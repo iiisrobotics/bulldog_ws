@@ -8,7 +8,6 @@ from gpd.msg import CloudIndexed
 from gpd.msg import GraspConfigList
 from geometry_msgs.msg import Point
 from std_msgs.msg import Int64
-import IPython
 
 if __name__ == "__main__":
 	rospy.init_node("test_service")
@@ -40,4 +39,4 @@ if __name__ == "__main__":
 	rospy.wait_for_service("/detect_grasps_server/detect_grasps")
 	detect_grasp = rospy.ServiceProxy("/detect_grasps_server/detect_grasps", detect_grasps)
 	graspConfigList = detect_grasp(cloudindexed)
-	IPython.embed()
+	

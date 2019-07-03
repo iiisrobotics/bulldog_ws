@@ -1,0 +1,335 @@
+#!/usr/bin/env python
+from __future__ import absolute_import
+from __future__ import print_function
+from __future__ import division
+
+import os
+import threading
+import numpy as np
+
+from cv_bridge import CvBridge
+import rospy
+import sensor_msgs.msg
+
+import coco
+import utils
+import model as modellib
+import visualize
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg
+from matplotlib.figure import Figure
+
+import mask_rcnn_ros.msg
+import mask_rcnn_ros.srv
+
+
+# Local path to trained weights file
+ROS_HOME = os.environ.get('ROS_HOME', os.path.join(os.environ['HOME'], '.ros'))
+COCO_MODEL_PATH = os.path.join(ROS_HOME, 'mask_rcnn_coco.h5')
+
+# COCO Class names
+# Index of the class in the list is its ID. For example, to get ID of
+# the teddy bear class, use: CLASS_NAMES.index('teddy bear')
+CLASS_NAMES = ['BG', 'person', 'bicycle', 'car', 'motorcycle', 'airplane',
+               'bus', 'train', 'truck', 'boat', 'traffic light',
+               'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird',
+               'cat', 'dog', 'horse', 'sheep', 'cow', 'elephant', 'bear',
+               'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie',
+               'suitcase', 'frisbee', 'skis', 'snowboard', 'sports ball',
+               'kite', 'baseball bat', 'baseball glove', 'skateboard',
+               'surfboard', 'tennis racket', 'bottle', 'wine glass', 'cup',
+               'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple',
+               'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza',
+               'donut', 'cake', 'chair', 'couch', 'potted plant', 'bed',
+               'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote',
+               'keyboard', 'cell phone', 'microwave', 'oven', 'toaster',
+               'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors',
+               'teddy bear', 'hair drier', 'toothbrush']
+
+
+class InferenceConfig(coco.CocoConfig):
+    # Set batch size to 1 since we'll be running inference on
+    # one image at a time. Batch size = GPU_COUNT * IMAGES_PER_GPU
+    GPU_COUNT = 1
+    IMAGES_PER_GPU = 1
+
+
+class MaskRCNNNode(object):
+    def __init__(self):
+        """Initialize a MaskRCNNNode
+
+        Parameters
+        ----------
+
+        Returns
+        ----------
+        - <obj>: MaskRCNNNode
+            A Mask RCNN instantiation.
+
+        """
+        self._cv_bridge = CvBridge()
+
+        config = InferenceConfig()
+        config.display()
+
+        self._visualization = rospy.get_param('~visualization', True)
+
+        # Create model object in inference mode.
+        self._model = modellib.MaskRCNN(mode="inference", model_dir="",
+                                        config=config)
+        # Load weights trained on MS-COCO
+        model_path = rospy.get_param('~model_path', COCO_MODEL_PATH)
+        # Download COCO trained weights from Releases if needed
+        if model_path == COCO_MODEL_PATH and not os.path.exists(COCO_MODEL_PATH):
+            utils.download_trained_weights(COCO_MODEL_PATH)
+
+        self._model.load_weights(model_path, by_name=True)
+
+        self._class_names = rospy.get_param('~class_names', CLASS_NAMES)
+
+        self._last_msg = None
+        self._msg_lock = threading.Lock()
+
+        self._class_colors = visualize.random_colors(len(CLASS_NAMES))
+
+        self._result_pub = rospy.Publisher('~result',
+                                           mask_rcnn_ros.msg.Result,
+                                           queue_size=1)
+        self._vis_pub = rospy.Publisher('~visualization',
+                                        sensor_msgs.msg.Image,
+                                        queue_size=1)
+                                        
+    def run(self, image_msg, verbose=False):
+        """Run the Mask RCNN algorithm to detect object in a image.
+
+        Parameters
+        ----------
+        - image_msg: sensor_msgs.msg.Image
+            Raw image message transfer through specified topics.
+
+        - verbose: bool (optional, default = False)
+            Whether print model structure or not.
+
+        Returns
+        ----------
+        - result_msg: mask_rcnn_ros.msg.Result
+            Result message for the detection.
+
+        """
+        # self._result_pub = rospy.Publisher('~result', Result, queue_size=1)
+        # vis_pub = rospy.Publisher('~visualization', Image, queue_size=1)
+        # rospy.Subscriber('~input', Image,
+        #                  self._image_callback, queue_size=1)
+        # rate = rospy.Rate(self._publish_rate)
+        # while not rospy.is_shutdown():
+        #     if self._msg_lock.acquire(False):
+        #         msg = self._last_msg
+        #         self._last_msg = None
+        #         self._msg_lock.release()
+        #     else:
+        #         rate.sleep()
+        #         continue
+        #     if msg is not None:
+        #         np_image = self._cv_bridge.imgmsg_to_cv2(msg, 'bgr8')
+        #         # Run detection
+        #         results = self._model.detect([np_image], verbose=0)
+        #         result = results[0]
+        #         result_msg = self._build_result_msg(msg, result)
+        #         self._result_pub.publish(result_msg)
+        #         # Visualize results
+        #         if self._visualization:
+        #             cv_result = self._visualize_cv(result, np_image)
+        #             image_msg = self._cv_bridge.cv2_to_imgmsg(
+        #                 cv_result, 'bgr8')
+        #             vis_pub.publish(image_msg)
+        #     rate.sleep()
+        rospy.loginfo("Running...")
+        image = self._cv_bridge.imgmsg_to_cv2(image_msg, 'bgr8')
+        detections = self._model.detect([image], verbose=verbose)
+        detection = detections[0]
+        result_msg = self._build_result_msg(image_msg, detection)
+        self._result_pub.publish(result_msg)
+        if self._visualization:
+            vis_plt_detection = self._visualize(detection, image)
+            self._display(vis_plt_detection)
+            vis_cv_detection = self._visualize_cv(detection, image)
+            image_msg = self._cv_bridge.cv2_to_imgmsg(vis_cv_detection, 'bgr8')
+            self._vis_pub.publish(image_msg)
+        return result_msg
+
+    def _build_result_msg(self, msg, detection):
+        """Construct a result message for the detection.
+
+        Parameters
+        ----------
+        - msg: sensor_msgs.msg.Image
+
+        - detection: dict
+            A single Mask RCNN detection.
+
+        Returns
+        ----------
+        - result_msg: mask_rcnn_ros.msg.Result
+            The corresponding result message of the detection.
+
+        """
+        result_msg = mask_rcnn_ros.msg.Result()
+        result_msg.header = msg.header
+        for idx, (y1, x1, y2, x2) in enumerate(detection['rois']):
+            box = sensor_msgs.msg.RegionOfInterest(
+                x_offset=int(x1), y_offset=int(y1),
+                height=int(y2 - y1), width=int(x2 - x1)
+            )
+            result_msg.boxes.append(box)
+
+            class_id = detection['class_ids'][idx]
+            result_msg.class_ids.append(class_id)
+
+            class_name = self._class_names[class_id]
+            result_msg.class_names.append(class_name)
+
+            score = detection['scores'][idx]
+            result_msg.scores.append(score)
+
+            mask = sensor_msgs.msg.Image(
+                header=msg.header,
+                height=detection['masks'].shape[0],
+                width=detection['masks'].shape[1],
+                encoding='mono8',
+                is_bigendian=False,
+                step=detection['masks'].shape[1],
+                data=(detection['masks'][:, :, idx] * 255).tobytes()
+            )
+            result_msg.masks.append(mask)
+        return result_msg
+
+    def _visualize(self, detection, image):
+        """Generate a visual result for a detection with matplotlib.
+
+        Parameters
+        ----------
+        - detection: dict
+            A single Mask RCNN detection
+
+        - image: ndarray
+            Original image.
+
+        Returns
+        ----------
+        - vis_plt_detection:
+            A visual detection.
+
+        """
+        rospy.loginfo("Visualizing...")
+
+        fig = Figure()
+        canvas = FigureCanvasAgg(fig)
+        axes = fig.gca()
+        visualize.display_instances(
+            image, detection['rois'], detection['masks'],
+            detection['class_ids'], CLASS_NAMES,
+            detection['scores'], ax=axes, class_colors=self._class_colors
+        )
+        fig.tight_layout()
+        canvas.draw()
+        vis_plt_detection = np.fromstring(canvas.tostring_rgb(), dtype='uint8')
+
+        _, _, w, h = fig.bbox.bounds
+        vis_plt_detection = vis_plt_detection.reshape((int(h), int(w), 3))
+        return vis_plt_detection
+
+    def _visualize_cv(self, detection, image):
+        """Generate a visual result for a detection with OpenCV.
+
+        Parameters
+        ----------
+        - detection: dict
+            A single detection
+
+        - image: ndarray
+            Original image.
+
+        Returns
+        ----------
+        - vis_cv_detection:
+            A visual detection.
+
+        """
+        rospy.loginfo("Visualizing (cv)...")
+        vis_cv_detection = visualize.display_instances_cv(
+            image, detection['rois'], detection['masks'],
+            detection['class_ids'], CLASS_NAMES,
+            detection['scores'], class_colors=self._class_colors
+        )
+
+        return vis_cv_detection
+
+    def _display(self, image, title=None):
+        """Display image with matplotlib
+
+        Parameters
+        ----------
+        - result: np.ndarray
+            Result image.
+
+        - title: str
+            Title of the image.
+
+        Returns
+        ----------
+
+        """
+        title = title if title is not None else "Mask RCNN detection"
+
+        fig, ax = plt.subplots(nrows=1, ncols=1)
+        ax.set_title(title)
+        ax.set_axis_off()
+        if len(image.shape) == 1:
+            ax.imshow(image, cmap=plt.get_cmap('gray'))
+        elif len(image.shape) == 3:
+            ax.imshow(image)
+        else:
+            raise RuntimeError("Cannot display image with invalid shape.")
+        plt.pause(0.01)
+
+
+def mask_rcnn_srv_callback(request):
+    """Callback of the Mask RCNN service
+
+    Parameters
+    ----------
+    - request: mask_rcnn_ros.srv.MaskDetectRequest
+        Request from a client.
+
+    Returns
+    ----------
+    - response: mask_rcnn_ros.srv.MaskDetectResponse
+        Response of the service.
+
+    """
+    node = MaskRCNNNode()
+    result_msg = node.run(request.input_image, verbose=True)
+    response = mask_rcnn_ros.srv.MaskDetectResponse(result_msg)
+    return response
+
+
+def main():
+    """Main entrance.
+
+    Parameters
+    ----------
+
+    Returns
+    ----------
+
+    """
+    rospy.init_node('mask_rcnn')
+    rospy.Service('mask_rcnn_srv',
+                  mask_rcnn_ros.srv.MaskDetect,
+                  mask_rcnn_srv_callback)
+    rospy.loginfo("Mask RCNN service ready.")
+    rospy.spin()
+
+
+if __name__ == '__main__':
+    main()
