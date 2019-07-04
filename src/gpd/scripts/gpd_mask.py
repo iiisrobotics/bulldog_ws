@@ -54,16 +54,16 @@ if __name__ == "__main__":
 
 
 	cloudindexed = CloudIndexed()
-	if len(response.result.masks) > 0:
+	if len(response.detection.masks) > 0:
 		j = 0
-		while j < len(response.result.class_names):
-			if response.result.class_names[j] == 'bottle':
+		while j < len(response.detection.class_names):
+			if response.detection.class_names[j] == 'bottle':
 				break
 			j = j+1
-		if j == len(response.result.class_names):
+		if j == len(response.detection.class_names):
 			print("no bottle found!")
 
-		mask = response.result.masks[j]
+		mask = response.detection.masks[j]
 		for i in range(mask.step * mask.height):
 			if mask.data[i] == '\xff':
 				cloudindexed.indices.append(Int64(i))
