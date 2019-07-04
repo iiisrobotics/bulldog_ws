@@ -13,7 +13,7 @@ catkin_python_setup()
 
 add_message_files(
   FILES
-    Result.msg
+    Detection.msg
 )
 
 add_service_files(

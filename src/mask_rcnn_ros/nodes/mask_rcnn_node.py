@@ -91,9 +91,9 @@ class MaskRCNNNode:
         #
         # publisher
         #
-        self._result_pub = rospy.Publisher('~result',
-                                           mask_rcnn_ros.msg.Result,
-                                           queue_size=1)
+        self._detection_pub = rospy.Publisher('~detection',
+                                              mask_rcnn_ros.msg.Detection,
+                                              queue_size=1)
         self._vis_pub = rospy.Publisher('~visualization',
                                         sensor_msgs.msg.Image,
                                         queue_size=1)
@@ -170,18 +170,18 @@ class MaskRCNNNode:
                 #
                 # detection
                 #
-                results = self._model.detect([np_image], verbose=0)
-                result = results[0]
-                result_msg = self._build_result_msg(msg, result)
-                self._result_pub.publish(result_msg)
+                detections = self._model.detect([np_image], verbose=0)
+                detection = detections[0]
+                detection_msg = self._build_detection_msg(msg, detection)
+                self._detection_pub.publish(detection_msg)
 
                 #
                 # visualization
                 #
                 if self._visualization:
-                    cv_result = self._visualize_cv(result, np_image)
+                    cv_detection = self._visualize_cv(detection, np_image)
                     image_msg = self._cv_bridge.cv2_to_imgmsg(
-                        cv_result, 'bgr8')
+                        cv_detection, 'bgr8')
                     self._vis_pub.publish(image_msg)
             rate.sleep()
 
@@ -198,8 +198,8 @@ class MaskRCNNNode:
 
         Returns
         ----------
-        - result_msg: mask_rcnn_ros.msg.Result
-            Result message for the detection.
+        - detection_msg: mask_rcnn_ros.msg.detection
+            detection message for the detection.
 
         """
         rospy.loginfo("Running as service...")
@@ -211,8 +211,8 @@ class MaskRCNNNode:
         with self._graph.as_default():
             detections = self._model.detect([image], verbose=verbose)
         detection = detections[0]
-        result_msg = self._build_result_msg(image_msg, detection)
-        self._result_pub.publish(result_msg)
+        detection_msg = self._build_detection_msg(image_msg, detection)
+        self._detection_pub.publish(detection_msg)
 
         #
         # visualization
@@ -224,10 +224,10 @@ class MaskRCNNNode:
             image_msg = self._cv_bridge.cv2_to_imgmsg(vis_cv_detection, 'bgr8')
             self._vis_pub.publish(image_msg)
 
-        return result_msg
+        return detection_msg
 
-    def _build_result_msg(self, msg, detection):
-        """Construct a result message for the detection.
+    def _build_detection_msg(self, msg, detection):
+        """Construct a detection message for the detection.
 
         Parameters
         ----------
@@ -239,27 +239,27 @@ class MaskRCNNNode:
 
         Returns
         ----------
-        - result_msg: mask_rcnn_ros.msg.Result
-            The corresponding result message of the detection.
+        - detection_msg: mask_rcnn_ros.msg.detection
+            The corresponding detection message of the detection.
 
         """
-        result_msg = mask_rcnn_ros.msg.Result()
-        result_msg.header = msg.header
+        detection_msg = mask_rcnn_ros.msg.Detection()
+        detection_msg.header = msg.header
         for idx, (y1, x1, y2, x2) in enumerate(detection['rois']):
             box = sensor_msgs.msg.RegionOfInterest(
                 x_offset=int(x1), y_offset=int(y1),
                 height=int(y2 - y1), width=int(x2 - x1)
             )
-            result_msg.boxes.append(box)
+            detection_msg.boxes.append(box)
 
             class_id = detection['class_ids'][idx]
-            result_msg.class_ids.append(class_id)
+            detection_msg.class_ids.append(class_id)
 
             class_name = self._class_names[class_id]
-            result_msg.class_names.append(class_name)
+            detection_msg.class_names.append(class_name)
 
             score = detection['scores'][idx]
-            result_msg.scores.append(score)
+            detection_msg.scores.append(score)
 
             mask = sensor_msgs.msg.Image(
                 header=msg.header,
@@ -270,11 +270,11 @@ class MaskRCNNNode:
                 step=detection['masks'].shape[1],
                 data=(detection['masks'][:, :, idx] * 255).tobytes()
             )
-            result_msg.masks.append(mask)
-        return result_msg
+            detection_msg.masks.append(mask)
+        return detection_msg
 
     def _visualize(self, detection, image):
-        """Generate a visual result for a detection with matplotlib.
+        """Generate a visual detection for a detection with matplotlib.
 
         Parameters
         ----------
@@ -309,7 +309,7 @@ class MaskRCNNNode:
         return vis_plt_detection
 
     def _visualize_cv(self, detection, image):
-        """Generate a visual result for a detection with OpenCV.
+        """Generate a visual detection for a detection with OpenCV.
 
         Parameters
         ----------
@@ -339,8 +339,8 @@ class MaskRCNNNode:
 
         Parameters
         ----------
-        - result: np.ndarray
-            Result image.
+        - detection: np.ndarray
+            detection image.
 
         - title: str
             Title of the image.
@@ -399,6 +399,6 @@ class MaskRCNNNode:
 
         """
         rospy.loginfo("Get an image from client.")
-        result_msg = self.detect(request.input_image, verbose=True)
-        response = mask_rcnn_ros.srv.MaskDetectResponse(result_msg)
+        detection_msg = self.detect(request.input_image, verbose=True)
+        response = mask_rcnn_ros.srv.MaskDetectResponse(detection_msg)
         return response
