@@ -399,6 +399,6 @@ class MaskRCNNNode:
 
         """
         rospy.loginfo("Get an image from client.")
-        detection_msg = self.detect(request.input_image, verbose=True)
+        detection_msg = self.detect(request.input_image)
         response = mask_rcnn_ros.srv.MaskDetectResponse(detection_msg)
         return response

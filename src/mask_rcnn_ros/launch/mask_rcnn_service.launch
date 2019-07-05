@@ -6,5 +6,5 @@
     </node>
 
     <!-- RVIZ -->
-    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mask_rcnn_ros)/rviz/mask_rcnn_ros.rviz" /> -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mask_rcnn_ros)/rviz/mask_rcnn_ros.rviz" />
 </launch>

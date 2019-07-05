@@ -1,6 +1,6 @@
-# Installation
+# Documentation
 
-## Step by Step
+## Installation
 
 1. clean the workspace
 
@@ -66,12 +66,18 @@
         mv gpd_mask_test.py~ gpd_mask_test.py
 
 
-4. Mask RCNN
+4. Mask RCNN 
 
     Add suffix.
 
         roscd mask_rcnn_ros/nodes
         mv mask_rcnn_node mask_rcnn_node.py
 
-    Add 'mask_rcnn_service' node.
-    
+    Add 'mask_rcnn_service' executable script.
+
+    Add 'mask_rcnn_service.launch' launch file.
+
+5. moveit
+
+
+
