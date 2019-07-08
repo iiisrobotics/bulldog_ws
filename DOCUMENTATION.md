@@ -56,7 +56,7 @@
 
         get_filename_component(OpenCV_CONFIG_PATH "${CMAKE_CURRENT_LIST_FILE}" PATH)
 
-3. gpd mask test
+3. gpd
 
     Use 'gpd_mask_test.py~' instead of 'gdp_mask_test.py'
 
@@ -77,7 +77,9 @@
 
     Add 'mask_rcnn_service.launch' launch file.
 
-5. moveit
+5. Caffe building
 
+    "cudnn.hpp" (location: include/caffe/util/cudnn.hpp) may not be compatible 
+    with the current version of cuDNN, you should update this file.
 
-
+    Check the following ISSUE for more details: https://github.com/BVLC/caffe/issues/5793.

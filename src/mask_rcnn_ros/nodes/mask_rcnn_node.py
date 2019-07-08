@@ -165,12 +165,12 @@ class MaskRCNNNode:
                 rate.sleep()
                 continue
             if msg is not None:
-                np_image = self._cv_bridge.imgmsg_to_cv2(msg, 'bgr8')
+                image = self._cv_bridge.imgmsg_to_cv2(msg, 'bgr8')
 
                 #
                 # detection
                 #
-                detections = self._model.detect([np_image], verbose=0)
+                detections = self._model.detect([image], verbose=0)
                 detection = detections[0]
                 detection_msg = self._build_detection_msg(msg, detection)
                 self._detection_pub.publish(detection_msg)
@@ -179,7 +179,7 @@ class MaskRCNNNode:
                 # visualization
                 #
                 if self._visualization:
-                    cv_detection = self._visualize_cv(detection, np_image)
+                    cv_detection = self._visualize_cv(detection, image)
                     image_msg = self._cv_bridge.cv2_to_imgmsg(
                         cv_detection, 'bgr8')
                     self._vis_pub.publish(image_msg)
@@ -212,16 +212,15 @@ class MaskRCNNNode:
             detections = self._model.detect([image], verbose=verbose)
         detection = detections[0]
         detection_msg = self._build_detection_msg(image_msg, detection)
-        self._detection_pub.publish(detection_msg)
 
         #
         # visualization
         #
         if self._visualization:
-            vis_plt_detection = self._visualize(detection, image)
-            self._display(vis_plt_detection)
-            vis_cv_detection = self._visualize_cv(detection, image)
-            image_msg = self._cv_bridge.cv2_to_imgmsg(vis_cv_detection, 'bgr8')
+            # plt_detection = self._visualize(detection, image)
+            # self._display(plt_detection)
+            cv_detection = self._visualize_cv(detection, image)
+            image_msg = self._cv_bridge.cv2_to_imgmsg(cv_detection, 'bgr8')
             self._vis_pub.publish(image_msg)
 
         return detection_msg
