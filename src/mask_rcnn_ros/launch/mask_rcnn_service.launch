@@ -1,10 +1,12 @@
 <launch>
     <!-- Mask RCNN -->
-    <node name="mask_rcnn_ros_service" pkg="mask_rcnn_ros" type="mask_rcnn_service.py" output="screen">
+    <node name="mask_rcnn_ros_service" pkg="mask_rcnn_ros"
+        type="mask_rcnn_service.py" output="screen">
         <remap from="~input" to="/camera/rgb/image_raw" />
         <param name="~visualization" value="true" />
     </node>
 
     <!-- RVIZ -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mask_rcnn_ros)/rviz/mask_rcnn_ros.rviz" />
+    <node name="rviz" pkg="rviz" type="rviz"
+        args="-d $(find mask_rcnn_ros)/rviz/mask_rcnn_ros.rviz" />
 </launch>

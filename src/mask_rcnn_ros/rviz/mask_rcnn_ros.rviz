@@ -8,6 +8,7 @@ Panels:
         - /Status1
         - /Image1
         - /Image2
+        - /MarkerArray1
       Splitter Ratio: 0.755813956
     Tree Height: 614
   - Class: rviz/Selection
@@ -52,7 +53,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /camera/rgb/image_color
+      Image Topic: /camera/rgb/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -74,10 +75,18 @@ Visualization Manager:
       Transport Hint: raw
       Unreliable: false
       Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: visualization_marker_array
+      Name: MarkerArray
+      Namespace:
+        {}
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: world
+    Fixed Frame: base_link
     Frame Rate: 30
   Name: root
   Tools:
@@ -136,5 +145,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1259
-  X: 618
-  Y: 126
+  X: 468
+  Y: 225

@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d3da7188-081f-4a0b-9842-90bac7f67c9a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../DOCUMENTATION.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../DOCUMENTATION.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/launch/mask_rcnn_service.launch" beforeDir="false" afterPath="$PROJECT_DIR$/launch/mask_rcnn_service.launch" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodes/mask_rcnn_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/nodes/mask_rcnn_node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rviz/mask_rcnn_ros.rviz" beforeDir="false" afterPath="$PROJECT_DIR$/rviz/mask_rcnn_ros.rviz" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,10 +16,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nodes/mask_rcnn.py">
+        <entry file="file://$PROJECT_DIR$/nodes/mask_rcnn_service.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="196">
-              <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+            <state relative-caret-position="644">
+              <caret line="23" column="10" lean-forward="true" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
               <folding>
                 <element signature="e#23#35#0" expanded="true" />
               </folding>
@@ -29,22 +30,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/nodes/mask_rcnn_node.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4700">
-              <caret line="394" column="78" lean-forward="true" selection-start-line="394" selection-start-column="78" selection-end-line="394" selection-end-column="78" />
+            <state relative-caret-position="1080">
+              <caret line="291" selection-start-line="291" selection-end-line="291" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nodes/mask_rcnn_service.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="17" column="32" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
-              <folding>
-                <element signature="e#23#35#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -57,6 +46,9 @@
       <find>Result</find>
       <find>result</find>
       <find>Detection</find>
+      <find>visualization</find>
+      <find>_vis_pub</find>
+      <find>Visualize</find>
     </findStrings>
     <replaceStrings>
       <replace>detection</replace>
@@ -69,13 +61,16 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/requirements.txt" />
+        <option value="$PROJECT_DIR$/launch/mask_rcnn_service.launch" />
+        <option value="$PROJECT_DIR$/nodes/mask_rcnn_service.py" />
+        <option value="$PROJECT_DIR$/rviz/mask_rcnn_ros.rviz" />
         <option value="$PROJECT_DIR$/nodes/mask_rcnn_node.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="395" />
-    <option name="y" value="324" />
+    <option name="x" value="378" />
+    <option name="y" value="233" />
     <option name="width" value="1341" />
     <option name="height" value="963" />
   </component>
@@ -91,6 +86,16 @@
             <path>
               <item name="mask_rcnn_ros" type="b2602c69:ProjectViewProjectNode" />
               <item name="mask_rcnn_ros" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mask_rcnn_ros" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mask_rcnn_ros" type="462c0819:PsiDirectoryNode" />
+              <item name="nodes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mask_rcnn_ros" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mask_rcnn_ros" type="462c0819:PsiDirectoryNode" />
+              <item name="rviz" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -208,17 +213,19 @@
       <workItem from="1562400177467" duration="729000" />
       <workItem from="1562421106493" duration="121000" />
       <workItem from="1562588926660" duration="991000" />
+      <workItem from="1562594754689" duration="5000" />
+      <workItem from="1562594792238" duration="967000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7170000" />
+    <option name="totallyTimeSpent" value="8142000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="395" y="324" width="1341" height="963" extended-state="1" />
+    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2911197" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21503593" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -263,16 +270,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nodes/mask_rcnn_service.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="17" column="32" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
-          <folding>
-            <element signature="e#23#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nodes/mask_rcnn.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
@@ -283,10 +280,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/launch/mask_rcnn_service.launch">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rviz/mask_rcnn_ros.rviz">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="108" column="23" lean-forward="true" selection-start-line="108" selection-start-column="23" selection-end-line="108" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nodes/mask_rcnn_service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="23" column="10" lean-forward="true" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
+          <folding>
+            <element signature="e#23#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/nodes/mask_rcnn_node.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4700">
-          <caret line="394" column="78" lean-forward="true" selection-start-line="394" selection-start-column="78" selection-end-line="394" selection-end-column="78" />
+        <state relative-caret-position="1080">
+          <caret line="291" selection-start-line="291" selection-end-line="291" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>

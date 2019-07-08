@@ -289,8 +289,6 @@ class MaskRCNNNode:
             A visual detection.
 
         """
-        rospy.loginfo("Visualizing...")
-
         fig = Figure()
         canvas = FigureCanvasAgg(fig)
         axes = fig.gca()
@@ -324,7 +322,6 @@ class MaskRCNNNode:
             A visual detection.
 
         """
-        rospy.loginfo("Visualizing (cv)...")
         vis_cv_detection = visualize.display_instances_cv(
             image, detection['rois'], detection['masks'],
             detection['class_ids'], CLASS_NAMES,
