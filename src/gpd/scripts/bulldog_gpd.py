@@ -43,7 +43,7 @@ def cloud_transformation(srv, cloud):
 		cloud_transform_response = cloud_transformer(cloud)
 	except rospy.ServiceException as e:
 		rospy.logerr("Point cloud transform service call failed: %s" % e)
-		exit()
+		raise SystemExit()
 	cloud_transformed = cloud_transform_response.cloud_transformed
 	
 	return cloud_transformed
@@ -77,7 +77,7 @@ def mask_rcnn_detection(srv, image):
 		mask_rcnn_response = mask_rcnn_detector(image)
 	except rospy.ServiceException as e:
 		rospy.logerr("Mask RCNN service call failed: %s" % e)
-		exit()
+		raise SystemExit()
 	detection = mask_rcnn_response.detection
 
 	return detection
@@ -112,7 +112,7 @@ def grasps_detection(srv, cloud_indexed):
 		detect_grasps_response = grasps_detector(cloud_indexed)
 	except rospy.ServiceException as e:
 		rospy.logerr("Grasp detection service call failed: %s" % e)
-		exit()
+		raise SystemExit()
 	grasp_configs = detect_grasps_response.grasp_configs
 
 	return grasp_configs
@@ -149,10 +149,10 @@ def process_cloud(cloud_transformed, detection):
 				break
 		else:
 			rospy.logfatal("No bottle found!")
-			exit()
+			raise SystemExit()
 	else:
 		rospy.logfatal("Detect nothing!")
-		exit()
+		raise SystemExit()
 
 	cloud_indexed.cloud_sources.cloud = cloud_transformed
 	cloud_indexed.cloud_sources.view_points.append(Point(0, 0, 0))
@@ -217,8 +217,13 @@ def main():
 	# bottom_stamped.point = gpd_response.grasp_configs.grasps[0].bottom
 	# p = listener.transformPoint("base_link", bottom_stamped)
 
-	robot = moveit_commander.RobotCommander()
-	group = moveit_commander.MoveGroupCommander("left_arm")
+	group = None
+	try:
+		robot = moveit_commander.RobotCommander()
+		group = moveit_commander.MoveGroupCommander("left_arm")
+	except:
+		rospy.logerr("%s")
+		raise SystemExit()
 
 	pose_target = geometry_msgs.msg.Pose()
 	pose_target.orientation.x = 0

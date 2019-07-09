@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d3da7188-081f-4a0b-9842-90bac7f67c9a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../gpd/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../gpd/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../gpd/launch/grasp_detection_service.launch" beforeDir="false" afterPath="$PROJECT_DIR$/../gpd/launch/grasp_detection_service.launch" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../gpd/src/nodes/cloud_transform_server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../gpd/src/nodes/cloud_transform_server.cpp" afterDir="false" />
     </list>
@@ -41,9 +42,9 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="70" />
-    <option name="y" value="386" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="329" />
+    <option name="y" value="230" />
     <option name="width" value="1341" />
     <option name="height" value="963" />
   </component>
@@ -60,11 +61,6 @@
             <path>
               <item name="mask_rcnn_ros" type="b2602c69:ProjectViewProjectNode" />
               <item name="mask_rcnn_ros" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mask_rcnn_ros" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mask_rcnn_ros" type="462c0819:PsiDirectoryNode" />
-              <item name="launch" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mask_rcnn_ros" type="b2602c69:ProjectViewProjectNode" />
@@ -193,23 +189,23 @@
       <workItem from="1562594792238" duration="1971000" />
       <workItem from="1562598041799" duration="30000" />
       <workItem from="1562598107726" duration="119000" />
-      <workItem from="1562657045774" duration="1254000" />
+      <workItem from="1562657045774" duration="1259000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10549000" />
+    <option name="totallyTimeSpent" value="10554000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="70" y="386" width="1341" height="963" extended-state="1" />
+    <frame x="329" y="230" width="1341" height="963" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22934362" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22934362" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.46037295" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.46037295" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />

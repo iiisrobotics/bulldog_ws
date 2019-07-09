@@ -23,8 +23,8 @@ rosrun mask_rcnn_ros test_mask_service.py
 ## Test Mask_rcnn_ros with GPD
 roslaunch bulldog_gazebo bulldog_empty_world.launch  
 (manually add something in the vision of the robot, like a can of beer)  
-roslaunch mask_rcnn_ros simply.launch  
+roslaunch mask_rcnn_ros mask_rcnn_service.launch  
 roslaunch gpd grasp_detection_service.launch  
 roslaunch bulldog_gazebo_moveit_config bulldog_gazebo_planning_execution.launch  
-rosrun gpd pc_transform_server  
-rosrun gpd gpd_mask_test.py  
+rosrun gpd cloud_transform_server  
+rosrun gpd bulldog_gpd.py  
