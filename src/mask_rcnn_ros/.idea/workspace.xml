@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d3da7188-081f-4a0b-9842-90bac7f67c9a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../gpd/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../gpd/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gpd/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../gpd/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gpd/scripts/gpd_mask.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gpd/scripts/gpd_mask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gpd/scripts/gpd_mask_save.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/launch/mask_rcnn_service.launch" beforeDir="false" afterPath="$PROJECT_DIR$/launch/mask_rcnn_service.launch" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodes/mask_rcnn_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/nodes/mask_rcnn_node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nodes/mask_rcnn_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/nodes/mask_rcnn_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gpd/launch/grasp_detection_service.launch" beforeDir="false" afterPath="$PROJECT_DIR$/../gpd/launch/grasp_detection_service.launch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gpd/src/nodes/cloud_transform_server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../gpd/src/nodes/cloud_transform_server.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

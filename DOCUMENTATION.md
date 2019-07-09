@@ -83,3 +83,13 @@
     with the current version of cuDNN, you should update this file.
 
     Check the following ISSUE for more details: https://github.com/BVLC/caffe/issues/5793.
+
+6. point cloud transform in GPD
+
+    How to get the lastest frame transform?
+
+    https://answers.ros.org/question/245111/proper-way-to-transform-a-point-cloud/
+
+    Error example:
+        
+        [ERROR] [1562670811.260886536, 354.307000000]: Lookup would require extrapolation into the past.  Requested time 354.239000000 but the earliest data is at time 354.351000000, when looking up transform from frame [camera_frame_optical] to frame [base_link]
