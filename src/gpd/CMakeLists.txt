@@ -4,8 +4,18 @@ project(gpd)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS cmake_modules eigen_conversions geometry_msgs message_generation roscpp
-  sensor_msgs std_msgs mask_rcnn_ros)
+find_package(catkin REQUIRED COMPONENTS 
+  cmake_modules 
+  eigen_conversions 
+  geometry_msgs 
+  message_generation 
+  roscpp
+  sensor_msgs 
+  std_msgs 
+  mask_rcnn_ros
+  pcl_ros
+  pcl_conversions
+)
 
 # PCL
 find_package(PCL REQUIRED)
@@ -58,11 +68,20 @@ set(CMAKE_CXX_FLAGS "-DNDEBUG -O3 -fopenmp -Wno-deprecated -Wenum-compare")
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-add_message_files(FILES CloudIndexed.msg CloudSamples.msg CloudSources.msg GraspConfig.msg GraspConfigList.msg
-  SamplesMsg.msg)
+add_message_files(FILES 
+  CloudIndexed.msg 
+  CloudSamples.msg 
+  CloudSources.msg 
+  GraspConfig.msg 
+  GraspConfigList.msg
+  SamplesMsg.msg
+)
 
 ## Generate services in the 'srv' folder
-add_service_files(FILES detect_grasps.srv)
+add_service_files(FILES 
+  detect_grasps.srv
+  cloud_transform.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -72,7 +91,11 @@ add_service_files(FILES detect_grasps.srv)
 # )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(DEPENDENCIES geometry_msgs sensor_msgs std_msgs)
+generate_messages(DEPENDENCIES 
+  geometry_msgs 
+  sensor_msgs 
+  std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -104,9 +127,19 @@ generate_messages(DEPENDENCIES geometry_msgs sensor_msgs std_msgs)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-INCLUDE_DIRS include
-CATKIN_DEPENDS cmake_modules eigen_conversions geometry_msgs message_runtime roscpp sensor_msgs std_msgs
-DEPENDS Eigen OpenCV PCL
+  INCLUDE_DIRS include
+  CATKIN_DEPENDS 
+    cmake_modules 
+    eigen_conversions 
+    geometry_msgs 
+    message_runtime 
+    roscpp 
+    sensor_msgs 
+    std_msgs
+  DEPENDS 
+    Eigen 
+    OpenCV 
+    PCL
 )
 
 ###########
@@ -115,7 +148,13 @@ DEPENDS Eigen OpenCV PCL
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(include ${catkin_INCLUDE_DIRS} ${PCL_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
+include_directories(
+  include 
+  ${catkin_INCLUDE_DIRS}
+  ${Eigen_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS} 
+  ${OpenCV_INCLUDE_DIRS}
+)
 
 ## Declare a C++ library
 add_library(${PROJECT_NAME}_clustering src/${PROJECT_NAME}/clustering.cpp)
@@ -145,7 +184,7 @@ add_executable(${PROJECT_NAME}_test_grasp_image src/tests/test_grasp_image.cpp)
 add_executable(${PROJECT_NAME}_test_conv_layer src/tests/test_conv_layer.cpp)
 add_executable(${PROJECT_NAME}_test_lenet src/tests/test_lenet.cpp)
 add_executable(${PROJECT_NAME}_test_service src/tests/test_service.cpp)
-
+add_executable(${PROJECT_NAME}_cloud_transform_server src/nodes/cloud_transform_server.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
@@ -241,6 +280,11 @@ target_link_libraries(${PROJECT_NAME}_learning
                       ${GENERATOR_LIB}
                       ${catkin_LIBRARIES})
 
+target_link_libraries(${PROJECT_NAME}_cloud_transform_server
+                      ${catkin_LIBRARIES}
+                      ${GENERATOR_LIB}
+                      ${PCL_LIBRARIES})
+
 add_dependencies(${PROJECT_NAME}_detect_grasps ${PROJECT_NAME}_generate_messages_cpp)
 add_dependencies(${PROJECT_NAME}_detect_grasps_server ${PROJECT_NAME}_generate_messages_cpp)
 add_dependencies(${PROJECT_NAME}_generate_candidates ${PROJECT_NAME}_generate_messages_cpp)
@@ -251,6 +295,7 @@ add_dependencies(${PROJECT_NAME}_test_grasp_image ${PROJECT_NAME}_generate_messa
 add_dependencies(${PROJECT_NAME}_test_conv_layer ${PROJECT_NAME}_generate_messages_cpp)
 add_dependencies(${PROJECT_NAME}_test_lenet ${PROJECT_NAME}_generate_messages_cpp)
 add_dependencies(${PROJECT_NAME}_test_service ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(${PROJECT_NAME}_cloud_transform_server ${PROJECT_NAME}_generate_messages_cpp)
 
 # Rename targets to simplify their names.
 set_target_properties(${PROJECT_NAME}_detect_grasps
@@ -287,4 +332,8 @@ set_target_properties(${PROJECT_NAME}_test_lenet
 
 set_target_properties(${PROJECT_NAME}_test_service
                       PROPERTIES OUTPUT_NAME test_service
+                      PREFIX "")
+
+set_target_properties(${PROJECT_NAME}_cloud_transform_server
+                      PROPERTIES OUTPUT_NAME cloud_transform_server
                       PREFIX "")

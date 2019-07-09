@@ -69,6 +69,7 @@ class MaskRCNNNode:
         self._class_names = rospy.get_param('~class_names', CLASS_NAMES)
         self._class_colors = visualize.random_colors(len(CLASS_NAMES))
         self._visualization = rospy.get_param('~visualization', True)
+        self._topic_and_srv = rospy.get_param('~topic_and_srv', '~detection')
 
         #
         # network configuration
@@ -91,7 +92,7 @@ class MaskRCNNNode:
         #
         # publisher
         #
-        self._detection_pub = rospy.Publisher('~detection',
+        self._detection_pub = rospy.Publisher(self._topic_and_srv,
                                               mask_rcnn_ros.msg.Detection,
                                               queue_size=1)
         self._vis_pub = rospy.Publisher('~visualization',
@@ -116,19 +117,18 @@ class MaskRCNNNode:
 
         self._model.load_weights(model_path, by_name=True)
 
-    def serve(self, svr):
+    def serve(self):
         """Start the service to server client requests.
 
         Parameters
         ----------
-        - srv: str
-            Name of the Mask RCNN service.
 
         Returns
         ----------
 
         """
-        rospy.Service(svr,
+        rospy.loginfo("Running as service...")
+        rospy.Service(self._topic_and_srv,
                       mask_rcnn_ros.srv.MaskDetect,
                       self._srv_callback)
         rospy.loginfo("Mask RCNN service ready.")
@@ -144,7 +144,7 @@ class MaskRCNNNode:
         ----------
 
         """
-        rospy.loginfo("Running as topic...")
+        rospy.loginfo("Detecting...")
 
         #
         # subscribe
@@ -202,7 +202,7 @@ class MaskRCNNNode:
             detection message for the detection.
 
         """
-        rospy.loginfo("Running as service...")
+        rospy.loginfo("Detect...")
 
         #
         # detection

@@ -17,7 +17,7 @@ def main():
     """
     rospy.init_node('mask_rcnn')
     mask_rcnn_node = MaskRCNNNode()
-    mask_rcnn_node.serve('mask_rcnn_srv')
+    mask_rcnn_node.serve()
 
 
 if __name__ == '__main__':

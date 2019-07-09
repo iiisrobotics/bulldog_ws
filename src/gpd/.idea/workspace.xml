@@ -2,18 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5694c2f5-8622-4600-8bca-63ffeb0ec372" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../.idea/bulldog_ws.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/yee.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/gpd_mask_save.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../INSTALLATION.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/gpd_mask.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/gpd_mask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mask_rcnn_ros/.idea/dictionaries/yee.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mask_rcnn_ros/.idea/dictionaries/yee.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mask_rcnn_ros/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mask_rcnn_ros/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/gpd_mask_save.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../mask_rcnn_ros/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mask_rcnn_ros/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mask_rcnn_ros/launch/mask_rcnn_service.launch" beforeDir="false" afterPath="$PROJECT_DIR$/../mask_rcnn_ros/launch/mask_rcnn_service.launch" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mask_rcnn_ros/nodes/mask_rcnn_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/../mask_rcnn_ros/nodes/mask_rcnn_node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mask_rcnn_ros/nodes/mask_rcnn_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/../mask_rcnn_ros/nodes/mask_rcnn_service.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scripts/gpd_mask.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="101" selection-start-line="101" selection-end-line="101" />
+            <state relative-caret-position="252">
+              <caret line="39" column="8" lean-forward="true" selection-start-line="39" selection-start-column="8" selection-end-line="39" selection-end-column="8" />
               <folding>
                 <element signature="e#22#34#0" expanded="true" />
               </folding>
@@ -35,41 +31,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file:///opt/ros/indigo/lib/python2.7/dist-packages/moveit_commander/move_group.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="50" selection-start-line="50" selection-end-line="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.PyCharm2019.1/system/python_stubs/-1247972723/moveit_ros_planning_interface/_moveit_move_group_interface.py">
+        <entry file="file:///opt/ros/indigo/lib/python2.7/dist-packages/rospy/service.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="703" column="8" selection-start-line="703" selection-start-column="8" selection-end-line="703" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file:///opt/ros/indigo/lib/python2.7/dist-packages/moveit_commander/robot.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="149" selection-start-line="149" selection-end-line="149" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/gpd_mask_save.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1214">
-              <caret line="68" selection-start-line="68" selection-end-line="68" />
-              <folding>
-                <element signature="e#22#34#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="1269">
+              <caret line="58" selection-start-line="58" selection-end-line="58" />
             </state>
           </provider>
         </entry>
@@ -77,8 +43,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/gpd_mask_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
+            <state relative-caret-position="196">
+              <caret line="34" column="40" lean-forward="true" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
               <folding>
                 <element signature="e#22#34#0" expanded="true" />
               </folding>
@@ -107,12 +73,13 @@
       <list>
         <option value="$PROJECT_DIR$/scripts/gpd_mask_save.py" />
         <option value="$PROJECT_DIR$/scripts/gpd_mask.py" />
+        <option value="$PROJECT_DIR$/srv/cloud_transform.srv" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="246" />
-    <option name="y" value="479" />
+    <option name="x" value="494" />
+    <option name="y" value="367" />
     <option name="width" value="1290" />
     <option name="height" value="830" />
   </component>
@@ -133,7 +100,7 @@
             <path>
               <item name="gpd" type="b2602c69:ProjectViewProjectNode" />
               <item name="gpd" type="462c0819:PsiDirectoryNode" />
-              <item name="scripts" type="462c0819:PsiDirectoryNode" />
+              <item name="srv" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -202,22 +169,24 @@
       <workItem from="1562241262110" duration="1352000" />
       <workItem from="1562243997652" duration="4716000" />
       <workItem from="1562287762905" duration="6019000" />
+      <workItem from="1562656077808" duration="3444000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13466000" />
+    <option name="totallyTimeSpent" value="16910000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="246" y="479" width="1290" height="830" extended-state="1" />
+    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2926045" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20453289" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.47448274" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.36363637" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -241,40 +210,20 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/scripts/gpd_mask.py</url>
-          <line>28</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/scripts/gpd_mask.py</url>
-          <line>100</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/scripts/gpd_mask.py</url>
-          <line>73</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/scripts/gpd_mask.py</url>
-          <line>82</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file:///opt/ros/indigo/lib/python2.7/dist-packages/moveit_commander/robot.py</url>
-          <line>147</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file:///opt/ros/indigo/lib/python2.7/dist-packages/moveit_commander/move_group.py</url>
           <line>50</line>
           <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/scripts/gpd_mask.py</url>
+          <line>34</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/gpd$gpd_mask.coverage" NAME="gpd_mask Coverage Results" MODIFIED="1562305413659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
+    <SUITE FILE_PATH="coverage/gpd$gpd_mask.coverage" NAME="gpd_mask Coverage Results" MODIFIED="1562668145169" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
@@ -294,26 +243,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/gpd_mask_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
-          <folding>
-            <element signature="e#22#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/gpd_mask_save.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1214">
-          <caret line="68" selection-start-line="68" selection-end-line="68" />
-          <folding>
-            <element signature="e#22#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/gpd_mask_save.py" />
     <entry file="file:///opt/ros/indigo/lib/python2.7/dist-packages/rospy/impl/tcpros_service.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="185">
@@ -328,34 +258,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///opt/ros/indigo/lib/python2.7/dist-packages/moveit_commander/robot.py">
+    <entry file="file:///opt/ros/indigo/lib/python2.7/dist-packages/moveit_commander/move_group.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="149" selection-start-line="149" selection-end-line="149" />
+        <state relative-caret-position="367">
+          <caret line="50" selection-start-line="50" selection-end-line="50" />
+          <folding>
+            <element signature="e#1628#1675#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/.PyCharm2019.1/system/python_stubs/-1247972723/moveit_ros_planning_interface/_moveit_move_group_interface.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
+        <state relative-caret-position="312">
           <caret line="703" column="8" selection-start-line="703" selection-start-column="8" selection-end-line="703" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/gpd_mask.py">
+    <entry file="file:///opt/ros/indigo/lib/python2.7/dist-packages/moveit_commander/robot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="101" selection-start-line="101" selection-end-line="101" />
+        <state relative-caret-position="309">
+          <caret line="147" column="25" selection-start-line="147" selection-start-column="25" selection-end-line="147" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/ros/indigo/lib/python2.7/dist-packages/rospy/service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1269">
+          <caret line="58" selection-start-line="58" selection-end-line="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rviz/test_service.rviz">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="5" column="15" lean-forward="true" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/srv/cloud_transform.srv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="2" column="41" selection-start-line="2" selection-start-column="41" selection-end-line="2" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/gpd_mask_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="34" column="40" lean-forward="true" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
           <folding>
             <element signature="e#22#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file:///opt/ros/indigo/lib/python2.7/dist-packages/moveit_commander/move_group.py">
+    <entry file="file://$PROJECT_DIR$/scripts/gpd_mask.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
+        <state relative-caret-position="252">
+          <caret line="39" column="8" lean-forward="true" selection-start-line="39" selection-start-column="8" selection-end-line="39" selection-end-column="8" />
+          <folding>
+            <element signature="e#22#34#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
