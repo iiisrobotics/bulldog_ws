@@ -219,10 +219,10 @@ def main():
 
 	group = None
 	try:
-		robot = moveit_commander.RobotCommander()
+		moveit_commander.RobotCommander()
 		group = moveit_commander.MoveGroupCommander("left_arm")
-	except:
-		rospy.logerr("%s")
+	except moveit_commander.MoveItCommanderException as e:
+		rospy.logerr("%s", e)
 		raise SystemExit()
 
 	pose_target = geometry_msgs.msg.Pose()
