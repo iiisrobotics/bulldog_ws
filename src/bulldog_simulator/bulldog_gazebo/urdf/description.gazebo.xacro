@@ -27,12 +27,12 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 
   <xacro:arg name="laser_enabled" default="true" />
   <xacro:arg name="ur5_enabled" default="false" />
-  <xacro:arg name="kinect_enabled" default="true" />
+  <xacro:arg name="kinect_enabled" default="false" />
   <xacro:arg name="dual_ur5_enabled" default="true"/>
   <xacro:arg name="robotiq_grippers_enabled" default="true"/>
 
   <xacro:include filename="$(find bulldog_description)/urdf/bulldog/bulldog.urdf.xacro" />
-  <xacro:include filename="$(find bulldog_description)/urdf/accessories/plates.urdf.xacro" />
+  <!-- <xacro:include filename="$(find bulldog_description)/urdf/accessories/plates.urdf.xacro" /> -->
   <xacro:include filename="$(find bulldog_gazebo)/urdf/bulldog.gazebo.xacro" />
 
   <!-- Gazebo plugin for ROS Control -->
@@ -42,8 +42,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     </plugin>
    
   </gazebo>
-<gazebo>
-
+  
+  <gazebo>
     <plugin name="gazebo_grasp_fix" filename="libgazebo_grasp_fix.so">
         <arm>
            <arm_name>left_arm </arm_name>
@@ -87,7 +87,6 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     </plugin>
   </gazebo>
  
-
   <xacro:bulldog_robot />
 
   <xacro:bulldog_robot_gazebo />
