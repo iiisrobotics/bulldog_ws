@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="bulldog_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="bulldog_gazebo_robot" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:include filename="$(find bulldog_description)/urdf/accessories/wheel.urdf.xacro" />
   <xacro:include filename="$(find bulldog_description)/urdf/accessories/materials.urdf.xacro" />

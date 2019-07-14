@@ -1,5 +1,4 @@
 <launch>
-
   <!-- argument -->
   <arg name="laser_enabled" default="true"/>
   <arg name="ur5_enabled" default="false"/>
@@ -33,5 +32,4 @@
     <param name="/use_gui" value="false"/>
     <rosparam param="/source_list">[/joint_states]</rosparam>
   </node>
-
 </launch>

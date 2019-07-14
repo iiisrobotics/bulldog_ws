@@ -1,22 +1,29 @@
 <?xml version="1.0"?>
 <launch>
-    <!-- argument -->
-    <arg name="model" default="$(find bulldog_description)/test/bulldog_test.urdf.xacro" />
+    <arg name="model" default="$(find bulldog_description)/urdf/bulldog_gazebo_robot.xacro" />
+    <arg name="rviz_config" default="$(find bulldog_description)/rviz/bulldog.rviz" />
+    <arg name="kinematic_param" default="$(find bulldog_description)/config/kinematics.yaml" />
+    <arg name="semantic_model" default="$(find bulldog_description)/config/bulldog_gazebo_robot.srdf" />
     <arg name="use_gui" default="true" />
 
     <arg name="laser_enabled" default="true"/>
     <arg name="ur5_enabled" default="false"/>
-    <arg name="kinect_enabled" default="false"/>
+    <arg name="kinect_enabled" default="true"/>
     <arg name="robotiq_grippers_enabled" default="true"/>
     <arg name="dual_ur5_enabled" default="true"/>
 
-    <!-- parameter -->
+    <!-- Robot description URDF -->
     <param name="robot_description" command="$(find xacro)/xacro.py $(arg model) 
                                              laser_enabled:=$(arg laser_enabled)
                                              ur5_enabled:=$(arg ur5_enabled)
                                              kinect_enabled:=$(arg kinect_enabled)
                                              dual_ur5_enabled:=$(arg dual_ur5_enabled)
                                              robotiq_grippers_enabled:=$(arg robotiq_grippers_enabled)" />
+
+
+    <!-- The semantic description that corresponds to the URDF -->
+    <param name="robot_description_semantic" textfile="$(arg semantic_model)" />
+
 
     <!-- joint state publisher -->
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
@@ -27,5 +34,6 @@
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
 
     <!-- rviz -->
-    <node name="rviz" pkg="rviz" type="rviz" />
+    <node name="rviz" pkg="rviz" type="rviz" args="$(arg rviz_config)" output="screen">
+    </node>
 </launch>

@@ -22,7 +22,7 @@
              robotiq_grippers_enabled:=$(arg robotiq_grippers_enabled)"/>
 
   <!-- The semantic description that corresponds to the URDF -->
-  <param name="$(arg robot_description)_semantic" textfile="$(find bulldog_gazebo_moveit_config)/config/bulldog_robot.srdf" />
+  <param name="$(arg robot_description)_semantic" textfile="$(find bulldog_gazebo_moveit_config)/config/bulldog_gazebo_robot.srdf" />
   
   <!-- Load updated joint limits (override information from URDF) -->
   <group ns="$(arg robot_description)_planning">
@@ -31,7 +31,7 @@
 
   <!-- Load default settings for kinematics; these settings are overridden by settings in a node's namespace -->
   <group ns="$(arg robot_description)_kinematics">
-    <rosparam command="load" file="$(find bulldog_gazebo_moveit_config)/config/kinematics.yaml"/>_
+    <rosparam command="load" file="$(find bulldog_gazebo_moveit_config)/config/kinematics.yaml"/>
   </group>
   
 </launch>
