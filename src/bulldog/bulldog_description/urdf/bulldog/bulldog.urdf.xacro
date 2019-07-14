@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <robot name="bulldog_robot" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find bulldog_description)/urdf/bulldog/wheel.urdf.xacro" />
-  <xacro:include filename="$(find bulldog_description)/urdf/bulldog/materials.urdf.xacro" />
+  <xacro:include filename="$(find bulldog_description)/urdf/accessories/wheel.urdf.xacro" />
+  <xacro:include filename="$(find bulldog_description)/urdf/accessories/materials.urdf.xacro" />
+  <xacro:include filename="$(find bulldog_description)/urdf/accessories/plates.urdf.xacro" />
   <xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />
   <xacro:include filename="$(find lms1xx)/urdf/sick_lms1xx.urdf.xacro" />
   <xacro:include filename="$(find robotiq_s_model_visualization)/cfg/robotiq_hand_macro.urdf.xacro" />
   <xacro:include filename="$(find bulldog_description)/urdf/sensors/kinect_camera.urdf.xacro" />
-  <!--xacro:include filename="$(find bulldog_description)/urdf/accessories/yuntai.urdf.xacro" /-->
 
   <xacro:property name="wheel_length" value="0.142" />
   <xacro:property name="wheel_radius" value="0.183" />
@@ -28,12 +28,13 @@
         <material name="flat_black" />
       </visual>
       <collision>
-        <origin xyz="0 0 ${base_z_size/2.0}" rpy="0 0 0" />
+        <origin xyz="0 0 ${base_z_size / 2.0}" rpy="0 0 0" />
         <geometry>
           <box size="${base_x_size} ${base_y_size} ${base_z_size}"/>
         </geometry>
       </collision>
     </link>
+
     <gazebo reference="base_link">
       <material>Gazebo/FlatBlack</material>
     </gazebo>
@@ -46,6 +47,7 @@
         <inertia ixx="0.7" ixy="-0.03" ixz="-0.15" iyy="2" iyz="-0.01" izz="4" />
       </inertial>
     </link>
+
     <joint name="inertial_joint" type="fixed">
       <origin xyz="0 0 0" rpy="0 0 0" />
       <parent link="base_link" />
@@ -53,32 +55,17 @@
     </joint>
 
     <!-- top plate -->
-    <link name="top_plate_link">
-      <visual>
-        <origin xyz="0 0 0" rpy="0 0 0" />
-        <geometry>
-          <mesh filename="package://bulldog_description/meshes/top_plate.stl" />
-        </geometry>
-        <material name="grey" />
-      </visual>
-    </link>
-    <gazebo reference="top_plate_link">
-      <material>Gazebo/Grey</material>
-    </gazebo>
-
-    <joint name="top_plate_joint" type="fixed">
-      <origin xyz="0.07937 0 0.253" rpy="0 0 0" />
-      <parent link="base_link" />
-      <child link="top_plate_link" />
-    </joint>
+    <xacro:top_plate />
 
     <!-- imu -->
     <link name="imu_link"/>
+
     <joint name="imu_joint" type="fixed">
       <origin xyz="0 0 0" rpy="0 0 0" />
       <parent link="base_link" />
       <child link="imu_link" />
     </joint>
+
     <gazebo reference="imu_link" />
 
     <xacro:bulldog_wheel wheel_prefix="front_left">
@@ -99,13 +86,14 @@
 
     <!-- dual ur5 arms -->
     <xacro:if value="$(arg dual_ur5_enabled)">
-      <xacro:ur5_robot prefix="left_arm_" joint_limited="true"/>
+      <xacro:ur5_robot prefix="left_arm_" joint_limited="true"/>    
       <joint name="left_arm_base" type="fixed">
         <parent link="installation_plate_link" />
         <child link="left_arm_base_link" />
         <origin xyz="0 0.15945 0.09069" rpy="-0.785 0 0" />
       </joint>
-      <xacro:ur5_robot prefix="right_arm_" joint_limited="true"/>
+      
+      <xacro:ur5_robot prefix="right_arm_" joint_limited="true"/>  
       <joint name="right_arm_base" type="fixed">
         <parent link="installation_plate_link" />
         <child link="right_arm_base_link" />
@@ -133,15 +121,7 @@
 
     <!-- kinect -->
     <xacro:if value="$(arg kinect_enabled)">
-      <xacro:kinect_camera prefix="camera" />
-      <gazebo reference="camera_link">
-        <material>Gazebo/Black</material>
-      </gazebo>
-      <joint name="kinect_frame_joint" type="fixed">
-        <origin xyz="0.13 0 0.135" rpy=" 0 0.15 0" />
-        <parent link="installation_plate_link"/>
-        <child link="camera_link"/>
-      </joint>
+      <xacro:kinect_camera />
     </xacro:if>
 
   </xacro:macro>

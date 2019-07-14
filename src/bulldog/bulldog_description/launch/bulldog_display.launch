@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- argument -->
+    <arg name="model" default="$(find bulldog_description)/test/bulldog_test.urdf.xacro" />
+    <arg name="use_gui" default="true" />
+
+    <arg name="laser_enabled" default="true"/>
+    <arg name="ur5_enabled" default="false"/>
+    <arg name="kinect_enabled" default="false"/>
+    <arg name="robotiq_grippers_enabled" default="true"/>
+    <arg name="dual_ur5_enabled" default="true"/>
+
+    <!-- parameter -->
+    <param name="robot_description" command="$(find xacro)/xacro.py $(arg model) 
+                                             laser_enabled:=$(arg laser_enabled)
+                                             ur5_enabled:=$(arg ur5_enabled)
+                                             kinect_enabled:=$(arg kinect_enabled)
+                                             dual_ur5_enabled:=$(arg dual_ur5_enabled)
+                                             robotiq_grippers_enabled:=$(arg robotiq_grippers_enabled)" />
+
+    <!-- joint state publisher -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
+      <param name="use_gui" value="$(arg use_gui)"/>
+    </node>
+    
+    <!-- robot state publisher -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
+    <!-- rviz -->
+    <node name="rviz" pkg="rviz" type="rviz" />
+</launch>

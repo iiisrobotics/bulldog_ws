@@ -32,7 +32,6 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   <xacro:arg name="robotiq_grippers_enabled" default="true"/>
 
   <xacro:include filename="$(find bulldog_description)/urdf/bulldog/bulldog.urdf.xacro" />
-  <!-- <xacro:include filename="$(find bulldog_description)/urdf/accessories/plates.urdf.xacro" /> -->
   <xacro:include filename="$(find bulldog_gazebo)/urdf/bulldog.gazebo.xacro" />
 
   <!-- Gazebo plugin for ROS Control -->
