@@ -2,7 +2,7 @@
 <robot name="bulldog_robot" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:include filename="$(find bulldog_description)/urdf/bulldog/wheel.urdf.xacro" />
-  <xacro:include filename="$(find bulldog_description)/urdf/bulldog/materials.xacro" />
+  <xacro:include filename="$(find bulldog_description)/urdf/bulldog/materials.urdf.xacro" />
   <xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />
   <xacro:include filename="$(find lms1xx)/urdf/sick_lms1xx.urdf.xacro" />
   <xacro:include filename="$(find robotiq_s_model_visualization)/cfg/robotiq_hand_macro.urdf.xacro" />
