@@ -1,9 +1,11 @@
-# bulldog_ws
+# Bulldog Workspace
 
-## sources of important packages
+## Dependencies
+[Intel(R) RealSense(TM) ROS Wrapper](https://github.com/IntelRealSense/realsense-ros)  
 [Grasp Pose Detection (GPD)](https://github.com/atenpas/gpd)  
-[mask_rcnn](https://github.com/matterport/Mask_RCNN)  
-[mask_rcnn_ros](https://github.com/qixuxiang/mask_rcnn_ros)
+[mask_rcnn_ros](https://github.com/qixuxiang/mask_rcnn_ros)  
+
+**Note**: You should install all the dependencies correctly before compiling the bulldog workspace.
 
 ## Steps to setup:  
 cd bulldog_ws/gpg   
