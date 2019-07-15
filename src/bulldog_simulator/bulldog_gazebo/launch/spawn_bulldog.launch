@@ -2,7 +2,7 @@
 <!--
 Software License Agreement (BSD)
 
-\file      gazebo_description.launch
+\file      spawn_bulldog.launch
 \authors   Paul Bovbel <pbovbel@clearpathrobotics.com
 \copyright Copyright (c) 2015, Clearpath Robotics, Inc., All rights reserved.
 
@@ -27,24 +27,24 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 
   <arg name="laser_enabled" default="true"/>
   <arg name="ur5_enabled" default="false"/>
-  <arg name="kinect_enabled" default="true"/>
-  <arg name="robotiq_grippers_enabled" default="false"/>
-  <arg name="dual_ur5_enabled" default="false"/>
+  <arg name="kinect_enabled" default="false"/>
+  <arg name="robotiq_grippers_enabled" default="true"/>
+  <arg name="dual_ur5_enabled" default="true"/>
 
-  <param name="robot_description" command="$(find xacro)/xacro.py $(find bulldog_gazebo)/urdf/description.gazebo.xacro
-    laser_enabled:=$(arg laser_enabled)
-    ur5_enabled:=$(arg ur5_enabled)
-    kinect_enabled:=$(arg kinect_enabled)
-    dual_ur5_enabled:=$(arg dual_ur5_enabled)
-    robotiq_grippers_enabled:=$(arg robotiq_grippers_enabled)
-    " />
+  <param name="robot_description" 
+    command="$(find xacro)/xacro.py $(find bulldog_gazebo)/urdf/description.gazebo.xacro
+             laser_enabled:=$(arg laser_enabled)
+             ur5_enabled:=$(arg ur5_enabled)
+             kinect_enabled:=$(arg kinect_enabled)
+             dual_ur5_enabled:=$(arg dual_ur5_enabled)
+             robotiq_grippers_enabled:=$(arg robotiq_grippers_enabled)" />
 
   <!-- Load Husky control information -->
   <include file="$(find bulldog_control)/launch/control.launch"/>
 
   <!-- Include ros_control configuration for left and right ur5, only used in simulation -->
   <group if="$(arg dual_ur5_enabled)">
-   <rosparam command="load" file="$(find bulldog_control)/config/control_left_ur5.yaml" />
+            <rosparam command="load" file="$(find bulldog_control)/config/control_left_ur5.yaml" />
             <rosparam command="load" file="$(find bulldog_control)/config/control_right_ur5.yaml" />
             <node name="left_arm_controller_spawner" pkg="controller_manager" type="spawner" args="left_arm_controller --shutdown-timeout 3"/>
             <node name="right_arm_controller_spawner" pkg="controller_manager" type="spawner" args="right_arm_controller --shutdown-timeout 3"/>
@@ -92,9 +92,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
             min_height: 0.05
             max_height: 1.0
 
-            angle_min: -0.52 # -30.0*M_PI/180.0
-            angle_max: 0.52 # 30.0*M_PI/180.0
-            angle_increment: 0.005 # M_PI/360.0
+            angle_min: -0.52        # -30.0 * pi / 180.0
+            angle_max: 0.52         # 30.0 * pi / 180.0
+            angle_increment: 0.005  # pi / 360.0
             scan_time: 0.3333
             range_min: 0.45
             range_max: 4.0
@@ -110,16 +110,14 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 
   </group>
 
-    <!-- Spawn robot in gazebo -->
-    <node name="spawn_bulldog_model" pkg="gazebo_ros" type="spawn_model"
-    args="$(optenv ROBOT_INITIAL_POSE) -unpause -urdf -param robot_description -model mobile_base"/>
+  <!-- Spawn robot in gazebo -->
+  <node name="spawn_bulldog_model" pkg="gazebo_ros" type="spawn_model"
+  args="$(optenv ROBOT_INITIAL_POSE) -unpause -urdf -param robot_description -model mobile_base"/>
 
-    <!-- Load the bumblebee depth and pointcloud capabilities -->
-    <!--include file="$(find bulldog_gazebo)/launch/bumblebee_depth.launch"/-->
+  <!-- Load the bumblebee depth and pointcloud capabilities -->
+  <!--include file="$(find bulldog_gazebo)/launch/bumblebee_depth.launch"/-->
 
-    <!-- Launch script that stows bulldog arms -->
-    <node name="position_bulldog_arms" type="setup_sim_positions" pkg="bulldog_gazebo"/>
-
+  <!-- Launch script that stows bulldog arms -->
+  <node name="position_bulldog_arms" type="setup_sim_positions" pkg="bulldog_gazebo"/>
 
 </launch>
-
