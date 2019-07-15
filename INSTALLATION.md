@@ -1,5 +1,63 @@
 # Installation
 
+## Dependencies
+
+1. ros-control
+
+    http://wiki.ros.org/ros_control
+
+        sudo apt-get install ros-$ROS_DISTRO-ros-control
+
+2. object_recognition_msgs
+
+    http://wiki.ros.org/object_recognition_msgs
+
+        sudo apt-get install ros-$ROS_DISTRO-object-recognition-msgs
+
+3. soem
+
+    http://wiki.ros.org/soem
+
+        sudo apt-get install ros-$ROS_DISTRO-soem
+
+4. moveit
+
+    http://wiki.ros.org/moveit_ros
+    
+        sudo apt-get install ros-$ROS_DISTRO-moveit-ros
+
+5. QT4
+
+        sudo apt-get install qt4-default
+
+7. socketcan_interface
+
+        sudo apt-get install ros-$ROS_DISTRO-socketcan-interface
+
+8. universal_robot
+
+    redirect into bulldog worspace.
+
+        cd <path-to-workspace>
+
+    clone the git repository from https://github.com/ros-industrial/universal_robot.
+
+        git clone -b $ROS_DISTRO-devel https://github.com/ros-industrial/universal_robot.git
+
+    Note: we use **melodic-devel** branch here. And compile it from scratch.
+
+9.  robotiq
+
+    redirect into bulldog worspace.
+
+        cd <path-to-workspace>
+
+    clone the git repository from https://github.com/ros-industrial/robotiq.
+
+        git clone -b $ROS_DISTRO-devel https://github.com/ros-industrial/robotiq.git
+    
+    Note: we use **kinect-devel** branch here. And compile it from scratch.
+
 ## Step by Step
 
 1. clean the workspace
@@ -74,4 +132,23 @@
         mv mask_rcnn_node mask_rcnn_node.py
 
     Add 'mask_rcnn_service' node.
+
+5. ur_modern_driver
+
+    Error: 
     
+        'const struct hardware_interface::ControllerInfo’ has no member named ‘hardware_interface’
+
+    Solution:
+
+        https://github.com/ros-industrial/ur_modern_driver/issues/135
+
+6. universal_robot
+
+    Error:
+
+        fatal error: moveit_msgs/GetKinematicSolverInfo.h: No such file or directory
+            #include <moveit_msgs/GetKinematicSolverInfo.h>
+
+7. 
+
