@@ -10,3 +10,6 @@
 [submodule "src/LMS1xx"]
 	path = src/LMS1xx
 	url = https://github.com/clearpathrobotics/LMS1xx.git
+[submodule "src/interactive_marker_twist_server"]
+	path = src/interactive_marker_twist_server
+	url = https://github.com/ros-visualization/interactive_marker_twist_server.git
