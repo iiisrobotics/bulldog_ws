@@ -4,3 +4,9 @@
 [submodule "src/robotiq"]
 	path = src/robotiq
 	url = https://github.com/ros-industrial/robotiq
+[submodule "src/ur_modern_driver"]
+	path = src/ur_modern_driver
+	url = https://github.com/ros-industrial/ur_modern_driver.git
+[submodule "src/LMS1xx"]
+	path = src/LMS1xx
+	url = https://github.com/clearpathrobotics/LMS1xx.git

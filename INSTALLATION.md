@@ -30,13 +30,33 @@
 
         sudo apt-get install qt4-default
 
-7. socketcan_interface
+6. socketcan_interface
+
+    http://wiki.ros.org/socketcan_interface
 
         sudo apt-get install ros-$ROS_DISTRO-socketcan-interface
 
-8. universal_robot
+7. industrial_msgs
 
-    redirect into bulldog worspace.
+    http://wiki.ros.org/industrial_msgs
+
+        sudo apt-get install ros-$ROS_DISTRO-industrial-msgs
+
+8. lms1xx
+
+    redirect into bulldog workspace.
+
+        cd <path-to-workspace>
+
+    clone the git repository from https://github.com/clearpathrobotics/LMS1xx/tree/melodic_devel.
+
+        git clone -b $ROS_DISTRO$_devel https://github.com/clearpathrobotics/LMS1xx.git
+
+    Note: we use **melodic-devel** branch here. And compile it from scratch.
+
+9. universal_robot
+
+    redirect into bulldog workspace.
 
         cd <path-to-workspace>
 
@@ -46,9 +66,9 @@
 
     Note: we use **melodic-devel** branch here. And compile it from scratch.
 
-9.  robotiq
+10. robotiq
 
-    redirect into bulldog worspace.
+    redirect into bulldog workspace.
 
         cd <path-to-workspace>
 
@@ -56,6 +76,18 @@
 
         git clone -b $ROS_DISTRO-devel https://github.com/ros-industrial/robotiq.git
     
+    Note: we use **kinect-devel** branch here. And compile it from scratch.
+
+11. ur_modern_driver
+
+    redirect into bulldog workspace
+
+        cd <path-to-workspace>
+
+    clone the git repository from https://github.com/ros-industrial/ur_modern_driver.
+
+        git clone -b $ROS_DISTRO$-devel https://github.com/ros-industrial/ur_modern_driver.git
+
     Note: we use **kinect-devel** branch here. And compile it from scratch.
 
 ## Step by Step
@@ -149,6 +181,3 @@
 
         fatal error: moveit_msgs/GetKinematicSolverInfo.h: No such file or directory
             #include <moveit_msgs/GetKinematicSolverInfo.h>
-
-7. 
-
