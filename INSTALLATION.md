@@ -6,43 +6,55 @@
 
     http://wiki.ros.org/ros_control
 
-        sudo apt-get install ros-$ROS_DISTRO-ros-control
+        sudo apt-get install ros-$ROS_DISTRO$-ros-control
 
-2. object_recognition_msgs
+2. robot_localization
+
+    http://wiki.ros.org/robot_localization
+
+        sudo apt-get install ros-$ROS_DISTRO$-robot-localization
+
+3. object_recognition_msgs
 
     http://wiki.ros.org/object_recognition_msgs
 
-        sudo apt-get install ros-$ROS_DISTRO-object-recognition-msgs
+        sudo apt-get install ros-$ROS_DISTRO$-object-recognition-msgs
 
-3. soem
+4. soem
 
     http://wiki.ros.org/soem
 
-        sudo apt-get install ros-$ROS_DISTRO-soem
+        sudo apt-get install ros-$ROS_DISTRO$-soem
 
-4. moveit
+5. moveit
 
     http://wiki.ros.org/moveit_ros
     
-        sudo apt-get install ros-$ROS_DISTRO-moveit-ros
+        sudo apt-get install ros-$ROS_DISTRO$-moveit-ros
 
-5. QT4
+6. QT4
 
         sudo apt-get install qt4-default
 
-6. socketcan_interface
+7. socketcan_interface
 
     http://wiki.ros.org/socketcan_interface
 
-        sudo apt-get install ros-$ROS_DISTRO-socketcan-interface
+        sudo apt-get install ros-$ROS_DISTRO$-socketcan-interface
 
-7. industrial_msgs
+8. industrial_msgs
 
     http://wiki.ros.org/industrial_msgs
 
-        sudo apt-get install ros-$ROS_DISTRO-industrial-msgs
+        sudo apt-get install ros-$ROS_DISTRO$-industrial-msgs
 
-8. lms1xx
+9. twist_mux
+
+    http://wiki.ros.org/twist_mux
+
+        sudo apt-get install ros-$ROS_DISTRO$-twist-mux
+
+10. lms1xx
 
     redirect into bulldog workspace.
 
@@ -54,7 +66,7 @@
 
     Note: we use **melodic-devel** branch here. And compile it from scratch.
 
-9. universal_robot
+11. universal_robot
 
     redirect into bulldog workspace.
 
@@ -62,11 +74,11 @@
 
     clone the git repository from https://github.com/ros-industrial/universal_robot.
 
-        git clone -b $ROS_DISTRO-devel https://github.com/ros-industrial/universal_robot.git
+        git clone -b $ROS_DISTRO$-devel https://github.com/ros-industrial/universal_robot.git
 
     Note: we use **melodic-devel** branch here. And compile it from scratch.
 
-10. robotiq
+12. robotiq
 
     redirect into bulldog workspace.
 
@@ -74,11 +86,11 @@
 
     clone the git repository from https://github.com/ros-industrial/robotiq.
 
-        git clone -b $ROS_DISTRO-devel https://github.com/ros-industrial/robotiq.git
+        git clone -b $ROS_DISTRO$-devel https://github.com/ros-industrial/robotiq.git
     
     Note: we use **kinect-devel** branch here. And compile it from scratch.
 
-11. ur_modern_driver
+13. ur_modern_driver
 
     redirect into bulldog workspace
 
@@ -87,6 +99,18 @@
     clone the git repository from https://github.com/ros-industrial/ur_modern_driver.
 
         git clone -b $ROS_DISTRO$-devel https://github.com/ros-industrial/ur_modern_driver.git
+
+    Note: we use **kinect-devel** branch here. And compile it from scratch.
+
+14. interactive_marker_twist_server
+
+    redirect into bulldog workspace
+
+        cd <path-to-workspace>
+
+    clone the git repository from https://github.com/ros-visualization/interactive_marker_twist_server.git.
+
+        git clone -b $ROS_DISTRO$-devel https://github.com/ros-visualization/interactive_marker_twist_server.git
 
     Note: we use **kinect-devel** branch here. And compile it from scratch.
 

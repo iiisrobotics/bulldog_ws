@@ -14,7 +14,7 @@
 
   <!-- Load universal robot description format (URDF) -->
   <param if="$(arg load_robot_description)" name="$(arg robot_description)" 
-    command="$(find xacro)/xacro.py '$(find bulldog_description)/urdf/bulldog_gazebo_robot.xacro'
+    command="$(find xacro)/xacro --inorder '$(find bulldog_description)/urdf/bulldog_gazebo_robot.xacro'
              laser_enabled:=$(arg laser_enabled)
              ur5_enabled:=$(arg ur5_enabled)
              kinect_enabled:=$(arg kinect_enabled)
