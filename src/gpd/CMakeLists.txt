@@ -224,6 +224,52 @@ add_executable(${PROJECT_NAME}_cloud_transform_server src/nodes/cloud_transform_
 ## same as for the library above
 # add_dependencies(grasp_candidates_classifier_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
+## ----------
+add_dependencies(${PROJECT_NAME}_detect_grasps 
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
+  ${catkin_EXPORTED_TARGETS}
+)
+
+add_dependencies(${PROJECT_NAME}_generate_candidates 
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
+  ${catkin_EXPORTED_TARGETS}
+)
+
+add_dependencies(${PROJECT_NAME}_create_grasp_images 
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
+  ${catkin_EXPORTED_TARGETS}
+)
+
+if(USE_CAFFE STREQUAL "ON")
+  add_dependencies(${PROJECT_NAME}_create_training_data 
+    ${${PROJECT_NAME}_EXPORTED_TARGETS} 
+    ${catkin_EXPORTED_TARGETS}
+  )
+endif()
+
+add_dependencies(${PROJECT_NAME}_classify_candidates 
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
+  ${catkin_EXPORTED_TARGETS}
+)
+
+if(USE_CAFFE STREQUAL "ON")
+  add_dependencies(${PROJECT_NAME}_test_occlusion 
+    ${${PROJECT_NAME}_EXPORTED_TARGETS} 
+    ${catkin_EXPORTED_TARGETS}
+  )
+endif()
+
+add_dependencies(${PROJECT_NAME}_detect_grasps_server 
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
+  ${catkin_EXPORTED_TARGETS}
+)
+
+add_dependencies(${PROJECT_NAME}_cloud_transform_server 
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
+  ${catkin_EXPORTED_TARGETS}
+)
+## ----------
+
 ## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME}_classifier
                       ${classifier_dep})

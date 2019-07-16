@@ -93,3 +93,34 @@
     Error example:
         
         [ERROR] [1562670811.260886536, 354.307000000]: Lookup would require extrapolation into the past.  Requested time 354.239000000 but the earliest data is at time 354.351000000, when looking up transform from frame [camera_frame_optical] to frame [base_link]
+
+7. Intel Realsense
+
+    1. Documentation
+   
+        Follow the official documentation to install the ROS wrapper for Realsense cameras.
+
+        https://github.com/IntelRealSense/realsense-ros.
+
+        Note: We use version 2.2.1 to make it compatible with **indigo**. Remember to check it out.
+
+    2. Dependencies
+
+        You can find dependencies here: https://github.com/IntelRealSense/realsense-ros/blob/2.2.7/.travis.yml
+
+        **ddynamic_reconfigure** cannot be installed via `apt-get` on Ubuntu 14.04.
+        
+        Try to install it from source: https://github.com/pal-robotics/ddynamic_reconfigure.
+
+        You need to update `boost` to version 1.56. Follow the instructions on the official website:
+        https://www.boost.org/doc/libs/1_56_0/doc/html/bbv2/installation.html.
+
+    3. Build options
+
+        Note to build with
+
+            catkin_make
+    
+        instead of 
+
+            catkin_make -DCATKIN_ENABLE_TESTING=False -DCMAKE_BUILD_TYPE=Release
