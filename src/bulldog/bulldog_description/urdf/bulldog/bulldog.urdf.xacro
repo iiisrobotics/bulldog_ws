@@ -6,7 +6,7 @@
   <xacro:include filename="$(find bulldog_description)/urdf/accessories/plates.urdf.xacro" />
   <xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />
   <xacro:include filename="$(find lms1xx)/urdf/sick_lms1xx.urdf.xacro" />
-  <xacro:include filename="$(find robotiq_3f_gripper_visualization)/cfg/robotiq_hand_macro.urdf.xacro" />
+  <xacro:include filename="$(find robotiq_s_model_visualization)/cfg/robotiq_hand_macro.urdf.xacro" />
   <xacro:include filename="$(find bulldog_description)/urdf/sensors/kinect_camera.urdf.xacro" />
 
   <xacro:property name="wheel_length" value="0.142" />
@@ -103,6 +103,7 @@
       <xacro:robotiq_hand prefix="l_" parent="left_arm_ee_link" reflect="-1">
         <origin rpy="0 0 -1.57" xyz="0 0 0"/>
       </xacro:robotiq_hand>
+      
       <xacro:robotiq_hand prefix="r_" parent="right_arm_ee_link" reflect="-1">
         <origin rpy="0 0 -1.57" xyz="0 0 0"/>
       </xacro:robotiq_hand>
