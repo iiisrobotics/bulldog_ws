@@ -54,7 +54,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </joint>
 
     <gazebo reference="${prefix}_link">
-      <material>Gazebo/Black</material>
+      <material>Gazebo/Grey</material>
     </gazebo>
   </xacro:macro>
   

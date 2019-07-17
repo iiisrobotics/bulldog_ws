@@ -777,9 +777,9 @@ bool RobotiqHandPlugin::FindJoints()
   std::string prefix;
   std::string suffix;
   if (this->side == "left")
-    prefix = "l_";
+    prefix = "left_gripper_";// prefix must be compatible with custom gripper name!
   else
-    prefix = "r_";
+    prefix = "right_gripper_";// prefix must be compatible with custom gripper name!
 
   // palm_finger_1_joint (actuated).
   suffix = "palm_finger_1_joint";

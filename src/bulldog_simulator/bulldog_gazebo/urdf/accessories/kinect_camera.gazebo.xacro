@@ -14,7 +14,7 @@
     <gazebo reference="${prefix}_link">
       <sensor type="depth" name="${prefix}">
         <always_on>true</always_on>
-        <update_rate>20.0</update_rate>
+        <update_rate>30.0</update_rate>
         <camera>
           <horizontal_fov>${60.0 * pi / 180.0}</horizontal_fov>
           <image>
@@ -27,8 +27,8 @@
             <far>8.0</far>
           </clip>
         </camera>
-        <plugin name="kinect_${prefix}_controller" filename="libgazebo_ros_openni_kinect.so">
-          <cameraName>${prefix}</cameraName>
+        <plugin name="${prefix}_controller" filename="libgazebo_ros_openni_kinect.so">
+          <cameraName>${prefix}_camera</cameraName>
           <alwaysOn>true</alwaysOn>
           <updateRate>10</updateRate>
           <imageTopicName>rgb/image_raw</imageTopicName>
@@ -51,4 +51,3 @@
   </xacro:macro>
 
 </root>
-

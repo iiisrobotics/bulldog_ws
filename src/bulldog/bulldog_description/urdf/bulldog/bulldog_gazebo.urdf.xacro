@@ -108,20 +108,12 @@
             <origin xyz="0 0 0" rpy="0 0 -1.57" />
         </joint>
 
-        <xacro:sensor_d415 prefix="left_gripper_sensor_d415_" parent="left_gripper_palm">
-          <origin xyz="0 0 -0.065" rpy="${pi} 0 ${pi / 2}"/>
-        </xacro:sensor_d415>
-
         <xacro:s-model_articulated prefix="right_gripper_"/>
         <joint name="right_arm_gripper" type="fixed">
             <parent link="right_arm_ee_link" />
             <child link="right_gripper_palm" />
             <origin xyz="0 0 0" rpy="0 0 -1.57" />
         </joint>
-
-        <xacro:sensor_d415 prefix="right_gripper_sensor_d415_" parent="right_gripper_palm">
-          <origin xyz="0 0 -0.065" rpy="${pi} 0 ${pi / 2}"/>
-        </xacro:sensor_d415>
 
     </xacro:if>
 
@@ -139,6 +131,17 @@
     <!-- kinect -->
     <xacro:if value="$(arg kinect_enabled)">
       <xacro:kinect_camera />
+    </xacro:if>
+
+    <!-- realsense d415 -->
+    <xacro:if value="$(arg realsense_enabled)">
+      <xacro:sensor_d415 prefix="left_gripper_sensor_d415_" parent="left_gripper_palm">
+        <origin xyz="0 0 -0.065" rpy="${pi} 0 ${pi / 2}"/>
+      </xacro:sensor_d415>
+
+      <xacro:sensor_d415 prefix="right_gripper_sensor_d415_" parent="right_gripper_palm">
+          <origin xyz="0 0 -0.065" rpy="${pi} 0 ${pi / 2}"/>
+      </xacro:sensor_d415>
     </xacro:if>
 
   </xacro:macro>

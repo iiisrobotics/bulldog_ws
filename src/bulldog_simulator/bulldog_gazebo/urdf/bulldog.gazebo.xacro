@@ -26,6 +26,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 <robot name="bulldog_robot_gazebo" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:include filename="$(find bulldog_gazebo)/urdf/accessories/kinect_camera.gazebo.xacro"/>
+  <xacro:include filename="$(find bulldog_gazebo)/urdf/accessories/realsense_d415_camera.gazebo.xacro"/>
 
   <xacro:macro name="bulldog_robot_gazebo">
 
@@ -60,31 +61,32 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       
     <!-- ur5 arm -->
     <!--Remove when https://github.com/ros-industrial/universal_robot/pull/168 is resolved -->
-    <gazebo reference="ur5_arm_shoulder_link">
-      <selfCollide>true</selfCollide>
-    </gazebo>
-    <gazebo reference="ur5_arm_upper_arm_link">
-      <selfCollide>true</selfCollide>
-    </gazebo>
-    <gazebo reference="ur5_arm_forearm_link">
-      <selfCollide>true</selfCollide>
-    </gazebo>
-    <gazebo reference="ur5_arm_wrist_1_link">
-      <selfCollide>true</selfCollide>
-    </gazebo>
-    <gazebo reference="ur5_arm_wrist_3_link">
-      <selfCollide>true</selfCollide>
-    </gazebo>
-    <gazebo reference="ur5_arm_wrist_2_link">
-      <selfCollide>true</selfCollide>
-    </gazebo>
-    <gazebo reference="ur5_arm_ee_link">
-      <selfCollide>true</selfCollide>
-    </gazebo>
+    <xacro:if value="$(arg ur5_enabled)">
+      <gazebo reference="ur5_arm_shoulder_link">
+        <selfCollide>true</selfCollide>
+      </gazebo>
+      <gazebo reference="ur5_arm_upper_arm_link">
+        <selfCollide>true</selfCollide>
+      </gazebo>
+      <gazebo reference="ur5_arm_forearm_link">
+        <selfCollide>true</selfCollide>
+      </gazebo>
+      <gazebo reference="ur5_arm_wrist_1_link">
+        <selfCollide>true</selfCollide>
+      </gazebo>
+      <gazebo reference="ur5_arm_wrist_3_link">
+        <selfCollide>true</selfCollide>
+      </gazebo>
+      <gazebo reference="ur5_arm_wrist_2_link">
+        <selfCollide>true</selfCollide>
+      </gazebo>
+      <gazebo reference="ur5_arm_ee_link">
+        <selfCollide>true</selfCollide>
+      </gazebo>
+    </xacro:if>
 
     <!-- robotiq grippers -->
     <xacro:if value="$(arg robotiq_grippers_enabled)">
-
         <gazebo>
           <plugin name="robotiq_left_hand_plugin" filename="libRobotiqHandPlugin.so">
             <side>left</side>
@@ -191,12 +193,17 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
         <gazebo reference="right_gripper_finger_middle_link_3">
             <material>Gazebo/Grey</material>
         </gazebo>
- 
     </xacro:if>
 
     <!-- kinect -->
     <xacro:if value="$(arg kinect_enabled)">
       <xacro:kinect_camera_gazebo prefix="kinect"/>
+    </xacro:if>
+
+    <!-- realsense -->
+    <xacro:if value="$(arg realsense_enabled)">
+      <xacro:sensor_d415_gazebo prefix="left_gripper_sensor_d415_"/>
+      <xacro:sensor_d415_gazebo prefix="right_gripper_sensor_d415_"/>
     </xacro:if>
 
   </xacro:macro>

@@ -24,6 +24,22 @@
         cd <workspace>
         catkin_make
 
+## Gazebo
+
+You need to download some gazebo model manually and extract them into
+`~/.gazebo/models` directory to simulate them with Gazebo.
+
+Here is a tutorial about how to use depth camera in Gazebo:
+
+http://gazebosim.org/tutorials?tut=ros_depth_camera&cat=connect_ros
+
+
+1. Kinect
+
+    download from: https://bitbucket.org/osrf/gazebo_tutorials/src/default/ros_depth_camera/files/kinect.zip
+
+
+
 ## Troubleshooting
 
 1. mask_rcnn_ros incompatible with Keras >= 2.0.8
