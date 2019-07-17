@@ -98,7 +98,7 @@
 
     1. Documentation
    
-        Follow the official documentation to install the ROS wrapper for Realsense cameras.
+        Follow the official documentation to install the ROS wrapper for Realsense cameras from **source**!!!.
 
         https://github.com/IntelRealSense/realsense-ros.
 

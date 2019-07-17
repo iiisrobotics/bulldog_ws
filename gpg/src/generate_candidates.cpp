@@ -96,40 +96,4 @@ int main(int argc, char* argv[])
   hand_search_params.finger_width_ = finger_width;
   hand_search_params.hand_outer_diameter_ = hand_outer_diameter;
   hand_search_params.hand_depth_ = hand_depth;
-  hand_search_params.hand_height_ = hand_height;
-  hand_search_params.init_bite_ = init_bite;
-  hand_search_params.nn_radius_frames_ = nn_radius;
-  hand_search_params.num_orientations_ = num_orientations;
-  hand_search_params.num_samples_ = num_samples;
-  hand_search_params.num_threads_ = num_threads;
-  hand_search_params.rotation_axis_ = rotation_axis;
-  CandidatesGenerator candidates_generator(generator_params, hand_search_params);
-
-  // Set the camera pose.
-  Eigen::Matrix3Xd view_points(3,1);
-  view_points << camera_pose[3], camera_pose[6], camera_pose[9];
-
-  // Create object to load point cloud from file.
-  CloudCamera cloud_cam(argv[2], view_points);
-  if (cloud_cam.getCloudOriginal()->size() == 0)
-  {
-    std::cout << "Input point cloud is empty or does not exist!\n";
-    return (-1);
-  }
-
-  // Load surface normals from file.
-  std::cout << argc << "\n";
-  if (argc > 3)
-  {
-    cloud_cam.setNormalsFromFile(argv[3]);
-    std::cout << "Loaded surface normals from file.\n";
-  }
-
-  // Point cloud preprocessing: voxelize, remove statistical outliers, workspace filter, compute normals, subsample.
-  candidates_generator.preprocessPointCloud(cloud_cam);
-
-  // Generate a list of grasp candidates.
-  std::vector<Grasp> candidates = candidates_generator.generateGraspCandidates(cloud_cam);
-
-  return 0;
-}
+  hand_search_params.hand_height_ 
