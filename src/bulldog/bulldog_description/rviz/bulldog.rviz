@@ -86,202 +86,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        l_finger_1_link_0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_1_link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_1_link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_1_link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_1_link_median_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_1_link_median_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_1_link_median_bar_underactuated:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_1_link_paradistal_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_1_link_paramedian_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_1_link_paraproximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_1_link_paraproximal_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_1_link_proximal_actuating_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_1_link_proximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_2_link_0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_2_link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_2_link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_2_link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_2_link_median_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_2_link_median_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_2_link_median_bar_underactuated:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_2_link_paradistal_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_2_link_paramedian_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_2_link_paraproximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_2_link_paraproximal_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_2_link_proximal_actuating_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_2_link_proximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_middle_link_0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_middle_link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_middle_link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_middle_link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_middle_link_median_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_middle_link_median_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_middle_link_median_bar_underactuated:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_middle_link_paradistal_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_middle_link_paramedian_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_middle_link_paraproximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_middle_link_paraproximal_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_middle_link_proximal_actuating_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_middle_link_proximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_palm:
+        kinect_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -344,206 +149,75 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        r_finger_1_link_0:
+        left_gripper_finger_1_link_0:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        r_finger_1_link_1:
+        left_gripper_finger_1_link_1:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        r_finger_1_link_2:
+        left_gripper_finger_1_link_2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        r_finger_1_link_3:
+        left_gripper_finger_1_link_3:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        r_finger_1_link_median_actuating_hinge:
+        left_gripper_finger_2_link_0:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        r_finger_1_link_median_bar:
+        left_gripper_finger_2_link_1:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        r_finger_1_link_median_bar_underactuated:
+        left_gripper_finger_2_link_2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        r_finger_1_link_paradistal_hinge:
+        left_gripper_finger_2_link_3:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        r_finger_1_link_paramedian_hinge:
+        left_gripper_finger_middle_link_0:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        r_finger_1_link_paraproximal_actuating_hinge:
+        left_gripper_finger_middle_link_1:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        r_finger_1_link_paraproximal_bar:
+        left_gripper_finger_middle_link_2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        r_finger_1_link_proximal_actuating_bar:
+        left_gripper_finger_middle_link_3:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        r_finger_1_link_proximal_actuating_hinge:
+        left_gripper_palm:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        r_finger_2_link_0:
+        left_gripper_tool0:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
-        r_finger_2_link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_2_link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_2_link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_2_link_median_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_2_link_median_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_2_link_median_bar_underactuated:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_2_link_paradistal_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_2_link_paramedian_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_2_link_paraproximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_2_link_paraproximal_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_2_link_proximal_actuating_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_2_link_proximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_middle_link_0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_middle_link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_middle_link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_middle_link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_middle_link_median_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_middle_link_median_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_middle_link_median_bar_underactuated:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_middle_link_paradistal_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_middle_link_paramedian_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_middle_link_paraproximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_middle_link_paraproximal_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_middle_link_proximal_actuating_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_middle_link_proximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_palm:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         rear_left_wheel_link:
           Alpha: 1
           Show Axes: false
@@ -602,6 +276,75 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        right_gripper_finger_1_link_0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_1_link_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_1_link_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_1_link_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_2_link_0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_2_link_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_2_link_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_2_link_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_middle_link_0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_middle_link_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_middle_link_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_middle_link_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_palm:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_tool0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         top_plate_link:
           Alpha: 1
           Show Axes: false
@@ -616,7 +359,7 @@ Visualization Manager:
       Value: true
       Visual Enabled: true
     - Class: rviz/TF
-      Enabled: true
+      Enabled: false
       Frame Timeout: 15
       Frames:
         All Enabled: true
@@ -628,7 +371,7 @@ Visualization Manager:
       Tree:
         {}
       Update Interval: 0
-      Value: true
+      Value: false
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -686,5 +429,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1200
-  X: 536
-  Y: 251
+  X: 516
+  Y: 186
