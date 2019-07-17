@@ -29,11 +29,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="kinect_camera">
 
-  <xacro:macro name="kinect_camera" params="camera_link_name:=kinect_link
-                                            plate_link_name:=installation_plate_link">
+  <xacro:macro name="kinect_camera" params="prefix parent">
     <!-- Create kinect reference frame -->
     <!-- Add mesh for kinect -->
-    <link name="${camera_link_name}">
+    <link name="${prefix}_link">
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <visual>
         <origin xyz="0 0 0" rpy="0 0 ${pi / 2}"/>
@@ -48,13 +47,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       </collision>
     </link>
 
-    <joint name="${camera_link_name}_joint" type="fixed">
+    <joint name="${prefix}_joint" type="fixed">
       <origin xyz="0.13 0 0.135" rpy=" 0 0.15 0" />
-      <parent link="${plate_link_name}" />
-      <child link="${camera_link_name}" />
+      <parent link="${parent}" />
+      <child link="${prefix}_link" />
     </joint>
 
-    <gazebo reference="${camera_link_name}">
+    <gazebo reference="${prefix}_link">
       <material>Gazebo/Black</material>
     </gazebo>
   </xacro:macro>

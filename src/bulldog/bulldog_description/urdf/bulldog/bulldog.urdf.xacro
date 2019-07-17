@@ -8,6 +8,7 @@
   <xacro:include filename="$(find lms1xx)/urdf/sick_lms1xx.urdf.xacro" />
   <xacro:include filename="$(find robotiq_s_model_visualization)/cfg/robotiq_hand_macro.urdf.xacro" />
   <xacro:include filename="$(find bulldog_description)/urdf/sensors/kinect_camera.urdf.xacro" />
+  <xacro:include filename="$(find realsense2_camera)/urdf/_d415.urdf.xacro" />
 
   <xacro:property name="wheel_length" value="0.142" />
   <xacro:property name="wheel_radius" value="0.183" />
@@ -100,12 +101,22 @@
         <origin xyz="0 -0.15945 0.09069" rpy="-0.785 0 ${pi}" />
       </joint>
 
-      <xacro:robotiq_hand prefix="l_" parent="left_arm_ee_link" reflect="-1">
+      <xacro:robotiq_hand prefix="left_gripper_" parent="left_arm_ee_link" reflect="-1">
         <origin rpy="0 0 -1.57" xyz="0 0 0"/>
       </xacro:robotiq_hand>
-      <xacro:robotiq_hand prefix="r_" parent="right_arm_ee_link" reflect="-1">
+
+      <xacro:sensor_d415 prefix="left_gripper_sensor_d415_" parent="left_gripper_palm">
+          <origin xyz="0 0 -0.065" rpy="${pi} 0 ${pi / 2}"/>
+        </xacro:sensor_d415>
+
+      <xacro:robotiq_hand prefix="right_gripper_" parent="right_arm_ee_link" reflect="-1">
         <origin rpy="0 0 -1.57" xyz="0 0 0"/>
       </xacro:robotiq_hand>
+
+      <xacro:sensor_d415 prefix="right_gripper_sensor_d415_" parent="right_gripper_palm">
+          <origin xyz="0 0 -0.065" rpy="${pi} 0 ${pi / 2}"/>
+        </xacro:sensor_d415>
+
     </xacro:if>
 
     <!-- laser -->
@@ -121,7 +132,7 @@
 
     <!-- kinect -->
     <xacro:if value="$(arg kinect_enabled)">
-      <xacro:kinect_camera />
+      <xacro:kinect_camera prefix="kinect" parent="installation_plate_link" />
     </xacro:if>
 
   </xacro:macro>
