@@ -13,7 +13,7 @@
     <arg name="dual_ur5_enabled" default="true"/>
 
     <!-- Robot description URDF -->
-    <param name="robot_description" command="$(find xacro)/xacro.py $(arg model) 
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model) 
                                              laser_enabled:=$(arg laser_enabled)
                                              ur5_enabled:=$(arg ur5_enabled)
                                              kinect_enabled:=$(arg kinect_enabled)
