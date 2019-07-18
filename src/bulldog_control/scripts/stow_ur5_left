@@ -16,6 +16,8 @@ Q3 = [0.1412,-3.1415,2.8238,-2.8238,-1.612,-1.5708]
 client = None
 
 def move():
+    rospy.loginfo("Pose initializing...")
+
     g = FollowJointTrajectoryGoal()
     g.trajectory = JointTrajectory()
     g.trajectory.joint_names = JOINT_NAMES
@@ -76,11 +78,12 @@ def move_interrupt():
     g.trajectory.points = [
         JointTrajectoryPoint(positions=Q1, velocities=[0]*6, time_from_start=rospy.Duration(2.0)),
         JointTrajectoryPoint(positions=Q2, velocities=[0]*6, time_from_start=rospy.Duration(3.0)),
-        JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(4.0))]
+        JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(4.0))
+    ]
     
     client.send_goal(g)
     time.sleep(2.0)
-    print "Interrupting"
+    print("Interrupting")
     client.send_goal(g)
     try:
         client.wait_for_result()
@@ -93,18 +96,20 @@ def main():
     global client
 
     try:
-
-        time.sleep(15)
+        time.sleep(5)
 
         rospy.init_node("stow_left", anonymous=True, disable_signals=True)
-        client = actionlib.SimpleActionClient('left_arm_controller/follow_joint_trajectory', FollowJointTrajectoryAction)
-	print "Waiting for ur5_arm server..."
-	client.wait_for_server()
-	print "Connected to ur5_arm server"
-	move()
+        client = actionlib.SimpleActionClient(
+            'left_arm_controller/follow_joint_trajectory', 
+            FollowJointTrajectoryAction
+        )
+        rospy.loginfo("Waiting for UR5_ARM server...")
+        client.wait_for_server()
+        rospy.loginfo("UR5_ARM server is available.")
+        move()
     except KeyboardInterrupt:
         rospy.signal_shutdown("KeyboardInterrupt")
         raise
 
-if __name__ == '__main__': main()
-
+if __name__ == '__main__': 
+    main()

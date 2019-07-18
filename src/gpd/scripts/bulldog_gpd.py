@@ -142,7 +142,7 @@ def process_cloud(cloud_transformed, detection):
 	if len(detection.masks) > 0:
 		for class_name, mask in zip(detection.class_names,
 									detection.masks):
-			if class_name == 'bottle':
+			if class_name == 'bottle' or 'cup':
 				mask_data = np.fromstring(mask.data, dtype=np.uint8)
 				one_index = np.nonzero(mask_data)[0]
 				cloud_indexed.indices = [Int64(idx) for idx in one_index]

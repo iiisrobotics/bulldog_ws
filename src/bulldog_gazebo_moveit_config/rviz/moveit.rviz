@@ -5,7 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded: ~
       Splitter Ratio: 0.74256
-    Tree Height: 190
+    Tree Height: 117
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -69,11 +69,6 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          camera_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
           front_left_wheel_link:
             Alpha: 1
             Show Axes: false
@@ -97,75 +92,11 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          l_finger_1_link_0:
+          kinect_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          l_finger_1_link_1:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_1_link_2:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_1_link_3:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_2_link_0:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_2_link_1:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_2_link_2:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_2_link_3:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_middle_link_0:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_middle_link_1:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_middle_link_2:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_middle_link_3:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_palm:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_tool0:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
           laser:
             Alpha: 1
             Show Axes: false
@@ -224,72 +155,113 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_1_link_0:
+          left_gripper_finger_1_link_0:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_1_link_1:
+          left_gripper_finger_1_link_1:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_1_link_2:
+          left_gripper_finger_1_link_2:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_1_link_3:
+          left_gripper_finger_1_link_3:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_2_link_0:
+          left_gripper_finger_2_link_0:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_2_link_1:
+          left_gripper_finger_2_link_1:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_2_link_2:
+          left_gripper_finger_2_link_2:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_2_link_3:
+          left_gripper_finger_2_link_3:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_middle_link_0:
+          left_gripper_finger_middle_link_0:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_middle_link_1:
+          left_gripper_finger_middle_link_1:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_middle_link_2:
+          left_gripper_finger_middle_link_2:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_middle_link_3:
+          left_gripper_finger_middle_link_3:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_palm:
+          left_gripper_palm:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_tool0:
+          left_gripper_sensor_d415_camera_bottom_screw_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_color_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_color_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_depth_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_left_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_left_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_sensor_d415_camera_right_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_right_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_tool0:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -351,22 +323,117 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          right_gripper_finger_1_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_palm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_sensor_d415_camera_bottom_screw_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_color_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_color_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_depth_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_left_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_left_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_sensor_d415_camera_right_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_right_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           top_plate_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          yuntai_base_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          yuntai_shoulder_elbow_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          yuntai_shoulder_pan_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -421,11 +488,6 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          camera_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
           front_left_wheel_link:
             Alpha: 1
             Show Axes: false
@@ -449,75 +511,11 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          l_finger_1_link_0:
+          kinect_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          l_finger_1_link_1:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_1_link_2:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_1_link_3:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_2_link_0:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_2_link_1:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_2_link_2:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_2_link_3:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_middle_link_0:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_middle_link_1:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_middle_link_2:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_finger_middle_link_3:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_palm:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          l_tool0:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
           laser:
             Alpha: 1
             Show Axes: false
@@ -576,72 +574,113 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_1_link_0:
+          left_gripper_finger_1_link_0:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_1_link_1:
+          left_gripper_finger_1_link_1:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_1_link_2:
+          left_gripper_finger_1_link_2:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_1_link_3:
+          left_gripper_finger_1_link_3:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_2_link_0:
+          left_gripper_finger_2_link_0:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_2_link_1:
+          left_gripper_finger_2_link_1:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_2_link_2:
+          left_gripper_finger_2_link_2:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_2_link_3:
+          left_gripper_finger_2_link_3:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_middle_link_0:
+          left_gripper_finger_middle_link_0:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_middle_link_1:
+          left_gripper_finger_middle_link_1:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_middle_link_2:
+          left_gripper_finger_middle_link_2:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_finger_middle_link_3:
+          left_gripper_finger_middle_link_3:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_palm:
+          left_gripper_palm:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          r_tool0:
+          left_gripper_sensor_d415_camera_bottom_screw_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_color_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_color_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_depth_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_left_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_left_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_sensor_d415_camera_right_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_right_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_tool0:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -703,22 +742,117 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          right_gripper_finger_1_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_palm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_sensor_d415_camera_bottom_screw_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_color_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_color_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_depth_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_left_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_left_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_sensor_d415_camera_right_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_right_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           top_plate_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          yuntai_base_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          yuntai_shoulder_elbow_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          yuntai_shoulder_pan_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -752,7 +886,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.01
       Style: Flat Squares
-      Topic: /camera/depth/points
+      Topic: /left_gripper_sensor_d415_camera/depth/color/points
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -772,7 +906,7 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 3.98802e-38
+      Max Intensity: 999999
       Min Color: 0; 0; 0
       Min Intensity: 0
       Name: LaserScan
@@ -802,29 +936,29 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 2.9965
+      Distance: 6.01253
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.113567
-        Y: 0.10592
+        X: 0.481394
+        Y: 0.357676
         Z: 2.23518e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.199797
+      Pitch: 0.269797
       Target Frame: base_link
       Value: XYOrbit (rviz)
-      Yaw: 2.04677
+      Yaw: 0.186769
     Saved: ~
 Window Geometry:
   BulldogPanel:
     collapsed: false
   Displays:
     collapsed: false
-  Height: 1240
+  Height: 960
   Help:
     collapsed: false
   Hide Left Dock: false
@@ -833,9 +967,9 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd00000001000000000000030d0000048dfc0200000007fb000000100044006900730070006c00610079007301000000280000015c000000e600fffffffb0000000800480065006c00700000000342000000bb0000007a00fffffffb0000000a0056006900650077007300000003b0000000b0000000be00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000004e00fffffffc0000018a0000032b0000022f01000022fa000000000100000002fb0000001800420075006c006c0064006f006700500061006e0065006c0100000000ffffffff0000018e00fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000000000000030d0000030d00ffffff000004110000048d00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000001000000000000030d0000037afc0200000007fb000000100044006900730070006c00610079007301000000280000010a000000dd00fffffffb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000a0056006900650077007300000003b0000000b0000000b000fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb0000002e004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d00200053006c00690064006500720000000000ffffffff0000004a00fffffffc000001380000026a000001ea0100001dfa000000010100000002fb0000001800420075006c006c0064006f006700500061006e0065006c0100000000ffffffff0000015000fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000000000000030d000002a200ffffff000003c40000037a00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
-  Width: 1828
-  X: 79
-  Y: 17
+  Width: 1751
+  X: 93
+  Y: 82
