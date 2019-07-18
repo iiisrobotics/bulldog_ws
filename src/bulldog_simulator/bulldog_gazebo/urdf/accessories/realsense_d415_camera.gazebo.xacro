@@ -3,6 +3,11 @@
 
   <xacro:macro name="sensor_d415_gazebo" params="prefix">
 
+    <!-- material -->
+    <gazebo reference="${prefix}camera_link">
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
     <!-- color sensor -->
     <gazebo reference="${prefix}camera_depth_frame">
       <sensor name="${prefix}color_camera" type="camera">

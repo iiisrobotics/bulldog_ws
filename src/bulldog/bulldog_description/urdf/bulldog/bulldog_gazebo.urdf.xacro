@@ -130,7 +130,7 @@
 
     <!-- kinect -->
     <xacro:if value="$(arg kinect_enabled)">
-      <xacro:kinect_camera />
+      <xacro:kinect_camera prefix="kinect" parent="installation_plate_link" />
     </xacro:if>
 
     <!-- realsense d415 -->

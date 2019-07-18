@@ -3,6 +3,7 @@
   <arg name="laser_enabled" default="true"/>
   <arg name="ur5_enabled" default="false"/>
   <arg name="kinect_enabled" default="false"/>
+  <arg name="realsense_enabled" default="false"/>
   <arg name="robotiq_grippers_enabled" default="false"/>
   <arg name="dual_ur5_enabled" default="false"/>
 
@@ -14,10 +15,11 @@
 
   <!-- Load universal robot description format (URDF) -->
   <param if="$(arg load_robot_description)" name="$(arg robot_description)" 
-    command="$(find xacro)/xacro.py '$(find bulldog_description)/urdf/bulldog_gazebo_robot.xacro'
+    command="$(find xacro)/xacro --inorder '$(find bulldog_description)/urdf/bulldog_gazebo_robot.xacro'
              laser_enabled:=$(arg laser_enabled)
              ur5_enabled:=$(arg ur5_enabled)
              kinect_enabled:=$(arg kinect_enabled)
+             realsense_enabled:=$(arg realsense_enabled)
              dual_ur5_enabled:=$(arg dual_ur5_enabled)
              robotiq_grippers_enabled:=$(arg robotiq_grippers_enabled)"/>
 

@@ -3,6 +3,12 @@
 
   <xacro:macro name="kinect_camera_gazebo" params="prefix">
 
+    <!-- material -->
+    <gazebo reference="${prefix}_link">
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <!-- optical joint and link -->
     <joint name="${prefix}_optical_joint" type="fixed">
       <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
       <parent link="${prefix}_link"/>
@@ -11,6 +17,7 @@
 
     <link name="${prefix}_frame_optical"/>
 
+    <!-- depth camera -->
     <gazebo reference="${prefix}_link">
       <sensor type="depth" name="${prefix}">
         <always_on>true</always_on>

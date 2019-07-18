@@ -52,10 +52,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <parent link="${parent}" />
       <child link="${prefix}_link" />
     </joint>
-
-    <gazebo reference="${prefix}_link">
-      <material>Gazebo/Grey</material>
-    </gazebo>
+    
   </xacro:macro>
   
 </robot>

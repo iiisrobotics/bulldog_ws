@@ -174,8 +174,8 @@ def main():
 	rospy.init_node("gpd_mask")
 
 	rospy.loginfo("Getting image...")
-	image = rospy.wait_for_message("camera/rgb/image_raw", Image)
-	cloud = rospy.wait_for_message("camera/depth/points", PointCloud2)
+	image = rospy.wait_for_message("left_gripper_sensor_d415_camera/color/image_raw", Image)
+	cloud = rospy.wait_for_message("left_gripper_sensor_d415_camera/depth/color/points", PointCloud2)
 
 	# tf_buffer = tf2_ros.Buffer()
 	# tf_listener = tf2_ros.TransformListener(tf_buffer)
