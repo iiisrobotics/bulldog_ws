@@ -4,15 +4,18 @@ import numpy as np
 
 from sensor_msgs.msg import Image
 from sensor_msgs.msg import PointCloud2
-from mask_rcnn_ros.srv import MaskDetect 
-from gpd.srv import DetectGrasps
-from gpd.srv import CloudTransform
 from gpd.msg import CloudIndexed
 from geometry_msgs.msg import Point
+from geometry_msgs.msg import PoseStamped
+from geometry_msgs.msg import Quaternion
 from std_msgs.msg import Int64
 
+from mask_rcnn_ros.srv import MaskDetect
+from gpd.srv import DetectGrasps
+from gpd.srv import CloudTransform
+
 import moveit_commander
-import geometry_msgs.msg
+import tf.transformations
 
 
 def cloud_transformation(srv, cloud):
@@ -227,18 +230,47 @@ def main():
 		rospy.logerr("%s", e)
 		raise SystemExit()
 
-	pose_target = geometry_msgs.msg.Pose()
-	pose_target.orientation.x = 0
-	pose_target.orientation.y = 0
-	pose_target.orientation.z = 0.6
-	pose_target.orientation.w = 0.8
+	#
+	# interpret pose configuration
+	#
+	grasp = grasp_configs.grasps[0]
+	pose_position = grasp.bottom
+	pose_rotation_matrix = np.array([
+		[grasp.approach.x, grasp.binormal.x, grasp.axis.x, 0.0],
+		[grasp.approach.y, grasp.binormal.y, grasp.axis.y, 0.0],
+		[grasp.approach.z, grasp.binormal.z, grasp.axis.z, 0.0],
+		[0.0, 0.0, 0.0, 1.0]
+	], dtype=np.float64)
 
-	pose_target.position = grasp_configs.grasps[0].bottom
-	group.set_pose_target(pose_target)
+	print(pose_rotation_matrix)
+	pose_quaternion = tf.transformations.quaternion_from_matrix(
+		pose_rotation_matrix)
+	pose_quaternion = Quaternion(x=pose_quaternion[0], y=pose_quaternion[1],
+								 z=pose_quaternion[2], w=-pose_quaternion[3])
 
+	current_pose = group.get_current_pose()
+	print("Current pose:")
+	print(current_pose)
+
+	target_pose = PoseStamped()
+	target_pose.header.stamp = rospy.get_time()
+	target_pose.header.frame_id = group.get_pose_reference_frame()
+	target_pose.pose.position = pose_position
+	target_pose.pose.orientation = pose_quaternion
+
+	print("End effector frame: %s" % group.get_end_effector_link())
+
+	print("Target pose:")
+	print(target_pose)
+
+	group.set_pose_target(target_pose)
+
+	# plan = group.go(wait=True)
 	plan = group.plan()
+	# group.execute(plan, wait=True)
 
 	rospy.loginfo("============ Waiting while RVIZ displays motion planning...")
+	rospy.sleep(3.0)
 
 
 if __name__ == "__main__":

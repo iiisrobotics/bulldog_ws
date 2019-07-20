@@ -1,11 +1,11 @@
 <launch>
-  <!-- argument -->
-  <arg name="laser_enabled" default="true"/>
-  <arg name="ur5_enabled" default="false"/>
-  <arg name="kinect_enabled" default="true"/>
-  <arg name="realsense_enabled" default="true"/>
-  <arg name="robotiq_grippers_enabled" default="true"/>
-  <arg name="dual_ur5_enabled" default="true"/>
+  <!-- Bulldog configuration arguments -->
+  <arg name="laser_enabled" default="$(optenv BULLDOG_LMS1XX_ENABLED true)"/>
+  <arg name="ur5_enabled" default="$(optenv BULLDOG_UR5_ENABLED false)"/>
+  <arg name="kinect_enabled" default="$(optenv BULLDOG_KINECT_ENABLED false)"/>
+  <arg name="realsense_enabled" default="$(optenv BULLDOG_REALSENSE_ENABLED true)"/>
+  <arg name="dual_ur5_enabled" default="$(optenv BULLDOG_DUAL_UR5_ENABLED true)"/>
+  <arg name="robotiq_grippers_enabled" default="$(optenv ROBOTIQ_GRIPPERS_ENABLED true)"/>
 
   <!-- parameter -->
   <rosparam command="load" file="$(find bulldog_gazebo_moveit_config)/config/joint_names.yaml"/>

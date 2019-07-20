@@ -6,7 +6,7 @@
   </include>
 
   <!-- Load classifier parameters -->
-  <include file="$(find gpd)/launch/caffe/ur5_classifier_15channels.launch">
+  <include file="$(find gpd)/launch/caffe/classifier_3channels.launch">
     <arg name="node" value="detect_grasps_server" />
   </include>
 

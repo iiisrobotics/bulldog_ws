@@ -6,6 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /MarkerArray1
       Splitter Ratio: 0.755814
     Tree Height: 614
   - Class: rviz/Selection
@@ -74,7 +75,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/MarkerArray
       Enabled: true
-      Marker Topic: visualization_marker_array
+      Marker Topic: /detect_grasps_server/grasps_rviz
       Name: MarkerArray
       Namespaces:
         {}
@@ -134,7 +135,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 4.47536
+      Distance: 6.2687
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -169,5 +170,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1259
-  X: 132
-  Y: 263
+  X: 122
+  Y: 225

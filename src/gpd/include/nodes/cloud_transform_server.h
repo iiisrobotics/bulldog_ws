@@ -35,6 +35,7 @@ public:
 			// 	req.cloud_to_transform.header.stamp, 
 			// 	stampedTransformed
 			// );
+			ROS_INFO("")
 			pcl_ros::transformPointCloud(
 				"base_link",
 				req.cloud_to_transform, 
