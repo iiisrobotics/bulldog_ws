@@ -25,7 +25,8 @@ def move():
         JointTrajectoryPoint(positions=Q1, velocities=[0]*6, time_from_start=rospy.Duration(2.0)),
         JointTrajectoryPoint(positions=Q2, velocities=[0]*6, time_from_start=rospy.Duration(3.0)),
         JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(6.0))]
-    client.send_goal(g)
+    client.send_goal_and_wait(g)
+    # client.send_goal(g)
     try:
         client.wait_for_result()
     except KeyboardInterrupt:
@@ -96,6 +97,7 @@ def main():
     global client
 
     try:
+        # wait for controller
         time.sleep(5)
 
         rospy.init_node("stow_left", anonymous=True, disable_signals=True)

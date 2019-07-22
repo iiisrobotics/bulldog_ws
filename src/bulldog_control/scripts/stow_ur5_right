@@ -28,7 +28,8 @@ def move():
         JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(6.0))
     ]
 
-    client.send_goal(g)
+    client.send_goal_and_wait(g)
+    # client.send_goal(g)
     try:
         client.wait_for_result()
     except KeyboardInterrupt:
@@ -67,7 +68,8 @@ def move_repeated():
         g.trajectory.points.append(
             JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(d)))
         d += 2
-    client.send_goal(g)
+    client.send_goal_and_wait(g)
+    # client.send_goal(g)
     try:
         client.wait_for_result()
     except KeyboardInterrupt:
@@ -98,6 +100,7 @@ def main():
     global client
 
     try:
+        # wait for controller
         time.sleep(5)
 
         rospy.init_node("stow_right", anonymous=True, disable_signals=True)
