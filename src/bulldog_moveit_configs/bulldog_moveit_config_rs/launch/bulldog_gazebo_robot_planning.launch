@@ -21,17 +21,17 @@
     <arg name="dual_ur5_enabled" value="$(arg dual_ur5_enabled)"/>
   </include>
 
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="/use_gui" value="false"/>
+    <rosparam param="/source_list">[/joint_states]</rosparam>
+  </node>
+
   <include file="$(find bulldog_moveit_config_rs)/launch/move_group.launch">
+    <arg name="info" value="true"/>
     <arg name="publish_monitored_planning_scene" value="true" />
   </include>
 
   <include file="$(find bulldog_moveit_config_rs)/launch/moveit_rviz.launch">
     <arg name="config" value="true"/>
   </include>
-
-  <!-- joint state publisher -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-    <param name="use_gui" value="false"/>
-    <rosparam param="/source_list">[/joint_states]</rosparam>
-  </node>
 </launch>

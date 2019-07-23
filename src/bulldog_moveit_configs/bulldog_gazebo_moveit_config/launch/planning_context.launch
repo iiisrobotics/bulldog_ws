@@ -24,7 +24,7 @@
              robotiq_grippers_enabled:=$(arg robotiq_grippers_enabled)"/>
 
   <!-- The semantic description that corresponds to the URDF -->
-  <param name="$(arg robot_description)_semantic" textfile="$(find bulldog_gazebo_moveit_config)/config/bulldog_gazebo_robot_rs.srdf" />
+  <param name="$(arg robot_description)_semantic" textfile="$(find bulldog_gazebo_moveit_config)/config/bulldog_gazebo_robot.srdf" />
   
   <!-- Load updated joint limits (override information from URDF) -->
   <group ns="$(arg robot_description)_planning">

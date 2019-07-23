@@ -32,6 +32,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   <arg name="robotiq_grippers_enabled" default="$(optenv ROBOTIQ_GRIPPERS_ENABLED true)"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!-- <arg name="world_name" value="$(find bulldog_gazebo)/worlds/box.world"/>  -->
     <arg name="world_name" value="$(find bulldog_gazebo)/worlds/bulldog_grasp_demo.world"/> 
     <!-- <arg name="world_name" value="$(find bulldog_gazebo)/worlds/grasp_demo.world"/>  -->
     <!-- world_name is wrt GAZEBO_RESOURCE_PATH environment variable -->
