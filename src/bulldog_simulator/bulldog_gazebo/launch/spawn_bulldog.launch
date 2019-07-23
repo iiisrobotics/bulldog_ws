@@ -55,8 +55,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       args="right_arm_controller --shutdown-timeout 3" output="screen" />
 
     <!-- Stow the arm -->
-    <node name="initialize_bulldog_arms" pkg="bulldog_gazebo" type="setup_sim_positions" 
-      output="screen" />
+    <!-- <node name="initialize_bulldog_arms" pkg="bulldog_gazebo" type="setup_sim_positions" 
+      output="screen" /> -->
   </group>
 
   <!-- Include ros_control configuration for ur5, only used in simulation -->

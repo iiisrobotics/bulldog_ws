@@ -1,17 +1,17 @@
 <launch>
   <!-- Bulldog configuration arguments -->
-  <arg name="laser_enabled" default="$(optenv BULLDOG_LMS1XX_ENABLED true)"/>
-  <arg name="ur5_enabled" default="$(optenv BULLDOG_UR5_ENABLED false)"/>
-  <arg name="kinect_enabled" default="$(optenv BULLDOG_KINECT_ENABLED false)"/>
-  <arg name="realsense_enabled" default="$(optenv BULLDOG_REALSENSE_ENABLED true)"/>
-  <arg name="dual_ur5_enabled" default="$(optenv BULLDOG_DUAL_UR5_ENABLED true)"/>
-  <arg name="robotiq_grippers_enabled" default="$(optenv ROBOTIQ_GRIPPERS_ENABLED true)"/>
+  <arg name="laser_enabled" default="true"/>
+  <arg name="ur5_enabled" default="false"/>
+  <arg name="kinect_enabled" default="false"/>
+  <arg name="realsense_enabled" default="true"/>
+  <arg name="dual_ur5_enabled" default="true"/>
+  <arg name="robotiq_grippers_enabled" default="true"/>
 
   <!-- parameter -->
-  <rosparam command="load" file="$(find bulldog_gazebo_moveit_config)/config/joint_names.yaml"/>
+  <!-- <rosparam command="load" file="$(find bulldog_moveit_config_rs)/config/joint_names.yaml"/> -->
 
   <!-- include -->
-  <include file="$(find bulldog_gazebo_moveit_config)/launch/planning_context.launch" >
+  <include file="$(find bulldog_moveit_config_rs)/launch/planning_context.launch" >
     <arg name="load_robot_description" value="true" />
     <arg name="laser_enabled" value="$(arg laser_enabled)"/>
     <arg name="ur5_enabled" value="$(arg ur5_enabled)"/>
@@ -21,17 +21,17 @@
     <arg name="dual_ur5_enabled" value="$(arg dual_ur5_enabled)"/>
   </include>
 
-  <include file="$(find bulldog_gazebo_moveit_config)/launch/move_group.launch">
+  <include file="$(find bulldog_moveit_config_rs)/launch/move_group.launch">
     <arg name="publish_monitored_planning_scene" value="true" />
   </include>
 
-  <include file="$(find bulldog_gazebo_moveit_config)/launch/moveit_rviz.launch">
+  <include file="$(find bulldog_moveit_config_rs)/launch/moveit_rviz.launch">
     <arg name="config" value="true"/>
   </include>
 
   <!-- joint state publisher -->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-    <param name="/use_gui" value="false"/>
+    <param name="use_gui" value="false"/>
     <rosparam param="/source_list">[/joint_states]</rosparam>
   </node>
 </launch>

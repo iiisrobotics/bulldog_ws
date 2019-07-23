@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="model" default="$(find bulldog_description)/urdf/bulldog_robot.xacro" />
+    <arg name="model" default="$(find bulldog_description)/urdf/bulldog_gazebo_robot.xacro" />
     <arg name="rviz_config" default="$(find bulldog_description)/rviz/bulldog.rviz" />
     <arg name="kinematic_param" default="$(find bulldog_description)/config/kinematics.yaml" />
-    <arg name="semantic_model" default="$(find bulldog_description)/config/bulldog_robot.srdf" />
+    <arg name="semantic_model" default="$(find bulldog_description)/config/bulldog_gazebo_robot_rs.srdf" />
     <arg name="use_gui" default="false" />
 
     <arg name="laser_enabled" default="$(optenv BULLDOG_LMS1XX_ENABLED true)"/>

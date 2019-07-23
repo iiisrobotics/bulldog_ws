@@ -16,7 +16,7 @@ Q3 = [0.1412,-3.1415,2.8238,-2.8238,-1.612,-1.5708]
 client = None
 
 def move():
-    rospy.loginfo("Pose initializing...")
+    rospy.loginfo("Initializing left arm...")
 
     g = FollowJointTrajectoryGoal()
     g.trajectory = JointTrajectory()

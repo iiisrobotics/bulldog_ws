@@ -1,11 +1,11 @@
 <launch>
   <!-- Bulldog configuration arguments -->
-  <arg name="laser_enabled" default="$(optenv BULLDOG_LMS1XX_ENABLED true)"/>
-  <arg name="ur5_enabled" default="$(optenv BULLDOG_UR5_ENABLED false)"/>
-  <arg name="kinect_enabled" default="$(optenv BULLDOG_KINECT_ENABLED false)"/>
-  <arg name="realsense_enabled" default="$(optenv BULLDOG_REALSENSE_ENABLED true)"/>
-  <arg name="dual_ur5_enabled" default="$(optenv BULLDOG_DUAL_UR5_ENABLED true)"/>
-  <arg name="robotiq_grippers_enabled" default="$(optenv ROBOTIQ_GRIPPERS_ENABLED true)"/>
+  <arg name="laser_enabled" default="true"/>
+  <arg name="ur5_enabled" default="false"/>
+  <arg name="kinect_enabled" default="false"/>
+  <arg name="realsense_enabled" default="true"/>
+  <arg name="dual_ur5_enabled" default="true"/>
+  <arg name="robotiq_grippers_enabled" default="true"/>
 
   <!-- By default we do not overwrite the URDF. Change the following to true to change the default behavior -->
   <arg name="load_robot_description" default="false"/>
@@ -24,7 +24,7 @@
              robotiq_grippers_enabled:=$(arg robotiq_grippers_enabled)"/>
 
   <!-- The semantic description that corresponds to the URDF -->
-  <param name="$(arg robot_description)_semantic" textfile="$(find bulldog_gazebo_moveit_config)/config/bulldog_gazebo_robot.srdf" />
+  <param name="$(arg robot_description)_semantic" textfile="$(find bulldog_gazebo_moveit_config)/config/bulldog_gazebo_robot_rs.srdf" />
   
   <!-- Load updated joint limits (override information from URDF) -->
   <group ns="$(arg robot_description)_planning">
