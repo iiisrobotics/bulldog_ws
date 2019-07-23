@@ -6,6 +6,6 @@ moveit_setup_assistant_config:
   SRDF:
     relative_path: config/bulldog_gazebo_robot.srdf
   CONFIG:
-    author_name: test
-    author_email: test@gmail.com
-    generated_timestamp: 1508037060
+    author_name: Chongyi Zheng
+    author_email: chongyeezheng@gmail.com
+    generated_timestamp: 1563885882

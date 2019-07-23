@@ -33,8 +33,9 @@ planner_configs:
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
   RRTstarkConfigDefault:
     type: geometric::RRTstar
-    range: 5.0
-    delay_collision_checking: 0  # Stop collision checking as soon as C-free parent found. default 1
+    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05
+    delay_collision_checking: 1  # Stop collision checking as soon as C-free parent found. default 1
   TRRTkConfigDefault:
     type: geometric::TRRT
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
@@ -51,11 +52,33 @@ planner_configs:
     max_nearest_neighbors: 10  # use k nearest neighbors. default: 10
   PRMstarkConfigDefault:
     type: geometric::PRMstar
-  BITstarkConfigDefault:
-    type: geometric::BITstar
+left_gripper:
+  planner_configs:
+    - SBLkConfigDefault
+    - ESTkConfigDefault
+    - LBKPIECEkConfigDefault
+    - BKPIECEkConfigDefault
+    - KPIECEkConfigDefault
+    - RRTkConfigDefault
+    - RRTConnectkConfigDefault
+    - RRTstarkConfigDefault
+    - TRRTkConfigDefault
+    - PRMkConfigDefault
+    - PRMstarkConfigDefault
+right_gripper:
+  planner_configs:
+    - SBLkConfigDefault
+    - ESTkConfigDefault
+    - LBKPIECEkConfigDefault
+    - BKPIECEkConfigDefault
+    - KPIECEkConfigDefault
+    - RRTkConfigDefault
+    - RRTConnectkConfigDefault
+    - RRTstarkConfigDefault
+    - TRRTkConfigDefault
+    - PRMkConfigDefault
+    - PRMstarkConfigDefault
 left_arm:
-  default_planner_config: RRTstarkConfigDefault
-  enforce_joint_model_state_space: true
   planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
@@ -68,9 +91,9 @@ left_arm:
     - TRRTkConfigDefault
     - PRMkConfigDefault
     - PRMstarkConfigDefault
-    - BITstarkConfigDefault
+  projection_evaluator: joints(left_arm_shoulder_pan_joint,left_arm_shoulder_lift_joint)
+  longest_valid_segment_fraction: 0.05
 right_arm:
-  default_planner_config: RRTstarkConfigDefault
   planner_configs:
     - SBLkConfigDefault
     - ESTkConfigDefault
@@ -83,4 +106,5 @@ right_arm:
     - TRRTkConfigDefault
     - PRMkConfigDefault
     - PRMstarkConfigDefault
-    - BITstarkConfigDefault
+  projection_evaluator: joints(right_arm_shoulder_pan_joint,right_arm_shoulder_lift_joint)
+  longest_valid_segment_fraction: 0.05

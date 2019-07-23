@@ -1,4 +1,30 @@
 controller_list:
+  - name: fake_left_gripper_controller
+    joints:
+      - left_gripper_palm_finger_1_joint
+      - left_gripper_finger_1_joint_1
+      - left_gripper_finger_1_joint_2
+      - left_gripper_finger_1_joint_3
+      - left_gripper_palm_finger_2_joint
+      - left_gripper_finger_2_joint_1
+      - left_gripper_finger_2_joint_2
+      - left_gripper_finger_2_joint_3
+      - left_gripper_finger_middle_joint_1
+      - left_gripper_finger_middle_joint_2
+      - left_gripper_finger_middle_joint_3
+  - name: fake_right_gripper_controller
+    joints:
+      - right_gripper_palm_finger_1_joint
+      - right_gripper_finger_1_joint_1
+      - right_gripper_finger_1_joint_2
+      - right_gripper_finger_1_joint_3
+      - right_gripper_palm_finger_2_joint
+      - right_gripper_finger_2_joint_1
+      - right_gripper_finger_2_joint_2
+      - right_gripper_finger_2_joint_3
+      - right_gripper_finger_middle_joint_1
+      - right_gripper_finger_middle_joint_2
+      - right_gripper_finger_middle_joint_3
   - name: fake_left_arm_controller
     joints:
       - left_arm_shoulder_pan_joint
