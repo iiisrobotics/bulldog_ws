@@ -28,8 +28,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   <arg name="laser_enabled" default="$(optenv BULLDOG_LMS1XX_ENABLED true)"/>
   <arg name="ur5_enabled" default="$(optenv BULLDOG_UR5_ENABLED false)"/>
   <arg name="kinect_enabled" default="$(optenv BULLDOG_KINECT_ENABLED false)"/>
-  <arg name="realsense_enabled" default="$(optenv BULLDOG_REALSENSE_ENABLED false)"/>
-  <arg name="dual_ur5_enabled" default="$(optenv BULLDOG_DUAL_UR5_ENABLED false)"/>
+  <arg name="realsense_enabled" default="$(optenv BULLDOG_REALSENSE_ENABLED true)"/>
+  <arg name="dual_ur5_enabled" default="$(optenv BULLDOG_DUAL_UR5_ENABLED true)"/>
   <arg name="robotiq_grippers_enabled" default="$(optenv ROBOTIQ_GRIPPERS_ENABLED true)"/>
 
   <param name="robot_description" 
@@ -122,11 +122,11 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   </group>
 
   <!-- Spawn robot in gazebo -->
-  <node name="spawn_bulldog_model" pkg="gazebo_ros" type="spawn_model"
-    args="-unpause -urdf -param robot_description"/>
-
   <!-- <node name="spawn_bulldog_model" pkg="gazebo_ros" type="spawn_model"
-    args="-unpause -urdf -param robot_description -model mobile_link"/> -->
+    args="-unpause -urdf -param robot_description"/> -->
+
+  <node name="spawn_bulldog_model" pkg="gazebo_ros" type="spawn_model"
+    args="-unpause -urdf -param robot_description -model mobile_link"/>
 
   <!-- Load the bumblebee depth and pointcloud capabilities -->
   <!--include file="$(find bulldog_gazebo)/launch/bumblebee_depth.launch"/-->

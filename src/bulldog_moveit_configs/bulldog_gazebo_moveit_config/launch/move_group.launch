@@ -68,8 +68,6 @@
     <param name="planning_scene_monitor/publish_state_updates" value="$(arg publish_monitored_planning_scene)" />
     <param name="planning_scene_monitor/publish_transforms_updates" value="$(arg publish_monitored_planning_scene)" />
 
-    <!-- <param name="constraint_approximations_path" value="/home/shengjian/catkin_ws/constraints_approximation_database_10000"/> -->
-
   </node>
 
 </launch>
