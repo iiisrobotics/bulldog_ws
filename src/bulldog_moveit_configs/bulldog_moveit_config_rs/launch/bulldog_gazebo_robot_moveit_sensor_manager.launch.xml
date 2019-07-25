@@ -1,3 +1,0 @@
-<launch>
-    <rosparam command="load" file="$(find bulldog_moveit_config_rs)/config/sensors.yaml" />
-</launch>

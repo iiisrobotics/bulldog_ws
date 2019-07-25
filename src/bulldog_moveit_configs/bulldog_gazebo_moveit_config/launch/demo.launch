@@ -5,10 +5,6 @@
   <!-- Allow user to specify database location -->
   <arg name="db_path" default="$(find bulldog_gazebo_moveit_config)/default_warehouse_mongo_db" />
 
-  <arg name="sim" default="false" />
-  <!-- Remap follow_joint_trajectory -->
-  <remap if="$(arg sim)" from="/follow_joint_trajectory" to="/arm_controller/follow_joint_trajectory"/>
-
   <!-- By default, we are not in debug mode -->
   <arg name="debug" default="false" />
 

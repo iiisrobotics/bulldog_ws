@@ -50,9 +50,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     <rosparam command="load" file="$(find bulldog_control)/config/control_right_ur5.yaml" />
     
     <node name="left_arm_controller_spawner" pkg="controller_manager" type="spawner" 
-      args="left_arm_controller --shutdown-timeout 3" output="screen" />
+      args="left_arm_controller" output="screen" />
     <node name="right_arm_controller_spawner" pkg="controller_manager" type="spawner" 
-      args="right_arm_controller --shutdown-timeout 3" output="screen" />
+      args="right_arm_controller" output="screen" />
 
     <!-- Stow the arm -->
     <!-- <node name="initialize_bulldog_arms" pkg="bulldog_gazebo" type="setup_sim_positions" 
@@ -64,7 +64,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     <!-- Load UR5 controllers -->
     <rosparam command="load" file="$(find bulldog_control)/config/control_ur5.yaml" />
     <node name="arm_controller_spawner" pkg="controller_manager" type="spawner" 
-      args="arm_controller --shutdown-timeout 3" />
+      args="arm_controller" />
 
     <!-- Fake Calibration -->
     <node pkg="rostopic" type="rostopic" name="fake_joint_calibration" 
@@ -76,18 +76,18 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 
   <!-- Include robotiq gripper configs for left and right gripper, only used in sim -->
   <group if="$(arg robotiq_grippers_enabled)">
-    <node name="left_gripper_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" 
+    <!-- <node name="left_gripper_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" 
       output="screen">
       <param name="publish_frequency" type="double" value="50.0" />
-    </node>
+    </node> -->
     
     <node name="left_gripper_js_relay" pkg="topic_tools" type="relay" 
       args="/robotiq_hands/left_hand/joint_states /joint_states" output="screen" />
     
-    <node name="right_gripper_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" 
+    <!-- <node name="right_gripper_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" 
       output="screen" >
       <param name="publish_frequency" type="double" value="50.0" />
-    </node>
+    </node> -->
     
     <node name="right_gripper_js_relay" pkg="topic_tools" type="relay" 
       args="/robotiq_hands/right_hand/joint_states /joint_states" output="screen" />
@@ -122,12 +122,18 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     </node>
   </group>
 
+  <!-- publish robot state -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+    <param name="publish_frequency" value="50.0" />
+  </node>
+
   <!-- Spawn robot in gazebo -->
   <!-- <node name="spawn_bulldog_model" pkg="gazebo_ros" type="spawn_model"
     args="-unpause -file 'rosparam get /robot_description' -urdf -model bulldog"/> -->
 
   <node name="spawn_bulldog_model" pkg="gazebo_ros" type="spawn_model"
-    args="-unpause -urdf -param robot_description -model bulldog"/>
+    args="-unpause -urdf -param robot_description -model bulldog" 
+    respawn="false" output="screen" />
 
   <!-- Load the bumblebee depth and pointcloud capabilities -->
   <!--include file="$(find bulldog_gazebo)/launch/bumblebee_depth.launch"/-->

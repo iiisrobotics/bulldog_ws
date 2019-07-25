@@ -3,10 +3,10 @@
   <name>bulldog_gazebo_moveit_config</name>
   <version>0.3.0</version>
   <description>
-     An automatically generated package with all the configuration and launch files for using the bulldog_robot with the MoveIt! Motion Planning Framework
+     An automatically generated package with all the configuration and launch files for using the bulldog_gazebo_robot with the MoveIt! Motion Planning Framework
   </description>
-  <author email="test@gmail.com">test</author>
-  <maintainer email="test@gmail.com">test</maintainer>
+  <author email="chongyeezheng@gmail.com">Chongyi Zheng</author>
+  <maintainer email="chongyeezheng@gmail.com">Chongyi Zheng</maintainer>
 
   <license>BSD</license>
 
@@ -17,6 +17,7 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <run_depend>moveit_ros_move_group</run_depend>
+  <run_depend>moveit_fake_controller_manager</run_depend>
   <run_depend>moveit_kinematics</run_depend>
   <run_depend>moveit_planners_ompl</run_depend>
   <run_depend>moveit_ros_visualization</run_depend>

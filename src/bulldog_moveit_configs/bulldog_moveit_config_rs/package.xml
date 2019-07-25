@@ -3,7 +3,7 @@
   <name>bulldog_moveit_config_rs</name>
   <version>0.3.0</version>
   <description>
-     An automatically generated package with all the configuration and launch files for using the bulldog_gazebo_robot with the MoveIt! Motion Planning Framework
+     An automatically generated package with all the configuration and launch files for using the bulldog_robot with the MoveIt! Motion Planning Framework
   </description>
   <author email="chongyeezheng@gmail.com">Chongyi Zheng</author>
   <maintainer email="chongyeezheng@gmail.com">Chongyi Zheng</maintainer>

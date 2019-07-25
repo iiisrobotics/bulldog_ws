@@ -8,7 +8,7 @@ left_controller_joint_names: [
 ]
 
 right_controller_joint_names: [
-  right_arm_shoulder_pan_joint,
+  right_arm_shoulder_pan_joint, 
   right_arm_shoulder_lift_joint, 
   right_arm_elbow_joint, 
   right_arm_wrist_1_joint, 

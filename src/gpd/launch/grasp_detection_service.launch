@@ -1,5 +1,8 @@
 <launch>
 
+  <arg name="device"                     default="1"
+        doc="target device to execute inference. [0:CPU]|1:GPU|2:VPU|3:FPGA" />
+
   <!-- Load hand geometry parameters -->
   <include file="$(find gpd)/launch/ur5_hand_geometry.launch">
     <arg name="node" value="detect_grasps_server" />
@@ -29,7 +32,7 @@
     <param name="plot_filtered_grasps" value="false" />
     <param name="plot_valid_grasps" value="false" />
     <param name="plot_clusters" value="false" />
-    <param name="plot_selected_grasps" value="true" />
+    <param name="plot_selected_grasps" value="false" />
     <param name="rviz_topic" value="grasps_rviz" />
 
     <!-- Preprocessing of point cloud -->
@@ -40,7 +43,7 @@
 
     <!-- General parameters -->
     <param name="num_samples" value="1000" />  <!-- If have no valid grasps with score > 0, increase this. Try 500 or even 1000. This will be slow on a laptop. If run on cluster, will be much faster if you increase num_threads below as well. Or use the Caffe version of gpd. -->
-    <param name="num_threads" value="4" />
+    <param name="num_threads" value="8" />
 
     <!-- Parameters for local grasp candidate search -->
     <param name="nn_radius" value="0.01" />
@@ -48,7 +51,7 @@
 
     <!-- Filtering of grasp candidates -->
     <param name="filter_grasps" value="false" /> <!-- on workspace and robot hand aperture -->
-    <rosparam param="workspace_grasps"> [-1, 1, -1, 1, -1, 1] </rosparam>
+    <rosparam param="workspace_grasps"> [0.30, 0.90, -0.30, 0.30, -0.12, 0.40] </rosparam>
     <param name="filter_half_antipodal" value="false"/> <!-- on half antipodal -->
     
     <!-- Filter out grasps which are too low on (i.e. too close to) the table -->
@@ -63,13 +66,13 @@
     <param name="remove_plane_before_image_calculation" value="false" /> <!-- removes table plane from point cloud to speed up shadow computations -->
 
     <!-- Clustering of grasps -->
-    <param name="min_inliers" value="0" />
+    <param name="min_inliers" value="1" />
 
     <!-- Grasp selection -->
-    <param name="min_score_diff" value="50" />  <!-- Default: 50 -->
+    <param name="min_score_diff" value="50" />
     <param name="min_aperture" value="0.0" />
     <param name="max_aperture" value="0.085" />
-    <param name="num_selected" value="5" />
+    <param name="num_selected" value="3" />
 
   </node>
 

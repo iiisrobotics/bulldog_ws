@@ -1,9 +1,7 @@
 controller_list:
-  # - name: bulldog_gazebo_robot/left_arm_controller
   - name: left_arm_controller
     action_ns: follow_joint_trajectory
     type: FollowJointTrajectory
-    default: true
     joints:
       - left_arm_shoulder_pan_joint
       - left_arm_shoulder_lift_joint
@@ -11,11 +9,9 @@ controller_list:
       - left_arm_wrist_1_joint
       - left_arm_wrist_2_joint
       - left_arm_wrist_3_joint
-  # - name: bulldog_gazebo_robot/right_arm_controller
   - name: right_arm_controller
     action_ns: follow_joint_trajectory
     type: FollowJointTrajectory
-    default: true
     joints:
       - right_arm_shoulder_pan_joint
       - right_arm_shoulder_lift_joint

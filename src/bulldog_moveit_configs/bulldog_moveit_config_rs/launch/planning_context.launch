@@ -1,12 +1,4 @@
 <launch>
-  <!-- Bulldog configuration arguments -->
-  <arg name="laser_enabled" default="true"/>
-  <arg name="ur5_enabled" default="false"/>
-  <arg name="kinect_enabled" default="false"/>
-  <arg name="realsense_enabled" default="true"/>
-  <arg name="dual_ur5_enabled" default="true"/>
-  <arg name="robotiq_grippers_enabled" default="true"/>
-
   <!-- By default we do not overwrite the URDF. Change the following to true to change the default behavior -->
   <arg name="load_robot_description" default="false"/>
 
@@ -14,17 +6,10 @@
   <arg name="robot_description" default="robot_description"/>
 
   <!-- Load universal robot description format (URDF) -->
-  <param if="$(arg load_robot_description)" name="$(arg robot_description)" 
-    command="$(find xacro)/xacro --inorder '$(find bulldog_description)/urdf/bulldog_gazebo_robot.xacro'
-             laser_enabled:=$(arg laser_enabled)
-             ur5_enabled:=$(arg ur5_enabled)
-             kinect_enabled:=$(arg kinect_enabled)
-             realsense_enabled:=$(arg realsense_enabled)
-             dual_ur5_enabled:=$(arg dual_ur5_enabled)
-             robotiq_grippers_enabled:=$(arg robotiq_grippers_enabled)"/>
+  <param if="$(arg load_robot_description)" name="$(arg robot_description)" command="$(find xacro)/xacro.py --inorder '$(find bulldog_description)/urdf/bulldog_robot.xacro'"/>
 
   <!-- The semantic description that corresponds to the URDF -->
-  <param name="$(arg robot_description)_semantic" textfile="$(find bulldog_moveit_config_rs)/config/bulldog_gazebo_robot.srdf" />
+  <param name="$(arg robot_description)_semantic" textfile="$(find bulldog_moveit_config_rs)/config/bulldog_robot.srdf" />
   
   <!-- Load updated joint limits (override information from URDF) -->
   <group ns="$(arg robot_description)_planning">
