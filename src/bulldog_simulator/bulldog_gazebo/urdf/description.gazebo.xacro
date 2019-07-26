@@ -32,10 +32,10 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   <xacro:arg name="dual_ur5_enabled" default="true" />
   <xacro:arg name="robotiq_grippers_enabled" default="true" />
 
-  <xacro:include filename="$(find bulldog_description)/urdf/bulldog/bulldog_gazebo.urdf.xacro" />
+  <xacro:include filename="$(find bulldog_description)/urdf/bulldog/bulldog.urdf.xacro" />
   <xacro:include filename="$(find bulldog_gazebo)/urdf/bulldog.gazebo.xacro" />
 
   <xacro:bulldog_gazebo_config />
-  <xacro:bulldog_gazebo_robot />
+  <xacro:bulldog_robot />
 
 </robot>

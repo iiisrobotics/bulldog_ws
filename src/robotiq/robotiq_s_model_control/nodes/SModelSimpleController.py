@@ -47,7 +47,6 @@ import rospy
 from robotiq_s_model_control.msg import _SModel_robot_output  as outputMsg
 from time import sleep
 
-
 def genCommand(char, command):
     """Update the command according to the character entered by the user."""    
         
@@ -166,7 +165,7 @@ def publisher():
 
     rospy.init_node('SModelSimpleController')
     
-    pub = rospy.Publisher('SModelRobotOutput', outputMsg.SModel_robot_output)
+    pub = rospy.Publisher('SModelRobotOutput', outputMsg.SModel_robot_output, queue_size=1)
 
     command = outputMsg.SModel_robot_output();
 

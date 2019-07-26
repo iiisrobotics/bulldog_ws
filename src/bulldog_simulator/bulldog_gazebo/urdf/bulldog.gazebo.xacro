@@ -106,7 +106,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
               <gripper_link> left_gripper_finger_2_link_1 </gripper_link>
               <gripper_link> left_gripper_finger_2_link_2 </gripper_link>
               <gripper_link> left_gripper_finger_2_link_3 </gripper_link>
-              <!-- <gripper_link> left_gripper_finger_middle_link_0 </gripper_link> -->
+              <gripper_link> left_gripper_finger_middle_link_0 </gripper_link>
               <gripper_link> left_gripper_finger_middle_link_1 </gripper_link>
               <gripper_link> left_gripper_finger_middle_link_2 </gripper_link>
               <gripper_link> left_gripper_finger_middle_link_3 </gripper_link>
@@ -122,7 +122,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
               <gripper_link> right_gripper_finger_2_link_1 </gripper_link>
               <gripper_link> right_gripper_finger_2_link_2 </gripper_link>
               <gripper_link> right_gripper_finger_2_link_3 </gripper_link>
-              <!-- <gripper_link> right_gripper_finger_middle_link_0 </gripper_link> -->
+              <gripper_link> right_gripper_finger_middle_link_0 </gripper_link>
               <gripper_link> right_gripper_finger_middle_link_1 </gripper_link>
               <gripper_link> right_gripper_finger_middle_link_2 </gripper_link>
               <gripper_link> right_gripper_finger_middle_link_3 </gripper_link>
@@ -219,12 +219,12 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
             <material>Gazebo/Grey</material>
         </gazebo>
 
-        <!-- <gazebo reference="left_gripper_finger_middle_link_0">
+        <gazebo reference="left_gripper_finger_middle_link_0">
             <material>Gazebo/Black</material>
         </gazebo>
         <gazebo reference="right_gripper_finger_middle_link_0">
             <material>Gazebo/Black</material>
-        </gazebo> -->
+        </gazebo>
 
         <gazebo reference="left_gripper_finger_middle_link_1">
             <material>Gazebo/Black</material>

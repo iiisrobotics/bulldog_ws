@@ -81,7 +81,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <param name="publish_frequency" type="double" value="50.0" />
     </node> -->
     
-    <node name="left_gripper_js_relay" pkg="topic_tools" type="relay" 
+    <node name="left_gripper_joint_state_relay" pkg="topic_tools" type="relay" 
       args="/robotiq_hands/left_hand/joint_states /joint_states" output="screen" />
     
     <!-- <node name="right_gripper_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" 
@@ -89,7 +89,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <param name="publish_frequency" type="double" value="50.0" />
     </node> -->
     
-    <node name="right_gripper_js_relay" pkg="topic_tools" type="relay" 
+    <node name="right_gripper_joint_state_relay" pkg="topic_tools" type="relay" 
       args="/robotiq_hands/right_hand/joint_states /joint_states" output="screen" />
   </group>
 

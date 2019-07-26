@@ -233,8 +233,9 @@ def main():
 	#
 	# interpret pose configuration
 	#
-	# grasp = grasp_configs.grasps[2]
-	# pose_position = grasp.bottom
+	# grasp = grasp_configs.grasps[0]
+	# # pose_position = grasp.bottom
+	# pose_position = grasp.surface
 	# pose_rotation_matrix = np.array([
 	# 	[grasp.approach.x, grasp.binormal.x, grasp.axis.x, 0.0],
 	# 	[grasp.approach.y, grasp.binormal.y, grasp.axis.y, 0.0],
@@ -255,27 +256,28 @@ def main():
 	target_pose = PoseStamped()
 	target_pose.header.stamp = rospy.get_time()
 	target_pose.header.frame_id = group.get_pose_reference_frame()
-	target_pose.pose.position.x = 0.843836322228
-	target_pose.pose.position.y = 0.0879079641411
-	target_pose.pose.position.z = 0.567208940894
 	# target_pose.pose.position = pose_position
+	target_pose.pose.position.x = 0.9013942701
+	target_pose.pose.position.y = 0.120637695087
+	target_pose.pose.position.z = 0.616937744596
 	# target_pose.pose.orientation = pose_quaternion
-	target_pose.pose.orientation.x = -0.0484581199515
-	target_pose.pose.orientation.y = 0.0744024755386
-	target_pose.pose.orientation.z = -0.269878659876
-	target_pose.pose.orientation.w = -0.958791735044
-	# target_pose.pose.orientation = current_pose.pose.orientation
+	target_pose.pose.orientation.x = -0.902275387317
+	target_pose.pose.orientation.y = 0.43088678254
+	target_pose.pose.orientation.z = -0.0135260673245
+	target_pose.pose.orientation.w = -0.00726302806104
 
 	# pose: 
 	# 	position: 
-	# 		x: 0.843836322228
-	# 		y: 0.0879079641411
-	# 		z: 0.407208940894
+	# 		x: 0.9013942701
+	# 		y: 0.120637695087
+	# 		z: 0.416937744596
 	# 	orientation: 
-	# 		x: -0.0484581199515
-	# 		y: 0.0744024755386
-	# 		z: -0.269878659876
-	# 		w: -0.958791735044
+	# 		x: 0.902275387317
+	# 		y: 0.43088678254
+	# 		z: 0.0135260673245
+	# 		w: -0.00726302806104
+
+
 
 	print("End effector frame: %s" % group.get_end_effector_link())
 

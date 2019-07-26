@@ -140,3 +140,13 @@ http://gazebosim.org/tutorials?tut=ros_depth_camera&cat=connect_ros
         instead of 
 
             catkin_make -DCATKIN_ENABLE_TESTING=False -DCMAKE_BUILD_TYPE=Release
+
+8. Moveit! Configuration
+
+    bulldog robot self collision:
+
+    - (left_gripper_finger_middle_link_1, left_gripper_finger_middle_link_paraproximal_actuating_hinge)
+
+    - (left_gripper_finger_1_link_1, left_gripper_finger_1_link_paraproximal_actuating_hinge)
+
+    - (left_gripper_finger_1_link_0, left_gripper_finger_1_link_median_bar)
