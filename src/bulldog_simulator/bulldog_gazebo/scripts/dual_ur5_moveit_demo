@@ -7,7 +7,7 @@ import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
 
-print "============ Starting tutorial setup"
+print("============ Starting tutorial setup")
 moveit_commander.roscpp_initialize(sys.argv)
 rospy.init_node('husky_dual_ur5_moveit_tutorial',
                 anonymous=True)

@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<root xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="sensor_d415_gazebo" params="prefix">
+
+    <!-- material -->
+    <gazebo reference="${prefix}camera_link">
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <!-- color sensor -->
+    <gazebo reference="${prefix}camera_depth_frame">
+      <sensor name="${prefix}color_camera" type="camera">
+        <always_on>true</always_on>
+        <update_rate>30.0</update_rate>
+        <camera name="color">
+          <horizontal_fov>${64.0 * pi / 180.0}</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.01</near>
+            <far>100.0</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <plugin name="${prefix}color_controller" filename="libgazebo_ros_camera.so">
+          <alwaysOn>true</alwaysOn>
+          <updateRate>0.0</updateRate>
+          <cameraName>${prefix}color_camera</cameraName>
+          <imageTopicName>/${prefix}camera/color/image_raw</imageTopicName>
+          <cameraInfoTopicName>/${prefix}camera/color/camera_info</cameraInfoTopicName>
+          <frameName>${prefix}camera_color_optical_frame</frameName>
+          <hackBaseline>0.0</hackBaseline>
+          <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2>
+        </plugin>
+      </sensor>
+    </gazebo>
+    
+    <!-- left infrared sensor -->
+    <gazebo reference="${prefix}camera_left_ir_frame">
+      <sensor name="${prefix}left_ir_camera" type="camera">
+        <always_on>true</always_on>
+        <update_rate>30.0</update_rate>
+        <camera name="left_ir">
+          <horizontal_fov>${64.0 * pi / 180.0}</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>L8</format>
+          </image>
+          <clip>
+            <near>0.01</near>
+            <far>100.0</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <plugin name="${prefix}left_ir_controller" filename="libgazebo_ros_camera.so">
+          <alwaysOn>true</alwaysOn>
+          <updateRate>0.0</updateRate>
+          <cameraName>${prefix}left_if_camera</cameraName>
+          <imageTopicName>/${prefix}camera/infra1/image_rect_raw</imageTopicName>
+          <cameraInfoTopicName>/${prefix}camera/infra1/camera_info</cameraInfoTopicName>
+          <frameName>${prefix}camera_left_ir_optical_frame</frameName>
+          <hackBaseline>0.0</hackBaseline>
+          <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <!-- right infrared sensor -->
+    <gazebo reference="${prefix}camera_right_ir_frame">
+      <sensor name="${prefix}right_ir_camera" type="camera">
+        <always_on>true</always_on>
+        <update_rate>30.0</update_rate>
+        <camera name="right_ir">
+          <horizontal_fov>${64.0 * pi / 180.0}</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>L8</format>
+          </image>
+          <clip>
+            <near>0.01</near>
+            <far>100.0</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <plugin name="${prefix}right_ir_controller" filename="libgazebo_ros_camera.so">
+          <alwaysOn>true</alwaysOn>
+          <updateRate>0.0</updateRate>
+          <cameraName>${prefix}right_ir_camera</cameraName>
+          <imageTopicName>/${prefix}camera/infra2/image_rect_raw</imageTopicName>
+          <cameraInfoTopicName>/${prefix}camera/infra2/camera_info</cameraInfoTopicName>
+          <frameName>${prefix}camera_right_ir_optical_frame</frameName>
+          <hackBaseline>0.0</hackBaseline>
+          <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <!-- color and depth sensor -->
+    <gazebo reference="${prefix}camera_depth_frame">
+      <sensor name="${prefix}depth_camera" type="depth">
+        <always_on>true</always_on>
+        <update_rate>30.0</update_rate>
+        <camera name="depth">
+          <horizontal_fov>${64.0 * pi / 180.0}</horizontal_fov>
+          <image>
+            <format>L8</format>
+            <width>640</width>
+            <height>480</height>
+          </image>
+          <clip>
+            <near>0.01</near>
+            <far>100.0</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <plugin name="${prefix}depth_controller" filename="libgazebo_ros_openni_kinect.so">
+          <baseline>0.0</baseline>
+          <alwaysOn>true</alwaysOn>
+          <updateRate>10</updateRate>
+          <cameraName>${prefix}depth_camera</cameraName>
+          <imageTopicName>/${prefix}camera/depth/dummy_image_raw</imageTopicName>
+          <cameraInfoTopicName>/${prefix}camera/depth/dummy_camera_info</cameraInfoTopicName>
+          <depthImageTopicName>/${prefix}camera/depth/image_rect_raw</depthImageTopicName>
+          <depthImageCameraInfoTopicName>/${prefix}camera/depth/camera_info</depthImageCameraInfoTopicName>
+          <pointCloudTopicName>/${prefix}camera/depth/color/points</pointCloudTopicName>
+          <frameName>${prefix}camera_depth_optical_frame</frameName>
+          <pointCloudCutoff>0.4</pointCloudCutoff>
+          <distortion_k1>0.0</distortion_k1>
+          <distortion_k2>0.0</distortion_k2>
+          <distortion_k3>0.0</distortion_k3>
+          <distortion_t1>0.0</distortion_t1>
+          <distortion_t2>0.0</distortion_t2>
+          <CxPrime>0</CxPrime>
+          <Cx>0</Cx>
+          <Cy>0</Cy>
+          <focalLength>0</focalLength>
+          <hackBaseline>0</hackBaseline>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+  </xacro:macro>
+</root>

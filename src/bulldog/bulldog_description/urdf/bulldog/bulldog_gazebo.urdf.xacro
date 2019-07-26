@@ -6,15 +6,16 @@
   <xacro:include filename="$(find bulldog_description)/urdf/accessories/plates.urdf.xacro" />
   <xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />
   <xacro:include filename="$(find lms1xx)/urdf/sick_lms1xx.urdf.xacro" />
-  <xacro:include filename="$(find robotiq_s_model_visualization)/cfg/s-model_articulated_macro.xacro" />
+  <xacro:include filename="$(find robotiq_3f_gripper_visualization)/cfg/robotiq-3f-gripper_articulated_macro.xacro" />
   <xacro:include filename="$(find bulldog_description)/urdf/sensors/kinect_camera.urdf.xacro" />
+  <xacro:include filename="$(find realsense2_camera)/urdf/_d415.urdf.xacro" />
 
   <xacro:property name="wheel_length" value="0.142" />
   <xacro:property name="wheel_radius" value="0.183" />
 
-  <property name="base_x_size" value="0.85" />
-  <property name="base_y_size" value="0.42" />
-  <property name="base_z_size" value="0.325" />
+  <xacro:property name="base_x_size" value="0.85" />
+  <xacro:property name="base_y_size" value="0.42" />
+  <xacro:property name="base_z_size" value="0.325" />
 
   <xacro:macro name="bulldog_gazebo_robot">
     
@@ -100,19 +101,20 @@
         <origin xyz="0 -0.15945 0.09069" rpy="-0.785 0 ${pi}" />
         </joint>
 
-        <xacro:s-model_articulated prefix="l_"/>
+        <xacro:robotiq-3f-gripper_articulated prefix="left_gripper_"/>
         <joint name="left_arm_gripper" type="fixed">
             <parent link="left_arm_ee_link" />
-            <child link="l_palm" />
+            <child link="left_gripper_palm" />
             <origin xyz="0 0 0" rpy="0 0 -1.57" />
         </joint>
 
-        <xacro:s-model_articulated prefix="r_"/>
+        <xacro:robotiq-3f-gripper_articulated prefix="right_gripper_"/>
         <joint name="right_arm_gripper" type="fixed">
             <parent link="right_arm_ee_link" />
-            <child link="r_palm" />
+            <child link="right_gripper_palm" />
             <origin xyz="0 0 0" rpy="0 0 -1.57" />
         </joint>
+
     </xacro:if>
 
     <!-- laser -->
@@ -128,7 +130,18 @@
 
     <!-- kinect -->
     <xacro:if value="$(arg kinect_enabled)">
-      <xacro:kinect_camera />
+      <xacro:kinect_camera prefix="kinect" parent="installation_plate_link" />
+    </xacro:if>
+
+    <!-- realsense d415 -->
+    <xacro:if value="$(arg realsense_enabled)">
+      <xacro:sensor_d415 prefix="left_gripper_sensor_d415_" parent="left_gripper_palm">
+        <origin xyz="0 0 -0.065" rpy="${pi} 0 ${pi / 2}"/>
+      </xacro:sensor_d415>
+
+      <xacro:sensor_d415 prefix="right_gripper_sensor_d415_" parent="right_gripper_palm">
+          <origin xyz="0 0 -0.065" rpy="${pi} 0 ${pi / 2}"/>
+      </xacro:sensor_d415>
     </xacro:if>
 
   </xacro:macro>

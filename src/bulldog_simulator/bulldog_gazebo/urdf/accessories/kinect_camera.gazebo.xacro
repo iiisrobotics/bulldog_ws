@@ -3,6 +3,12 @@
 
   <xacro:macro name="kinect_camera_gazebo" params="prefix">
 
+    <!-- material -->
+    <gazebo reference="${prefix}_link">
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <!-- optical joint and link -->
     <joint name="${prefix}_optical_joint" type="fixed">
       <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
       <parent link="${prefix}_link"/>
@@ -11,10 +17,11 @@
 
     <link name="${prefix}_frame_optical"/>
 
+    <!-- depth camera -->
     <gazebo reference="${prefix}_link">
       <sensor type="depth" name="${prefix}">
         <always_on>true</always_on>
-        <update_rate>20.0</update_rate>
+        <update_rate>30.0</update_rate>
         <camera>
           <horizontal_fov>${60.0 * pi / 180.0}</horizontal_fov>
           <image>
@@ -27,8 +34,8 @@
             <far>8.0</far>
           </clip>
         </camera>
-        <plugin name="kinect_${prefix}_controller" filename="libgazebo_ros_openni_kinect.so">
-          <cameraName>${prefix}</cameraName>
+        <plugin name="${prefix}_controller" filename="libgazebo_ros_openni_kinect.so">
+          <cameraName>${prefix}_camera</cameraName>
           <alwaysOn>true</alwaysOn>
           <updateRate>10</updateRate>
           <imageTopicName>rgb/image_raw</imageTopicName>
@@ -51,4 +58,3 @@
   </xacro:macro>
 
 </root>
-

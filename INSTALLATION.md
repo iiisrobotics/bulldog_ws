@@ -88,7 +88,13 @@
 
         git clone -b $ROS_DISTRO$-devel https://github.com/ros-industrial/robotiq.git
     
-    Note: we use **kinect-devel** branch here. And compile it from scratch.
+    Note: we use **indigo-devel** branch here. And compile it from scratch. 
+    There will be some problems with `robotiq_s_model_articulated_gazebo_plugins` if you
+    are **melodic** user.
+    Check the **kinetic-devel** branch of the repository, then copy and paste `robot_3_finger_gripper_articulated_gazebo_plugins` code into the old one,
+    and replace all the `3_finger` with `s_model` and `Robotiq3FGripper` with `SModel`
+    to make it compatible with Gazebo 9.
+
 
 13. ur_modern_driver
 
@@ -100,7 +106,7 @@
 
         git clone -b $ROS_DISTRO$-devel https://github.com/ros-industrial/ur_modern_driver.git
 
-    Note: we use **kinect-devel** branch here. And compile it from scratch.
+    Note: we use **kinetic-devel** branch here. And compile it from scratch.
 
 14. interactive_marker_twist_server
 
@@ -112,7 +118,7 @@
 
         git clone -b $ROS_DISTRO$-devel https://github.com/ros-visualization/interactive_marker_twist_server.git
 
-    Note: we use **kinect-devel** branch here. And compile it from scratch.
+    Note: we use **kinetic-devel** branch here. And compile it from scratch.
 
 ## Step by Step
 

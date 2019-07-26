@@ -13,3 +13,6 @@
 [submodule "src/interactive_marker_twist_server"]
 	path = src/interactive_marker_twist_server
 	url = https://github.com/ros-visualization/interactive_marker_twist_server.git
+[submodule "src/realsense-ros"]
+	path = src/realsense-ros
+	url = https://github.com/IntelRealSense/realsense-ros.git

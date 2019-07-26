@@ -1,29 +1,29 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="model" default="$(find bulldog_description)/urdf/bulldog_gazebo_robot.xacro" />
+    <arg name="model" default="$(find bulldog_description)/urdf/bulldog_robot.xacro" />
     <arg name="rviz_config" default="$(find bulldog_description)/rviz/bulldog.rviz" />
     <arg name="kinematic_param" default="$(find bulldog_description)/config/kinematics.yaml" />
-    <arg name="semantic_model" default="$(find bulldog_description)/config/bulldog_gazebo_robot.srdf" />
-    <arg name="use_gui" default="true" />
+    <arg name="semantic_model" default="$(find bulldog_description)/config/bulldog_robot.srdf" />
+    <arg name="use_gui" default="false" />
 
-    <arg name="laser_enabled" default="true"/>
-    <arg name="ur5_enabled" default="false"/>
-    <arg name="kinect_enabled" default="true"/>
-    <arg name="robotiq_grippers_enabled" default="true"/>
-    <arg name="dual_ur5_enabled" default="true"/>
+    <arg name="laser_enabled" default="$(optenv BULLDOG_LMS1XX_ENABLED true)"/>
+    <arg name="ur5_enabled" default="$(optenv BULLDOG_UR5_ENABLED false)"/>
+    <arg name="kinect_enabled" default="$(optenv BULLDOG_KINECT_ENABLED true)"/>
+    <arg name="realsense_enabled" default="$(optenv BULLDOG_REALSENSE_ENABLED true)"/>
+    <arg name="dual_ur5_enabled" default="$(optenv BULLDOG_DUAL_UR5_ENABLED true)"/>
+    <arg name="robotiq_grippers_enabled" default="$(optenv ROBOTIQ_GRIPPERS_ENABLED true)"/>
 
     <!-- Robot description URDF -->
     <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model) 
                                              laser_enabled:=$(arg laser_enabled)
                                              ur5_enabled:=$(arg ur5_enabled)
                                              kinect_enabled:=$(arg kinect_enabled)
+                                             realsense_enabled:=$(arg realsense_enabled)
                                              dual_ur5_enabled:=$(arg dual_ur5_enabled)
                                              robotiq_grippers_enabled:=$(arg robotiq_grippers_enabled)" />
 
-
     <!-- The semantic description that corresponds to the URDF -->
     <param name="robot_description_semantic" textfile="$(arg semantic_model)" />
-
 
     <!-- joint state publisher -->
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
@@ -34,6 +34,6 @@
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
 
     <!-- rviz -->
-    <node name="rviz" pkg="rviz" type="rviz" args="$(arg rviz_config)" output="screen">
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_config)" output="screen">
     </node>
 </launch>
