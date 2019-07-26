@@ -130,8 +130,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   <!-- Spawn robot in gazebo -->
   <!-- <node name="spawn_bulldog_model" pkg="gazebo_ros" type="spawn_model"
     args="-unpause -file 'rosparam get /robot_description' -urdf -model bulldog"/> -->
-<!-- 
-  <node name="spawn_bulldog_model" pkg="gazebo_ros" type="spawn_model"
+
+  <!-- <node name="spawn_bulldog_model" pkg="gazebo_ros" type="spawn_model"
     args="-unpause -urdf -param robot_description -model bulldog" 
     respawn="false" output="screen" /> -->
 
