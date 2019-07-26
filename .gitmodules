@@ -15,4 +15,4 @@
 	url = https://github.com/ros-visualization/interactive_marker_twist_server.git
 [submodule "src/realsense-ros"]
 	path = src/realsense-ros
-	url = https://github.com/IntelRealSense/realsense-ros.git
+	url = https://github.com/YeeCY/realsense-ros.git

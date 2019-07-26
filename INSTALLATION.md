@@ -54,7 +54,26 @@
 
         sudo apt-get install ros-$ROS_DISTRO$-twist-mux
 
-10. lms1xx
+----
+
+You can run
+
+    git submodule init
+    git submodule update
+
+to clone all the following repository at once!
+
+10. realsense-ros
+
+    https://github.com/IntelRealSense/realsense-ros
+
+    Follow the documentation to install realsense wrappers for ROS.
+
+    Note: I have modify the code from official repository. If you have
+    any question, feel free to contact me.
+
+
+11.  lms1xx
 
     redirect into bulldog workspace.
 
@@ -66,7 +85,7 @@
 
     Note: we use **melodic-devel** branch here. And compile it from scratch.
 
-11. universal_robot
+12.  universal_robot
 
     redirect into bulldog workspace.
 
@@ -78,7 +97,7 @@
 
     Note: we use **melodic-devel** branch here. And compile it from scratch.
 
-12. robotiq
+13.  robotiq
 
     redirect into bulldog workspace.
 
@@ -88,15 +107,9 @@
 
         git clone -b $ROS_DISTRO$-devel https://github.com/ros-industrial/robotiq.git
     
-    Note: we use **indigo-devel** branch here. And compile it from scratch. 
-    There will be some problems with `robotiq_s_model_articulated_gazebo_plugins` if you
-    are **melodic** user.
-    Check the **kinetic-devel** branch of the repository, then copy and paste `robot_3_finger_gripper_articulated_gazebo_plugins` code into the old one,
-    and replace all the `3_finger` with `s_model` and `Robotiq3FGripper` with `SModel`
-    to make it compatible with Gazebo 9.
+    Note: we use **kinetic-devel** branch here. And compile it from scratch. 
 
-
-13. ur_modern_driver
+14.  ur_modern_driver
 
     redirect into bulldog workspace
 
@@ -108,7 +121,7 @@
 
     Note: we use **kinetic-devel** branch here. And compile it from scratch.
 
-14. interactive_marker_twist_server
+15.  interactive_marker_twist_server
 
     redirect into bulldog workspace
 
