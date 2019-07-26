@@ -44,21 +44,20 @@ This serves as an example for publishing messages on the 'SModelRobotOutput' top
 
 import roslib; roslib.load_manifest('robotiq_s_model_control')
 import rospy
-from robotiq_s_model_control.msg import _SModel_robot_output  as outputMsg
-from time import sleep
+from robotiq_s_model_articulated_msgs.msg import SModelRobotOutput
 
 def genCommand(char, command):
     """Update the command according to the character entered by the user."""    
         
     if char == 'a':
-        command = outputMsg.SModel_robot_output();
+        command = SModelRobotOutput()
         command.rACT = 1
         command.rGTO = 1
         command.rSPA = 255
         command.rFRA = 150
 
     if char == 'r':
-        command = outputMsg.SModel_robot_output();
+        command = SModelRobotOutput()
         command.rACT = 0
 
     if char == 'c':
@@ -139,7 +138,7 @@ def askForCommand(command):
 ##    currentCommand += ', rSPS = ' + str(command.rSPS)
 ##    currentCommand += ', rFRS = ' + str(command.rFRS)
 
-    print currentCommand
+    print(currentCommand)
 
     strAskForCommand  = '-----\nAvailable commands\n\n'
     strAskForCommand += 'r: Reset\n'
@@ -164,10 +163,11 @@ def publisher():
     """Main loop which requests new commands and publish them on the SModelRobotOutput topic."""
 
     rospy.init_node('SModelSimpleController')
-    
-    pub = rospy.Publisher('SModelRobotOutput', outputMsg.SModel_robot_output, queue_size=1)
+    topic = rospy.get_param('~topic', default='SModelRobotOutput')
 
-    command = outputMsg.SModel_robot_output();
+    pub = rospy.Publisher(topic, SModelRobotOutput, queue_size=1)
+
+    command = SModelRobotOutput()
 
     while not rospy.is_shutdown():
 

@@ -193,17 +193,17 @@ def main():
 	# rospy.loginfo("transformed pc")
 	# pc2 = pc_transform_res.out_cloud
 
-	# cloud_transformed = cloud_transformation(
-	# 	"cloud_transform_server/transformation",
-	# 	cloud
-	# )
+	cloud_transformed = cloud_transformation(
+		"cloud_transform_server/transformation",
+		cloud
+	)
 	
-	# detection = mask_rcnn_detection("mask_rcnn/detection", image)
+	detection = mask_rcnn_detection("mask_rcnn/detection", image)
 
-	# cloud_indexed = process_cloud(cloud_transformed, detection)
+	cloud_indexed = process_cloud(cloud_transformed, detection)
 
-	# grasp_configs = grasps_detection("detect_grasps_server/detect_grasps",
-	# 								 cloud_indexed)
+	grasp_configs = grasps_detection("detect_grasps_server/detect_grasps",
+									 cloud_indexed)
 
 	# get transform from camera to bask link
 	# listener = tf.TransformListener()
@@ -233,21 +233,21 @@ def main():
 	#
 	# interpret pose configuration
 	#
-	# grasp = grasp_configs.grasps[0]
-	# # pose_position = grasp.bottom
-	# pose_position = grasp.surface
-	# pose_rotation_matrix = np.array([
-	# 	[grasp.approach.x, grasp.binormal.x, grasp.axis.x, 0.0],
-	# 	[grasp.approach.y, grasp.binormal.y, grasp.axis.y, 0.0],
-	# 	[grasp.approach.z, grasp.binormal.z, grasp.axis.z, 0.0],
-	# 	[0.0, 0.0, 0.0, 1.0]
-	# ], dtype=np.float64)
+	grasp = grasp_configs.grasps[0]
+	# pose_position = grasp.bottom
+	pose_position = grasp.surface
+	pose_rotation_matrix = np.array([
+		[grasp.approach.x, grasp.binormal.x, grasp.axis.x, 0.0],
+		[grasp.approach.y, grasp.binormal.y, grasp.axis.y, 0.0],
+		[grasp.approach.z, grasp.binormal.z, grasp.axis.z, 0.0],
+		[0.0, 0.0, 0.0, 1.0]
+	], dtype=np.float64)
 
-	# print(pose_rotation_matrix)
-	# pose_quaternion = tf.transformations.quaternion_from_matrix(
-	# 	pose_rotation_matrix)
-	# pose_quaternion = Quaternion(x=pose_quaternion[0], y=pose_quaternion[1],
-	# 							 z=pose_quaternion[2], w=-pose_quaternion[3])
+	print(pose_rotation_matrix)
+	pose_quaternion = tf.transformations.quaternion_from_matrix(
+		pose_rotation_matrix)
+	pose_quaternion = Quaternion(x=pose_quaternion[0], y=pose_quaternion[1],
+								 z=pose_quaternion[2], w=-pose_quaternion[3])
 
 	current_pose = group.get_current_pose()
 	print("Current pose:")
@@ -256,15 +256,15 @@ def main():
 	target_pose = PoseStamped()
 	target_pose.header.stamp = rospy.get_time()
 	target_pose.header.frame_id = group.get_pose_reference_frame()
-	# target_pose.pose.position = pose_position
-	target_pose.pose.position.x = 0.9013942701
-	target_pose.pose.position.y = 0.120637695087
-	target_pose.pose.position.z = 0.616937744596
-	# target_pose.pose.orientation = pose_quaternion
-	target_pose.pose.orientation.x = -0.902275387317
-	target_pose.pose.orientation.y = 0.43088678254
-	target_pose.pose.orientation.z = -0.0135260673245
-	target_pose.pose.orientation.w = -0.00726302806104
+	target_pose.pose.position = pose_position
+	# target_pose.pose.position.x = 0.9013942701
+	# target_pose.pose.position.y = 0.120637695087
+	# target_pose.pose.position.z = 0.616937744596
+	target_pose.pose.orientation = pose_quaternion
+	# target_pose.pose.orientation.x = -0.902275387317
+	# target_pose.pose.orientation.y = 0.43088678254
+	# target_pose.pose.orientation.z = -0.0135260673245
+	# target_pose.pose.orientation.w = -0.00726302806104
 
 	# pose: 
 	# 	position: 
