@@ -4,19 +4,8 @@ project(gpd)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS 
-  cmake_modules 
-  eigen_conversions 
-  geometry_msgs 
-  message_generation 
-  roscpp
-  sensor_msgs 
-  std_msgs
-  pcl_ros
-)
-
-# Eigen3
-find_package(Eigen3)
+find_package(catkin REQUIRED COMPONENTS cmake_modules eigen_conversions geometry_msgs message_generation roscpp
+  sensor_msgs std_msgs mask_rcnn_ros)
 
 # PCL
 find_package(PCL REQUIRED)
@@ -34,36 +23,9 @@ find_library(GENERATOR_LIB grasp_candidates_generator)
 find_path(GENERATOR_LIB_INCLUDE_DIR gpg/grasp.h)
 include_directories(${GENERATOR_LIB_INCLUDE_DIR})
 
-# Caffe
-option(USE_CAFFE "use Caffe framework" ON)
-if(USE_CAFFE STREQUAL "ON")
-  find_package(Caffe)
-  include_directories(${Caffe_INCLUDE_DIRS})
-  add_definitions(${Caffe_DEFINITIONS})
-endif()
-
-# OpenVINO
-option(USE_OPENVINO "use OpenVINO toolkit" OFF)
-if(USE_OPENVINO STREQUAL "ON")
-  find_package(InferenceEngine 1.0)
-  if (NOT InferenceEngine_FOUND)
-    message(FATAL_ERROR "Please install OpenVINO https://software.intel.com/en-us/articles/OpenVINO-Install-Linux")
-  endif()
-  include_directories(${InferenceEngine_INCLUDE_DIRS})
-  link_directories(${InferenceEngine_LIBRARY_DIRS})
-  add_definitions(-DUSE_OPENVINO)
-  get_filename_component(MODELS_DIR "models/openvino" ABSOLUTE)
-  configure_file(include/gpd/openvino_classifier.h.in gpd/openvino_classifier.h)
-  include_directories(${CMAKE_CURRENT_BINARY_DIR})
-  set(classifier_src src/${PROJECT_NAME}/classifier.cpp src/${PROJECT_NAME}/openvino_classifier.cpp)
-  set(classifier_dep ${InferenceEngine_LIBRARIES})
-else()
-  set(classifier_src src/${PROJECT_NAME}/classifier.cpp src/${PROJECT_NAME}/caffe_classifier.cpp)
-  set(classifier_dep ${Caffe_LIBRARIES} ${OpenCV_LIBRARIES})
-endif()
-
 ## Set compiler optimization flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNDEBUG -O3 -fopenmp -flto -Wno-deprecated -Wenum-compare -std=c++11")
+set(CMAKE_CXX_FLAGS "-DNDEBUG -O3 -fopenmp -Wno-deprecated -Wenum-compare")
+#set(CMAKE_CXX_FLAGS "-DNDEBUG -march=native -O3 -fopenmp")
 # set(CMAKE_CXX_FLAGS "-DNDEBUG -O3 -fopenmp -flto -mavx -mfma -Wno-deprecated -Wenum-compare")
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -96,22 +58,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNDEBUG -O3 -fopenmp -flto -Wno-depreca
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-add_message_files(FILES 
-  CloudIndexed.msg 
-  CloudSamples.msg 
-  CloudSources.msg 
-  GraspConfig.msg 
-  GraspConfigList.msg
-  SamplesMsg.msg
-)
+add_message_files(FILES CloudIndexed.msg CloudSamples.msg CloudSources.msg GraspConfig.msg GraspConfigList.msg
+  SamplesMsg.msg)
 
 ## Generate services in the 'srv' folder
-add_service_files(DIRECTORY srv
- FILES
-   SetParameters.srv
-   DetectGrasps.srv
-   CloudTransform.srv
-)
+add_service_files(FILES detect_grasps.srv)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -121,11 +72,7 @@ add_service_files(DIRECTORY srv
 # )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(DEPENDENCIES 
-  geometry_msgs 
-  sensor_msgs 
-  std_msgs
-)
+generate_messages(DEPENDENCIES geometry_msgs sensor_msgs std_msgs)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -157,21 +104,9 @@ generate_messages(DEPENDENCIES
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS 
-    include
-  CATKIN_DEPENDS 
-    cmake_modules 
-    eigen_conversions 
-    geometry_msgs 
-    message_runtime 
-    roscpp 
-    sensor_msgs 
-    std_msgs
-    pcl_ros
-  DEPENDS 
-    EIGEN3 
-    OpenCV 
-    PCL
+INCLUDE_DIRS include
+CATKIN_DEPENDS cmake_modules eigen_conversions geometry_msgs message_runtime roscpp sensor_msgs std_msgs
+DEPENDS Eigen OpenCV PCL
 )
 
 ###########
@@ -183,20 +118,16 @@ catkin_package(
 include_directories(include ${catkin_INCLUDE_DIRS} ${PCL_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
 
 ## Declare a C++ library
-add_library(${PROJECT_NAME}_classifier ${classifier_src})
 add_library(${PROJECT_NAME}_clustering src/${PROJECT_NAME}/clustering.cpp)
-if(USE_CAFFE STREQUAL "ON")
-  add_library(${PROJECT_NAME}_data_generator src/${PROJECT_NAME}/data_generator.cpp)
-endif()
 add_library(${PROJECT_NAME}_grasp_detector src/${PROJECT_NAME}/grasp_detector.cpp)
+add_library(${PROJECT_NAME}_grasp_plotter src/${PROJECT_NAME}/grasp_plotter.cpp)
 add_library(${PROJECT_NAME}_learning src/${PROJECT_NAME}/learning.cpp)
 add_library(${PROJECT_NAME}_sequential_importance_sampling src/${PROJECT_NAME}/sequential_importance_sampling.cpp)
 add_library(${PROJECT_NAME}_grasp_image src/${PROJECT_NAME}/grasp_image.cpp)
 add_library(${PROJECT_NAME}_grasp_image_15_channels src/${PROJECT_NAME}/grasp_image_15_channels.cpp)
-
-## ----------
-add_library(${PROJECT_NAME}_grasp_plotter src/${PROJECT_NAME}/grasp_plotter.cpp)
-## ----------
+add_library(${PROJECT_NAME}_dense_layer src/${PROJECT_NAME}/dense_layer.cpp)
+add_library(${PROJECT_NAME}_conv_layer src/${PROJECT_NAME}/conv_layer.cpp)
+add_library(${PROJECT_NAME}_lenet src/${PROJECT_NAME}/lenet.cpp)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -205,75 +136,22 @@ add_library(${PROJECT_NAME}_grasp_plotter src/${PROJECT_NAME}/grasp_plotter.cpp)
 
 ## Declare C++ executables
 add_executable(${PROJECT_NAME}_detect_grasps src/nodes/grasp_detection_node.cpp)
+add_executable(${PROJECT_NAME}_detect_grasps_server src/nodes/grasp_detection_server.cpp)
 add_executable(${PROJECT_NAME}_generate_candidates src/nodes/generate_candidates.cpp)
 add_executable(${PROJECT_NAME}_create_grasp_images src/nodes/create_grasp_images.cpp)
-if(USE_CAFFE STREQUAL "ON")
-  add_executable(${PROJECT_NAME}_create_training_data src/nodes/create_training_data.cpp)
-endif()
 add_executable(${PROJECT_NAME}_classify_candidates src/nodes/classify_candidates.cpp)
-if(USE_CAFFE STREQUAL "ON")
-  add_executable(${PROJECT_NAME}_test_occlusion src/tests/test_occlusion.cpp)
-endif()
+add_executable(${PROJECT_NAME}_test_occlusion src/tests/test_occlusion.cpp)
+add_executable(${PROJECT_NAME}_test_grasp_image src/tests/test_grasp_image.cpp)
+add_executable(${PROJECT_NAME}_test_conv_layer src/tests/test_conv_layer.cpp)
+add_executable(${PROJECT_NAME}_test_lenet src/tests/test_lenet.cpp)
+add_executable(${PROJECT_NAME}_test_service src/tests/test_service.cpp)
 
-## ----------
-add_executable(${PROJECT_NAME}_detect_grasps_server src/nodes/grasp_detection_server.cpp)
-add_executable(${PROJECT_NAME}_cloud_transform_server src/nodes/cloud_transform_server.cpp)
-## ----------
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(grasp_candidates_classifier_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-## ----------
-add_dependencies(${PROJECT_NAME}_detect_grasps 
-  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
-  ${catkin_EXPORTED_TARGETS}
-)
-
-add_dependencies(${PROJECT_NAME}_generate_candidates 
-  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
-  ${catkin_EXPORTED_TARGETS}
-)
-
-add_dependencies(${PROJECT_NAME}_create_grasp_images 
-  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
-  ${catkin_EXPORTED_TARGETS}
-)
-
-if(USE_CAFFE STREQUAL "ON")
-  add_dependencies(${PROJECT_NAME}_create_training_data 
-    ${${PROJECT_NAME}_EXPORTED_TARGETS} 
-    ${catkin_EXPORTED_TARGETS}
-  )
-endif()
-
-add_dependencies(${PROJECT_NAME}_classify_candidates 
-  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
-  ${catkin_EXPORTED_TARGETS}
-)
-
-if(USE_CAFFE STREQUAL "ON")
-  add_dependencies(${PROJECT_NAME}_test_occlusion 
-    ${${PROJECT_NAME}_EXPORTED_TARGETS} 
-    ${catkin_EXPORTED_TARGETS}
-  )
-endif()
-
-add_dependencies(${PROJECT_NAME}_detect_grasps_server 
-  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
-  ${catkin_EXPORTED_TARGETS}
-)
-
-add_dependencies(${PROJECT_NAME}_cloud_transform_server 
-  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
-  ${catkin_EXPORTED_TARGETS}
-)
-## ----------
-
 ## Specify libraries to link a library or executable target against
-target_link_libraries(${PROJECT_NAME}_classifier
-                      ${classifier_dep})
-
 target_link_libraries(${PROJECT_NAME}_clustering
                       ${GENERATOR_LIB})
 
@@ -282,20 +160,6 @@ target_link_libraries(${PROJECT_NAME}_create_grasp_images
                       ${GENERATOR_LIB}
                       ${catkin_LIBRARIES}
                       ${PCL_LIBRARIES})
-
-if(USE_CAFFE STREQUAL "ON")
-  target_link_libraries(${PROJECT_NAME}_create_training_data
-                      ${PROJECT_NAME}_data_generator)
-endif()
-
-if(USE_CAFFE STREQUAL "ON")
-  target_link_libraries(${PROJECT_NAME}_data_generator
-                        ${PROJECT_NAME}_learning
-                        ${GENERATOR_LIB}
-                        ${Caffe_LIBRARIES}
-                        ${catkin_LIBRARIES}
-                        ${PCL_LIBRARIES})
-endif()
 
 target_link_libraries(${PROJECT_NAME}_generate_candidates
                       ${GENERATOR_LIB}
@@ -310,12 +174,15 @@ target_link_libraries(${PROJECT_NAME}_classify_candidates
                       ${PCL_LIBRARIES})
 
 target_link_libraries(${PROJECT_NAME}_grasp_detector
-                      ${PROJECT_NAME}_classifier
                       ${PROJECT_NAME}_clustering
                       ${PROJECT_NAME}_learning
+                      ${PROJECT_NAME}_lenet
                       ${GENERATOR_LIB}
-                      ${catkin_LIBRARIES}
-                      ${classifier_dep})
+                      ${catkin_LIBRARIES})
+
+target_link_libraries(${PROJECT_NAME}_grasp_plotter                      
+                      ${GENERATOR_LIB}
+                      ${catkin_LIBRARIES})
 
 target_link_libraries(${PROJECT_NAME}_grasp_image
                       ${OpenCV_LIBRARIES})
@@ -329,31 +196,10 @@ target_link_libraries(${PROJECT_NAME}_learning
 
 target_link_libraries(${PROJECT_NAME}_detect_grasps
                       ${PROJECT_NAME}_grasp_detector
+                      ${PROJECT_NAME}_grasp_plotter
                       ${PROJECT_NAME}_sequential_importance_sampling
                       ${GENERATOR_LIB}
                       ${PCL_LIBRARIES})
-
-target_link_libraries(${PROJECT_NAME}_sequential_importance_sampling
-                      ${PROJECT_NAME}_grasp_detector)
-
-if(USE_CAFFE STREQUAL "ON")
-  target_link_libraries(${PROJECT_NAME}_test_occlusion
-                        ${PROJECT_NAME}_learning
-                        ${GENERATOR_LIB}
-                        ${catkin_LIBRARIES}
-                        ${PCL_LIBRARIES}
-                        ${Caffe_LIBRARIES})
-endif()
-
-target_link_libraries(${PROJECT_NAME}_learning
-                      ${GENERATOR_LIB}
-                      ${catkin_LIBRARIES}
-                      ${Caffe_LIBRARIES})
-
-## ----------
-target_link_libraries(${PROJECT_NAME}_grasp_plotter                      
-                      ${GENERATOR_LIB}
-                      ${catkin_LIBRARIES})
 
 target_link_libraries(${PROJECT_NAME}_detect_grasps_server
                       ${PROJECT_NAME}_grasp_detector
@@ -361,15 +207,58 @@ target_link_libraries(${PROJECT_NAME}_detect_grasps_server
                       ${GENERATOR_LIB}
                       ${PCL_LIBRARIES})
 
-target_link_libraries(${PROJECT_NAME}_cloud_transform_server
-                      ${catkin_LIBRARIES}
+target_link_libraries(${PROJECT_NAME}_sequential_importance_sampling
+                      ${PROJECT_NAME}_grasp_detector)
+
+target_link_libraries(${PROJECT_NAME}_test_occlusion
+                      ${PROJECT_NAME}_learning
                       ${GENERATOR_LIB}
-                      ${PCL_LIBRARIES})                      
-## ----------
+                      ${catkin_LIBRARIES}
+                      ${PCL_LIBRARIES})
+
+target_link_libraries(${PROJECT_NAME}_test_grasp_image
+                      ${PROJECT_NAME}_learning
+                      ${PROJECT_NAME}_lenet
+                      ${GENERATOR_LIB}
+                      ${catkin_LIBRARIES}
+                      ${PCL_LIBRARIES})
+
+target_link_libraries(${PROJECT_NAME}_test_conv_layer
+                      ${PROJECT_NAME}_conv_layer)
+
+target_link_libraries(${PROJECT_NAME}_lenet
+                      ${PROJECT_NAME}_conv_layer
+                      ${PROJECT_NAME}_dense_layer)
+
+target_link_libraries(${PROJECT_NAME}_test_lenet
+                      ${PROJECT_NAME}_lenet)
+
+target_link_libraries(${PROJECT_NAME}_test_service
+                      ${catkin_LIBRARIES}
+                      ${PCL_LIBRARIES})
+
+target_link_libraries(${PROJECT_NAME}_learning
+                      ${GENERATOR_LIB}
+                      ${catkin_LIBRARIES})
+
+add_dependencies(${PROJECT_NAME}_detect_grasps ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(${PROJECT_NAME}_detect_grasps_server ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(${PROJECT_NAME}_generate_candidates ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(${PROJECT_NAME}_create_grasp_images ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(${PROJECT_NAME}_classify_candidates ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(${PROJECT_NAME}_test_occlusion ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(${PROJECT_NAME}_test_grasp_image ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(${PROJECT_NAME}_test_conv_layer ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(${PROJECT_NAME}_test_lenet ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(${PROJECT_NAME}_test_service ${PROJECT_NAME}_generate_messages_cpp)
 
 # Rename targets to simplify their names.
 set_target_properties(${PROJECT_NAME}_detect_grasps
                       PROPERTIES OUTPUT_NAME detect_grasps
+                      PREFIX "")
+
+set_target_properties(${PROJECT_NAME}_detect_grasps_server
+                      PROPERTIES OUTPUT_NAME detect_grasps_server
                       PREFIX "")
 
 set_target_properties(${PROJECT_NAME}_classify_candidates
@@ -380,23 +269,22 @@ set_target_properties(${PROJECT_NAME}_create_grasp_images
                       PROPERTIES OUTPUT_NAME create_grasp_images
                       PREFIX "")
 
-if(USE_CAFFE STREQUAL "ON")
-  set_target_properties(${PROJECT_NAME}_create_training_data
-                      PROPERTIES OUTPUT_NAME create_training_data
+set_target_properties(${PROJECT_NAME}_test_occlusion
+                      PROPERTIES OUTPUT_NAME test_occlusion
                       PREFIX "")
-endif()
 
-if(USE_CAFFE STREQUAL "ON")
-  set_target_properties(${PROJECT_NAME}_test_occlusion
-                        PROPERTIES OUTPUT_NAME test_occlusion
-                        PREFIX "")
-endif()
+set_target_properties(${PROJECT_NAME}_test_grasp_image
+                      PROPERTIES OUTPUT_NAME test_grasp_image
+                      PREFIX "")
 
-## ----------
-set_target_properties(${PROJECT_NAME}_detect_grasps_server
-                      PROPERTIES OUTPUT_NAME detect_grasps_server
+set_target_properties(${PROJECT_NAME}_test_conv_layer
+                      PROPERTIES OUTPUT_NAME test_conv_layer
                       PREFIX "")
-set_target_properties(${PROJECT_NAME}_cloud_transform_server
-                      PROPERTIES OUTPUT_NAME cloud_transform_server
+
+set_target_properties(${PROJECT_NAME}_test_lenet
+                      PROPERTIES OUTPUT_NAME test_lenet
                       PREFIX "")
-## ----------
+
+set_target_properties(${PROJECT_NAME}_test_service
+                      PROPERTIES OUTPUT_NAME test_service
+                      PREFIX "")

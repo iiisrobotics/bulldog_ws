@@ -63,10 +63,10 @@ int main(int argc, char** argv){
 	move_group.setPoseTarget(target_pose1);
 	ROS_INFO("start planning");
 	moveit::planning_interface::MoveGroup::Plan my_plan;
-	success = move_group.plan(my_plan);
+	success = static_cast<bool>(move_group.plan(my_plan));
 	getchar();
 	if(success){
-		ex = move_group.execute(my_plan);
+		ex = static_cast<bool>(move_group.execute(my_plan));
 		if(!ex){
 			ROS_INFO("exe failed!");
 		}

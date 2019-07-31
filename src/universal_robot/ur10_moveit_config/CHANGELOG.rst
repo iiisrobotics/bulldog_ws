@@ -2,15 +2,21 @@
 Changelog for package ur10_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.1.11 (2018-01-06)
--------------------
-* Merge pull request `#321 <https://github.com//ros-industrial/universal_robot/issues/321>`_ from gavanderhoorn/bp_266_indigo-devel
-  Backport `#266 <https://github.com//ros-industrial/universal_robot/issues/266>`_ to Indigo.
-* Reduce longest valid segment fraction to accomodate non-limited version of the UR5 (`#266 <https://github.com//ros-industrial/universal_robot/issues/266>`_)
-* Contributors: G.A. vd. Hoorn, Scott Paulin
+1.2.5 (2019-04-05)
+------------------
+* Update maintainer listing: add Miguel (`#410 <https://github.com/ros-industrial/universal_robot/issues/410>`_)
+* MoveGroupExecuteService is Deprecated by MoveIt! (`#391 <https://github.com/ros-industrial/universal_robot/issues/391>`_)
+* Update maintainer and author information.
+* Add roslaunch tests (`#362 <https://github.com/ros-industrial/universal_robot/issues/362>`_)
+* Contributors: gavanderhoorn, Nadia Hammoudeh García, 薯片半价
 
-1.1.10 (2017-08-04)
--------------------
+1.2.1 (2018-01-06)
+------------------
+* Reduce longest valid segment fraction to accomodate non-limited version of the UR5 (`#266 <https://github.com//ros-industrial/universal_robot/issues/266>`_)
+* Contributors: Scott Paulin
+
+1.2.0 (2017-08-04)
+------------------
 * Fix Deprecated warning in MoveIt: parameter moved into namespace 'trajectory_execution'
 * Contributors: Dave Coleman
 

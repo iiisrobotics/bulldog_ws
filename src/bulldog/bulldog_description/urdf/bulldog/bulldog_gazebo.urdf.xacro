@@ -6,9 +6,9 @@
   <xacro:include filename="$(find bulldog_description)/urdf/accessories/plates.urdf.xacro" />
   <xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />
   <xacro:include filename="$(find lms1xx)/urdf/sick_lms1xx.urdf.xacro" />
-  <xacro:include filename="$(find robotiq_s_model_visualization)/cfg/s-model_articulated_macro.xacro" />
+  <xacro:include filename="$(find robotiq_3f_gripper_visualization)/cfg/robotiq-3f-gripper_articulated_macro.xacro" />
   <xacro:include filename="$(find bulldog_description)/urdf/sensors/kinect_camera.urdf.xacro" />
-  <xacro:include filename="$(find realsense2_camera)/urdf/_d415.urdf.xacro" />
+  <xacro:include filename="$(find realsense2_description)/urdf/_d415.urdf.xacro" />
 
   <xacro:property name="wheel_length" value="0.142" />
   <xacro:property name="wheel_radius" value="0.183" />
@@ -101,14 +101,14 @@
         <origin xyz="0 -0.15945 0.09069" rpy="-0.785 0 ${pi}" />
         </joint>
 
-        <xacro:s-model_articulated prefix="left_gripper_"/>
+        <xacro:robotiq-3f-gripper_articulated prefix="left_gripper_"/>
         <joint name="left_arm_gripper" type="fixed">
             <parent link="left_arm_ee_link" />
             <child link="left_gripper_palm" />
             <origin xyz="0 0 0" rpy="0 0 -1.57" />
         </joint>
 
-        <xacro:s-model_articulated prefix="right_gripper_"/>
+        <xacro:robotiq-3f-gripper_articulated prefix="right_gripper_"/>
         <joint name="right_arm_gripper" type="fixed">
             <parent link="right_arm_ee_link" />
             <child link="right_gripper_palm" />

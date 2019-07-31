@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(bulldog_motion)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -19,7 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   object_recognition_msgs
   tf
-  robotiq_s_model_control
+  robotiq_3f_gripper_control
   rospy
   message_generation
 )

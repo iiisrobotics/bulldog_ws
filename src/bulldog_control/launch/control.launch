@@ -4,7 +4,7 @@
   <rosparam command="load" file="$(find bulldog_control)/config/control.yaml" />
 
   <node name="base_controller_spawner" pkg="controller_manager" type="spawner" 
-    args="bulldog_joint_publisher bulldog_velocity_controller --shutdown-timeout 3"/>
+    args="bulldog_joint_publisher bulldog_velocity_controller"/>
 
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
     <rosparam command="load" file="$(find bulldog_control)/config/localization.yaml" />

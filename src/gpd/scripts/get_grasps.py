@@ -14,7 +14,9 @@ def callback(msg):
 rospy.init_node('get_grasps')
 
 # Subscribe to the ROS topic that contains the grasps.
-sub = rospy.Subscriber('/detect_grasps/clustered_grasps', GraspConfigList, callback)
+sub = rospy.Subscriber('/detect_grasps/clustered_grasps',
+                       GraspConfigList,
+                       callback)
 
 # Wait for grasps to arrive.
 rate = rospy.Rate(1)

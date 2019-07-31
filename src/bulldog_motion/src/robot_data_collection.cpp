@@ -118,7 +118,7 @@ int main(int argc, char **argv){
 		target_pose = group.getRandomPose();
 		group.setPoseTarget(target_pose);
 
-		success = group.plan(my_plan);
+		success = static_cast<bool>(group.plan(my_plan));
 
 		if(success){
 			//save start joint angle

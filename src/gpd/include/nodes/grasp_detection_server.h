@@ -45,7 +45,7 @@
 #include <gpg/cloud_camera.h>
 
 // this project (services)
-#include <gpd/DetectGrasps.h>
+#include <gpd/detect_grasps.h>
 
 // this project (headers)
 #include "../gpd/grasp_detector.h"
@@ -77,7 +77,7 @@ public:
    * \param req the service request
    * \param res the service response
    */
-  bool detectGrasps(gpd::DetectGrasps::Request& req, gpd::DetectGrasps::Response& res);
+  bool detectGrasps(gpd::detect_grasps::Request& req, gpd::detect_grasps::Response& res);
 
 
 private:

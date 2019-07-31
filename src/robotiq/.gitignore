@@ -35,3 +35,7 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+*.autosave
+
+CATKIN_IGNORE
+*.user
