@@ -151,7 +151,7 @@ def process_cloud(cloud_transformed, detection):
 				cloud_indexed.indices = [Int64(idx) for idx in one_index]
 				break
 		else:
-			rospy.logfatal("No bottle found!")
+			rospy.logfatal("No bottle or cup found!")
 			raise SystemExit()
 	else:
 		rospy.logfatal("Detect nothing!")
@@ -233,9 +233,16 @@ def main():
 	#
 	# interpret pose configuration
 	#
-	grasp = grasp_configs.grasps[0]
-	# pose_position = grasp.bottom
-	pose_position = grasp.surface
+	# find the closest grasp first
+	pose_positions = [grasp.bottom for grasp in grasp_configs.grasps]
+	positions = [[position.x, position.y, position.z]
+					  for position in pose_positions]
+	dist = np.linalg.norm(positions, axis=1)
+	min_dist_idx = np.argmin(dist)
+
+	# print(min_dist_idx)
+	grasp = grasp_configs.grasps[min_dist_idx]
+	pose_position = pose_positions[min_dist_idx]
 	pose_rotation_matrix = np.array([
 		[grasp.approach.x, grasp.binormal.x, grasp.axis.x, 0.0],
 		[grasp.approach.y, grasp.binormal.y, grasp.axis.y, 0.0],
@@ -257,27 +264,36 @@ def main():
 	target_pose.header.stamp = rospy.get_time()
 	target_pose.header.frame_id = group.get_pose_reference_frame()
 	target_pose.pose.position = pose_position
-	# target_pose.pose.position.x = 0.9013942701
-	# target_pose.pose.position.y = 0.120637695087
-	# target_pose.pose.position.z = 0.616937744596
+	# target_pose.pose.position.x = 0.81226748031
+	# target_pose.pose.position.y = 0.00989963778223
+	# target_pose.pose.position.z = 0.467501767581
 	target_pose.pose.orientation = pose_quaternion
-	# target_pose.pose.orientation.x = -0.902275387317
-	# target_pose.pose.orientation.y = 0.43088678254
-	# target_pose.pose.orientation.z = -0.0135260673245
-	# target_pose.pose.orientation.w = -0.00726302806104
+	# target_pose.pose.orientation.x = 0.848927211273
+	# target_pose.pose.orientation.y = 0.528492369976
+	# target_pose.pose.orientation.z = 0.00399167473541
+	# target_pose.pose.orientation.w = -0.00157205941038
 
 	# pose: 
 	# 	position: 
-	# 		x: 0.9013942701
-	# 		y: 0.120637695087
-	# 		z: 0.416937744596
+	# 		x: 0.81226748031
+	# 		y: 0.00989963778223
+	# 		z: 0.467501767581
 	# 	orientation: 
-	# 		x: 0.902275387317
-	# 		y: 0.43088678254
-	# 		z: 0.0135260673245
-	# 		w: -0.00726302806104
+	# 		x: 0.848927211273
+	# 		y: 0.528492369976
+	# 		z: 0.00399167473541
+	# 		w: -0.00157205941038
 
-
+	# pose: 
+	# 	position: 
+	# 		x: 0.863075949343
+	# 		y: 0.0752093873621
+	# 		z: 0.46135636413
+	# 	orientation: 
+	# 		x: 0.848756802221
+	# 		y: 0.528763711841
+	# 		z: 0.00431671795937
+	# 		w: -0.00148110459685
 
 	print("End effector frame: %s" % group.get_end_effector_link())
 
