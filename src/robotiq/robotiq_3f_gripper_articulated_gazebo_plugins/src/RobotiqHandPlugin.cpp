@@ -98,9 +98,9 @@ void RobotiqHandPlugin::Load(gazebo::physics::ModelPtr _parent,
   // Load the vector of all joints.
   std::string prefix;
   if (this->side == "left")
-    prefix = "l_";
+    prefix = "left_gripper_";
   else
-    prefix = "r_";
+    prefix = "right_gripper_";
 
   // Load the vector of all joints.
   if (!this->FindJoints())
@@ -843,9 +843,9 @@ bool RobotiqHandPlugin::FindJoints()
   std::string prefix;
   std::string suffix;
   if (this->side == "left")
-    prefix = "l_";
+    prefix = "left_gripper_";
   else
-    prefix = "r_";
+    prefix = "right_gripper_";
 
   // palm_finger_1_joint (actuated).
   suffix = "palm_finger_1_joint";

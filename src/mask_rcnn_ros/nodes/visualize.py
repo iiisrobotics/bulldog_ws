@@ -21,7 +21,9 @@ import IPython.display
 
 import utils
 import sys
-sys.path.remove('/opt/ros/indigo/lib/python2.7/dist-packages')
+
+# remove through environment variable instead of hardcoding
+sys.path.remove('/opt/ros/kinetic/lib/python2.7/dist-packages')
 
 ############################################################
 #  Visualization
