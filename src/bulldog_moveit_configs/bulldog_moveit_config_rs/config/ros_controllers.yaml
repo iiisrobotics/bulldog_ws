@@ -9,6 +9,7 @@ generic_hw_control_loop:
 # Settings for ros_control hardware interface
 hardware_interface:
   joints:
+    - world_base_joint
     - front_left_wheel_joint
     - front_right_wheel_joint
     - left_arm_shoulder_pan_joint

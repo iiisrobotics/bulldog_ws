@@ -23,7 +23,7 @@ OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTE
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
-<robot name="bulldog_gazebo_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="bulldog_robot" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:include filename="$(find bulldog_gazebo)/urdf/accessories/kinect_camera.gazebo.xacro"/>
   <xacro:include filename="$(find bulldog_gazebo)/urdf/accessories/realsense_d415_camera.gazebo.xacro"/>
@@ -94,6 +94,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       </gazebo>
     </xacro:if>
 
+    <!-- dual ur5 arms -->
     <xacro:if value="$(arg dual_ur5_enabled)">
       <gazebo>
         <plugin name="gazebo_grasp_fix" filename="libgazebo_grasp_fix.so">

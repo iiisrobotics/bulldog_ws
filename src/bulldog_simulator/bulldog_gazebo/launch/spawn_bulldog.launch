@@ -122,7 +122,13 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     </node>
   </group>
 
-  <!-- publish robot state -->
+  <!-- publish robot state (tf transforms) -->
+  <!-- do not use robot_state_publisher in case we have passive joint in the URDF -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="false"/>
+    <rosparam param="/source_list">[/joint_states]</rosparam>
+  </node>
+
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
     <param name="publish_frequency" value="50.0" />
   </node>

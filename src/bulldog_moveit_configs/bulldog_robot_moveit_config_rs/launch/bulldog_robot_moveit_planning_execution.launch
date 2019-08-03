@@ -1,0 +1,31 @@
+<launch>
+  <!-- The planning and execution components of MoveIt! configured to run -->
+  <arg name="debug" default="false" />
+
+  <!-- Non-standard joint names:
+       - Create a file [robot_moveit_config]/config/joint_names.yaml
+           controller_joint_names: [joint_1, joint_2, ... joint_N] 
+       - Update with joint names for your robot (in order expected by rbt controller)
+       - and uncomment the following line: -->
+  <!-- <rosparam command="load" file="$(find bulldog_moveit_config_rs)/config/joint_names.yaml"/> -->
+
+  <!-- If needed, broadcast static tf for robot root -->
+  <node pkg="tf" type="static_transform_publisher" name="virtual_joint_broadcaster_0" 
+    args="0 0 0 0 0 0 odom base_link 100" />
+
+
+  <!-- Run the main MoveIt! executable without trajectory execution (we do not have controllers configured by default) -->
+  <include file="$(find bulldog_robot_moveit_config_rs)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="fake_execution" value="false"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+  <!-- Run Rviz and load the default config to see the state of the move_group node -->
+  <include file="$(find bulldog_robot_moveit_config_rs)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+</launch>

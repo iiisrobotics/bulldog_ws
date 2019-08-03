@@ -1,3 +1,4 @@
+# The name of this file shouldn't be changed, or else the Setup Assistant won't detect it
 sensors: 
   - sensor_plugin: occupancy_map_monitor/PointCloudOctomapUpdater
     point_cloud_topic: left_gripper_sensor_d415_camera/depth/color/points
