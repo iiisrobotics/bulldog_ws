@@ -738,6 +738,16 @@ there are multiple hands then a prefix followed by an "_" is needed.
         <mu1>1.1</mu1>
         <mu2>1.1</mu2>
       </gazebo>
+
+      <!-- Link tool0 -->
+      <link name="${prefix}tool0"/>
+
+      <!-- Link inertial -->
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="1.3"/>
+        <inertia ixx="0.006012" ixy="0.000079" ixz="-0.00024" iyy="0.012892" iyz="0" izz="0.002435" />
+      </inertial>
     <!-- End of link list -->
 
     <!-- Joint list -->
@@ -783,6 +793,17 @@ there are multiple hands then a prefix followed by an "_" is needed.
     </joint>
 
     <gazebo reference="${prefix}palm_finger_middle_joint">
+      <implicitSpringDamper>1</implicitSpringDamper>
+    </gazebo>
+
+    <!-- Joint palm_tool0 -->
+    <joint name="${prefix}palm_tool0" type="fixed">
+			<parent link="${prefix}palm"/>
+			<child link="${prefix}tool0"/>
+			<origin xyz="0.0 0.0875 0.0" rpy="0 0 1.5707"/>
+		</joint>
+
+    <gazebo reference="${prefix}palm_tool0">
       <implicitSpringDamper>1</implicitSpringDamper>
     </gazebo>
     <!-- end of joint list -->
