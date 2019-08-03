@@ -72,6 +72,24 @@
 
         sudo apt-get install ros-$ROS_DISTRO$-interactive-marker-twist-server
 
+13. gazebo-ros-pkgs
+
+    http://wiki.ros.org/gazebo_plugins
+
+        sudo apt-get install ros-$ROS_DISTRO$-gazebo-ros-pkgs
+
+14. gazebo-ros-control
+
+    http://wiki.ros.org/gazebo_ros_control
+
+        sudo apt-get install ros-$ROS_DISTRO$-gazebo-ros-control
+
+15. ros-controllers
+
+    http://wiki.ros.org/ros_controllers
+
+        sudo apt-get install ros-$ROS_DISTRO$-ros-controllers
+
 ----
 
 You can run
@@ -81,7 +99,7 @@ You can run
 
 to clone all the following repository at once!
 
-13. realsense-ros
+16. realsense-ros
 
     https://github.com/IntelRealSense/realsense-ros
 
@@ -90,7 +108,7 @@ to clone all the following repository at once!
     Note: I have modify the code from official repository. If you have
     any question, feel free to contact me.
 
-14.  universal_robot
+17.  universal_robot
 
     redirect into bulldog workspace.
 
@@ -102,7 +120,7 @@ to clone all the following repository at once!
 
     Note: we use **melodic-devel** branch here. And compile it from scratch.
 
-15.  robotiq
+18.  robotiq
 
     redirect into bulldog workspace.
 
@@ -114,7 +132,7 @@ to clone all the following repository at once!
     
     Note: we use **kinetic-devel** branch here. And compile it from scratch. 
 
-16.  ur_modern_driver
+19.  ur_modern_driver
 
     redirect into bulldog workspace
 
@@ -166,6 +184,11 @@ to clone all the following repository at once!
     need to add prefix parameter to the macro descrpiton and modify the defintion of
     "aluminum" material.
 
+3. No p gain specified for pid.
+
+    This kind of errors are bugs of Gazebo7. It has been removed in Gazebo9 with ROS Melodic.
+    **Just ignore them!!!**
+
 2. mask_rcnn_ros incompatible with Keras >= 2.0.8
 
         cd <workspace>/src/mask_rcnn_ros/node
@@ -206,14 +229,18 @@ to clone all the following repository at once!
         mv gpd_mask_test.py~ gpd_mask_test.py
 
 
-5. Mask RCNN
+5. mask_rcnn_ros incompatible with Keras >= 2.0.8
 
-    Add suffix.
+        cd <workspace>/src/mask_rcnn_ros/node
+        vim model.py
 
-        roscd mask_rcnn_ros/nodes
-        mv mask_rcnn_node mask_rcnn_node.py
+    Type the following command to replace all 'topology' with 'saving'
 
-    Add 'mask_rcnn_service' node.
+        :%s/topology/saving/g
+    
+    Save and quit
+
+        :wq
 
 6. ur_modern_driver
 

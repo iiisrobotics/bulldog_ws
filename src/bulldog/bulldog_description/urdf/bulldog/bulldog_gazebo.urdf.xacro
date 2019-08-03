@@ -101,6 +101,8 @@
         <origin xyz="0 -0.15945 0.09069" rpy="-0.785 0 ${pi}" />
         </joint>
 
+        <!-- If you modify the name of the grippers, remember to change the *prefix* in line 
+           780 and 782 accordingly of $(find robotiq_s_model_articulated_gazebo_plugins)/src/RobotiqHandPlugin.cpp. -->
         <xacro:robotiq-3f-gripper_articulated prefix="left_gripper_"/>
         <joint name="left_arm_gripper" type="fixed">
             <parent link="left_arm_ee_link" />
