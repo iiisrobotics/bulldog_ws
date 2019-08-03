@@ -1,0 +1,180 @@
+# MoveIt-specific simulation settings
+moveit_sim_hw_interface:
+  joint_model_group: controllers_initial_group_
+  joint_model_group_pose: controllers_initial_pose_
+# Settings for ros_control control loop
+generic_hw_control_loop:
+  loop_hz: 300
+  cycle_time_error_threshold: 0.01
+# Settings for ros_control hardware interface
+hardware_interface:
+  joints:
+    - world_joint
+    - front_left_wheel_joint
+    - front_right_wheel_joint
+    - left_arm_shoulder_pan_joint
+    - left_arm_shoulder_lift_joint
+    - left_arm_elbow_joint
+    - left_arm_wrist_1_joint
+    - left_arm_wrist_2_joint
+    - left_arm_wrist_3_joint
+    - left_gripper_palm_finger_1_joint
+    - left_gripper_finger_1_joint_1
+    - left_gripper_finger_1_joint_2
+    - left_gripper_finger_1_joint_3
+    - left_gripper_finger_1_joint_paradistal_hinge
+    - left_gripper_finger_1_joint_median_actuating_hinge
+    - left_gripper_finger_1_joint_median_actuating_hinge_median_bar
+    - left_gripper_finger_1_joint_paramedian_hinge
+    - left_gripper_finger_1_joint_paramedian_hinge_median_bar_underactuated
+    - left_gripper_finger_1_joint_paraproximal_actuating_hinge
+    - left_gripper_finger_1_joint_paraproximal_bar
+    - left_gripper_finger_1_joint_proximal_actuating_hinge
+    - left_gripper_finger_1_joint_proximal_actuating_bar
+    - left_gripper_palm_finger_2_joint
+    - left_gripper_finger_2_joint_1
+    - left_gripper_finger_2_joint_2
+    - left_gripper_finger_2_joint_3
+    - left_gripper_finger_2_joint_paradistal_hinge
+    - left_gripper_finger_2_joint_median_actuating_hinge
+    - left_gripper_finger_2_joint_median_actuating_hinge_median_bar
+    - left_gripper_finger_2_joint_paramedian_hinge
+    - left_gripper_finger_2_joint_paramedian_hinge_median_bar_underactuated
+    - left_gripper_finger_2_joint_paraproximal_actuating_hinge
+    - left_gripper_finger_2_joint_paraproximal_bar
+    - left_gripper_finger_2_joint_proximal_actuating_hinge
+    - left_gripper_finger_2_joint_proximal_actuating_bar
+    - left_gripper_palm_finger_middle_joint
+    - left_gripper_finger_middle_joint_1
+    - left_gripper_finger_middle_joint_2
+    - left_gripper_finger_middle_joint_3
+    - left_gripper_finger_middle_joint_paradistal_hinge
+    - left_gripper_finger_middle_joint_median_actuating_hinge
+    - left_gripper_finger_middle_joint_median_actuating_hinge_median_bar
+    - left_gripper_finger_middle_joint_paramedian_hinge
+    - left_gripper_finger_middle_joint_paramedian_hinge_median_bar_underactuated
+    - left_gripper_finger_middle_joint_paraproximal_actuating_hinge
+    - left_gripper_finger_middle_joint_paraproximal_bar
+    - left_gripper_finger_middle_joint_proximal_actuating_hinge
+    - left_gripper_finger_middle_joint_proximal_actuating_bar
+    - right_arm_shoulder_pan_joint
+    - right_arm_shoulder_lift_joint
+    - right_arm_elbow_joint
+    - right_arm_wrist_1_joint
+    - right_arm_wrist_2_joint
+    - right_arm_wrist_3_joint
+    - right_gripper_palm_finger_1_joint
+    - right_gripper_finger_1_joint_1
+    - right_gripper_finger_1_joint_2
+    - right_gripper_finger_1_joint_3
+    - right_gripper_finger_1_joint_paradistal_hinge
+    - right_gripper_finger_1_joint_median_actuating_hinge
+    - right_gripper_finger_1_joint_median_actuating_hinge_median_bar
+    - right_gripper_finger_1_joint_paramedian_hinge
+    - right_gripper_finger_1_joint_paramedian_hinge_median_bar_underactuated
+    - right_gripper_finger_1_joint_paraproximal_actuating_hinge
+    - right_gripper_finger_1_joint_paraproximal_bar
+    - right_gripper_finger_1_joint_proximal_actuating_hinge
+    - right_gripper_finger_1_joint_proximal_actuating_bar
+    - right_gripper_palm_finger_2_joint
+    - right_gripper_finger_2_joint_1
+    - right_gripper_finger_2_joint_2
+    - right_gripper_finger_2_joint_3
+    - right_gripper_finger_2_joint_paradistal_hinge
+    - right_gripper_finger_2_joint_median_actuating_hinge
+    - right_gripper_finger_2_joint_median_actuating_hinge_median_bar
+    - right_gripper_finger_2_joint_paramedian_hinge
+    - right_gripper_finger_2_joint_paramedian_hinge_median_bar_underactuated
+    - right_gripper_finger_2_joint_paraproximal_actuating_hinge
+    - right_gripper_finger_2_joint_paraproximal_bar
+    - right_gripper_finger_2_joint_proximal_actuating_hinge
+    - right_gripper_finger_2_joint_proximal_actuating_bar
+    - right_gripper_palm_finger_middle_joint
+    - right_gripper_finger_middle_joint_1
+    - right_gripper_finger_middle_joint_2
+    - right_gripper_finger_middle_joint_3
+    - right_gripper_finger_middle_joint_paradistal_hinge
+    - right_gripper_finger_middle_joint_median_actuating_hinge
+    - right_gripper_finger_middle_joint_median_actuating_hinge_median_bar
+    - right_gripper_finger_middle_joint_paramedian_hinge
+    - right_gripper_finger_middle_joint_paramedian_hinge_median_bar_underactuated
+    - right_gripper_finger_middle_joint_paraproximal_actuating_hinge
+    - right_gripper_finger_middle_joint_paraproximal_bar
+    - right_gripper_finger_middle_joint_proximal_actuating_hinge
+    - right_gripper_finger_middle_joint_proximal_actuating_bar
+    - rear_left_wheel_joint
+    - rear_right_wheel_joint
+  sim_control_mode: 1  # 0: position, 1: velocity
+# Publish all joint states
+# Creates the /joint_states topic necessary in ROS
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+controller_list:
+  - name: left_arm_controller
+    action_ns: follow_joint_trajectory
+    default: True
+    type: FollowJointTrajectory
+    joints:
+      - left_arm_shoulder_pan_joint
+      - left_arm_shoulder_lift_joint
+      - left_arm_elbow_joint
+      - left_arm_wrist_1_joint
+      - left_arm_wrist_2_joint
+      - left_arm_wrist_3_joint
+  - name: right_arm_controller
+    action_ns: follow_joint_trajectory
+    default: True
+    type: FollowJointTrajectory
+    joints:
+      - right_arm_shoulder_pan_joint
+      - right_arm_shoulder_lift_joint
+      - right_arm_elbow_joint
+      - right_arm_wrist_1_joint
+      - right_arm_wrist_2_joint
+      - right_arm_wrist_3_joint
+left_arm_controller:
+  type: position_controllers/JointTrajectoryController
+  topic: "left"
+  joints:
+     - left_arm_shoulder_pan_joint
+     - left_arm_shoulder_lift_joint
+     - left_arm_elbow_joint
+     - left_arm_wrist_1_joint
+     - left_arm_wrist_2_joint
+     - left_arm_wrist_3_joint
+  constraints:
+      goal_time: 0.6
+      stopped_velocity_tolerance: 0.05
+      left_arm_shoulder_pan_joint: {trajectory: 0.1, goal: 0.1}
+      left_arm_shoulder_lift_joint: {trajectory: 0.1, goal: 0.1}
+      left_arm_elbow_joint: {trajectory: 0.1, goal: 0.1}
+      left_arm_wrist_1_joint: {trajectory: 0.1, goal: 0.1}
+      left_arm_wrist_2_joint: {trajectory: 0.1, goal: 0.1}
+      left_arm_wrist_3_joint: {trajectory: 0.1, goal: 0.1}
+  stop_trajectory_duration: 0.5
+  state_publish_rate: 25
+  action_monitor_rate: 10
+right_arm_controller:
+  type: position_controllers/JointTrajectoryController
+  topic: "right"
+  joints:
+     - right_arm_shoulder_pan_joint
+     - right_arm_shoulder_lift_joint
+     - right_arm_elbow_joint
+     - right_arm_wrist_1_joint
+     - right_arm_wrist_2_joint
+     - right_arm_wrist_3_joint
+  constraints:
+      goal_time: 0.6
+      stopped_velocity_tolerance: 0.05
+      right_arm_shoulder_pan_joint: {trajectory: 0.1, goal: 0.1}
+      right_arm_shoulder_lift_joint: {trajectory: 0.1, goal: 0.1}
+      right_arm_elbow_joint: {trajectory: 0.1, goal: 0.1}
+      right_arm_wrist_1_joint: {trajectory: 0.1, goal: 0.1}
+      right_arm_wrist_2_joint: {trajectory: 0.1, goal: 0.1}
+      right_arm_wrist_3_joint: {trajectory: 0.1, goal: 0.1}
+  stop_trajectory_duration: 0.5
+  state_publish_rate: 25
+  action_monitor_rate: 10
+
