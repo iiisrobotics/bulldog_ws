@@ -30,17 +30,13 @@
 
     http://wiki.ros.org/moveit_ros
     
-        sudo apt-get install ros-$ROS_DISTRO$-moveit-ros
+        sudo apt-get install ros-$ROS_DISTRO$-moveit
 
 6. openni2_camera
 
     http://wiki.ros.org/openni2_camera
 
-    sudo apt-get install ros-$ROS_DISTRO$-openni2-camera 
-
-6. QT5
-
-        sudo apt-get install qt4-default
+    sudo apt-get install ros-$ROS_DISTRO$-openni2-camera
 
 7. socketcan_interface
 
@@ -165,7 +161,15 @@ to clone all the following repository at once!
 
 ## Troubleshooting
 
-1. mask_rcnn_ros incompatible with Keras >= 2.0.8
+1. Gazebo hanging
+
+    If you wait the Gazebo to startup for a long time without response, that means you
+    don't have models to spawn the environment.
+
+    Go to https://bitbucket.org/osrf/gazebo_models, download all the models, and put them
+    into 
+
+2. mask_rcnn_ros incompatible with Keras >= 2.0.8
 
         cd <workspace>/src/mask_rcnn_ros/node
         vim model.py
@@ -178,7 +182,7 @@ to clone all the following repository at once!
 
         :wq
 
-2. Imported target "opencv_xphoto" includes non-existent path ...
+3. Imported target "opencv_xphoto" includes non-existent path ...
 
     Modify "OpenCVConfig.cmake" fiel
 
@@ -195,7 +199,7 @@ to clone all the following repository at once!
 
         get_filename_component(OpenCV_CONFIG_PATH "${CMAKE_CURRENT_LIST_FILE}" PATH)
 
-3. gpd mask test
+4. gpd mask test
 
     Use 'gpd_mask_test.py~' instead of 'gdp_mask_test.py'
 
@@ -205,7 +209,7 @@ to clone all the following repository at once!
         mv gpd_mask_test.py~ gpd_mask_test.py
 
 
-4. Mask RCNN
+5. Mask RCNN
 
     Add suffix.
 
@@ -214,7 +218,7 @@ to clone all the following repository at once!
 
     Add 'mask_rcnn_service' node.
 
-5. ur_modern_driver
+6. ur_modern_driver
 
     Error: 
     
@@ -223,10 +227,3 @@ to clone all the following repository at once!
     Solution:
 
         https://github.com/ros-industrial/ur_modern_driver/issues/135
-
-6. universal_robot
-
-    Error:
-
-        fatal error: moveit_msgs/GetKinematicSolverInfo.h: No such file or directory
-            #include <moveit_msgs/GetKinematicSolverInfo.h>
