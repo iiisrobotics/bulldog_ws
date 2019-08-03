@@ -56,6 +56,22 @@
 
         sudo apt-get install ros-$ROS_DISTRO$-twist-mux
 
+10. lms1xx
+
+    http://wiki.ros.org/LMS1xx
+
+        sudo apt-get install ros-$ROS_DISTRO$-lms1xx
+
+11. ddynamic_reconfigure
+
+        sudo apt-get install ros-$ROS_DISTRO$-ddynamic-reconfigure
+
+12. interactive_marker_twist_server
+
+    http://wiki.ros.org/interactive_marker_twist_server
+
+        sudo apt-get install ros-$ROS_DISTRO$-interactive-marker-twist-server
+
 ----
 
 You can run
@@ -65,7 +81,7 @@ You can run
 
 to clone all the following repository at once!
 
-10. realsense-ros
+13. realsense-ros
 
     https://github.com/IntelRealSense/realsense-ros
 
@@ -74,20 +90,7 @@ to clone all the following repository at once!
     Note: I have modify the code from official repository. If you have
     any question, feel free to contact me.
 
-
-11.  lms1xx
-
-    redirect into bulldog workspace.
-
-        cd <path-to-workspace>
-
-    clone the git repository from https://github.com/clearpathrobotics/LMS1xx/tree/melodic_devel.
-
-        git clone -b $ROS_DISTRO$_devel https://github.com/clearpathrobotics/LMS1xx.git
-
-    Note: we use **melodic-devel** branch here. And compile it from scratch.
-
-12.  universal_robot
+14.  universal_robot
 
     redirect into bulldog workspace.
 
@@ -99,7 +102,7 @@ to clone all the following repository at once!
 
     Note: we use **melodic-devel** branch here. And compile it from scratch.
 
-13.  robotiq
+15.  robotiq
 
     redirect into bulldog workspace.
 
@@ -111,7 +114,7 @@ to clone all the following repository at once!
     
     Note: we use **kinetic-devel** branch here. And compile it from scratch. 
 
-14.  ur_modern_driver
+16.  ur_modern_driver
 
     redirect into bulldog workspace
 
@@ -120,18 +123,6 @@ to clone all the following repository at once!
     clone the git repository from https://github.com/ros-industrial/ur_modern_driver.
 
         git clone -b $ROS_DISTRO$-devel https://github.com/ros-industrial/ur_modern_driver.git
-
-    Note: we use **kinetic-devel** branch here. And compile it from scratch.
-
-15.  interactive_marker_twist_server
-
-    redirect into bulldog workspace
-
-        cd <path-to-workspace>
-
-    clone the git repository from https://github.com/ros-visualization/interactive_marker_twist_server.git.
-
-        git clone -b $ROS_DISTRO$-devel https://github.com/ros-visualization/interactive_marker_twist_server.git
 
     Note: we use **kinetic-devel** branch here. And compile it from scratch.
 
@@ -168,6 +159,12 @@ to clone all the following repository at once!
 
     Go to https://bitbucket.org/osrf/gazebo_models, download all the models, and put them
     into 
+
+2. Invalid parameter "prefix" for Realsense D415
+
+    The original D415 URDF contains no prefix for multiple instantiation spawning, you
+    need to add prefix parameter to the macro descrpiton and modify the defintion of
+    "aluminum" material.
 
 2. mask_rcnn_ros incompatible with Keras >= 2.0.8
 
