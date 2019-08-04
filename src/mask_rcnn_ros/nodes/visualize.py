@@ -20,10 +20,7 @@ import cv2
 import IPython.display
 
 import utils
-import sys
 
-# remove through environment variable instead of hardcoding
-sys.path.remove('/opt/ros/kinetic/lib/python2.7/dist-packages')
 
 ############################################################
 #  Visualization
