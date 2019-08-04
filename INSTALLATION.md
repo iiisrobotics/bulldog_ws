@@ -189,7 +189,7 @@ to clone all the following repository at once!
     This kind of errors are bugs of Gazebo7. It has been removed in Gazebo9 with ROS Melodic.
     **Just ignore them!!!**
 
-2. mask_rcnn_ros incompatible with Keras >= 2.0.8
+4. mask_rcnn_ros incompatible with Keras >= 2.0.8
 
         cd <workspace>/src/mask_rcnn_ros/node
         vim model.py
@@ -202,7 +202,7 @@ to clone all the following repository at once!
 
         :wq
 
-3. Imported target "opencv_xphoto" includes non-existent path ...
+5. Imported target "opencv_xphoto" includes non-existent path ...
 
     Modify "OpenCVConfig.cmake" fiel
 
@@ -219,7 +219,7 @@ to clone all the following repository at once!
 
         get_filename_component(OpenCV_CONFIG_PATH "${CMAKE_CURRENT_LIST_FILE}" PATH)
 
-4. gpd mask test
+6. gpd mask test
 
     Use 'gpd_mask_test.py~' instead of 'gdp_mask_test.py'
 
@@ -229,7 +229,7 @@ to clone all the following repository at once!
         mv gpd_mask_test.py~ gpd_mask_test.py
 
 
-5. mask_rcnn_ros incompatible with Keras >= 2.0.8
+7. mask_rcnn_ros incompatible with Keras >= 2.0.8
 
         cd <workspace>/src/mask_rcnn_ros/node
         vim model.py
@@ -242,7 +242,7 @@ to clone all the following repository at once!
 
         :wq
 
-6. ur_modern_driver
+8. ur_modern_driver
 
     Error: 
     
@@ -251,3 +251,12 @@ to clone all the following repository at once!
     Solution:
 
         https://github.com/ros-industrial/ur_modern_driver/issues/135
+
+9. Disable self collisions between following links with `bulldog_robot_moveit_config_rs/launch/setup_assistant` to avoid planning failures.
+
+    left_gripper_finger_1_link_1 - left_gripper_finger_1_link_paraproximal_actuating_hinge
+    left_gripper_finger_middle_link_1 - left_gripper_finger_middle_link_paraproximal_actuating_hinge
+    left_gripper_finger_1_link_0 - left_gripper_finger_1_link_median_bar
+    right_gripper_finger_1_link_1 - right_gripper_finger_1_link_paraproximal_actuating_hinge
+    right_gripper_finger_middle_link_1 - right_gripper_finger_middle_link_paraproximal_actuating_hinge
+    right_gripper_finger_1_link_0 - right_gripper_finger_1_link_median_bar

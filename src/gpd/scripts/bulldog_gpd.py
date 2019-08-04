@@ -14,6 +14,7 @@ from mask_rcnn_ros.srv import MaskDetect
 from gpd.srv import DetectGrasps
 from gpd.srv import CloudTransform
 
+import sensor_msgs.point_cloud2
 import moveit_commander
 import tf.transformations
 
@@ -94,7 +95,9 @@ def grasps_detection(srv, cloud_indexed):
 	- srv:
 		Name of the grasps detection service.
 
-	- cloud_indexed: 
+	- cloud_indexed: gpd.msg.CloudIndexed
+		The transformed point cloud and a list of indices into it at which to
+		sample grasp candidates. 
 
 	Returns
 	----------
@@ -141,14 +144,45 @@ def process_cloud(cloud_transformed, detection):
 
 	"""
 	cloud_indexed = CloudIndexed()
+	cloud_indexed.cloud_sources.cloud = cloud_transformed
+	cloud_indexed.cloud_sources.view_points.append(Point(0, 0, 0))
+	cloud_indexed.cloud_sources.camera_source.append(Int64(0))
+
+	#
+	# convert PointCloud2 to a list of points
+	#
+	cloud_points = np.reshape(
+		np.fromstring(cloud_transformed.data, dtype=np.float32), [-1, 4]
+	)
+	# odd rows and first three columns are informative
+	cloud_points = cloud_points[::2, 0:3]
+	# remove nans
+	cloud_points = cloud_points[~np.isnan(cloud_points[:, 0])]
+	print("Number of indices in original cloud: %d" % len(cloud_points))
 
 	if len(detection.masks) > 0:
 		for class_name, mask in zip(detection.class_names,
 									detection.masks):
-			if (class_name == 'bottle') or (class_name == 'cup'):
-				mask_data = np.fromstring(mask.data, dtype=np.uint8)
-				one_index = np.nonzero(mask_data)[0]
-				cloud_indexed.indices = [Int64(idx) for idx in one_index]
+			#
+			# name filtering
+			#
+			mask_indices = name_filtering(class_name, mask)
+
+			#
+			# least squares filtering, extract the nonplanar indices
+			#
+			if len(mask_indices) > 0:
+				least_squares_indices = least_squares_filtering(cloud_points)
+			else:
+				continue
+
+			if len(mask_indices) > 0 and len(least_squares_indices) > 0:
+				# TODO: Filter after Mask RCNN
+				cloud_indices = mask_indices + least_squares_indices
+				print("Number of indices in filtered cloud: %d" %
+					len(cloud_indices))
+
+				cloud_indexed.indices = [Int64(idx) for idx in cloud_indices]
 				break
 		else:
 			rospy.logfatal("No bottle or cup found!")
@@ -157,11 +191,81 @@ def process_cloud(cloud_transformed, detection):
 		rospy.logfatal("Detect nothing!")
 		raise SystemExit()
 
-	cloud_indexed.cloud_sources.cloud = cloud_transformed
-	cloud_indexed.cloud_sources.view_points.append(Point(0, 0, 0))
-	cloud_indexed.cloud_sources.camera_source.append(Int64(0))
-
 	return cloud_indexed
+
+
+def name_filtering(class_name, mask):
+	"""Extract point cloud of typical objects.
+
+	Parameters
+	----------
+	- class_name: str
+		Name of the detection from the Mask RCNN.
+
+	- mask: sensor_msgs/Image
+		Mask of the corresponding detection from the Mask RCNN.
+
+	Returns
+	----------
+	- mask_indices: list
+		List of index indicating the valid point cloud through Mask RCNN.
+
+	"""
+	if (class_name == 'bottle') or (class_name == 'cup'):
+		mask_data = np.fromstring(mask.data, dtype=np.uint8)
+		mask_indices = np.where(mask_data != 0)[0]
+	else:
+		mask_indices = []
+
+	return mask_indices
+
+
+def least_squares_filtering(cloud_points, dist_thresh=0.01):
+	"""Extract the nonplanar indices through least squares fitting.
+
+	Parameters
+	----------
+	- cloud_points: list
+		List of points in the point cloud.
+
+	- dist_thresh: float
+		Threshold of the distances between the fitting plane and points.
+
+	Returns
+	----------
+	- least_squares_indices: list
+		List of index indicating the valid point cloud through least squares
+		fitting.
+
+	Note
+	----------
+	The normal plane equation is a * x + b * y + c * z + d = 0, we assume
+	c = -1 and let a * x + b * y + d = z to solve the least squares fitting.
+
+	"""
+	cloud_points = np.copy(cloud_points)
+
+	#
+	# solve least squares fitting
+	#
+	A = np.stack([
+		cloud_points[:, 0],
+		cloud_points[:, 1],
+		np.ones(cloud_points.shape[0])
+	], axis=1)
+	b = cloud_points[:, 2]
+	coeff, _, _, _ = np.linalg.lstsq(A, b, rcond=None)
+
+	#
+	# distance between the fitting plane and points
+	#
+	dist = np.square(coeff[0] * cloud_points[:, 0] +
+					 coeff[1] * cloud_points[:, 1] +
+					 coeff[2] -
+					 cloud_points[:, 2])
+	least_squares_indices = np.where(dist >= dist_thresh)[0]
+
+	return least_squares_indices
 
 
 def main():
@@ -228,6 +332,7 @@ def main():
 		group = moveit_commander.MoveGroupCommander("left_arm")
 	except moveit_commander.MoveItCommanderException as e:
 		rospy.logerr("%s", e)
+		rospy.logerr("Please startup MoveIt planning context first!")
 		raise SystemExit()
 
 	#
@@ -248,11 +353,13 @@ def main():
 		[grasp.approach.y, grasp.binormal.y, grasp.axis.y, 0.0],
 		[grasp.approach.z, grasp.binormal.z, grasp.axis.z, 0.0],
 		[0.0, 0.0, 0.0, 1.0]
-	], dtype=np.float64)
+	])
 
 	print(pose_rotation_matrix)
 	pose_quaternion = tf.transformations.quaternion_from_matrix(
 		pose_rotation_matrix)
+
+	# take inverse quaternion to rotate in odom (a.k.a. base_link) frame
 	pose_quaternion = Quaternion(x=pose_quaternion[0], y=pose_quaternion[1],
 								 z=pose_quaternion[2], w=-pose_quaternion[3])
 
@@ -264,38 +371,27 @@ def main():
 	target_pose.header.stamp = rospy.get_time()
 	target_pose.header.frame_id = group.get_pose_reference_frame()
 	target_pose.pose.position = pose_position
-	# target_pose.pose.position.x = 0.81226748031
-	# target_pose.pose.position.y = 0.00989963778223
-	# target_pose.pose.position.z = 0.467501767581
+	# target_pose.pose.position.x = 0.920550534598
+	# target_pose.pose.position.y = -0.214042859617
+	# target_pose.pose.position.z = 0.457450517917
 	target_pose.pose.orientation = pose_quaternion
-	# target_pose.pose.orientation.x = 0.848927211273
-	# target_pose.pose.orientation.y = 0.528492369976
-	# target_pose.pose.orientation.z = 0.00399167473541
-	# target_pose.pose.orientation.w = -0.00157205941038
+	# target_pose.pose.orientation.x = 0.7976158200489984
+	# target_pose.pose.orientation.y = 0.6031400140057149
+	# target_pose.pose.orientation.z = 0.005281569338155196
+	# target_pose.pose.orientation.w = -0.0017978148058544854
 
 	# pose: 
 	# 	position: 
-	# 		x: 0.81226748031
-	# 		y: 0.00989963778223
-	# 		z: 0.467501767581
+	# 		x: 0.920550534598
+	# 		y: -0.214042859617
+	# 		z: 0.457450517917
 	# 	orientation: 
-	# 		x: 0.848927211273
-	# 		y: 0.528492369976
-	# 		z: 0.00399167473541
-	# 		w: -0.00157205941038
+	# 		x: 0.7976158200489984
+	# 		y: 0.6031400140057149
+	# 		z: 0.005281569338155196
+	# 		w: -0.0017978148058544854
 
-	# pose: 
-	# 	position: 
-	# 		x: 0.863075949343
-	# 		y: 0.0752093873621
-	# 		z: 0.46135636413
-	# 	orientation: 
-	# 		x: 0.848756802221
-	# 		y: 0.528763711841
-	# 		z: 0.00431671795937
-	# 		w: -0.00148110459685
-
-	print("End effector frame: %s" % group.get_end_effector_link())
+	# print("End effector frame: %s" % group.get_end_effector_link())
 
 	print("Target pose:")
 	print(target_pose)

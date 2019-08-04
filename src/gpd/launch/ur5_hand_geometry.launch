@@ -11,6 +11,6 @@
   <param name="$(arg node)/finger_width" value="0.031" /> <!-- robotiq 3 finger hand = 0.031 mm -->
   <param name="$(arg node)/hand_outer_diameter" value="0.1405" /> <!-- robotiq 3 finger hand = 0.1405 mm -->
   <param name="$(arg node)/hand_depth" value="0.112" /> <!-- robotiq 3 finger hand = 0.112 mm -->
-  <param name="$(arg node)/hand_height" value="0.126" /> <!-- robotiq 3 finger hand = 0.126 mm -->
-  <param name="$(arg node)/init_bite" value="0.01" />
+  <param name="$(arg node)/hand_height" value="0.149" /> <!-- robotiq 3 finger hand = 0.126 mm + realsense d415 = 0.023 mm -->
+  <param name="$(arg node)/init_bite" value="0.05" />
 </launch>

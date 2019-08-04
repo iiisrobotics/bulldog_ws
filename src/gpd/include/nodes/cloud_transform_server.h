@@ -36,7 +36,7 @@ public:
 			// 	stampedTransformed
 			// );
 			pcl_ros::transformPointCloud(
-				"base_link",
+				"odom",
 				req.cloud_to_transform, 
 				res.cloud_transformed,
 				listener_
