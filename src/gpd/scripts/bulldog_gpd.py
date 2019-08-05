@@ -349,17 +349,17 @@ def find_closest_grasp(grasps, frame='odom',
 	#
 	# thresholding
 	#
-	if closest_grasp.bottom.y <= min_y_thresh:
-		rospy.logerr("%s arm cannot move to the other side of the robot!" %
-					 ("Left" if min_y_thresh < 0 else "Right"))
-		rospy.logerr("Target position: (%f, %f, %f)." %
-					 (closest_grasp.bottom.x,
-					  closest_grasp.bottom.y,
-					  closest_grasp.bottom.z))
-		rospy.logerr("Please move the robot first!")
-		raise SystemExit()
-	elif min_y_soft_thresh >= closest_grasp.bottom.y > min_y_thresh:
-		if closest_dist >= min_dist_thresh:
+	if closest_dist >= min_dist_thresh:
+		if closest_grasp.bottom.y <= min_y_thresh:
+			rospy.logerr("%s arm cannot move to the other side of the robot!" %
+						("Left" if min_y_thresh < 0 else "Right"))
+			rospy.logerr("Target position: (%f, %f, %f)." %
+						(closest_grasp.bottom.x,
+						closest_grasp.bottom.y,
+						closest_grasp.bottom.z))
+			rospy.logerr("Please move the robot first!")
+			raise SystemExit()
+		elif min_y_soft_thresh >= closest_grasp.bottom.y > min_y_thresh:
 			rospy.logerr("%s arm cannot move farther!" %
 					 	 ("Left" if min_y_thresh < 0 else "Right"))
 			rospy.logerr("Target plannar distance: %f." % closest_dist)

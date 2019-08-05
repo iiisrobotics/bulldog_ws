@@ -733,7 +733,7 @@ Visualization Manager:
         Planning Group: left_arm
         Query Goal State: true
         Query Start State: false
-        Show Workspace: true
+        Show Workspace: false
         Start State Alpha: 1
         Start State Color: 0; 255; 0
       Planning Scene Topic: move_group/monitored_planning_scene
@@ -1479,5 +1479,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1406
-  X: 234
-  Y: 193
+  X: 281
+  Y: 178
