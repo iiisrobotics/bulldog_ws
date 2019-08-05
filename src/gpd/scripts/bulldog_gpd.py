@@ -21,7 +21,7 @@ import tf.transformations
 
 
 POSE_REFERENCE_FRAME = 'odom'
-GRASP_FILTERING_FRAME = 'left_gripper_tool0'  # 'left_arm_base'
+GRASP_FILTERING_FRAME = 'left_arm_base'  # 'left_gripper_tool0', 'left_arm_base'
 
 
 def cloud_transformation(srv, cloud):
@@ -115,7 +115,7 @@ def grasps_detection(srv, cloud_indexed):
 	rospy.loginfo("Grasp detection service is available.")
 
 	try:
-		rospy.loginfo("Generating grasp...")
+		rospy.loginfo("Generating grasps...")
 		grasps_detector = rospy.ServiceProxy(srv, DetectGrasps)
 		detect_grasps_response = grasps_detector(cloud_indexed)
 	except rospy.ServiceException as e:
@@ -278,7 +278,10 @@ def least_squares_filtering(cloud_points, mask_indices, dist_thresh=4e-4):
 	return least_squares_indices
 
 
-def find_closest_grasp(grasps, frame='odom'):
+def find_closest_grasp(grasps, frame='odom',
+					   min_y_thresh=-0.05, 
+					   min_y_soft_thresh=0.08,
+					   min_dist_thresh=0.81):
 	"""Find the closest grasp to a specified frame.
 
 	Parameters
@@ -289,6 +292,22 @@ def find_closest_grasp(grasps, frame='odom'):
 
 	- frame: str (optional, default = 'odom' (a.k.a. 'base_link') )
 		Name of the reference frame.
+
+	- min_y_thresh: float (optional, default = -0.05)
+		Minimum value for closest grasp along y axis, i.e. the left arm cannot
+		move to the right side of the robot, and the right arm cannot
+		move to the left side of the robot. Remember to define this threshold
+		in 'odom' frame.
+
+	- min_y_soft_thresh: float (optional, default = 0.08)
+		Minimum value for closest grasp along y axis which we begin to consider
+		distance threshold, i.e. when targer position's y value is in
+		[min_y_soft_thresh, min_y_thresh), we consider the planar distance of
+		the target position from the arm base frame.
+
+	- min_dist_thresh: float (optional, default = 0.81)
+		Max value for closest grasp from the are base link, i.e. the arms
+		cannot go farther than this distance.
 
 	Returns
 	----------
@@ -317,14 +336,35 @@ def find_closest_grasp(grasps, frame='odom'):
 				tf.ExtrapolationException) as e:
 			rospy.logerr("%s" % e)
 			raise SystemExit()
-	pose_positions = [[pose_position.point.x,
-					   pose_position.point.y,
-					   pose_position.point.z]
-					  for pose_position in pose_positions]
+	pose_plannar_positions = [[pose_position.point.x,
+							   pose_position.point.y]
+							  for pose_position in pose_positions]
 
-	dist = np.linalg.norm(pose_positions, axis=1)
+	dist = np.linalg.norm(pose_plannar_positions, axis=1)
+	closest_dist = np.min(dist)
+	rospy.loginfo("Closest Distance: %f." % closest_dist)
 	closest_idx = np.argmin(dist)
 	closest_grasp = grasps[closest_idx]
+
+	#
+	# thresholding
+	#
+	if closest_grasp.bottom.y <= min_y_thresh:
+		rospy.logerr("%s arm cannot move to the other side of the robot!" %
+					 ("Left" if min_y_thresh < 0 else "Right"))
+		rospy.logerr("Target position: (%f, %f, %f)." %
+					 (closest_grasp.bottom.x,
+					  closest_grasp.bottom.y,
+					  closest_grasp.bottom.z))
+		rospy.logerr("Please move the robot first!")
+		raise SystemExit()
+	elif min_y_soft_thresh >= closest_grasp.bottom.y > min_y_thresh:
+		if closest_dist >= min_dist_thresh:
+			rospy.logerr("%s arm cannot move farther!" %
+					 	 ("Left" if min_y_thresh < 0 else "Right"))
+			rospy.logerr("Target plannar distance: %f." % closest_dist)
+			rospy.logerr("Please move the robot first!")
+			raise SystemExit()
 
 	return closest_grasp
 
@@ -348,29 +388,29 @@ def configure_target_pose(target_position, target_quaternion):
 	Notes
 	----------
 	pose: 
-	position: 
-		x: 0.867562988872
-		y: 0.194389093132
-		z: 0.460585583453
-	orientation: 
-		x: 0.0007408187237435616
-		y: -0.006351929128702793
-		z: -0.6014963755518126
-		w: -0.7988499323289672
+		position: 
+			x: 0.98714264072
+			y: -0.0181142373857
+			z: 0.480302787791
+		orientation: 
+			x: 0.6859901647729069
+			y: 0.7275965355007923
+			z: 0.004507587996639602
+			w: 0.0006760270237895833
 
 	"""
 	target_pose = PoseStamped()
 	target_pose.header.stamp = rospy.get_time()
 	target_pose.header.frame_id = POSE_REFERENCE_FRAME
 	target_pose.pose.position = target_position
-	# target_pose.pose.position.x = 0.867562988872
-	# target_pose.pose.position.y = 0.194389093132
-	# target_pose.pose.position.z = 0.460585583453 + 0.2
+	# target_pose.pose.position.x = 0.98714264072
+	# target_pose.pose.position.y = -0.0181142373857
+	# target_pose.pose.position.z = 0.480302787791 + 0.3
 	target_pose.pose.orientation = target_quaternion
-	# target_pose.pose.orientation.x = 0.0007408187237435616
-	# target_pose.pose.orientation.y = -0.006351929128702793
-	# target_pose.pose.orientation.z = -0.6014963755518126
-	# target_pose.pose.orientation.w = -0.7988499323289672
+	# target_pose.pose.orientation.x = 0.6859901647729069
+	# target_pose.pose.orientation.y = 0.7275965355007923
+	# target_pose.pose.orientation.z = 0.004507587996639602
+	# target_pose.pose.orientation.w = 0.0006760270237895833
 
 	return target_pose
 
