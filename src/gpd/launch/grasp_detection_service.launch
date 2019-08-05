@@ -19,7 +19,7 @@
     <param name="use_importance_sampling" value="false" />
         
     <!-- What type of point cloud is used and what ROS topic it comes from -->
-    <param name="cloud_type" value="0" /> <!-- 0: PointCloud2, 1: CloudSized, 2: CloudIndexed, 3: CloudSamples -->
+    <param name="cloud_type" value="2" /> <!-- 0: PointCloud2, 1: CloudSized, 2: CloudIndexed, 3: CloudSamples -->
     <param name="cloud_topic" value="/cloud_base" />
     
     <!-- (optional) The ROS topic that the samples come from (default: an empty string) -->
