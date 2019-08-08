@@ -519,7 +519,7 @@ def main():
 
 	plan = group.plan()
 	# plan = group.go(wait=True)
-	# group.execute(plan, wait=True)
+	group.execute(plan, wait=True)
 
 	rospy.loginfo("============ Waiting while RVIZ displays motion planning...")
 	rospy.sleep(3.0)
