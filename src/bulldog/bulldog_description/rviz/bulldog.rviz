@@ -7,8 +7,7 @@ Panels:
         - /Global Options1
         - /Status1
         - /TF1
-        - /TF1/Frames1
-      Splitter Ratio: 0.659883976
+      Splitter Ratio: 0.665706038
     Tree Height: 426
   - Class: rviz/Selection
     Name: Selection
@@ -173,6 +172,51 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        left_gripper_finger_1_link_median_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_1_link_median_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_1_link_median_bar_underactuated:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_1_link_paradistal_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_1_link_paramedian_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_1_link_paraproximal_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_1_link_paraproximal_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_1_link_proximal_actuating_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_1_link_proximal_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         left_gripper_finger_2_link_0:
           Alpha: 1
           Show Axes: false
@@ -193,6 +237,51 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        left_gripper_finger_2_link_median_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_2_link_median_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_2_link_median_bar_underactuated:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_2_link_paradistal_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_2_link_paramedian_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_2_link_paraproximal_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_2_link_paraproximal_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_2_link_proximal_actuating_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_2_link_proximal_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         left_gripper_finger_middle_link_0:
           Alpha: 1
           Show Axes: false
@@ -209,6 +298,51 @@ Visualization Manager:
           Show Trail: false
           Value: true
         left_gripper_finger_middle_link_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_middle_link_median_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_middle_link_median_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_middle_link_median_bar_underactuated:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_middle_link_paradistal_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_middle_link_paramedian_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_middle_link_paraproximal_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_middle_link_paraproximal_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_middle_link_proximal_actuating_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_gripper_finger_middle_link_proximal_actuating_hinge:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -341,6 +475,51 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        right_gripper_finger_1_link_median_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_1_link_median_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_1_link_median_bar_underactuated:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_1_link_paradistal_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_1_link_paramedian_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_1_link_paraproximal_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_1_link_paraproximal_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_1_link_proximal_actuating_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_1_link_proximal_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         right_gripper_finger_2_link_0:
           Alpha: 1
           Show Axes: false
@@ -361,6 +540,51 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        right_gripper_finger_2_link_median_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_2_link_median_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_2_link_median_bar_underactuated:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_2_link_paradistal_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_2_link_paramedian_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_2_link_paraproximal_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_2_link_paraproximal_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_2_link_proximal_actuating_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_2_link_proximal_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         right_gripper_finger_middle_link_0:
           Alpha: 1
           Show Axes: false
@@ -377,6 +601,51 @@ Visualization Manager:
           Show Trail: false
           Value: true
         right_gripper_finger_middle_link_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_middle_link_median_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_middle_link_median_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_middle_link_median_bar_underactuated:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_middle_link_paradistal_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_middle_link_paramedian_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_middle_link_paraproximal_actuating_hinge:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_middle_link_paraproximal_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_middle_link_proximal_actuating_bar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_gripper_finger_middle_link_proximal_actuating_hinge:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -495,6 +764,24 @@ Visualization Manager:
           Value: false
         left_gripper_finger_1_link_3:
           Value: false
+        left_gripper_finger_1_link_median_actuating_hinge:
+          Value: false
+        left_gripper_finger_1_link_median_bar:
+          Value: false
+        left_gripper_finger_1_link_median_bar_underactuated:
+          Value: false
+        left_gripper_finger_1_link_paradistal_hinge:
+          Value: false
+        left_gripper_finger_1_link_paramedian_hinge:
+          Value: false
+        left_gripper_finger_1_link_paraproximal_actuating_hinge:
+          Value: false
+        left_gripper_finger_1_link_paraproximal_bar:
+          Value: false
+        left_gripper_finger_1_link_proximal_actuating_bar:
+          Value: false
+        left_gripper_finger_1_link_proximal_actuating_hinge:
+          Value: false
         left_gripper_finger_2_link_0:
           Value: false
         left_gripper_finger_2_link_1:
@@ -502,6 +789,24 @@ Visualization Manager:
         left_gripper_finger_2_link_2:
           Value: false
         left_gripper_finger_2_link_3:
+          Value: false
+        left_gripper_finger_2_link_median_actuating_hinge:
+          Value: false
+        left_gripper_finger_2_link_median_bar:
+          Value: false
+        left_gripper_finger_2_link_median_bar_underactuated:
+          Value: false
+        left_gripper_finger_2_link_paradistal_hinge:
+          Value: false
+        left_gripper_finger_2_link_paramedian_hinge:
+          Value: false
+        left_gripper_finger_2_link_paraproximal_actuating_hinge:
+          Value: false
+        left_gripper_finger_2_link_paraproximal_bar:
+          Value: false
+        left_gripper_finger_2_link_proximal_actuating_bar:
+          Value: false
+        left_gripper_finger_2_link_proximal_actuating_hinge:
           Value: false
         left_gripper_finger_middle_link_0:
           Value: false
@@ -511,8 +816,26 @@ Visualization Manager:
           Value: false
         left_gripper_finger_middle_link_3:
           Value: false
+        left_gripper_finger_middle_link_median_actuating_hinge:
+          Value: false
+        left_gripper_finger_middle_link_median_bar:
+          Value: false
+        left_gripper_finger_middle_link_median_bar_underactuated:
+          Value: false
+        left_gripper_finger_middle_link_paradistal_hinge:
+          Value: false
+        left_gripper_finger_middle_link_paramedian_hinge:
+          Value: false
+        left_gripper_finger_middle_link_paraproximal_actuating_hinge:
+          Value: false
+        left_gripper_finger_middle_link_paraproximal_bar:
+          Value: false
+        left_gripper_finger_middle_link_proximal_actuating_bar:
+          Value: false
+        left_gripper_finger_middle_link_proximal_actuating_hinge:
+          Value: false
         left_gripper_palm:
-          Value: true
+          Value: false
         left_gripper_sensor_d415_camera_bottom_screw_frame:
           Value: false
         left_gripper_sensor_d415_camera_color_frame:
@@ -534,7 +857,7 @@ Visualization Manager:
         left_gripper_sensor_d415_camera_right_ir_optical_frame:
           Value: false
         left_gripper_tool0:
-          Value: true
+          Value: false
         rear_left_wheel_link:
           Value: false
         rear_right_wheel_link:
@@ -567,6 +890,24 @@ Visualization Manager:
           Value: false
         right_gripper_finger_1_link_3:
           Value: false
+        right_gripper_finger_1_link_median_actuating_hinge:
+          Value: false
+        right_gripper_finger_1_link_median_bar:
+          Value: false
+        right_gripper_finger_1_link_median_bar_underactuated:
+          Value: false
+        right_gripper_finger_1_link_paradistal_hinge:
+          Value: false
+        right_gripper_finger_1_link_paramedian_hinge:
+          Value: false
+        right_gripper_finger_1_link_paraproximal_actuating_hinge:
+          Value: false
+        right_gripper_finger_1_link_paraproximal_bar:
+          Value: false
+        right_gripper_finger_1_link_proximal_actuating_bar:
+          Value: false
+        right_gripper_finger_1_link_proximal_actuating_hinge:
+          Value: false
         right_gripper_finger_2_link_0:
           Value: false
         right_gripper_finger_2_link_1:
@@ -574,6 +915,24 @@ Visualization Manager:
         right_gripper_finger_2_link_2:
           Value: false
         right_gripper_finger_2_link_3:
+          Value: false
+        right_gripper_finger_2_link_median_actuating_hinge:
+          Value: false
+        right_gripper_finger_2_link_median_bar:
+          Value: false
+        right_gripper_finger_2_link_median_bar_underactuated:
+          Value: false
+        right_gripper_finger_2_link_paradistal_hinge:
+          Value: false
+        right_gripper_finger_2_link_paramedian_hinge:
+          Value: false
+        right_gripper_finger_2_link_paraproximal_actuating_hinge:
+          Value: false
+        right_gripper_finger_2_link_paraproximal_bar:
+          Value: false
+        right_gripper_finger_2_link_proximal_actuating_bar:
+          Value: false
+        right_gripper_finger_2_link_proximal_actuating_hinge:
           Value: false
         right_gripper_finger_middle_link_0:
           Value: false
@@ -583,8 +942,26 @@ Visualization Manager:
           Value: false
         right_gripper_finger_middle_link_3:
           Value: false
+        right_gripper_finger_middle_link_median_actuating_hinge:
+          Value: false
+        right_gripper_finger_middle_link_median_bar:
+          Value: false
+        right_gripper_finger_middle_link_median_bar_underactuated:
+          Value: false
+        right_gripper_finger_middle_link_paradistal_hinge:
+          Value: false
+        right_gripper_finger_middle_link_paramedian_hinge:
+          Value: false
+        right_gripper_finger_middle_link_paraproximal_actuating_hinge:
+          Value: false
+        right_gripper_finger_middle_link_paraproximal_bar:
+          Value: false
+        right_gripper_finger_middle_link_proximal_actuating_bar:
+          Value: false
+        right_gripper_finger_middle_link_proximal_actuating_hinge:
+          Value: false
         right_gripper_palm:
-          Value: true
+          Value: false
         right_gripper_sensor_d415_camera_bottom_screw_frame:
           Value: false
         right_gripper_sensor_d415_camera_color_frame:
@@ -606,7 +983,7 @@ Visualization Manager:
         right_gripper_sensor_d415_camera_right_ir_optical_frame:
           Value: false
         right_gripper_tool0:
-          Value: true
+          Value: false
         top_plate_link:
           Value: false
       Marker Scale: 1
@@ -646,16 +1023,58 @@ Visualization Manager:
                                   left_gripper_finger_1_link_2:
                                     left_gripper_finger_1_link_3:
                                       {}
+                                    left_gripper_finger_1_link_paradistal_hinge:
+                                      {}
+                                  left_gripper_finger_1_link_median_actuating_hinge:
+                                    left_gripper_finger_1_link_median_bar:
+                                      {}
+                                  left_gripper_finger_1_link_paramedian_hinge:
+                                    left_gripper_finger_1_link_median_bar_underactuated:
+                                      {}
+                                left_gripper_finger_1_link_paraproximal_actuating_hinge:
+                                  left_gripper_finger_1_link_paraproximal_bar:
+                                    {}
+                                left_gripper_finger_1_link_proximal_actuating_hinge:
+                                  left_gripper_finger_1_link_proximal_actuating_bar:
+                                    {}
                               left_gripper_finger_2_link_0:
                                 left_gripper_finger_2_link_1:
                                   left_gripper_finger_2_link_2:
                                     left_gripper_finger_2_link_3:
                                       {}
+                                    left_gripper_finger_2_link_paradistal_hinge:
+                                      {}
+                                  left_gripper_finger_2_link_median_actuating_hinge:
+                                    left_gripper_finger_2_link_median_bar:
+                                      {}
+                                  left_gripper_finger_2_link_paramedian_hinge:
+                                    left_gripper_finger_2_link_median_bar_underactuated:
+                                      {}
+                                left_gripper_finger_2_link_paraproximal_actuating_hinge:
+                                  left_gripper_finger_2_link_paraproximal_bar:
+                                    {}
+                                left_gripper_finger_2_link_proximal_actuating_hinge:
+                                  left_gripper_finger_2_link_proximal_actuating_bar:
+                                    {}
                               left_gripper_finger_middle_link_0:
                                 left_gripper_finger_middle_link_1:
                                   left_gripper_finger_middle_link_2:
                                     left_gripper_finger_middle_link_3:
                                       {}
+                                    left_gripper_finger_middle_link_paradistal_hinge:
+                                      {}
+                                  left_gripper_finger_middle_link_median_actuating_hinge:
+                                    left_gripper_finger_middle_link_median_bar:
+                                      {}
+                                  left_gripper_finger_middle_link_paramedian_hinge:
+                                    left_gripper_finger_middle_link_median_bar_underactuated:
+                                      {}
+                                left_gripper_finger_middle_link_paraproximal_actuating_hinge:
+                                  left_gripper_finger_middle_link_paraproximal_bar:
+                                    {}
+                                left_gripper_finger_middle_link_proximal_actuating_hinge:
+                                  left_gripper_finger_middle_link_proximal_actuating_bar:
+                                    {}
                               left_gripper_sensor_d415_camera_bottom_screw_frame:
                                 left_gripper_sensor_d415_camera_link:
                                   left_gripper_sensor_d415_camera_depth_frame:
@@ -690,16 +1109,58 @@ Visualization Manager:
                                   right_gripper_finger_1_link_2:
                                     right_gripper_finger_1_link_3:
                                       {}
+                                    right_gripper_finger_1_link_paradistal_hinge:
+                                      {}
+                                  right_gripper_finger_1_link_median_actuating_hinge:
+                                    right_gripper_finger_1_link_median_bar:
+                                      {}
+                                  right_gripper_finger_1_link_paramedian_hinge:
+                                    right_gripper_finger_1_link_median_bar_underactuated:
+                                      {}
+                                right_gripper_finger_1_link_paraproximal_actuating_hinge:
+                                  right_gripper_finger_1_link_paraproximal_bar:
+                                    {}
+                                right_gripper_finger_1_link_proximal_actuating_hinge:
+                                  right_gripper_finger_1_link_proximal_actuating_bar:
+                                    {}
                               right_gripper_finger_2_link_0:
                                 right_gripper_finger_2_link_1:
                                   right_gripper_finger_2_link_2:
                                     right_gripper_finger_2_link_3:
                                       {}
+                                    right_gripper_finger_2_link_paradistal_hinge:
+                                      {}
+                                  right_gripper_finger_2_link_median_actuating_hinge:
+                                    right_gripper_finger_2_link_median_bar:
+                                      {}
+                                  right_gripper_finger_2_link_paramedian_hinge:
+                                    right_gripper_finger_2_link_median_bar_underactuated:
+                                      {}
+                                right_gripper_finger_2_link_paraproximal_actuating_hinge:
+                                  right_gripper_finger_2_link_paraproximal_bar:
+                                    {}
+                                right_gripper_finger_2_link_proximal_actuating_hinge:
+                                  right_gripper_finger_2_link_proximal_actuating_bar:
+                                    {}
                               right_gripper_finger_middle_link_0:
                                 right_gripper_finger_middle_link_1:
                                   right_gripper_finger_middle_link_2:
                                     right_gripper_finger_middle_link_3:
                                       {}
+                                    right_gripper_finger_middle_link_paradistal_hinge:
+                                      {}
+                                  right_gripper_finger_middle_link_median_actuating_hinge:
+                                    right_gripper_finger_middle_link_median_bar:
+                                      {}
+                                  right_gripper_finger_middle_link_paramedian_hinge:
+                                    right_gripper_finger_middle_link_median_bar_underactuated:
+                                      {}
+                                right_gripper_finger_middle_link_paraproximal_actuating_hinge:
+                                  right_gripper_finger_middle_link_paraproximal_bar:
+                                    {}
+                                right_gripper_finger_middle_link_proximal_actuating_hinge:
+                                  right_gripper_finger_middle_link_proximal_actuating_bar:
+                                    {}
                               right_gripper_sensor_d415_camera_bottom_screw_frame:
                                 right_gripper_sensor_d415_camera_link:
                                   right_gripper_sensor_d415_camera_depth_frame:
@@ -766,10 +1227,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.660398126
+      Pitch: 0.815398097
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.430398226
+      Yaw: 4.71358347
     Saved: ~
 Window Geometry:
   Displays:
@@ -787,5 +1248,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1125
-  X: 333
-  Y: 213
+  X: 491
+  Y: 187

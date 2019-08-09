@@ -146,11 +146,7 @@ void RobotiqHandPlugin::Load(gazebo::physics::ModelPtr _parent,
       this->posePID[i].SetIGain(this->sdf->Get<double>("ki_position"));
 
     if (this->sdf->HasElement("kd_position"))
-    {
       this->posePID[i].SetDGain(this->sdf->Get<double>("kd_position"));
-      std::cout << "dGain after overloading: " << this->posePID[i].dGain
-                << std::endl;
-    }
 
     if (this->sdf->HasElement("position_effort_min"))
       this->posePID[i].SetCmdMin(this->sdf->Get<double>("position_effort_min"));
@@ -543,7 +539,7 @@ uint8_t RobotiqHandPlugin::GetCurrentPosition(
 #if GAZEBO_MAJOR_VERSION >= 9
   return static_cast<uint8_t>(round(255.0 * relAngle() / range()));
 #else
-  static_cast<uint8_t>(round(255.0 * relAngle.Radian() / range.Radian()));
+  return static_cast<uint8_t>(round(255.0 * relAngle.Radian() / range.Radian()));
 #endif
 }
 
