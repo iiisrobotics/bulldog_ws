@@ -6,7 +6,7 @@
   <xacro:include filename="$(find bulldog_description)/urdf/accessories/plates.urdf.xacro" />
   <xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />
   <xacro:include filename="$(find lms1xx)/urdf/sick_lms1xx.urdf.xacro" />
-  <xacro:include filename="$(find robotiq_3f_gripper_visualization)/cfg/robotiq-3f-gripper_articulated_macro.xacro" />
+  <xacro:include filename="$(find robotiq_3f_gripper_visualization)/cfg/robotiq_hand_macro.urdf.xacro" />
   <xacro:include filename="$(find bulldog_description)/urdf/sensors/kinect_camera.urdf.xacro" />
   <xacro:include filename="$(find realsense2_description)/urdf/_d415.urdf.xacro" />
 
@@ -103,19 +103,13 @@
 
       <!-- If you modify the name of the grippers, remember to change the *prefix* in line 
            780 and 782 accordingly of $(find robotiq_s_model_articulated_gazebo_plugins)/src/RobotiqHandPlugin.cpp. -->
-        <xacro:robotiq-3f-gripper_articulated prefix="left_gripper_"/>
-        <joint name="left_arm_gripper_joint" type="fixed">
-            <parent link="left_arm_ee_link" />
-            <child link="left_gripper_palm" />
-            <origin xyz="0 0 0" rpy="0 0 -1.57" />
-        </joint>
+      <xacro:robotiq_hand prefix="left_gripper_" parent="left_arm_ee_link" reflect="-1">
+        <origin rpy="0 0 -1.57" xyz="0 0 0"/>
+      </xacro:robotiq_hand>
 
-        <xacro:robotiq-3f-gripper_articulated prefix="right_gripper_"/>
-        <joint name="right_arm_gripper_joint" type="fixed">
-            <parent link="right_arm_ee_link" />
-            <child link="right_gripper_palm" />
-            <origin xyz="0 0 0" rpy="0 0 -1.57" />
-        </joint>
+      <xacro:robotiq_hand prefix="right_gripper_" parent="right_arm_ee_link" reflect="-1">
+        <origin rpy="0 0 -1.57" xyz="0 0 0"/>
+      </xacro:robotiq_hand>
 
     </xacro:if>
 

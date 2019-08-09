@@ -263,6 +263,7 @@ to clone all the following repository at once!
     left_gripper_finger_1_link_1 - left_gripper_finger_1_link_paraproximal_actuating_hinge
     left_gripper_finger_middle_link_1 - left_gripper_finger_middle_link_paraproximal_actuating_hinge
     left_gripper_finger_1_link_0 - left_gripper_finger_1_link_median_bar
+    left_gripper_finger_2_link_paraproximal_actuating_hinge - left_gripper_finger_2_link_1
     right_gripper_finger_1_link_1 - right_gripper_finger_1_link_paraproximal_actuating_hinge
     right_gripper_finger_middle_link_1 - right_gripper_finger_middle_link_paraproximal_actuating_hinge
     right_gripper_finger_1_link_0 - right_gripper_finger_1_link_median_bar
