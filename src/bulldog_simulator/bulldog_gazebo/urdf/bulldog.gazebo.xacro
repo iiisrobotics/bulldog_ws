@@ -149,7 +149,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
             <kp_position>5.0</kp_position>
             <kd_position>0.5</kd_position>
           </plugin> 
-        </gazebo> 
+        </gazebo>
 
          <gazebo>
             <plugin name="robotiq_right_hand_plugin" filename="libRobotiqHandPlugin.so">
@@ -159,10 +159,10 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
             </plugin>
         </gazebo>
 
-        <gazebo reference="left_gripper">
+        <gazebo reference="left_gripper_palm">
             <material>Gazebo/Black</material>
         </gazebo>
-        <gazebo reference="right_gripper">
+        <gazebo reference="right_gripper_palm">
             <material>Gazebo/Black</material>
         </gazebo>
 
