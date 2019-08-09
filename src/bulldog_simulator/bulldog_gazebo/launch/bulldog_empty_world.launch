@@ -43,6 +43,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     <arg name="gui" value="true"/>
     <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
+    <arg name="extra_gazebo_args" value="--verbose" />
   </include>
 
   <include file="$(find bulldog_gazebo)/launch/spawn_bulldog.launch">

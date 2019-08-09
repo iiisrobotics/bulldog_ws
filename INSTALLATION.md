@@ -6,89 +6,95 @@
 
     http://wiki.ros.org/ros_control
 
-        sudo apt-get install ros-$ROS_DISTRO$-ros-control
+        sudo apt-get install ros-$ROS_DISTRO-ros-control
 
 2. robot_localization
 
     http://wiki.ros.org/robot_localization
 
-        sudo apt-get install ros-$ROS_DISTRO$-robot-localization
+        sudo apt-get install ros-$ROS_DISTRO-robot-localization
 
 3. controller_manager
 
     http://wiki.ros.org/controller_manager
 
-        sudo apt-get install ros-$ROS_DISTRO$-controller-manager
+        sudo apt-get install ros-$ROS_DISTRO-controller-manager
 
 4. soem
 
     http://wiki.ros.org/soem
 
-        sudo apt-get install ros-$ROS_DISTRO$-soem
+        sudo apt-get install ros-$ROS_DISTRO-soem
 
 5. moveit
 
     http://wiki.ros.org/moveit_ros
     
-        sudo apt-get install ros-$ROS_DISTRO$-moveit
+        sudo apt-get install ros-$ROS_DISTRO-moveit
 
 6. openni2_camera
 
     http://wiki.ros.org/openni2_camera
 
-    sudo apt-get install ros-$ROS_DISTRO$-openni2-camera
+    sudo apt-get install ros-$ROS_DISTRO-openni2-camera
 
 7. socketcan_interface
 
     http://wiki.ros.org/socketcan_interface
 
-        sudo apt-get install ros-$ROS_DISTRO$-socketcan-interface
+        sudo apt-get install ros-$ROS_DISTRO-socketcan-interface
 
 8. industrial_msgs
 
     http://wiki.ros.org/industrial_msgs
 
-        sudo apt-get install ros-$ROS_DISTRO$-industrial-msgs
+        sudo apt-get install ros-$ROS_DISTRO-industrial-msgs
 
 9. twist_mux
 
     http://wiki.ros.org/twist_mux
 
-        sudo apt-get install ros-$ROS_DISTRO$-twist-mux
+        sudo apt-get install ros-$ROS_DISTRO-twist-mux
 
 10. lms1xx
 
     http://wiki.ros.org/LMS1xx
 
-        sudo apt-get install ros-$ROS_DISTRO$-lms1xx
+        sudo apt-get install ros-$ROS_DISTRO-lms1xx
 
 11. ddynamic_reconfigure
 
-        sudo apt-get install ros-$ROS_DISTRO$-ddynamic-reconfigure
+        sudo apt-get install ros-$ROS_DISTRO-ddynamic-reconfigure
 
 12. interactive_marker_twist_server
 
     http://wiki.ros.org/interactive_marker_twist_server
 
-        sudo apt-get install ros-$ROS_DISTRO$-interactive-marker-twist-server
+        sudo apt-get install ros-$ROS_DISTRO-interactive-marker-twist-server
 
 13. gazebo-ros-pkgs
 
     http://wiki.ros.org/gazebo_plugins
 
-        sudo apt-get install ros-$ROS_DISTRO$-gazebo-ros-pkgs
+        sudo apt-get install ros-$ROS_DISTRO-gazebo-ros-pkgs
 
 14. gazebo-ros-control
 
     http://wiki.ros.org/gazebo_ros_control
 
-        sudo apt-get install ros-$ROS_DISTRO$-gazebo-ros-control
+        sudo apt-get install ros-$ROS_DISTRO-gazebo-ros-control
 
 15. ros-controllers
 
     http://wiki.ros.org/ros_controllers
 
-        sudo apt-get install ros-$ROS_DISTRO$-ros-controllers
+        sudo apt-get install ros-$ROS_DISTRO-ros-controllers
+
+16. hector_gazebo_plugins
+
+    http://wiki.ros.org/hector_gazebo_plugins
+
+        sudo apt-get install ros-$ROS_DISTRO-hector-gazebo-plugins
 
 ----
 
@@ -99,7 +105,7 @@ You can run
 
 to clone all the following repository at once!
 
-16. realsense-ros
+17. realsense-ros
 
     https://github.com/IntelRealSense/realsense-ros
 
@@ -108,7 +114,7 @@ to clone all the following repository at once!
     Note: I have modify the code from official repository. If you have
     any question, feel free to contact me.
 
-17.  universal_robot
+18.  universal_robot
 
     redirect into bulldog workspace.
 
@@ -116,11 +122,11 @@ to clone all the following repository at once!
 
     clone the git repository from https://github.com/ros-industrial/universal_robot.
 
-        git clone -b $ROS_DISTRO$-devel https://github.com/ros-industrial/universal_robot.git
+        git clone -b $ROS_DISTRO-devel https://github.com/ros-industrial/universal_robot.git
 
     Note: we use **melodic-devel** branch here. And compile it from scratch.
 
-18.  robotiq
+19.  robotiq
 
     redirect into bulldog workspace.
 
@@ -128,11 +134,11 @@ to clone all the following repository at once!
 
     clone the git repository from https://github.com/ros-industrial/robotiq.
 
-        git clone -b $ROS_DISTRO$-devel https://github.com/ros-industrial/robotiq.git
+        git clone -b $ROS_DISTRO-devel https://github.com/ros-industrial/robotiq.git
     
     Note: we use **kinetic-devel** branch here. And compile it from scratch. 
 
-19.  ur_modern_driver
+20.  ur_modern_driver
 
     redirect into bulldog workspace
 
@@ -140,7 +146,7 @@ to clone all the following repository at once!
 
     clone the git repository from https://github.com/ros-industrial/ur_modern_driver.
 
-        git clone -b $ROS_DISTRO$-devel https://github.com/ros-industrial/ur_modern_driver.git
+        git clone -b $ROS_DISTRO-devel https://github.com/ros-industrial/ur_modern_driver.git
 
     Note: we use **kinetic-devel** branch here. And compile it from scratch.
 
