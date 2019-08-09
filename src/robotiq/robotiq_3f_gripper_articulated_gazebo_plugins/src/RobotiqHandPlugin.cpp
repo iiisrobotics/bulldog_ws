@@ -865,30 +865,33 @@ bool RobotiqHandPlugin::FindJoints()
 
   // We read the joint state from finger_1_joint_1
   // but we actuate finger_1_joint_proximal_actuating_hinge (actuated).
-  suffix = "finger_1_joint_proximal_actuating_hinge";
+  // suffix = "finger_1_joint_proximal_actuating_hinge";
+  suffix = "finger_1_joint_1";
   if (!this->GetAndPushBackJoint(prefix + suffix, this->fingerJoints))
     return false;
-  suffix = "finger_1_joint_1";
+  // suffix = "finger_1_joint_1";
   if (!this->GetAndPushBackJoint(prefix + suffix, this->joints))
     return false;
   this->jointNames.push_back(prefix + suffix);
 
   // We read the joint state from finger_2_joint_1
   // but we actuate finger_2_proximal_actuating_hinge (actuated).
-  suffix = "finger_2_joint_proximal_actuating_hinge";
+  // suffix = "finger_2_joint_proximal_actuating_hinge";
+  suffix = "finger_2_joint_1";
   if (!this->GetAndPushBackJoint(prefix + suffix, this->fingerJoints))
     return false;
-  suffix = "finger_2_joint_1";
+  // suffix = "finger_2_joint_1";
   if (!this->GetAndPushBackJoint(prefix + suffix, this->joints))
     return false;
   this->jointNames.push_back(prefix + suffix);
 
   // We read the joint state from finger_middle_joint_1
   // but we actuate finger_middle_proximal_actuating_hinge (actuated).
-  suffix = "finger_middle_joint_proximal_actuating_hinge";
+  // suffix = "finger_middle_joint_proximal_actuating_hinge";
+  suffix = "finger_middle_joint_1";
   if (!this->GetAndPushBackJoint(prefix + suffix, this->fingerJoints))
     return false;
-  suffix = "finger_middle_joint_1";
+  // suffix = "finger_middle_joint_1";
   if (!this->GetAndPushBackJoint(prefix + suffix, this->joints))
     return false;
   this->jointNames.push_back(prefix + suffix);
@@ -918,10 +921,10 @@ bool RobotiqHandPlugin::FindJoints()
   this->jointNames.push_back(prefix + suffix);
 
   // palm_finger_middle_joint (underactuated).
-  suffix = "palm_finger_middle_joint";
-  if (!this->GetAndPushBackJoint(prefix + suffix, this->joints))
-    return false;
-  this->jointNames.push_back(prefix + suffix);
+  // suffix = "palm_finger_middle_joint";
+  // if (!this->GetAndPushBackJoint(prefix + suffix, this->joints))
+  //   return false;
+  // this->jointNames.push_back(prefix + suffix);
 
   // finger_middle_joint_2 (underactuated).
   suffix = "finger_middle_joint_2";
