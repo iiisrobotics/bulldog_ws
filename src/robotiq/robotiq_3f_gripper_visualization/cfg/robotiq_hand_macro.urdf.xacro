@@ -277,12 +277,12 @@ there are multiple hands then a prefix followed by an "_" is needed.
           <box size=".02 .02 .002"/>
         </geometry>
       </visual>
-      <!-- <collision>
+      <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
          <geometry>
           <box size=".02 .02 .002"/>
         </geometry>
-      </collision> -->
+      </collision>
       <inertial>
         <origin rpy="0 0 0" xyz="0.0092 0.00514 0"/>
         <mass value="0.00359"/>
@@ -339,12 +339,12 @@ there are multiple hands then a prefix followed by an "_" is needed.
           <box size=".02 .02 .002"/>
         </geometry>
       </visual>
-      <!-- <collision>
+      <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
          <geometry>
           <box size=".02 .02 .002"/>
         </geometry>
-      </collision> -->
+      </collision>
       <inertial>
         <origin rpy="0 0 0" xyz="-0.01025 0.00046 0"/>
         <mass value="0.00276"/>
@@ -401,12 +401,12 @@ there are multiple hands then a prefix followed by an "_" is needed.
           <box size=".02 .02 .002"/>
         </geometry>
       </visual>
-      <!--  <collision>
+      <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
          <geometry>
           <box size=".02 0.02 .002"/>
         </geometry>
-      </collision> -->
+      </collision>
       <inertial>
         <origin rpy="0 0 0" xyz="0.00548 0 0"/>
         <mass value="0.00158"/>

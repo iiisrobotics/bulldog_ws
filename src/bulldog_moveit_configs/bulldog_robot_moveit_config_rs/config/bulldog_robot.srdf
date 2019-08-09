@@ -1210,6 +1210,7 @@
     <disable_collisions link1="left_gripper_finger_2_link_1" link2="left_gripper_finger_2_link_median_bar_underactuated" reason="Default" />
     <disable_collisions link1="left_gripper_finger_2_link_1" link2="left_gripper_finger_2_link_paradistal_hinge" reason="Never" />
     <disable_collisions link1="left_gripper_finger_2_link_1" link2="left_gripper_finger_2_link_paramedian_hinge" reason="Adjacent" />
+    <disable_collisions link1="left_gripper_finger_2_link_1" link2="left_gripper_finger_2_link_paraproximal_actuating_hinge" reason="User" />
     <disable_collisions link1="left_gripper_finger_2_link_1" link2="left_gripper_finger_2_link_paraproximal_bar" reason="Default" />
     <disable_collisions link1="left_gripper_finger_2_link_1" link2="left_gripper_finger_2_link_proximal_actuating_bar" reason="Default" />
     <disable_collisions link1="left_gripper_finger_2_link_1" link2="left_gripper_finger_2_link_proximal_actuating_hinge" reason="Default" />
