@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="left_hand_ip" value="192.168.1.12" />
+	<arg name="right_hand_ip" value="192.168.1.13" />
+
+	<group ns="left_hand">
+	  <node name="left_gripper_driver" pkg="robotiq_3f_gripper_control" type="Robotiq3FGripperTcpNode.py" 
+	    args="$(arg left_hand_ip)" >
+	    <!--
+	    <remap from="Robotiq3FGripperRobotInput" to="LeftRobotiq3FGripperRobotInput" />
+	    <remap from="/left/LeftSModelRobotInput" to="LeftSModelRobotInput" />
+	    -->
+	  </node>
+	</group>
+        <group ns="right_hand">
+          <node name="right_gripper_driver" pkg="robotiq_3f_gripper_control" type="Robotiq3FGripperTcpNode.py" 
+	    args="$(arg right_hand_ip)">
+	    <!--
+            <remap from="SModelRobotInput" to="RightSModelRobotInput" />
+	    <remap from="/right/RightSModelRobotInput" to="RightSModelRobotInput" />
+            -->
+	  </node>
+        </group>
+</launch>

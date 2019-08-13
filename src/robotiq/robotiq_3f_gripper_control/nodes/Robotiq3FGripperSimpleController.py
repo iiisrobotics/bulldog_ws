@@ -170,7 +170,7 @@ def publisher():
     rospy.init_node('Robotiq3FGripperSimpleController')
     topic = rospy.get_param('~topic', default='Robotiq3FGripperRobotOutput')
 
-    pub = rospy.Publisher(topic, Robotiq3FGripperRobotOutput)
+    pub = rospy.Publisher(topic, Robotiq3FGripperRobotOutput, queue_size=1)
 
     command = Robotiq3FGripperRobotOutput()
 
