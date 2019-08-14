@@ -1,3 +1,9 @@
 [submodule "src/realsense-ros"]
 	path = src/realsense-ros
 	url = https://github.com/YeeCY/realsense-ros.git
+[submodule "src/gazebo_grasp_fix_plugin/general-message-pkgs"]
+	path = src/gazebo_grasp_fix_plugin/general-message-pkgs
+	url = https://github.com/JenniferBuehler/general-message-pkgs.git
+[submodule "src/gazebo_grasp_fix_plugin/gazebo-pkgs"]
+	path = src/gazebo_grasp_fix_plugin/gazebo-pkgs
+	url = https://github.com/JenniferBuehler/gazebo-pkgs.git
