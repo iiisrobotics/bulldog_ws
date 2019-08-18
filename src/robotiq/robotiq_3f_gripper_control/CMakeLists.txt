@@ -67,24 +67,24 @@ target_link_libraries(robotiq_3f_gripper_ethercat_node
    ${catkin_LIBRARIES}
 )
 
-add_executable(robotiq_3f_gripper_can_node
-  src/${PROJECT_NAME}/robotiq_3f_gripper_can_client.cpp
-  src/robotiq_3f_gripper_can_node.cpp
-)
+#add_executable(robotiq_3f_gripper_can_node
+#  src/${PROJECT_NAME}/robotiq_3f_gripper_can_client.cpp
+#  src/robotiq_3f_gripper_can_node.cpp
+#)
 
-target_link_libraries(robotiq_3f_gripper_can_node
-  ${PROJECT_NAME}
-  ${catkin_LIBRARIES}
-)
+#target_link_libraries(robotiq_3f_gripper_can_node
+#  ${PROJECT_NAME}
+#  ${catkin_LIBRARIES}
+#)
 
 install(PROGRAMS nodes/Robotiq3FGripperSimpleController.py nodes/Robotiq3FGripperStatusListener.py
         nodes/Robotiq3FGripperTcpNode.py DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
-install(TARGETS ${PROJECT_NAME} robotiq_3f_gripper_can_node robotiq_3f_gripper_ethercat_node
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+#install(TARGETS ${PROJECT_NAME} robotiq_3f_gripper_can_node robotiq_3f_gripper_ethercat_node
+#  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+#)
 
 install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
