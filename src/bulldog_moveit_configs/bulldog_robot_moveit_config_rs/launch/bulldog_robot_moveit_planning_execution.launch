@@ -1,6 +1,9 @@
 <launch>
   <!-- The planning and execution components of MoveIt! configured to run -->
+  <!-- GDB functionality -->
   <arg name="debug" default="false" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+  <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
 
   <!-- Non-standard joint names:
        - Create a file [robot_moveit_config]/config/joint_names.yaml
