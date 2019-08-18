@@ -44,6 +44,25 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   <!-- Load base control information -->
   <include file="$(find bulldog_control)/launch/control.launch"/>
 
+  <!-- Include ros_control configuration for ur5, only used in simulation -->
+  <group if="$(arg ur5_enabled)">
+    <!-- Load UR5 controllers -->
+    <rosparam command="load" file="$(find bulldog_control)/config/control_ur5.yaml" />
+    <node name="arm_controller_spawner" pkg="controller_manager" type="spawner" 
+      args="arm_controller" />
+
+    <!-- Fake Calibration -->
+    <!--
+    <node pkg="rostopic" type="rostopic" name="fake_joint_calibration" 
+      args="pub calibrated std_msgs/Bool true" />
+    -->
+
+    <!-- Stow the arm -->
+    <!--
+    <node name="stow_ur5" pkg="bulldog_control" type="stow_ur5" />
+    -->
+  </group>
+
   <!-- Include ros_control configuration for left and right ur5, only used in simulation -->
   <group if="$(arg dual_ur5_enabled)">
     <rosparam command="load" file="$(find bulldog_control)/config/control_left_ur5.yaml" />
@@ -57,21 +76,6 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     <!-- Stow the arm -->
     <!-- <node name="initialize_bulldog_arms" pkg="bulldog_gazebo" type="setup_sim_positions" 
       output="screen" /> -->
-  </group>
-
-  <!-- Include ros_control configuration for ur5, only used in simulation -->
-  <group if="$(arg ur5_enabled)">
-    <!-- Load UR5 controllers -->
-    <rosparam command="load" file="$(find bulldog_control)/config/control_ur5.yaml" />
-    <node name="arm_controller_spawner" pkg="controller_manager" type="spawner" 
-      args="arm_controller" />
-
-    <!-- Fake Calibration -->
-    <node pkg="rostopic" type="rostopic" name="fake_joint_calibration" 
-      args="pub calibrated std_msgs/Bool true" />
-
-    <!-- Stow the arm -->
-    <node name="stow_ur5" pkg="bulldog_control" type="stow_ur5" />
   </group>
 
   <!-- Include robotiq gripper configs for left and right gripper, only used in sim -->

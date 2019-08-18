@@ -4,29 +4,6 @@
   <arg unless="$(arg debug)" name="launch_prefix" value="" />
   <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
 
-  <!-- ur5 arguments -->
-  <arg name="ur5_left_prefix" default="left_arm_" />
-  <arg name="ur5_right_prefix" default="right_arm_" />
-  <arg name="ur5_left_ip" default="192.168.1.50"/>
-  <arg name="ur5_right_ip" default="192.168.1.60"/>
-  <arg name="ur5_left_reverse_port" default="33829"/>
-  <arg name="ur5_right_reverse_port" default="50001"/>
-  <arg name="ur5_min_payload"  default="0.0"/>
-  <arg name="ur5_max_payload"  default="3.0"/>
-  <arg name="ur5_max_velocity" default="5.0"/> 
-  <!-- <arg name="ur5_servoj_time" default="0.008"/> -->
-  <arg name="ur5_left_base_frame" default="$(arg ur5_left_prefix)base"/>
-  <arg name="ur5_right_base_frame" default="$(arg ur5_right_prefix)base"/>
-  <arg name="ur5_left_tool_frame" default="$(arg ur5_left_prefix)tool0_controller"/>
-  <arg name="ur5_right_tool_frame" default="$(arg ur5_right_prefix)tool0_controller"/>
-  <arg name="ur5_shutdown_on_disconnect" default="true" />
-
-  <!-- robotiq 3 finger grippers arguments -->
-  <arg name="robotiq_left_ip" default="192.168.1.12"/>
-  <arg name="robotiq_right_ip" default="192.168.1.13"/>
-  <arg name="robotiq_left_prefix" default="left_gripper_"/>
-  <arg name="robotiq_right_prefix" default="right_gripper_"/>
-
   
   <!-- <include file="$(find bulldog_robot_moveit_config_rs)/launch/planning_context.launch">
     <arg name="load_robot_description" value="true"/>

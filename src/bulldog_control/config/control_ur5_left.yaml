@@ -1,6 +1,5 @@
 left_arm_controller:
   type: position_controllers/JointTrajectoryController
-  topic: "left"
   joints:
      - left_arm_shoulder_pan_joint
      - left_arm_shoulder_lift_joint
@@ -20,3 +19,4 @@ left_arm_controller:
   stop_trajectory_duration: 0.5
   state_publish_rate: 25
   action_monitor_rate: 10
+  
