@@ -33,6 +33,7 @@
   </include> -->
 
   <!-- ur5 hardware interfaces -->
+  <!--
   <node name="ur5_left_hardware_interface" pkg="ur_modern_driver" type="ur_driver" output="screen" 
     launch-prefix="$(arg launch_prefix)">
     <param name="robot_ip_address" type="str" value="$(arg ur5_left_ip)" />
@@ -42,7 +43,6 @@
     <param name="max_velocity" type="double" value="$(arg ur5_max_velocity)" />
     <param name="use_ros_control" type="bool" value="True"/>
     <param name="servoj_gain" type="double" value="750" />
-    <!-- <param name="servoj_time" type="double" value="$(arg servoj_time)" /> -->
     <param name="prefix" type="str" value="$(arg ur5_left_prefix)" />
     <param name="base_frame" type="str" value="$(arg ur5_left_base_frame)"/>
     <param name="tool_frame" type="str" value="$(arg ur5_left_tool_frame)"/>
@@ -58,12 +58,12 @@
     <param name="max_velocity" type="double" value="$(arg ur5_max_velocity)" />
     <param name="use_ros_control" type="bool" value="True"/>
     <param name="servoj_gain" type="double" value="750" />
-    <!-- <param name="servoj_time" type="double" value="$(arg servoj_time)" /> -->
     <param name="prefix" type="str" value="$(arg ur5_right_prefix)" />
     <param name="base_frame" type="str" value="$(arg ur5_right_base_frame)"/>
     <param name="tool_frame" type="str" value="$(arg ur5_right_tool_frame)"/>
     <param name="shutdown_on_disconnect" type="bool" value="$(arg ur5_shutdown_on_disconnect)"/>
   </node>
+  -->
 
   <!-- robotiq 3 finger gripper hardware interfaces -->
   <group ns="left_gripper">
@@ -110,9 +110,11 @@
   </include>
 
   <!-- startup rviz -->
+  <!--
   <include file="$(find bulldog_robot_moveit_config_rs)/launch/moveit_rviz.launch">
     <arg name="config" value="true"/>
     <arg name="debug" value="$(arg debug)"/>
   </include>
+  -->
 
 </launch>

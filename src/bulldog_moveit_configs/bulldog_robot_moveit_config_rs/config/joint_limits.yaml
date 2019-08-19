@@ -4,61 +4,61 @@
 joint_limits:
   left_arm_elbow_joint:
     has_velocity_limits: true
-    max_velocity: 3.15
+    max_velocity: 1.575  # 3.15 / 2
     has_acceleration_limits: false
     max_acceleration: 0
   left_arm_shoulder_lift_joint:
     has_velocity_limits: true
-    max_velocity: 3.15
+    max_velocity: 1.575
     has_acceleration_limits: false
     max_acceleration: 0
   left_arm_shoulder_pan_joint:
     has_velocity_limits: true
-    max_velocity: 3.15
+    max_velocity: 1.575
     has_acceleration_limits: false
     max_acceleration: 0
   left_arm_wrist_1_joint:
     has_velocity_limits: true
-    max_velocity: 3.2
+    max_velocity: 1.6 # 3.2 / 2
     has_acceleration_limits: false
     max_acceleration: 0
   left_arm_wrist_2_joint:
     has_velocity_limits: true
-    max_velocity: 3.2
+    max_velocity: 1.6
     has_acceleration_limits: false
     max_acceleration: 0
   left_arm_wrist_3_joint:
     has_velocity_limits: true
-    max_velocity: 3.2
+    max_velocity: 1.6
     has_acceleration_limits: false
     max_acceleration: 0
   right_arm_elbow_joint:
     has_velocity_limits: true
-    max_velocity: 3.15
+    max_velocity: 1.575
     has_acceleration_limits: false
     max_acceleration: 0
   right_arm_shoulder_lift_joint:
     has_velocity_limits: true
-    max_velocity: 3.15
+    max_velocity: 1.575
     has_acceleration_limits: false
     max_acceleration: 0
   right_arm_shoulder_pan_joint:
     has_velocity_limits: true
-    max_velocity: 3.15
+    max_velocity: 1.6
     has_acceleration_limits: false
     max_acceleration: 0
   right_arm_wrist_1_joint:
     has_velocity_limits: true
-    max_velocity: 3.2
+    max_velocity: 1.6
     has_acceleration_limits: false
     max_acceleration: 0
   right_arm_wrist_2_joint:
     has_velocity_limits: true
-    max_velocity: 3.2
+    max_velocity: 1.6
     has_acceleration_limits: false
     max_acceleration: 0
   right_arm_wrist_3_joint:
     has_velocity_limits: true
-    max_velocity: 3.2
+    max_velocity: 1.6
     has_acceleration_limits: false
     max_acceleration: 0
