@@ -166,16 +166,16 @@ namespace bulldog
 
   void BulldogHW::write()
   {
-    // if (emergency_stop)
-    // {
-    //   motor_controller->setMotorSpeed(1, 0);
-    //   motor_controller->setMotorSpeed(2, 0);
-    // }
-    // else
-    // {
-      motor_controller->setMotorSpeed(1, -joint_velocity_command_[0]*CP);
-      motor_controller->setMotorSpeed(2, joint_velocity_command_[2]*CP);
-  //  }
+    if (emergency_stop)
+    {
+      motor_controller->setMotorSpeed(1, 0);
+      motor_controller->setMotorSpeed(2, 0);
+    }
+    else
+    {
+      motor_controller->setMotorSpeed(1, joint_velocity_command_[0]*CP);
+      motor_controller->setMotorSpeed(2, -joint_velocity_command_[2]*CP);
+    }
   }
 
 }
