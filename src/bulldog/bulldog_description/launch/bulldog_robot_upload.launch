@@ -123,8 +123,8 @@
         <!-- Load right ur5 controllers -->
         <rosparam command="load" file="$(find bulldog_control)/config/control_ur5_right.yaml" />
         
-        <!-- <node name="ur5_right_controller_spawner" pkg="controller_manager" type="spawner" 
-            respawn="false" output="screen" args="right_arm_controller" /> -->
+        <node name="ur5_right_controller_spawner" pkg="controller_manager" type="spawner" 
+            respawn="false" output="screen" args="right_arm_controller" />
     </group>
 
     <!-- Include robotiq gripper configs for left and right gripper, only used in sim -->

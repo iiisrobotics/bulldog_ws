@@ -54,13 +54,21 @@
         <joint name="left_arm_wrist_2_joint" value="-0.5235" />
         <joint name="left_arm_wrist_3_joint" value="0.7854" />
     </group_state>
+    <group_state name="right_arm_home" group="right_arm">
+        <joint name="right_arm_elbow_joint" value="0" />
+        <joint name="right_arm_shoulder_lift_joint" value="0" />
+        <joint name="right_arm_shoulder_pan_joint" value="0" />
+        <joint name="right_arm_wrist_1_joint" value="0" />
+        <joint name="right_arm_wrist_2_joint" value="0" />
+        <joint name="right_arm_wrist_3_joint" value="0" />
+    </group_state>
     <group_state name="right_arm_default" group="right_arm">
         <joint name="right_arm_elbow_joint" value="-2.83" />
         <joint name="right_arm_shoulder_lift_joint" value="0" />
         <joint name="right_arm_shoulder_pan_joint" value="0" />
         <joint name="right_arm_wrist_1_joint" value="0" />
         <joint name="right_arm_wrist_2_joint" value="1.5708" />
-        <joint name="right_arm_wrist_3_joint" value="-2.3562" />
+        <joint name="right_arm_wrist_3_joint" value="-0.7854" />
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="left_end_effector" parent_link="left_gripper_tool0" group="left_gripper" />
