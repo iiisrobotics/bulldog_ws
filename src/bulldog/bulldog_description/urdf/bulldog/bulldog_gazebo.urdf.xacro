@@ -109,14 +109,14 @@
         <joint name="left_arm_gripper" type="fixed">
             <parent link="left_arm_ee_link" />
             <child link="left_gripper_palm" />
-            <origin xyz="0 0 0" rpy="0 0 -1.57" />
+            <origin xyz="0 0 0" rpy="0 -2.3562 -1.57" />
         </joint>
 
         <xacro:robotiq-3f-gripper_articulated prefix="right_gripper_"/>
         <joint name="right_arm_gripper" type="fixed">
             <parent link="right_arm_ee_link" />
             <child link="right_gripper_palm" />
-            <origin xyz="0 0 0" rpy="0 0 -1.57" />
+            <origin xyz="0 0 0" rpy="0 2.3562 -1.57" />
         </joint>
 
     </xacro:if>
