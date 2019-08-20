@@ -30,7 +30,9 @@
     <!-- <param name="$(arg robot_description)_semantic" textfile="$(find bulldog_description)/config/bulldog_robot.srdf" /> -->
 
     <!-- Load base control information -->
+	<!--
 	<include file="$(find bulldog_control)/launch/control.launch"/>
+	-->
 
     <!-- Include ros_control configuration for ur5, only used in simulation -->
     <group if="$(arg ur5_enabled)">
