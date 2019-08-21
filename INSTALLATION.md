@@ -36,7 +36,7 @@
 
     http://wiki.ros.org/openni2_camera
 
-    sudo apt-get install ros-$ROS_DISTRO-openni2-camera
+        sudo apt-get install ros-$ROS_DISTRO-openni2-camera
 
 7. socketcan_interface
 
@@ -124,7 +124,7 @@ to clone all the following repository at once!
 
         git clone -b $ROS_DISTRO-devel https://github.com/ros-industrial/universal_robot.git
 
-    Note: we use **melodic-devel** branch here. And compile it from scratch.
+    Note: we use **kinetic-devel** branch here. And compile it from scratch.
 
 19.  robotiq
 
