@@ -1,0 +1,2 @@
+# Monitor Controller - ttyUSB1
+SUBSYSTEMS=="usb", ATTRS{product}=="USB-Serial Controller", ATTRS{idProduct}=="2303", ATTRS{idVendor}=="067b", ATTRS{devnum}=="5", MODE="0666", SYMLINK+="monitor_controller"

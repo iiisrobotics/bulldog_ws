@@ -1,0 +1,2 @@
+# Motor Controller - ttyACM0
+SUBSYSTEMS=="usb", ATTRS{product}=="Motor Controller", ATTRS{idProduct}=="5740", ATTRS{idVendor}=="20d2", MODE="0666", SYMLINK+="motor_controller"
