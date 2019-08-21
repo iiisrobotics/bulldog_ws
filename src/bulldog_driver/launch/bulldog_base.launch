@@ -4,9 +4,9 @@
   <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find bulldog_description)/urdf/bulldog_robot.xacro'" />
 
   <node pkg="bulldog_driver" type="bulldog_node" name="bulldog_driver" output="screen" >
-    <param name="controller_port" value="/dev/ttyACM0" />
-    <param name="display_port" value="/dev/ttyUSB1" />
-    <param name="bms_port" value="/dev/ttyUSB0" />
+    <param name="controller_port" value="/dev/motor_controller" />
+    <param name="display_port" value="/dev/monitor_controller" />
+    <param name="bms_port" value="/dev/bsm_controller" />
     <param name="r1_offset" value="7" />
     <param name="r2_offset" value="13" />
     <param name="tmp_limit" value="70" />
@@ -15,7 +15,7 @@
   <rosparam command="load" file="$(find bulldog_driver)/config/control.yaml" />
   <node name="controller_spawner" pkg="controller_manager" type="spawner" 
   	respawn="false" output="screen" 
-	args="bulldog_joint_publisher bulldog_velocity_controller --shutdown-timeout 1"/>
+	args="bulldog_joint_publisher bulldog_velocity_controller"/>
 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
