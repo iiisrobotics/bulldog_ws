@@ -132,6 +132,8 @@ Negative - Black
 
 ## Hardware to Software Mapping
 
+### Descriptions
+
 1. ttyACM0
 
     该接口是轮子电机接口，通过最底层电路连接（连接方式未知）形成一个USB接口，直接插在Intel NUC上。其接口为黑色且比较短，默认插在白色USB分线器下方。硬件调试结束后注意检查该接口是否正确连接：
@@ -144,8 +146,73 @@ Negative - Black
 
 2. ttyUSB0
 
+    IMU接口，用于计算底盘Odometry和Speed。
+    
     该接口用于bsm，具体功能未知，需要和公司沟通。
 
 3. ttyUSB1
 
     该接口是Robot车厢后方显示屏的接口，通过USB接口插在Intel NUC上。其接口为黑色且比较长，默认插在Kinetic Blue Data线的旁边。
+
+### Rules
+
+以上接口为硬件在系统device目录下的表示，Linux系统在硬件与对应设备的驱动程序之间还有对应的hardware rules。
+由于硬件默认使用权限为root而不是普通用户，该Rule可以通过硬件出厂信息match到具体的硬件设备，实现开放权限给普通
+用户使用，定义带有意义的symlink等功能。若重装系统后在使用driver前请先配置hardware rules。
+
+注意使用google搜索udev rules的使用方法。
+
+以下为参考blog: https://clearpathrobotics.com/blog/2015/01/udev/
+
+
+1. rules存放目录
+
+        cd /lib/udev/rules.d
+
+    该目录下存放有系统默认的hardware rule，可以控制键盘、鼠标等基本设备的使用，注意文件的命名方式和内容格式，请勿直接修改这个目录中的rules或添加新的rules。
+
+        cd /etc/udev/rules.d
+
+    该目录存放custom rules，新增的rules会覆盖掉相同设备的默认rules，请将新的rules存放在该目录中。
+
+2. 查看hardware information
+
+    使用如下命令能够查看各设备出厂信息
+
+        udevadm info -a -p $(udevadm info -q path -n <devpath>)
+
+    其中`<devpath>`为/dev目录下对应的各个设备名称。一下为ttyACM0, ttyUSB0, ttyUSB1对应的部分信息
+
+    - ttyACM0 - motor controller
+
+        ATTRS{product}=="Motor Controller"
+        ATTRS{idProduct}=="5740"
+        ATTRS{idVendor}=="20d2"
+
+    - ttyUSB0 - imu controller
+    
+        ATTRS{product}=="USB-Serial Controller"
+        ATTRS{idProduct}=="2303"
+        ATTRS{idVendor}=="067b"
+        ATTRS{devnum}=="2"
+
+    - ttyUSB1 - monitor controller
+
+        ATTRS{product}=="USB-Serial Controller"
+        ATTRS{idProduct}=="2303"
+        ATTRS{idVendor}=="067b"
+        ATTRS{devnum}=="5"
+
+3. 拷贝bulldog_rules中的内容至系统目录
+
+        cd bulldog_rules
+        sudo cp * /etc/udev/rules.d
+
+4. 重启udev
+
+        sudo udevadm control --reload-rules
+        sudo service udev restart
+        sudo udevadm trigger
+
+    之后可以正常启动底盘driver。
+
