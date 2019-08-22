@@ -1,0 +1,53 @@
+<launch>
+    <!-- Robot settings -->
+    <arg name="laser_enabled" default="$(optenv BULLDOG_LMS1XX_ENABLED true)"/>
+    <arg name="ur5_enabled" default="$(optenv BULLDOG_UR5_ENABLED false)"/>
+    <arg name="kinect_enabled" default="$(optenv BULLDOG_KINECT_ENABLED false)"/>
+    <arg name="realsense_enabled" default="$(optenv BULLDOG_REALSENSE_ENABLED true)"/>
+    <arg name="dual_ur5_enabled" default="$(optenv BULLDOG_DUAL_UR5_ENABLED true)"/>
+    <arg name="robotiq_grippers_enabled" default="$(optenv ROBOTIQ_GRIPPERS_ENABLED true)"/>
+
+    <!-- Load universal robot description format (URDF) -->
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find bulldog_description)/urdf/bulldog_robot.xacro'
+        laser_enabled:=$(arg laser_enabled)
+        ur5_enabled:=$(arg ur5_enabled)
+        kinect_enabled:=$(arg kinect_enabled)
+        realsense_enabled:=$(arg realsense_enabled)
+        dual_ur5_enabled:=$(arg dual_ur5_enabled)
+        robotiq_grippers_enabled:=$(arg robotiq_grippers_enabled)"/>
+
+    <!-- The semantic description that corresponds to the URDF -->
+    <param name="robot_description_semantic" textfile="$(find bulldog_description)/config/bulldog_robot.srdf" />
+    
+    <!-- Include LMS1xx laser driver -->
+    <include file="$(find bulldog_bringup)/launch/LMS1xx.launch">
+        <arg name="laser_enabled" value="$(arg laser_enabled)"/>
+    </include>
+
+    <!-- Include UR5 driver -->
+    <include file="$(find bulldog_bringup)/launch/ur5_arm.launch">
+        <arg name="ur5_enabled" value="$(arg ur5_enabled)"/>
+        <arg name="dual_ur5_enabled" value="$(arg dual_ur5_enabled)"/>
+    </include>
+
+    <!-- Include Robotiq 3 Finger Gripper driver -->
+    <include file="$(find bulldog_bringup)/launch/robotiq_3f_gripper.launch">
+        <arg name="robotiq_grippers_enabled" value="$(arg robotiq_grippers_enabled)"/>
+    </include>
+
+    <!-- Include Intel RealSense camera driver -->
+    <include file="$(find bulldog_bringup)/launch/realsense_camera.launch">
+        <arg name="realsense_enabled" value="$(arg realsense_enabled)"/>
+    </include>
+
+    <!-- publish robot state (tf transforms) -->
+    <!-- do not use robot_state_publisher in case we have passive joint in the URDF -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <param name="use_gui" value="false"/>
+        <rosparam param="/source_list">[/joint_states]</rosparam>
+    </node>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+        <param name="publish_frequency" value="50.0" />
+    </node>
+</launch>
