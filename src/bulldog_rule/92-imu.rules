@@ -1,2 +1,3 @@
 # IMU Controller - ttyUSB0
-SUBSYSTEMS=="usb", ATTRS{product}=="USB-Serial Controller", ATTRS{idProduct}=="2303", ATTRS{idVendor}=="067b", ATTRS{devnum}=="2", MODE="0666", SYMLINK+="imu_controller"
+# WARNNING: This rule may not be adaptable to every machine!
+KERNEL=="ttyUSB0", SUBSYSTEMS=="usb", ATTRS{product}=="USB-Serial Controller", ATTRS{idProduct}=="2303", ATTRS{idVendor}=="067b", MODE="0666", SYMLINK+="imu_controller"
