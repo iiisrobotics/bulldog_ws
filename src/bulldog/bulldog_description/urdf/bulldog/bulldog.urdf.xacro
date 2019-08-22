@@ -87,14 +87,16 @@
 
     <!-- dual ur5 arms -->
     <xacro:if value="$(arg dual_ur5_enabled)">
-      <xacro:ur5_robot prefix="left_arm_" joint_limited="true"/>    
+      <xacro:ur5_robot prefix="left_arm_" joint_limited="true"
+        transmission_hw_interface="hardware_interface/PositionJointInterface" />    
       <joint name="left_arm_base" type="fixed">
         <parent link="installation_plate_link" />
         <child link="left_arm_base_link" />
         <origin xyz="0 0.15945 0.09069" rpy="-0.785 0 0" />
       </joint>
       
-      <xacro:ur5_robot prefix="right_arm_" joint_limited="true"/>  
+      <xacro:ur5_robot prefix="right_arm_" joint_limited="true"
+        transmission_hw_interface="hardware_interface/PositionJointInterface" />  
       <joint name="right_arm_base" type="fixed">
         <parent link="installation_plate_link" />
         <child link="right_arm_base_link" />
@@ -104,11 +106,11 @@
       <!-- If you modify the name of the grippers, remember to change the *prefix* in line 
            780 and 782 accordingly of $(find robotiq_s_model_articulated_gazebo_plugins)/src/RobotiqHandPlugin.cpp. -->
       <xacro:robotiq_hand prefix="left_gripper_" parent="left_arm_ee_link" reflect="-1">
-        <origin rpy="0 0 -1.57" xyz="0 0 0"/>
+        <origin rpy="0 -2.3562 -1.5708" xyz="0 0 0"/>
       </xacro:robotiq_hand>
 
       <xacro:robotiq_hand prefix="right_gripper_" parent="right_arm_ee_link" reflect="-1">
-        <origin rpy="0 0 -1.57" xyz="0 0 0"/>
+        <origin rpy="0 2.3562 -1.5708" xyz="0 0 0"/>
       </xacro:robotiq_hand>
 
     </xacro:if>

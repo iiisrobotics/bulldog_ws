@@ -2,9 +2,9 @@
 <launch>
     <arg name="model" default="$(find bulldog_description)/urdf/bulldog_robot.xacro" />
     <arg name="rviz_config" default="$(find bulldog_description)/rviz/bulldog.rviz" />
-    <arg name="kinematic_param" default="$(find bulldog_description)/config/kinematics.yaml" />
+    <!-- <arg name="kinematic_param" default="$(find bulldog_description)/config/kinematics.yaml" /> -->
     <arg name="semantic_model" default="$(find bulldog_description)/config/bulldog_robot.srdf" />
-    <arg name="use_gui" default="false" />
+    <arg name="joint_state_gui" default="false" />
 
     <arg name="laser_enabled" default="$(optenv BULLDOG_LMS1XX_ENABLED true)"/>
     <arg name="ur5_enabled" default="$(optenv BULLDOG_UR5_ENABLED false)"/>
@@ -27,7 +27,7 @@
 
     <!-- joint state publisher -->
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
-      <param name="use_gui" value="$(arg use_gui)"/>
+      <param name="use_gui" value="$(arg joint_state_gui)"/>
     </node>
     
     <!-- robot state publisher -->
