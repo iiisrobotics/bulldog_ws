@@ -11,8 +11,8 @@
   <node name="$(anon rviz)" launch-prefix="$(arg launch_prefix)" pkg="rviz" type="rviz" respawn="false"
 	args="$(arg command_args)" output="screen">
     <!-- remap gripper control topic -->
-    <remap from="Robotiq3FGripperRobotOutput" to="left_hand/command" />
-    <remap from="Robotiq3FGripperRobotInput" to="left_hand/state" />
+    <remap from="Robotiq3FGripperRobotOutput" to="left_gripper/command" />
+    <remap from="Robotiq3FGripperRobotInput" to="left_gripper/state" />
     <rosparam command="load" file="$(find bulldog_robot_moveit_config_rs)/config/kinematics.yaml"/>
   </node>
 

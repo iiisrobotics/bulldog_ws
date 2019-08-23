@@ -1,0 +1,24 @@
+<launch>
+  <!-- GDB functionality -->
+  <arg name="debug" default="false" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+  <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
+
+  <!-- broadcast static tf for virtual robot root -->
+  <node pkg="tf" type="static_transform_publisher" name="virtual_joint_broadcaster_0" args="0 0 0 0 0 0 odom base_link 100" />
+
+  <!-- startup MoveIt move group context -->
+  <include file="$(find bulldog_robot_moveit_config_rs)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="fake_execution" value="false"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+  <!-- startup rviz -->
+  <include file="$(find bulldog_robot_moveit_config_rs)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+</launch>

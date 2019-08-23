@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+    <node name="left_gripper_manipulator" pkg="robotiq_3f_gripper_control" type="Robotiq3FGripperSimpleController.py">
+        <remap from="Robotiq3FGripperRobotOutput" to="/left_gripper/command" />
+    </node>
+    
+</launch>

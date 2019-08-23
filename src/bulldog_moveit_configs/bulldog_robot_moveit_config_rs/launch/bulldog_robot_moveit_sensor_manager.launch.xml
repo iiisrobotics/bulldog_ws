@@ -1,6 +1,5 @@
 <launch>
-    <rosparam command="load"
-        file="$(find bulldog_robot_moveit_config_rs)/config/sensors_3d.yaml" />
+    <rosparam command="load" file="$(find bulldog_robot_moveit_config_rs)/config/sensors_3d.yaml" />
     
     <param name="octomap_frame" type="string" value="odom" />
     <param name="octomap_resolution" type="double" value="0.025" />
