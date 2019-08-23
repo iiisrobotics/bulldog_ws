@@ -3,8 +3,8 @@
     <arg name="realsense_enabled" default="$(optenv BULLDOG_REALSENSE_ENABLED true)"/>
 
     <!-- Intel RealSense camera settings -->
-    <arg name="left_gripper_camera_serial_no" default="821312060956"/>  <!-- Intel RealSense D415 -->
-    <arg name="right_gripper_camera_serial_no" default="827112070078"/>  <!-- Intel RealSense D435 -->
+    <arg name="left_gripper_camera_serial_no" default="827112070078"/>  <!-- Intel RealSense D435 -->
+    <arg name="right_gripper_camera_serial_no" default="821312060956"/>  <!-- Intel RealSense D415 -->
     <arg name="left_gripper_camera" default="left_gripper_sensor_d415_camera"/>
     <arg name="right_gripper_camera" default="right_gripper_sensor_d415_camera"/>  
     <arg name="left_gripper_camera_tf_prefix" default="$(arg left_gripper_camera)"/>
