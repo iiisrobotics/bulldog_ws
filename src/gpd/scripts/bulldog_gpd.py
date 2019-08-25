@@ -162,9 +162,12 @@ def process_cloud(cloud_transformed, detection):
 	# remove nans
 	# cloud_points = cloud_points[~np.isnan(cloud_points[:, 0])]
 	cloud_points = []
-	for cloud_point in sensor_msgs.point_cloud2.read_points(cloud_transformed, skip_nans=True):
+	for cloud_point in sensor_msgs.point_cloud2.read_points(cloud_transformed):
 		cloud_points.append([cloud_point[0], cloud_point[1], cloud_point[2]])
 	cloud_points = np.asarray(cloud_points)
+	print(cloud_points.shape)
+	cloud_points = cloud_points[~np.isnan(cloud_points[:, 0])]
+	print(cloud_points.shape)
 
 	if len(detection.masks) > 0:
 		for class_name, mask in zip(detection.class_names,
@@ -437,7 +440,7 @@ def main():
 	image_stream = rospy.get_param(
 		'image_stream', 'left_gripper_sensor_d415_camera/color/image_raw')
 	cloud_stream = rospy.get_param(
-		'image_stream', 'left_gripper_sensor_d415_camera/depth/color/points')
+		'image_stream', 'left_gripper_sensor_d415_camera/depth_registered/points')
 
 	#
 	# get image and point cloud
