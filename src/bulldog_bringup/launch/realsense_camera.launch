@@ -24,6 +24,7 @@
     <arg name="enable_accel" default="false"/>
     <arg name="enable_pointcloud" default="true"/>
     <arg name="enable_sync" default="true"/>
+    <arg name="align_depth" default="true"/>
     <arg name="initial_reset" default="true"/>
 
     <group if="$(arg realsense_enabled)">
@@ -46,6 +47,7 @@
                 <arg name="enable_accel" value="$(arg enable_accel)"/>
                 <arg name="enable_pointcloud" value="$(arg enable_pointcloud)"/>
                 <arg name="enable_sync" value="$(arg enable_sync)"/>
+                <arg name="align_depth" value="$(arg align_depth)"/>
                 <arg name="initial_reset" value="$(arg initial_reset)"/>
             </include>
         </group>
@@ -69,6 +71,7 @@
                 <arg name="enable_accel" value="$(arg enable_accel)"/>
                 <arg name="enable_pointcloud" value="$(arg enable_pointcloud)"/>
                 <arg name="enable_sync" value="$(arg enable_sync)"/>
+                <arg name="align_depth" value="$(arg align_depth)"/>
                 <arg name="initial_reset" value="$(arg initial_reset)"/>
             </include>
         </group>
