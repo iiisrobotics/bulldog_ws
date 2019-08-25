@@ -1,0 +1,36 @@
+<launch>
+	<!-- Robot settings -->
+	<arg name="robotiq_grippers_enabled" default="$(optenv ROBOTIQ_GRIPPERS_ENABLED true)"/>
+
+	<!-- Robotiq 3 Finger Gripper settings -->
+	<arg name="robotiq_left_ip" default="192.168.1.12"/>
+	<arg name="robotiq_right_ip" default="192.168.1.13"/>
+	<arg name="robotiq_left_prefix" default="left_gripper_"/>
+	<arg name="robotiq_right_prefix" default="right_gripper_"/>
+
+	<group if="$(arg robotiq_grippers_enabled)">
+        <!-- Robotiq 3 Finger Grippers hardware interfaces -->
+        <node name="robotiq_3f_gripper_left_hardware_interface" pkg="robotiq_3f_gripper_control" type="Robotiq3FGripperTcpNode.py"
+            output="screen" args="$(arg robotiq_left_ip)">
+            <remap from="Robotiq3FGripperRobotInput" to="left_gripper/state"/>
+            <remap from="Robotiq3FGripperRobotOutput" to="left_gripper/command"/>
+        </node>
+
+        <node name="robotiq_3f_gripper_right_hardware_interface" pkg="robotiq_3f_gripper_control" type="Robotiq3FGripperTcpNode.py" 
+            output="screen" args="$(arg robotiq_right_ip)">
+            <remap from="Robotiq3FGripperRobotInput" to="right_gripper/state"/>
+            <remap from="Robotiq3FGripperRobotOutput" to="right_gripper/command"/>
+        </node>
+
+        <!-- <node name="left_gripper_joint_state_relay" pkg="topic_tools" type="relay" 
+            args="/robotiq_hands/left_hand/joint_states /joint_states" output="screen" /> -->
+        
+        <!-- <node name="right_gripper_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" 
+        output="screen" >
+        <param name="publish_frequency" type="double" value="50.0" />
+        </node> -->
+        
+        <!-- <node name="right_gripper_joint_state_relay" pkg="topic_tools" type="relay" 
+            args="/robotiq_hands/right_hand/joint_states /joint_states" output="screen" /> -->
+    </group>
+</launch>
