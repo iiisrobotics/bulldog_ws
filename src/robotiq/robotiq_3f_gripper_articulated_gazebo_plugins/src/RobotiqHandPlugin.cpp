@@ -40,13 +40,13 @@ I'm not sure exactly where the dependency chain includes PID.hh for the first ti
 
 // Default topic names initialization.
 const std::string RobotiqHandPlugin::DefaultLeftTopicCommand  =
-  "/left_hand/command";
+  "/left_gripper/command";
 const std::string RobotiqHandPlugin::DefaultLeftTopicState    =
-  "/left_hand/state";
+  "/left_gripper/state";
 const std::string RobotiqHandPlugin::DefaultRightTopicCommand =
-  "/right_hand/command";
+  "/right_gripper/command";
 const std::string RobotiqHandPlugin::DefaultRightTopicState   =
-  "/right_hand/state";
+  "/right_gripper/state";
 
 ////////////////////////////////////////////////////////////////////////////////
 RobotiqHandPlugin::RobotiqHandPlugin()
