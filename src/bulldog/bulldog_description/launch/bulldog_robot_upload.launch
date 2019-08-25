@@ -1,0 +1,157 @@
+<launch>
+    <!-- GDB functionality -->
+    <arg name="debug" default="false" />
+    <arg unless="$(arg debug)" name="launch_prefix" value="" />
+    <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
+
+    <!-- Robot settings -->
+    <arg name="laser_enabled" default="$(optenv BULLDOG_LMS1XX_ENABLED true)"/>
+    <arg name="ur5_enabled" default="$(optenv BULLDOG_UR5_ENABLED false)"/>
+    <arg name="kinect_enabled" default="$(optenv BULLDOG_KINECT_ENABLED false)"/>
+    <arg name="realsense_enabled" default="$(optenv BULLDOG_REALSENSE_ENABLED true)"/>
+    <arg name="dual_ur5_enabled" default="$(optenv BULLDOG_DUAL_UR5_ENABLED true)"/>
+    <arg name="robotiq_grippers_enabled" default="$(optenv ROBOTIQ_GRIPPERS_ENABLED true)"/>
+
+    <!-- Load universal robot description format (URDF) -->
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find bulldog_description)/urdf/bulldog_robot.xacro'
+        laser_enabled:=$(arg laser_enabled)
+        ur5_enabled:=$(arg ur5_enabled)
+        kinect_enabled:=$(arg kinect_enabled)
+        realsense_enabled:=$(arg realsense_enabled)
+        dual_ur5_enabled:=$(arg dual_ur5_enabled)
+        robotiq_grippers_enabled:=$(arg robotiq_grippers_enabled)"/>
+
+    <!-- The semantic description that corresponds to the URDF -->
+    <param name="robot_description_semantic" textfile="$(find bulldog_description)/config/bulldog_robot.srdf" />
+
+    <!-- Load base controllers -->
+    <include file="$(find bulldog_control)/launch/control.launch"/>
+
+    <!-- Include ros_control configuration for ur5, only used in simulation -->
+    <group if="$(arg ur5_enabled)">
+        <!-- UR5 settings -->
+        <arg name="ur5_prefix" default="arm_" />
+        <arg name="ur5_ip" default="192.168.1.50"/>
+        <arg name="ur5_reverse_port" default="50001"/>
+        <arg name="ur5_min_payload"  default="0.0"/>
+        <arg name="ur5_max_payload"  default="3.0"/>
+        <arg name="ur5_max_velocity" default="5.0"/> 
+        <arg name="ur5_base_frame" default="$(arg ur5_prefix)base"/>
+        <arg name="ur5_tool_frame" default="$(arg ur5_prefix)tool0"/>
+        <arg name="ur5_shutdown_on_disconnect" default="true"/>
+
+        <!-- UR5 hardware interfaces -->
+        <node name="ur5_hardware_interface" pkg="ur_modern_driver" type="ur_driver" output="screen" 
+            launch-prefix="$(arg launch_prefix)">
+            <param name="robot_ip_address" type="str" value="$(arg ur5_ip)" />
+            <param name="reverse_port" value="$(arg ur5_reverse_port)"/>
+            <param name="min_payload" type="double" value="$(arg ur5_min_payload)" />
+            <param name="max_payload" type="double" value="$(arg ur5_max_payload)" />
+            <param name="max_velocity" type="double" value="$(arg ur5_max_velocity)" />
+            <param name="use_ros_control" type="bool" value="false"/>
+            <param name="prefix" type="str" value="$(arg ur5_prefix)" />
+            <param name="base_frame" type="str" value="$(arg ur5_base_frame)"/>
+            <param name="tool_frame" type="str" value="$(arg ur5_tool_frame)"/>
+            <param name="shutdown_on_disconnect" type="bool" value="$(arg ur5_shutdown_on_disconnect)"/>
+        
+            <remap from="follow_joint_trajectory" to="arm_controller/follow_joint_trajectory"/>
+        </node>
+    </group>
+
+    <!-- Include ros_control configuration for left and right ur5, only used in simulation -->
+    <group if="$(arg dual_ur5_enabled)">
+        <!-- UR5 settings -->
+        <arg name="ur5_left_prefix" default="left_arm_" />
+        <arg name="ur5_right_prefix" default="right_arm_" />
+        <arg name="ur5_left_ip" default="192.168.1.50"/>
+        <arg name="ur5_right_ip" default="192.168.1.60"/>
+        <arg name="ur5_left_reverse_port" default="50001"/>
+        <arg name="ur5_right_reverse_port" default="50002"/>
+        <arg name="ur5_min_payload"  default="0.0"/>
+        <arg name="ur5_max_payload"  default="3.0"/>
+        <arg name="ur5_max_velocity" default="5.0"/>
+        <arg name="ur5_left_base_frame" default="$(arg ur5_left_prefix)base"/>
+        <arg name="ur5_right_base_frame" default="$(arg ur5_right_prefix)base"/>
+        <arg name="ur5_left_tool_frame" default="$(arg ur5_left_prefix)tool0"/>
+        <arg name="ur5_right_tool_frame" default="$(arg ur5_right_prefix)tool0"/>
+        <arg name="ur5_shutdown_on_disconnect" default="true"/>
+
+        <!-- Load left ur5 hardware interfaces -->
+        <node name="ur5_left_hardware_interface" pkg="ur_modern_driver" type="ur_driver" output="screen" 
+            launch-prefix="$(arg launch_prefix)">
+            <param name="prefix" type="str" value="$(arg ur5_left_prefix)" />
+            <param name="robot_ip_address" type="str" value="$(arg ur5_left_ip)" />
+            <param name="reverse_port" value="$(arg ur5_left_reverse_port)"/>
+            <param name="min_payload" type="double" value="$(arg ur5_min_payload)" />
+            <param name="max_payload" type="double" value="$(arg ur5_max_payload)" />
+            <param name="max_velocity" type="double" value="$(arg ur5_max_velocity)" />
+            <param name="use_ros_control" type="bool" value="false"/>
+            <param name="base_frame" type="str" value="$(arg ur5_left_base_frame)"/>
+            <param name="tool_frame" type="str" value="$(arg ur5_left_tool_frame)"/>
+            <param name="shutdown_on_disconnect" type="bool" value="$(arg ur5_shutdown_on_disconnect)"/>
+
+            <remap from="follow_joint_trajectory" to="left_arm_controller/follow_joint_trajectory"/>
+        </node>
+
+        <!-- Load right ur5 hardware interfaces -->
+        <node name="ur5_right_hardware_interface" pkg="ur_modern_driver" type="ur_driver" output="screen" 
+            launch-prefix="$(arg launch_prefix)">
+            <param name="prefix" type="str" value="$(arg ur5_right_prefix)" />
+            <param name="robot_ip_address" type="str" value="$(arg ur5_right_ip)" />
+            <param name="reverse_port" value="$(arg ur5_right_reverse_port)"/>
+            <param name="min_payload" type="double" value="$(arg ur5_min_payload)" />
+            <param name="max_payload" type="double" value="$(arg ur5_max_payload)" />
+            <param name="max_velocity" type="double" value="$(arg ur5_max_velocity)" />
+            <param name="use_ros_control" type="bool" value="false"/>
+            <param name="base_frame" type="str" value="$(arg ur5_right_base_frame)"/>
+            <param name="tool_frame" type="str" value="$(arg ur5_right_tool_frame)"/>
+            <param name="shutdown_on_disconnect" type="bool" value="$(arg ur5_shutdown_on_disconnect)"/>
+
+            <remap from="follow_joint_trajectory" to="right_arm_controller/follow_joint_trajectory"/>
+        </node>
+    </group>
+
+    <!-- Include robotiq gripper configs for left and right gripper, only used in sim -->
+    <group if="$(arg robotiq_grippers_enabled)">
+        <!-- Robotiq 3 finger grippers settings -->
+        <arg name="robotiq_left_ip" default="192.168.1.12"/>
+        <arg name="robotiq_right_ip" default="192.168.1.13"/>
+        <arg name="robotiq_left_prefix" default="left_gripper_"/>
+        <arg name="robotiq_right_prefix" default="right_gripper_"/>
+        
+        <!-- Robotiq 3 finger grippers hardware interfaces -->
+        <node name="robotiq_3f_gripper_left_hardware_interface" pkg="robotiq_3f_gripper_control" type="Robotiq3FGripperTcpNode.py"
+            output="screen" args="$(arg robotiq_left_ip)">
+            <remap from="Robotiq3FGripperRobotInput" to="left_gripper/state"/>
+            <remap from="Robotiq3FGripperRobotOutput" to="left_gripper/command"/>
+        </node>
+
+        <node name="robotiq_3f_gripper_right_hardware_interface" pkg="robotiq_3f_gripper_control" type="Robotiq3FGripperTcpNode.py" 
+            output="screen" args="$(arg robotiq_right_ip)">
+            <remap from="Robotiq3FGripperRobotInput" to="right_gripper/state"/>
+            <remap from="Robotiq3FGripperRobotOutput" to="right_gripper/command"/>
+        </node>
+
+        <!-- <node name="left_gripper_joint_state_relay" pkg="topic_tools" type="relay" 
+            args="/robotiq_hands/left_hand/joint_states /joint_states" output="screen" /> -->
+        
+        <!-- <node name="right_gripper_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" 
+        output="screen" >
+        <param name="publish_frequency" type="double" value="50.0" />
+        </node> -->
+        
+        <!-- <node name="right_gripper_joint_state_relay" pkg="topic_tools" type="relay" 
+            args="/robotiq_hands/right_hand/joint_states /joint_states" output="screen" /> -->
+    </group>
+
+    <!-- publish robot state (tf transforms) -->
+    <!-- do not use robot_state_publisher in case we have passive joint in the URDF -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <param name="use_gui" value="false"/>
+        <rosparam param="/source_list">[/joint_states]</rosparam>
+    </node>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+        <param name="publish_frequency" value="50.0" />
+    </node>
+</launch>

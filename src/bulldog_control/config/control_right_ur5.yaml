@@ -1,6 +1,5 @@
 right_arm_controller:
   type: position_controllers/JointTrajectoryController
-  topic: "right"
   joints:
      - right_arm_shoulder_pan_joint
      - right_arm_shoulder_lift_joint

@@ -1,6 +1,5 @@
 left_arm_controller:
   type: position_controllers/JointTrajectoryController
-  topic: "left"
   joints:
      - left_arm_shoulder_pan_joint
      - left_arm_shoulder_lift_joint

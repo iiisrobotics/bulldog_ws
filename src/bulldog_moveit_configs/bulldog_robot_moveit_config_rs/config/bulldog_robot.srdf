@@ -43,7 +43,7 @@
         <joint name="left_arm_shoulder_lift_joint" value="-1.5708" />
         <joint name="left_arm_shoulder_pan_joint" value="-1.5708" />
         <joint name="left_arm_wrist_1_joint" value="-1.5708" />
-        <joint name="left_arm_wrist_2_joint" value="-0.5235" />
+        <joint name="left_arm_wrist_2_joint" value="-0.7854" />
         <joint name="left_arm_wrist_3_joint" value="0.7854" />
     </group_state>
     <group_state name="left_arm_gripping_top" group="left_arm">
@@ -51,7 +51,7 @@
         <joint name="left_arm_shoulder_lift_joint" value="-1.5708" />
         <joint name="left_arm_shoulder_pan_joint" value="-1.5708" />
         <joint name="left_arm_wrist_1_joint" value="-0.7854" />
-        <joint name="left_arm_wrist_2_joint" value="-0.5235" />
+        <joint name="left_arm_wrist_2_joint" value="-0.7854" />
         <joint name="left_arm_wrist_3_joint" value="0.7854" />
     </group_state>
     <group_state name="right_arm_home" group="right_arm">
