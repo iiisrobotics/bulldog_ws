@@ -152,22 +152,16 @@ def process_cloud(cloud_transformed, detection):
 	cloud_indexed.cloud_sources.camera_source.append(Int64(0))
 
 	#
-	# convert PointCloud2 to a list of points
+	# get NAN points from the point cloud
 	#
-	# cloud_points = np.reshape(
-	# 	np.fromstring(cloud_transformed.data, dtype=np.float32), [-1, 4]
-	# )
-	# odd rows and first three columns are informative
-	# cloud_points = cloud_points[::2, 0:3]
-	# remove nans
-	# cloud_points = cloud_points[~np.isnan(cloud_points[:, 0])]
 	cloud_points = []
 	for cloud_point in sensor_msgs.point_cloud2.read_points(cloud_transformed):
 		cloud_points.append([cloud_point[0], cloud_point[1], cloud_point[2]])
 	cloud_points = np.asarray(cloud_points)
-	print(cloud_points.shape)
-	cloud_points = cloud_points[~np.isnan(cloud_points[:, 0])]
-	print(cloud_points.shape)
+	nan_mask = np.isnan(cloud_points[:, 0])
+	# print(cloud_points.shape)
+	# cloud_points = cloud_points[~nan_mask]
+	# print(cloud_points.shape)
 
 	if len(detection.masks) > 0:
 		for class_name, mask in zip(detection.class_names,
@@ -175,7 +169,7 @@ def process_cloud(cloud_transformed, detection):
 			#
 			# name filtering
 			#
-			mask_indices = name_filtering(class_name, mask)
+			mask_indices = name_filtering(class_name, mask, nan_mask)
 
 			if len(mask_indices) > 0:
 				cloud_indices = mask_indices
@@ -208,7 +202,7 @@ def process_cloud(cloud_transformed, detection):
 	return cloud_indexed
 
 
-def name_filtering(class_name, mask):
+def name_filtering(class_name, mask, nan_mask):
 	"""Extract point cloud of typical objects.
 
 	Parameters
@@ -219,6 +213,9 @@ def name_filtering(class_name, mask):
 	- mask: sensor_msgs/Image
 		Mask of the corresponding detection from the Mask RCNN.
 
+	- nan_mask: numpy.ndarray
+		Boolean mask to indicate the NAN points in the point cloud.
+
 	Returns
 	----------
 	- mask_indices: list
@@ -227,7 +224,7 @@ def name_filtering(class_name, mask):
 	"""
 	if (class_name == 'bottle') or (class_name == 'cup'):
 		mask_data = np.fromstring(mask.data, dtype=np.uint8)
-		mask_indices = np.where(mask_data != 0)[0].tolist()
+		mask_indices = np.where((mask_data != 0) & ~nan_mask)[0].tolist()
 	else:
 		mask_indices = []
 

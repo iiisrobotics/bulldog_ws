@@ -13,7 +13,7 @@
     </link>
 
     <joint name="top_plate_joint" type="fixed">
-      <origin xyz="0.07937 0 0.253" rpy="0 0 0" />
+      <origin xyz="0.13437 0 0.253" rpy="0 0 0" /><!-- <origin xyz="0.07937 0 0.253" rpy="0 0 0" /> -->
       <parent link="base_link" />
       <child link="top_plate_link" />
     </joint>
@@ -37,7 +37,7 @@
     <joint name="installation_plate_joint" type="fixed">
       <parent link="base_link"/>
       <child link="installation_plate_link"/>
-      <origin xyz="0.197 0 0.314" rpy="0 0 0" />
+      <origin xyz="0.252 0 0.314" rpy="0 0 0" /><!-- <origin xyz="0.197 0 0.314" rpy="0 0 0" /> -->
     </joint>
     
     <gazebo reference="installation_plate_link">
@@ -59,7 +59,7 @@
     <joint name="laser_plate_joint" type="fixed">
       <parent link="installation_plate_link"/>
       <child link="laser_plate_link"/>
-      <origin xyz="0.3 0 -0.1" rpy="${pi} 0 0" />
+      <origin xyz="0.245 0 -0.1" rpy="${pi} 0 0" /><!-- <origin xyz="0.3 0 -0.1" rpy="${pi} 0 0" /> -->
     </joint>
 
     <gazebo reference="laser_plate_link">

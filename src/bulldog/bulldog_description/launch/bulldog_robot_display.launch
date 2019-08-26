@@ -8,7 +8,7 @@
 
     <arg name="laser_enabled" default="$(optenv BULLDOG_LMS1XX_ENABLED true)"/>
     <arg name="ur5_enabled" default="$(optenv BULLDOG_UR5_ENABLED false)"/>
-    <arg name="kinect_enabled" default="$(optenv BULLDOG_KINECT_ENABLED true)"/>
+    <arg name="kinect_enabled" default="$(optenv BULLDOG_KINECT_ENABLED false)"/>
     <arg name="realsense_enabled" default="$(optenv BULLDOG_REALSENSE_ENABLED true)"/>
     <arg name="dual_ur5_enabled" default="$(optenv BULLDOG_DUAL_UR5_ENABLED true)"/>
     <arg name="robotiq_grippers_enabled" default="$(optenv ROBOTIQ_GRIPPERS_ENABLED true)"/>
