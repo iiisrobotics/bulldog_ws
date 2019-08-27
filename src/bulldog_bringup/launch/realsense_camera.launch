@@ -9,6 +9,8 @@
     <arg name="right_gripper_camera" default="right_gripper_sensor_d415_camera"/>  
     <arg name="left_gripper_camera_tf_prefix" default="$(arg left_gripper_camera)"/>
     <arg name="right_gripper_camera_tf_prefix" default="$(arg right_gripper_camera)"/>
+    <arg name="enable_gyro" default="false"/>
+    <arg name="enable_accel" default="false"/>
     <arg name="enable_sync" default="true"/>
     <arg name="align_depth" default="true"/>
     <arg name="initial_reset" default="true"/>
@@ -19,8 +21,10 @@
             <arg name="camera" value="$(arg left_gripper_camera)"/>
             <arg name="tf_prefix" value="$(arg left_gripper_camera_tf_prefix)"/>
             <arg name="enable_sync" value="$(arg enable_sync)"/>
+            <arg name="enable_gyro" value="$(arg enable_gyro)"/>
+            <arg name="enable_accel" value="$(arg enable_accel)"/>
             <arg name="align_depth" value="$(arg align_depth)"/>
-            <!-- <arg name="initial_reset" value="$(arg initial_reset)"/> -->
+            <arg name="initial_reset" value="$(arg initial_reset)"/>
         </include>
 
         <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
@@ -28,8 +32,10 @@
             <arg name="camera" value="$(arg right_gripper_camera)"/>
             <arg name="tf_prefix" value="$(arg right_gripper_camera_tf_prefix)"/>
             <arg name="enable_sync" value="$(arg enable_sync)"/>
+            <arg name="enable_gyro" value="$(arg enable_gyro)"/>
+            <arg name="enable_accel" value="$(arg enable_accel)"/>
             <arg name="align_depth" value="$(arg align_depth)"/>
-            <!-- <arg name="initial_reset" value="$(arg initial_reset)"/> -->
+            <arg name="initial_reset" value="$(arg initial_reset)"/>
         </include>
     </group>
 </launch>
