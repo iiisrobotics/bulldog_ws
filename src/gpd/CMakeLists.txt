@@ -158,9 +158,6 @@ generate_messages(DEPENDENCIES
 catkin_package(
   INCLUDE_DIRS 
     include
-  LIBRARIES
-    ${PROJECT_NAME}_grasp_detector
-    ${PROJECT_NAME}_grasp_plotter
   CATKIN_DEPENDS 
     cmake_modules 
     eigen_conversions 
@@ -221,6 +218,10 @@ if(USE_CAFFE STREQUAL "ON")
   add_executable(${PROJECT_NAME}_test_occlusion src/tests/test_occlusion.cpp)
 endif()
 
+## ----------
+add_executable(${PROJECT_NAME}_detect_grasps_server src/nodes/grasp_detection_server.cpp)
+## ----------
+
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(grasp_candidates_classifier_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
@@ -259,6 +260,11 @@ if(USE_CAFFE STREQUAL "ON")
     ${catkin_EXPORTED_TARGETS}
   )
 endif()
+
+add_dependencies(${PROJECT_NAME}_detect_grasps_server 
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
+  ${catkin_EXPORTED_TARGETS}
+)
 
 ## ----------
 
@@ -347,6 +353,12 @@ target_link_libraries(${PROJECT_NAME}_grasp_plotter
                       ${GENERATOR_LIB}
                       ${catkin_LIBRARIES})
 
+target_link_libraries(${PROJECT_NAME}_detect_grasps_server
+                      ${PROJECT_NAME}_grasp_detector
+                      ${PROJECT_NAME}_grasp_plotter
+                      ${GENERATOR_LIB}
+                      ${PCL_LIBRARIES})
+
 ## ----------
 
 # Rename targets to simplify their names.
@@ -373,3 +385,9 @@ if(USE_CAFFE STREQUAL "ON")
                         PROPERTIES OUTPUT_NAME test_occlusion
                         PREFIX "")
 endif()
+
+## ----------
+set_target_properties(${PROJECT_NAME}_detect_grasps_server
+                      PROPERTIES OUTPUT_NAME detect_grasps_server
+                      PREFIX "")
+## ----------

@@ -66,10 +66,10 @@ class MaskRCNNNode:
 
         """
         self._cv_bridge = CvBridge()
-        self._class_names = rospy.get_param('~class_names', CLASS_NAMES)
+        self._class_names = rospy.get_param('class_names', CLASS_NAMES)
         self._class_colors = visualize.random_colors(len(CLASS_NAMES))
-        self._visualization = rospy.get_param('~visualization', True)
-        self._topic_and_srv = rospy.get_param('~topic_and_srv', '~detection')
+        self._visualization = rospy.get_param('visualization', True)
+        self._topic_and_srv = rospy.get_param('topic_and_srv', '~detection')
 
         #
         # network configuration
@@ -99,7 +99,7 @@ class MaskRCNNNode:
                                         sensor_msgs.msg.Image,
                                         queue_size=1)
 
-        self._publish_rate = rospy.get_param('~publish_rate', 100)
+        self._publish_rate = rospy.get_param('publish_rate', 100)
 
         #
         # tensorflow graph
@@ -110,7 +110,7 @@ class MaskRCNNNode:
         # Load weights trained on MS-COCO, download COCO trained weights from
         # releases if needed
         #
-        model_path = rospy.get_param('~model_path', COCO_MODEL_PATH)
+        model_path = rospy.get_param('model_path', COCO_MODEL_PATH)
         if model_path == COCO_MODEL_PATH and not os.path.exists(
                 COCO_MODEL_PATH):
             utils.download_trained_weights(COCO_MODEL_PATH)
@@ -149,8 +149,8 @@ class MaskRCNNNode:
         #
         # subscribe
         #
-        rospy.Subscriber('~input', sensor_msgs.msg.Image,
-                         self._topic_callback, queue_size=1)
+        rospy.Subscriber('input', sensor_msgs.msg.Image,
+                        self._topic_callback, queue_size=1)
 
         #
         # publish   

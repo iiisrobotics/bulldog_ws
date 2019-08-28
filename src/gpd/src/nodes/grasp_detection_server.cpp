@@ -1,4 +1,4 @@
-#include "grasp_detection_server.h"
+#include "../../include/nodes/grasp_detection_server.h"
 
 
 GraspDetectionServer::GraspDetectionServer(ros::NodeHandle& node)

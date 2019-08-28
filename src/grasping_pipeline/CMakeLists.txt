@@ -13,14 +13,13 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   geometry_msgs
   sensor_msgs
-  eigen_conversions
   gpd
   mask_rcnn_ros
   pcl_ros
 )
 
 ## System dependencies are found with CMake's conventions
-find_package(Eigen3 REQUIRED)
+# find_package(Eigen3 REQUIRED)
 # find_package(PCL REQUIRED)
 
 
@@ -120,12 +119,10 @@ catkin_package(
     std_msgs
     geometry_msgs
     sensor_msgs
-    eigen_conversions
     gpd
     mask_rcnn_ros
     pcl_ros
   DEPENDS
-    EIGEN3
 )
 
 ###########
@@ -153,9 +150,6 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(detect_grasps_server 
-  src/nodes/grasp_detection_server.cpp
-)
 add_executable(cloud_transform_server
   src/nodes/cloud_transform_server.cpp
 )
@@ -168,21 +162,12 @@ add_executable(cloud_transform_server
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(detect_grasps_server  
-  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
-  ${catkin_EXPORTED_TARGETS}
-)
-
 add_dependencies(cloud_transform_server  
   ${${PROJECT_NAME}_EXPORTED_TARGETS} 
   ${catkin_EXPORTED_TARGETS}
 )
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(detect_grasps_server
-  ${catkin_LIBRARIES}
-)
-
 target_link_libraries(cloud_transform_server
   ${catkin_LIBRARIES}
 )

@@ -48,8 +48,8 @@
 #include <gpd/DetectGrasps.h>
 
 // GPD (headers)
-#include <gpd/grasp_detector.h>
-#include <gpd/grasp_plotter.h>
+#include "../gpd/grasp_detector.h"
+#include "../gpd/grasp_plotter.h"
 
 
 class GraspDetectionServer
