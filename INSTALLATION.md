@@ -26,17 +26,17 @@
 
         sudo apt-get install ros-$ROS_DISTRO-soem
 
-5. moveit
+5. moveit-ros
 
     http://wiki.ros.org/moveit_ros
     
-        sudo apt-get install ros-$ROS_DISTRO-moveit
+        sudo apt-get install ros-$ROS_DISTRO-moveit-ros
 
 6. openni2_camera
 
     http://wiki.ros.org/openni2_camera
 
-    sudo apt-get install ros-$ROS_DISTRO-openni2-camera
+        sudo apt-get install ros-$ROS_DISTRO-openni2-camera
 
 7. socketcan_interface
 
