@@ -37,7 +37,7 @@
     <joint name="installation_plate_joint" type="fixed">
       <parent link="base_link"/>
       <child link="installation_plate_link"/>
-      <origin xyz="0.197 0 0.314" rpy="0 0 0" />
+      <origin xyz="0.147 0 0.314" rpy="0 0 0" />
     </joint>
     
     <gazebo reference="installation_plate_link">
