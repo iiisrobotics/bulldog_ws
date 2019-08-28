@@ -4,7 +4,7 @@
         doc="target device to execute inference. [0:CPU]|1:GPU|2:VPU|3:FPGA" />
 
   <!-- Load hand geometry parameters -->
-  <include file="$(find gpd)/launch/ur5_hand_geometry.launch">
+  <include file="$(find grasping_pipeline)/launch/ur5_hand_geometry.launch">
     <arg name="node" value="detect_grasps_server" />
   </include>
 

@@ -12,7 +12,6 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   sensor_msgs 
   std_msgs
-  pcl_ros
 )
 
 # Eigen3
@@ -159,6 +158,9 @@ generate_messages(DEPENDENCIES
 catkin_package(
   INCLUDE_DIRS 
     include
+  LIBRARIES
+    ${PROJECT_NAME}_grasp_detector
+    ${PROJECT_NAME}_grasp_plotter
   CATKIN_DEPENDS 
     cmake_modules 
     eigen_conversions 
@@ -167,7 +169,6 @@ catkin_package(
     roscpp 
     sensor_msgs 
     std_msgs
-    pcl_ros
   DEPENDS 
     EIGEN3 
     OpenCV 
@@ -180,7 +181,12 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(include ${catkin_INCLUDE_DIRS} ${PCL_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
+include_directories(
+  include
+  ${catkin_INCLUDE_DIRS} 
+  ${PCL_INCLUDE_DIRS} 
+  ${OpenCV_INCLUDE_DIRS}
+)
 
 ## Declare a C++ library
 add_library(${PROJECT_NAME}_classifier ${classifier_src})
@@ -214,11 +220,6 @@ add_executable(${PROJECT_NAME}_classify_candidates src/nodes/classify_candidates
 if(USE_CAFFE STREQUAL "ON")
   add_executable(${PROJECT_NAME}_test_occlusion src/tests/test_occlusion.cpp)
 endif()
-
-## ----------
-add_executable(${PROJECT_NAME}_detect_grasps_server src/nodes/grasp_detection_server.cpp)
-add_executable(${PROJECT_NAME}_cloud_transform_server src/nodes/cloud_transform_server.cpp)
-## ----------
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
@@ -259,15 +260,6 @@ if(USE_CAFFE STREQUAL "ON")
   )
 endif()
 
-add_dependencies(${PROJECT_NAME}_detect_grasps_server 
-  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
-  ${catkin_EXPORTED_TARGETS}
-)
-
-add_dependencies(${PROJECT_NAME}_cloud_transform_server 
-  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
-  ${catkin_EXPORTED_TARGETS}
-)
 ## ----------
 
 ## Specify libraries to link a library or executable target against
@@ -355,16 +347,6 @@ target_link_libraries(${PROJECT_NAME}_grasp_plotter
                       ${GENERATOR_LIB}
                       ${catkin_LIBRARIES})
 
-target_link_libraries(${PROJECT_NAME}_detect_grasps_server
-                      ${PROJECT_NAME}_grasp_detector
-                      ${PROJECT_NAME}_grasp_plotter
-                      ${GENERATOR_LIB}
-                      ${PCL_LIBRARIES})
-
-target_link_libraries(${PROJECT_NAME}_cloud_transform_server
-                      ${catkin_LIBRARIES}
-                      ${GENERATOR_LIB}
-                      ${PCL_LIBRARIES})                      
 ## ----------
 
 # Rename targets to simplify their names.
@@ -391,12 +373,3 @@ if(USE_CAFFE STREQUAL "ON")
                         PROPERTIES OUTPUT_NAME test_occlusion
                         PREFIX "")
 endif()
-
-## ----------
-set_target_properties(${PROJECT_NAME}_detect_grasps_server
-                      PROPERTIES OUTPUT_NAME detect_grasps_server
-                      PREFIX "")
-set_target_properties(${PROJECT_NAME}_cloud_transform_server
-                      PROPERTIES OUTPUT_NAME cloud_transform_server
-                      PREFIX "")
-## ----------

@@ -44,12 +44,12 @@
 // GPG
 #include <gpg/cloud_camera.h>
 
-// this project (services)
+// GPD (services)
 #include <gpd/DetectGrasps.h>
 
-// this project (headers)
-#include "../gpd/grasp_detector.h"
-#include "../gpd/grasp_plotter.h"
+// GPD (headers)
+#include <gpd/grasp_detector.h>
+#include <gpd/grasp_plotter.h>
 
 
 class GraspDetectionServer
