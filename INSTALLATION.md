@@ -50,6 +50,12 @@
 
         sudo apt-get install ros-kinetic-moveit-simple-controller-manager
 
+9. moveit_commander
+
+    http://wiki.ros.org/moveit_commander
+
+        sudo apt-get install ros-kinetic-moveit-commander
+
 9. openni2_camera
 
     http://wiki.ros.org/openni2_camera

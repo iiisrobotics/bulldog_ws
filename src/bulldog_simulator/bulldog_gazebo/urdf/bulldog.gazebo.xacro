@@ -105,8 +105,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
             <side>left</side>
             <kp_position>5.0</kp_position>
             <kd_position>0.5</kd_position>
-            <topic_command>left_hand/command</topic_command>
-            <topic_state>left_hand/state</topic_state>
+            <topic_command>left_gripper/command</topic_command>
+            <topic_state>left_gripper/state</topic_state>
           </plugin> 
         </gazebo>
 
@@ -115,8 +115,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
               <side>right</side>
               <kp_position>5.0</kp_position>
               <kd_position>0.5</kd_position>
-              <topic_command>right_hand/command</topic_command>
-              <topic_state>right_hand/state</topic_state>
+              <topic_command>right_gripper/command</topic_command>
+              <topic_state>right_gripper/state</topic_state>
             </plugin>
         </gazebo>
 

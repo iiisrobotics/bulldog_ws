@@ -13,13 +13,14 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   geometry_msgs
   sensor_msgs
+  eigen_conversions
   gpd
   mask_rcnn_ros
   pcl_ros
 )
 
 ## System dependencies are found with CMake's conventions
-# find_package(Eigen3 REQUIRED)
+find_package(Eigen3 REQUIRED)
 # find_package(PCL REQUIRED)
 
 
@@ -119,10 +120,12 @@ catkin_package(
     std_msgs
     geometry_msgs
     sensor_msgs
+    eigen_conversions
     gpd
     mask_rcnn_ros
     pcl_ros
   DEPENDS
+    EIGEN3
 )
 
 ###########
