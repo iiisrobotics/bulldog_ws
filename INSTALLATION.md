@@ -32,65 +32,71 @@
     
         sudo apt-get install ros-$ROS_DISTRO-moveit-ros
 
-6. openni2_camera
+6. moveit_planners_ompl
+
+    http://wiki.ros.org/moveit_planners_ompl
+
+        sudo apt-get install ros-$ROS_DISTRO-moveit-planners-ompl
+
+7. openni2_camera
 
     http://wiki.ros.org/openni2_camera
 
         sudo apt-get install ros-$ROS_DISTRO-openni2-camera
 
-7. socketcan_interface
+8. socketcan_interface
 
     http://wiki.ros.org/socketcan_interface
 
         sudo apt-get install ros-$ROS_DISTRO-socketcan-interface
 
-8. industrial_msgs
+9. industrial_msgs
 
     http://wiki.ros.org/industrial_msgs
 
         sudo apt-get install ros-$ROS_DISTRO-industrial-msgs
 
-9. twist_mux
+10. twist_mux
 
     http://wiki.ros.org/twist_mux
 
         sudo apt-get install ros-$ROS_DISTRO-twist-mux
 
-10. lms1xx
+11. lms1xx
 
     http://wiki.ros.org/LMS1xx
 
         sudo apt-get install ros-$ROS_DISTRO-lms1xx
 
-11. ddynamic_reconfigure
+12. ddynamic_reconfigure
 
         sudo apt-get install ros-$ROS_DISTRO-ddynamic-reconfigure
 
-12. interactive_marker_twist_server
+13. interactive_marker_twist_server
 
     http://wiki.ros.org/interactive_marker_twist_server
 
         sudo apt-get install ros-$ROS_DISTRO-interactive-marker-twist-server
 
-13. gazebo-ros-pkgs
+14. gazebo-ros-pkgs
 
     http://wiki.ros.org/gazebo_plugins
 
         sudo apt-get install ros-$ROS_DISTRO-gazebo-ros-pkgs
 
-14. gazebo-ros-control
+15. gazebo-ros-control
 
     http://wiki.ros.org/gazebo_ros_control
 
         sudo apt-get install ros-$ROS_DISTRO-gazebo-ros-control
 
-15. ros-controllers
+16. ros-controllers
 
     http://wiki.ros.org/ros_controllers
 
         sudo apt-get install ros-$ROS_DISTRO-ros-controllers
 
-16. hector_gazebo_plugins
+17. hector_gazebo_plugins
 
     http://wiki.ros.org/hector_gazebo_plugins
 
