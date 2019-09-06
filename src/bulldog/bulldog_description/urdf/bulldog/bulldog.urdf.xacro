@@ -9,7 +9,7 @@
   <xacro:include filename="$(find lms1xx)/urdf/sick_lms1xx.urdf.xacro" />
   <xacro:include filename="$(find robotiq_3f_gripper_visualization)/cfg/robotiq_hand_macro.urdf.xacro" />
   <xacro:include filename="$(find bulldog_description)/urdf/sensors/kinect_camera.urdf.xacro" />
-  <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
+  <xacro:include filename="$(find realsense2_description)/urdf/_d415.urdf.xacro" />
 
   <xacro:property name="wheel_length" value="0.142" />
   <xacro:property name="wheel_radius" value="0.183" />
@@ -132,27 +132,27 @@
       <xacro:kinect_camera prefix="kinect" parent="installation_plate_link" />
     </xacro:if>
 
-    <!-- realsense d435 -->
+    <!-- realsense d415 -->
     <xacro:if value="$(arg realsense_enabled)">
       <xacro:realsense_support prefix="left_gripper_sensor_support_" 
         installation_link="left_gripper_palm">
         <origin xyz="0 -0.050 0" rpy="${pi / 2} 0 ${pi}" />
       </xacro:realsense_support>
 
-      <xacro:sensor_d435 prefix="left_gripper_sensor_d435_" 
+      <xacro:sensor_d415 prefix="left_gripper_sensor_d415_" 
         parent="left_gripper_sensor_support_mounted_link">
         <origin xyz="0 0 0" rpy="0 0 0"/>
-      </xacro:sensor_d435>
+      </xacro:sensor_d415>
 
       <xacro:realsense_support prefix="right_gripper_sensor_support_" 
         installation_link="right_gripper_palm">
         <origin xyz="0 -0.050 0" rpy="${-pi / 2} 0 0" />
       </xacro:realsense_support>
 
-      <xacro:sensor_d435 prefix="right_gripper_sensor_d435_" 
+      <xacro:sensor_d415 prefix="right_gripper_sensor_d415_" 
         parent="right_gripper_sensor_support_mounted_link">
         <origin xyz="0 0 0" rpy="0 0 0"/>
-      </xacro:sensor_d435>
+      </xacro:sensor_d415>
     </xacro:if>
 
   </xacro:macro>

@@ -33,7 +33,7 @@
     </link>
 
     <joint name="${prefix}mounted_joint" type="fixed">
-        <origin xyz="0 0.0785 0.00875" rpy="0 ${-pi / 2} ${-pi / 2}" />
+        <origin xyz="0 0.0795 0.00875" rpy="0 ${-pi / 2} ${-pi / 2}" />
         <parent link="${prefix}support_link" />
         <child link="${prefix}mounted_link" />
     </joint>
