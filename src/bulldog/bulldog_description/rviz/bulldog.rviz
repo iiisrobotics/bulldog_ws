@@ -88,11 +88,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        kinect_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         laser:
           Alpha: 1
           Show Axes: false
@@ -392,6 +387,15 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        left_gripper_sensor_support_mounted_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_gripper_sensor_support_support_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         left_gripper_tool0:
           Alpha: 1
           Show Axes: false
@@ -695,6 +699,15 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        right_gripper_sensor_support_mounted_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        right_gripper_sensor_support_support_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         right_gripper_tool0:
           Alpha: 1
           Show Axes: false
@@ -718,7 +731,7 @@ Visualization Manager:
       Frames:
         All Enabled: false
         base_link:
-          Value: false
+          Value: true
         front_left_wheel_link:
           Value: false
         front_right_wheel_link:
@@ -728,8 +741,6 @@ Visualization Manager:
         inertial_link:
           Value: false
         installation_plate_link:
-          Value: false
-        kinect_link:
           Value: false
         laser:
           Value: false
@@ -834,7 +845,7 @@ Visualization Manager:
         left_gripper_finger_middle_link_proximal_actuating_hinge:
           Value: false
         left_gripper_palm:
-          Value: false
+          Value: true
         left_gripper_sensor_d415_camera_bottom_screw_frame:
           Value: false
         left_gripper_sensor_d415_camera_color_frame:
@@ -854,6 +865,10 @@ Visualization Manager:
         left_gripper_sensor_d415_camera_right_ir_frame:
           Value: false
         left_gripper_sensor_d415_camera_right_ir_optical_frame:
+          Value: false
+        left_gripper_sensor_support_mounted_link:
+          Value: false
+        left_gripper_sensor_support_support_link:
           Value: false
         left_gripper_tool0:
           Value: false
@@ -960,7 +975,7 @@ Visualization Manager:
         right_gripper_finger_middle_link_proximal_actuating_hinge:
           Value: false
         right_gripper_palm:
-          Value: false
+          Value: true
         right_gripper_sensor_d415_camera_bottom_screw_frame:
           Value: false
         right_gripper_sensor_d415_camera_color_frame:
@@ -980,6 +995,10 @@ Visualization Manager:
         right_gripper_sensor_d415_camera_right_ir_frame:
           Value: false
         right_gripper_sensor_d415_camera_right_ir_optical_frame:
+          Value: false
+        right_gripper_sensor_support_mounted_link:
+          Value: false
+        right_gripper_sensor_support_support_link:
           Value: false
         right_gripper_tool0:
           Value: false
@@ -1001,8 +1020,6 @@ Visualization Manager:
           inertial_link:
             {}
           installation_plate_link:
-            kinect_link:
-              {}
             laser_plate_link:
               laser:
                 {}
@@ -1016,6 +1033,8 @@ Visualization Manager:
                       left_arm_wrist_2_link:
                         left_arm_wrist_3_link:
                           left_arm_ee_link:
+                            {}
+                          left_arm_tool0:
                             left_gripper_palm:
                               left_gripper_finger_1_link_0:
                                 left_gripper_finger_1_link_1:
@@ -1088,10 +1107,11 @@ Visualization Manager:
                                     left_gripper_sensor_d415_camera_right_ir_frame:
                                       left_gripper_sensor_d415_camera_right_ir_optical_frame:
                                         {}
+                              left_gripper_sensor_support_support_link:
+                                left_gripper_sensor_support_mounted_link:
+                                  {}
                               left_gripper_tool0:
                                 {}
-                          left_arm_tool0:
-                            {}
             right_arm_base_link:
               right_arm_base:
                 {}
@@ -1102,6 +1122,8 @@ Visualization Manager:
                       right_arm_wrist_2_link:
                         right_arm_wrist_3_link:
                           right_arm_ee_link:
+                            {}
+                          right_arm_tool0:
                             right_gripper_palm:
                               right_gripper_finger_1_link_0:
                                 right_gripper_finger_1_link_1:
@@ -1174,10 +1196,11 @@ Visualization Manager:
                                     right_gripper_sensor_d415_camera_right_ir_frame:
                                       right_gripper_sensor_d415_camera_right_ir_optical_frame:
                                         {}
+                              right_gripper_sensor_support_support_link:
+                                right_gripper_sensor_support_mounted_link:
+                                  {}
                               right_gripper_tool0:
                                 {}
-                          right_arm_tool0:
-                            {}
           rear_left_wheel_link:
             {}
           rear_right_wheel_link:
@@ -1226,10 +1249,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.630397916
+      Pitch: 0.620398045
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.04358149
+      Yaw: 4.16858244
     Saved: ~
 Window Geometry:
   Displays:
@@ -1247,5 +1270,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1125
-  X: 369
-  Y: 183
+  X: 470
+  Y: 134

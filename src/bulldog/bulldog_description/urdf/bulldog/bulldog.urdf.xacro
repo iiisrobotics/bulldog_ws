@@ -4,11 +4,12 @@
   <xacro:include filename="$(find bulldog_description)/urdf/accessories/wheel.urdf.xacro" />
   <xacro:include filename="$(find bulldog_description)/urdf/accessories/materials.urdf.xacro" />
   <xacro:include filename="$(find bulldog_description)/urdf/accessories/plates.urdf.xacro" />
+  <xacro:include filename="$(find bulldog_description)/urdf/accessories/realsense_support.urdf.xacro" />
   <xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />
   <xacro:include filename="$(find lms1xx)/urdf/sick_lms1xx.urdf.xacro" />
   <xacro:include filename="$(find robotiq_3f_gripper_visualization)/cfg/robotiq_hand_macro.urdf.xacro" />
   <xacro:include filename="$(find bulldog_description)/urdf/sensors/kinect_camera.urdf.xacro" />
-  <xacro:include filename="$(find realsense2_description)/urdf/_d415.urdf.xacro" />
+  <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
 
   <xacro:property name="wheel_length" value="0.142" />
   <xacro:property name="wheel_radius" value="0.183" />
@@ -106,11 +107,11 @@
       <!-- If you modify the name of the grippers, remember to change the *prefix* in line 
            780 and 782 accordingly of $(find robotiq_s_model_articulated_gazebo_plugins)/src/RobotiqHandPlugin.cpp. -->
       <xacro:robotiq_hand prefix="left_gripper_" parent="left_arm_tool0" reflect="-1">
-        <origin rpy="1.5708 0 -2.3562" xyz="0 0 0.065"/>
+        <origin rpy="${pi / 2} 0 ${-pi * 3 / 4}" xyz="0 0 0.065"/>
       </xacro:robotiq_hand>
 
       <xacro:robotiq_hand prefix="right_gripper_" parent="right_arm_tool0" reflect="-1">
-        <origin rpy="1.5708 0 2.3562" xyz="0 0 0.065"/>
+        <origin rpy="${pi / 2} 0 ${pi * 3 / 4}" xyz="0 0 0.065"/>
       </xacro:robotiq_hand>
 
     </xacro:if>
@@ -133,13 +134,25 @@
 
     <!-- realsense d415 -->
     <xacro:if value="$(arg realsense_enabled)">
-      <xacro:sensor_d415 prefix="left_gripper_sensor_d415_" parent="left_gripper_palm">
-        <origin xyz="0 0 0.065" rpy="0 0 ${pi / 2}"/>
-      </xacro:sensor_d415>
+      <xacro:realsense_support prefix="left_gripper_sensor_support_" 
+        installation_link="left_gripper_palm">
+        <origin xyz="0 -0.050 0" rpy="${pi / 2} 0 ${pi}" />
+      </xacro:realsense_support>
 
-      <xacro:sensor_d415 prefix="right_gripper_sensor_d415_" parent="right_gripper_palm">
-          <origin xyz="0 0 -0.065" rpy="${pi} 0 ${pi / 2}"/>
-        </xacro:sensor_d415>
+      <xacro:sensor_d435 prefix="left_gripper_sensor_d415_" 
+        parent="left_gripper_sensor_support_mounted_link">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+      </xacro:sensor_d435>
+
+      <xacro:realsense_support prefix="right_gripper_sensor_support_" 
+        installation_link="right_gripper_palm">
+        <origin xyz="0 -0.050 0" rpy="${-pi / 2} 0 0" />
+      </xacro:realsense_support>
+
+      <xacro:sensor_d435 prefix="right_gripper_sensor_d415_" 
+        parent="right_gripper_sensor_support_mounted_link">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+      </xacro:sensor_d435>
     </xacro:if>
 
   </xacro:macro>

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="bulldog_plates" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="plates" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:macro name="top_plate">
     <link name="top_plate_link">

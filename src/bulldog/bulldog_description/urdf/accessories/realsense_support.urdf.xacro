@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot name="realsense_support" xmlns:xacro="http://ros.org/wiki/xacro">
+
+<xacro:macro name="realsense_support" params="prefix installation_link *origin">
+
+    <link name="${prefix}support_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://bulldog_description/meshes/realsense_support.stl" 
+                    scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="white">
+                <color rgba="1.0 1.0 1.0 1.0" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://bulldog_description/meshes/realsense_support.stl" 
+                    scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="${prefix}installation_support_joint" type="fixed">
+        <xacro:insert_block name="origin" />
+        <parent link="${installation_link}" />
+        <child link="${prefix}support_link" />
+    </joint>
+
+    <link name="${prefix}mounted_link">
+    </link>
+
+    <joint name="${prefix}mounted_joint" type="fixed">
+        <origin xyz="0 0.0785 0.00875" rpy="0 ${-pi / 2} ${-pi / 2}" />
+        <parent link="${prefix}support_link" />
+        <child link="${prefix}mounted_link" />
+    </joint>
+</xacro:macro>
+
+</robot>
