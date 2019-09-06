@@ -284,10 +284,13 @@ to clone all the following repository at once!
 
 9. Disable self collisions between following links with `bulldog_robot_moveit_config_rs/launch/setup_assistant` to avoid planning failures.
 
+    left_gripper_palm - left_gripper_finger_1_link_median_actuating_hinge
     left_gripper_finger_1_link_1 - left_gripper_finger_1_link_paraproximal_actuating_hinge
     left_gripper_finger_middle_link_1 - left_gripper_finger_middle_link_paraproximal_actuating_hinge
     left_gripper_finger_1_link_0 - left_gripper_finger_1_link_median_bar
     left_gripper_finger_2_link_paraproximal_actuating_hinge - left_gripper_finger_2_link_1
+    right_gripper_palm - right_gripper_finger_1_link_median_actuating_hinge
     right_gripper_finger_1_link_1 - right_gripper_finger_1_link_paraproximal_actuating_hinge
     right_gripper_finger_middle_link_1 - right_gripper_finger_middle_link_paraproximal_actuating_hinge
     right_gripper_finger_1_link_0 - right_gripper_finger_1_link_median_bar
+    right_gripper_finger_2_link_paraproximal_actuating_hinge - right_gripper_finger_2_link_1

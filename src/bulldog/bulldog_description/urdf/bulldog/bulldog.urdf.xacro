@@ -132,14 +132,14 @@
       <xacro:kinect_camera prefix="kinect" parent="installation_plate_link" />
     </xacro:if>
 
-    <!-- realsense d415 -->
+    <!-- realsense d435 -->
     <xacro:if value="$(arg realsense_enabled)">
       <xacro:realsense_support prefix="left_gripper_sensor_support_" 
         installation_link="left_gripper_palm">
         <origin xyz="0 -0.050 0" rpy="${pi / 2} 0 ${pi}" />
       </xacro:realsense_support>
 
-      <xacro:sensor_d435 prefix="left_gripper_sensor_d415_" 
+      <xacro:sensor_d435 prefix="left_gripper_sensor_d435_" 
         parent="left_gripper_sensor_support_mounted_link">
         <origin xyz="0 0 0" rpy="0 0 0"/>
       </xacro:sensor_d435>
@@ -149,7 +149,7 @@
         <origin xyz="0 -0.050 0" rpy="${-pi / 2} 0 0" />
       </xacro:realsense_support>
 
-      <xacro:sensor_d435 prefix="right_gripper_sensor_d415_" 
+      <xacro:sensor_d435 prefix="right_gripper_sensor_d435_" 
         parent="right_gripper_sensor_support_mounted_link">
         <origin xyz="0 0 0" rpy="0 0 0"/>
       </xacro:sensor_d435>

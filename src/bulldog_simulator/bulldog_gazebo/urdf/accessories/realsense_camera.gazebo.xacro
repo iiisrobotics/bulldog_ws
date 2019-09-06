@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <root xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:macro name="sensor_d415_gazebo" params="prefix">
+  <xacro:macro name="sensor_d435_gazebo" params="prefix">
 
     <!-- material -->
     <gazebo reference="${prefix}camera_link">
-      <material>Gazebo/Grey</material>
+      <material>Gazebo/White</material>
     </gazebo>
 
     <!-- color sensor -->
