@@ -6,7 +6,6 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /TF1
       Splitter Ratio: 0.665706038
     Tree Height: 426
   - Class: rviz/Selection
@@ -388,6 +387,15 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        left_gripper_sensor_support_mounted_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_gripper_sensor_support_support_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         left_gripper_tool0:
           Alpha: 1
           Show Axes: false
@@ -691,6 +699,15 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        right_gripper_sensor_support_mounted_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        right_gripper_sensor_support_support_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         right_gripper_tool0:
           Alpha: 1
           Show Axes: false
@@ -714,7 +731,7 @@ Visualization Manager:
       Frames:
         All Enabled: false
         base_link:
-          Value: false
+          Value: true
         front_left_wheel_link:
           Value: false
         front_right_wheel_link:
@@ -828,7 +845,7 @@ Visualization Manager:
         left_gripper_finger_middle_link_proximal_actuating_hinge:
           Value: false
         left_gripper_palm:
-          Value: false
+          Value: true
         left_gripper_sensor_d415_camera_bottom_screw_frame:
           Value: false
         left_gripper_sensor_d415_camera_color_frame:
@@ -849,10 +866,12 @@ Visualization Manager:
           Value: false
         left_gripper_sensor_d415_camera_right_ir_optical_frame:
           Value: false
+        left_gripper_sensor_support_mounted_link:
+          Value: false
+        left_gripper_sensor_support_support_link:
+          Value: false
         left_gripper_tool0:
           Value: false
-        odom:
-          Value: true
         rear_left_wheel_link:
           Value: false
         rear_right_wheel_link:
@@ -956,7 +975,7 @@ Visualization Manager:
         right_gripper_finger_middle_link_proximal_actuating_hinge:
           Value: false
         right_gripper_palm:
-          Value: false
+          Value: true
         right_gripper_sensor_d415_camera_bottom_screw_frame:
           Value: false
         right_gripper_sensor_d415_camera_color_frame:
@@ -977,6 +996,10 @@ Visualization Manager:
           Value: false
         right_gripper_sensor_d415_camera_right_ir_optical_frame:
           Value: false
+        right_gripper_sensor_support_mounted_link:
+          Value: false
+        right_gripper_sensor_support_support_link:
+          Value: false
         right_gripper_tool0:
           Value: false
         top_plate_link:
@@ -987,198 +1010,203 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        odom:
-          base_link:
-            front_left_wheel_link:
-              {}
-            front_right_wheel_link:
-              {}
-            imu_link:
-              {}
-            inertial_link:
-              {}
-            installation_plate_link:
-              laser_plate_link:
-                laser:
-                  {}
-              left_arm_base_link:
-                left_arm_base:
-                  {}
-                left_arm_shoulder_link:
-                  left_arm_upper_arm_link:
-                    left_arm_forearm_link:
-                      left_arm_wrist_1_link:
-                        left_arm_wrist_2_link:
-                          left_arm_wrist_3_link:
-                            left_arm_ee_link:
-                              left_gripper_palm:
-                                left_gripper_finger_1_link_0:
-                                  left_gripper_finger_1_link_1:
-                                    left_gripper_finger_1_link_2:
-                                      left_gripper_finger_1_link_3:
-                                        {}
-                                      left_gripper_finger_1_link_paradistal_hinge:
-                                        {}
-                                    left_gripper_finger_1_link_median_actuating_hinge:
-                                      left_gripper_finger_1_link_median_bar:
-                                        {}
-                                    left_gripper_finger_1_link_paramedian_hinge:
-                                      left_gripper_finger_1_link_median_bar_underactuated:
-                                        {}
-                                  left_gripper_finger_1_link_paraproximal_actuating_hinge:
-                                    left_gripper_finger_1_link_paraproximal_bar:
+        base_link:
+          front_left_wheel_link:
+            {}
+          front_right_wheel_link:
+            {}
+          imu_link:
+            {}
+          inertial_link:
+            {}
+          installation_plate_link:
+            laser_plate_link:
+              laser:
+                {}
+            left_arm_base_link:
+              left_arm_base:
+                {}
+              left_arm_shoulder_link:
+                left_arm_upper_arm_link:
+                  left_arm_forearm_link:
+                    left_arm_wrist_1_link:
+                      left_arm_wrist_2_link:
+                        left_arm_wrist_3_link:
+                          left_arm_ee_link:
+                            {}
+                          left_arm_tool0:
+                            left_gripper_palm:
+                              left_gripper_finger_1_link_0:
+                                left_gripper_finger_1_link_1:
+                                  left_gripper_finger_1_link_2:
+                                    left_gripper_finger_1_link_3:
                                       {}
-                                  left_gripper_finger_1_link_proximal_actuating_hinge:
-                                    left_gripper_finger_1_link_proximal_actuating_bar:
+                                    left_gripper_finger_1_link_paradistal_hinge:
                                       {}
-                                left_gripper_finger_2_link_0:
-                                  left_gripper_finger_2_link_1:
-                                    left_gripper_finger_2_link_2:
-                                      left_gripper_finger_2_link_3:
-                                        {}
-                                      left_gripper_finger_2_link_paradistal_hinge:
-                                        {}
-                                    left_gripper_finger_2_link_median_actuating_hinge:
-                                      left_gripper_finger_2_link_median_bar:
-                                        {}
-                                    left_gripper_finger_2_link_paramedian_hinge:
-                                      left_gripper_finger_2_link_median_bar_underactuated:
-                                        {}
-                                  left_gripper_finger_2_link_paraproximal_actuating_hinge:
-                                    left_gripper_finger_2_link_paraproximal_bar:
+                                  left_gripper_finger_1_link_median_actuating_hinge:
+                                    left_gripper_finger_1_link_median_bar:
                                       {}
-                                  left_gripper_finger_2_link_proximal_actuating_hinge:
-                                    left_gripper_finger_2_link_proximal_actuating_bar:
+                                  left_gripper_finger_1_link_paramedian_hinge:
+                                    left_gripper_finger_1_link_median_bar_underactuated:
                                       {}
-                                left_gripper_finger_middle_link_0:
-                                  left_gripper_finger_middle_link_1:
-                                    left_gripper_finger_middle_link_2:
-                                      left_gripper_finger_middle_link_3:
-                                        {}
-                                      left_gripper_finger_middle_link_paradistal_hinge:
-                                        {}
-                                    left_gripper_finger_middle_link_median_actuating_hinge:
-                                      left_gripper_finger_middle_link_median_bar:
-                                        {}
-                                    left_gripper_finger_middle_link_paramedian_hinge:
-                                      left_gripper_finger_middle_link_median_bar_underactuated:
-                                        {}
-                                  left_gripper_finger_middle_link_paraproximal_actuating_hinge:
-                                    left_gripper_finger_middle_link_paraproximal_bar:
+                                left_gripper_finger_1_link_paraproximal_actuating_hinge:
+                                  left_gripper_finger_1_link_paraproximal_bar:
+                                    {}
+                                left_gripper_finger_1_link_proximal_actuating_hinge:
+                                  left_gripper_finger_1_link_proximal_actuating_bar:
+                                    {}
+                              left_gripper_finger_2_link_0:
+                                left_gripper_finger_2_link_1:
+                                  left_gripper_finger_2_link_2:
+                                    left_gripper_finger_2_link_3:
                                       {}
-                                  left_gripper_finger_middle_link_proximal_actuating_hinge:
-                                    left_gripper_finger_middle_link_proximal_actuating_bar:
+                                    left_gripper_finger_2_link_paradistal_hinge:
                                       {}
-                                left_gripper_sensor_d415_camera_bottom_screw_frame:
-                                  left_gripper_sensor_d415_camera_link:
-                                    left_gripper_sensor_d415_camera_depth_frame:
-                                      left_gripper_sensor_d415_camera_color_frame:
-                                        left_gripper_sensor_d415_camera_color_optical_frame:
-                                          {}
-                                      left_gripper_sensor_d415_camera_depth_optical_frame:
+                                  left_gripper_finger_2_link_median_actuating_hinge:
+                                    left_gripper_finger_2_link_median_bar:
+                                      {}
+                                  left_gripper_finger_2_link_paramedian_hinge:
+                                    left_gripper_finger_2_link_median_bar_underactuated:
+                                      {}
+                                left_gripper_finger_2_link_paraproximal_actuating_hinge:
+                                  left_gripper_finger_2_link_paraproximal_bar:
+                                    {}
+                                left_gripper_finger_2_link_proximal_actuating_hinge:
+                                  left_gripper_finger_2_link_proximal_actuating_bar:
+                                    {}
+                              left_gripper_finger_middle_link_0:
+                                left_gripper_finger_middle_link_1:
+                                  left_gripper_finger_middle_link_2:
+                                    left_gripper_finger_middle_link_3:
+                                      {}
+                                    left_gripper_finger_middle_link_paradistal_hinge:
+                                      {}
+                                  left_gripper_finger_middle_link_median_actuating_hinge:
+                                    left_gripper_finger_middle_link_median_bar:
+                                      {}
+                                  left_gripper_finger_middle_link_paramedian_hinge:
+                                    left_gripper_finger_middle_link_median_bar_underactuated:
+                                      {}
+                                left_gripper_finger_middle_link_paraproximal_actuating_hinge:
+                                  left_gripper_finger_middle_link_paraproximal_bar:
+                                    {}
+                                left_gripper_finger_middle_link_proximal_actuating_hinge:
+                                  left_gripper_finger_middle_link_proximal_actuating_bar:
+                                    {}
+                              left_gripper_sensor_d415_camera_bottom_screw_frame:
+                                left_gripper_sensor_d415_camera_link:
+                                  left_gripper_sensor_d415_camera_depth_frame:
+                                    left_gripper_sensor_d415_camera_color_frame:
+                                      left_gripper_sensor_d415_camera_color_optical_frame:
                                         {}
-                                      left_gripper_sensor_d415_camera_left_ir_frame:
-                                        left_gripper_sensor_d415_camera_left_ir_optical_frame:
-                                          {}
-                                      left_gripper_sensor_d415_camera_right_ir_frame:
-                                        left_gripper_sensor_d415_camera_right_ir_optical_frame:
-                                          {}
-                                left_gripper_tool0:
+                                    left_gripper_sensor_d415_camera_depth_optical_frame:
+                                      {}
+                                    left_gripper_sensor_d415_camera_left_ir_frame:
+                                      left_gripper_sensor_d415_camera_left_ir_optical_frame:
+                                        {}
+                                    left_gripper_sensor_d415_camera_right_ir_frame:
+                                      left_gripper_sensor_d415_camera_right_ir_optical_frame:
+                                        {}
+                              left_gripper_sensor_support_support_link:
+                                left_gripper_sensor_support_mounted_link:
                                   {}
-                            left_arm_tool0:
-                              {}
-              right_arm_base_link:
-                right_arm_base:
-                  {}
-                right_arm_shoulder_link:
-                  right_arm_upper_arm_link:
-                    right_arm_forearm_link:
-                      right_arm_wrist_1_link:
-                        right_arm_wrist_2_link:
-                          right_arm_wrist_3_link:
-                            right_arm_ee_link:
-                              right_gripper_palm:
-                                right_gripper_finger_1_link_0:
-                                  right_gripper_finger_1_link_1:
-                                    right_gripper_finger_1_link_2:
-                                      right_gripper_finger_1_link_3:
-                                        {}
-                                      right_gripper_finger_1_link_paradistal_hinge:
-                                        {}
-                                    right_gripper_finger_1_link_median_actuating_hinge:
-                                      right_gripper_finger_1_link_median_bar:
-                                        {}
-                                    right_gripper_finger_1_link_paramedian_hinge:
-                                      right_gripper_finger_1_link_median_bar_underactuated:
-                                        {}
-                                  right_gripper_finger_1_link_paraproximal_actuating_hinge:
-                                    right_gripper_finger_1_link_paraproximal_bar:
+                              left_gripper_tool0:
+                                {}
+            right_arm_base_link:
+              right_arm_base:
+                {}
+              right_arm_shoulder_link:
+                right_arm_upper_arm_link:
+                  right_arm_forearm_link:
+                    right_arm_wrist_1_link:
+                      right_arm_wrist_2_link:
+                        right_arm_wrist_3_link:
+                          right_arm_ee_link:
+                            {}
+                          right_arm_tool0:
+                            right_gripper_palm:
+                              right_gripper_finger_1_link_0:
+                                right_gripper_finger_1_link_1:
+                                  right_gripper_finger_1_link_2:
+                                    right_gripper_finger_1_link_3:
                                       {}
-                                  right_gripper_finger_1_link_proximal_actuating_hinge:
-                                    right_gripper_finger_1_link_proximal_actuating_bar:
+                                    right_gripper_finger_1_link_paradistal_hinge:
                                       {}
-                                right_gripper_finger_2_link_0:
-                                  right_gripper_finger_2_link_1:
-                                    right_gripper_finger_2_link_2:
-                                      right_gripper_finger_2_link_3:
-                                        {}
-                                      right_gripper_finger_2_link_paradistal_hinge:
-                                        {}
-                                    right_gripper_finger_2_link_median_actuating_hinge:
-                                      right_gripper_finger_2_link_median_bar:
-                                        {}
-                                    right_gripper_finger_2_link_paramedian_hinge:
-                                      right_gripper_finger_2_link_median_bar_underactuated:
-                                        {}
-                                  right_gripper_finger_2_link_paraproximal_actuating_hinge:
-                                    right_gripper_finger_2_link_paraproximal_bar:
+                                  right_gripper_finger_1_link_median_actuating_hinge:
+                                    right_gripper_finger_1_link_median_bar:
                                       {}
-                                  right_gripper_finger_2_link_proximal_actuating_hinge:
-                                    right_gripper_finger_2_link_proximal_actuating_bar:
+                                  right_gripper_finger_1_link_paramedian_hinge:
+                                    right_gripper_finger_1_link_median_bar_underactuated:
                                       {}
-                                right_gripper_finger_middle_link_0:
-                                  right_gripper_finger_middle_link_1:
-                                    right_gripper_finger_middle_link_2:
-                                      right_gripper_finger_middle_link_3:
-                                        {}
-                                      right_gripper_finger_middle_link_paradistal_hinge:
-                                        {}
-                                    right_gripper_finger_middle_link_median_actuating_hinge:
-                                      right_gripper_finger_middle_link_median_bar:
-                                        {}
-                                    right_gripper_finger_middle_link_paramedian_hinge:
-                                      right_gripper_finger_middle_link_median_bar_underactuated:
-                                        {}
-                                  right_gripper_finger_middle_link_paraproximal_actuating_hinge:
-                                    right_gripper_finger_middle_link_paraproximal_bar:
+                                right_gripper_finger_1_link_paraproximal_actuating_hinge:
+                                  right_gripper_finger_1_link_paraproximal_bar:
+                                    {}
+                                right_gripper_finger_1_link_proximal_actuating_hinge:
+                                  right_gripper_finger_1_link_proximal_actuating_bar:
+                                    {}
+                              right_gripper_finger_2_link_0:
+                                right_gripper_finger_2_link_1:
+                                  right_gripper_finger_2_link_2:
+                                    right_gripper_finger_2_link_3:
                                       {}
-                                  right_gripper_finger_middle_link_proximal_actuating_hinge:
-                                    right_gripper_finger_middle_link_proximal_actuating_bar:
+                                    right_gripper_finger_2_link_paradistal_hinge:
                                       {}
-                                right_gripper_sensor_d415_camera_bottom_screw_frame:
-                                  right_gripper_sensor_d415_camera_link:
-                                    right_gripper_sensor_d415_camera_depth_frame:
-                                      right_gripper_sensor_d415_camera_color_frame:
-                                        right_gripper_sensor_d415_camera_color_optical_frame:
-                                          {}
-                                      right_gripper_sensor_d415_camera_depth_optical_frame:
+                                  right_gripper_finger_2_link_median_actuating_hinge:
+                                    right_gripper_finger_2_link_median_bar:
+                                      {}
+                                  right_gripper_finger_2_link_paramedian_hinge:
+                                    right_gripper_finger_2_link_median_bar_underactuated:
+                                      {}
+                                right_gripper_finger_2_link_paraproximal_actuating_hinge:
+                                  right_gripper_finger_2_link_paraproximal_bar:
+                                    {}
+                                right_gripper_finger_2_link_proximal_actuating_hinge:
+                                  right_gripper_finger_2_link_proximal_actuating_bar:
+                                    {}
+                              right_gripper_finger_middle_link_0:
+                                right_gripper_finger_middle_link_1:
+                                  right_gripper_finger_middle_link_2:
+                                    right_gripper_finger_middle_link_3:
+                                      {}
+                                    right_gripper_finger_middle_link_paradistal_hinge:
+                                      {}
+                                  right_gripper_finger_middle_link_median_actuating_hinge:
+                                    right_gripper_finger_middle_link_median_bar:
+                                      {}
+                                  right_gripper_finger_middle_link_paramedian_hinge:
+                                    right_gripper_finger_middle_link_median_bar_underactuated:
+                                      {}
+                                right_gripper_finger_middle_link_paraproximal_actuating_hinge:
+                                  right_gripper_finger_middle_link_paraproximal_bar:
+                                    {}
+                                right_gripper_finger_middle_link_proximal_actuating_hinge:
+                                  right_gripper_finger_middle_link_proximal_actuating_bar:
+                                    {}
+                              right_gripper_sensor_d415_camera_bottom_screw_frame:
+                                right_gripper_sensor_d415_camera_link:
+                                  right_gripper_sensor_d415_camera_depth_frame:
+                                    right_gripper_sensor_d415_camera_color_frame:
+                                      right_gripper_sensor_d415_camera_color_optical_frame:
                                         {}
-                                      right_gripper_sensor_d415_camera_left_ir_frame:
-                                        right_gripper_sensor_d415_camera_left_ir_optical_frame:
-                                          {}
-                                      right_gripper_sensor_d415_camera_right_ir_frame:
-                                        right_gripper_sensor_d415_camera_right_ir_optical_frame:
-                                          {}
-                                right_gripper_tool0:
+                                    right_gripper_sensor_d415_camera_depth_optical_frame:
+                                      {}
+                                    right_gripper_sensor_d415_camera_left_ir_frame:
+                                      right_gripper_sensor_d415_camera_left_ir_optical_frame:
+                                        {}
+                                    right_gripper_sensor_d415_camera_right_ir_frame:
+                                      right_gripper_sensor_d415_camera_right_ir_optical_frame:
+                                        {}
+                              right_gripper_sensor_support_support_link:
+                                right_gripper_sensor_support_mounted_link:
                                   {}
-                            right_arm_tool0:
-                              {}
-            rear_left_wheel_link:
-              {}
-            rear_right_wheel_link:
-              {}
-            top_plate_link:
-              {}
+                              right_gripper_tool0:
+                                {}
+          rear_left_wheel_link:
+            {}
+          rear_right_wheel_link:
+            {}
+          top_plate_link:
+            {}
       Update Interval: 0
       Value: true
   Enabled: true
@@ -1206,7 +1234,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.945129752
+      Distance: 3.59634995
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -1221,10 +1249,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.255398571
+      Pitch: 0.620398045
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.91858912
+      Yaw: 4.16858244
     Saved: ~
 Window Geometry:
   Displays:
@@ -1242,5 +1270,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1125
-  X: 491
-  Y: 187
+  X: 470
+  Y: 134
