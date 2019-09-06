@@ -1,4 +1,4 @@
-//server node to transform pointcloud from focal frame to base link frame
+// server node to transform pointcloud from focal frame to base link frame
 #include <ros/ros.h>
 #include <tf/tf.h>
 #include <pcl_ros/transforms.h>
@@ -21,22 +21,8 @@ public:
 		ROS_INFO("Point cloud received.");
 	
 		try{
-			// tf::StampedTransform stampedTransformed;
-
-			// listener_.waitForTransform(
-			// 	"base_link", 
-			// 	req.cloud_to_transform.header.frame_id, 
-			// 	req.cloud_to_transform.header.stamp, 
-			// 	ros::Duration(10.0)
-			// );
-			// listener_.lookupTransform(
-			// 	"base_link", 
-			// 	req.cloud_to_transform.header.frame_id, 
-			// 	req.cloud_to_transform.header.stamp, 
-			// 	stampedTransformed
-			// );
 			pcl_ros::transformPointCloud(
-				"base_link",
+				"odom",
 				req.cloud_to_transform, 
 				res.cloud_transformed,
 				listener_
