@@ -5,7 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded: ~
       Splitter Ratio: 0.742560029
-    Tree Height: 270
+    Tree Height: 231
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -71,6 +71,645 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
+          base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          front_left_wheel_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          front_right_wheel_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          imu_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          inertial_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          installation_plate_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          laser:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          laser_plate_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_arm_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_ee_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_forearm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_shoulder_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_arm_upper_arm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_wrist_1_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_wrist_2_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_wrist_3_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_median_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_median_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_median_bar_underactuated:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_paradistal_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_paramedian_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_paraproximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_paraproximal_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_proximal_actuating_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_proximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_median_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_median_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_median_bar_underactuated:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_paradistal_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_paramedian_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_paraproximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_paraproximal_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_proximal_actuating_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_proximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_median_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_median_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_median_bar_underactuated:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_paradistal_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_paramedian_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_paraproximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_paraproximal_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_proximal_actuating_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_proximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_palm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_sensor_d415_camera_bottom_screw_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_color_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_color_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_depth_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_left_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_left_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_sensor_d415_camera_right_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_right_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          rear_left_wheel_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          rear_right_wheel_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_arm_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_ee_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_forearm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_shoulder_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_arm_upper_arm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_wrist_1_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_wrist_2_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_wrist_3_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_median_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_median_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_median_bar_underactuated:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_paradistal_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_paramedian_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_paraproximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_paraproximal_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_proximal_actuating_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_proximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_median_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_median_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_median_bar_underactuated:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_paradistal_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_paramedian_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_paraproximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_paraproximal_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_proximal_actuating_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_proximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_median_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_median_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_median_bar_underactuated:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_paradistal_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_paramedian_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_paraproximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_paraproximal_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_proximal_actuating_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_proximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_palm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_sensor_d415_camera_bottom_screw_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_color_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_color_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_depth_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_left_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_left_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_sensor_d415_camera_right_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_right_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          top_plate_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
         Loop Animation: true
         Robot Alpha: 0.5
         Robot Color: 150; 50; 150
@@ -116,6 +755,645 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
+          base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          front_left_wheel_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          front_right_wheel_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          imu_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          inertial_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          installation_plate_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          laser:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          laser_plate_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_arm_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_ee_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_forearm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_shoulder_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_arm_upper_arm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_wrist_1_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_wrist_2_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_arm_wrist_3_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_median_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_median_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_median_bar_underactuated:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_paradistal_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_paramedian_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_paraproximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_paraproximal_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_proximal_actuating_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_1_link_proximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_median_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_median_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_median_bar_underactuated:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_paradistal_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_paramedian_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_paraproximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_paraproximal_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_proximal_actuating_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_2_link_proximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_median_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_median_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_median_bar_underactuated:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_paradistal_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_paramedian_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_paraproximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_paraproximal_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_proximal_actuating_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_finger_middle_link_proximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_palm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_sensor_d415_camera_bottom_screw_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_color_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_color_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_depth_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_left_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_left_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_gripper_sensor_d415_camera_right_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_sensor_d415_camera_right_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_gripper_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          rear_left_wheel_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          rear_right_wheel_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_arm_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_ee_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_forearm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_shoulder_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_arm_upper_arm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_wrist_1_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_wrist_2_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_arm_wrist_3_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_median_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_median_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_median_bar_underactuated:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_paradistal_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_paramedian_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_paraproximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_paraproximal_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_proximal_actuating_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_1_link_proximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_median_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_median_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_median_bar_underactuated:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_paradistal_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_paramedian_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_paraproximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_paraproximal_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_proximal_actuating_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_2_link_proximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_median_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_median_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_median_bar_underactuated:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_paradistal_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_paramedian_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_paraproximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_paraproximal_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_proximal_actuating_bar:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_finger_middle_link_proximal_actuating_hinge:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_palm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_sensor_d415_camera_bottom_screw_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_color_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_color_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_depth_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_depth_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_left_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_left_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_gripper_sensor_d415_camera_right_ir_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_sensor_d415_camera_right_ir_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_gripper_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          top_plate_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
         Robot Alpha: 0.5
         Show Robot Collision: false
         Show Robot Visual: true
@@ -151,703 +1429,6 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: false
-    - Attached Body Color: 150; 50; 150
-      Class: moveit_rviz_plugin/RobotState
-      Collision Enabled: false
-      Enabled: true
-      Links:
-        All Links Enabled: true
-        Expand Joint Details: false
-        Expand Link Details: false
-        Expand Tree: false
-        Link Tree Style: Links in Alphabetic Order
-        base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        front_left_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        front_right_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        imu_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        inertial_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        installation_plate_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        laser:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        laser_plate_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_arm_base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_arm_base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_arm_ee_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_arm_forearm_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_arm_shoulder_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_arm_tool0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_arm_upper_arm_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_arm_wrist_1_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_arm_wrist_2_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_arm_wrist_3_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_1_link_0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_1_link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_1_link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_1_link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_1_link_median_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_1_link_median_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_1_link_median_bar_underactuated:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_1_link_paradistal_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_1_link_paramedian_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_1_link_paraproximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_1_link_paraproximal_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_1_link_proximal_actuating_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_1_link_proximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_2_link_0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_2_link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_2_link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_2_link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_2_link_median_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_2_link_median_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_2_link_median_bar_underactuated:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_2_link_paradistal_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_2_link_paramedian_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_2_link_paraproximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_2_link_paraproximal_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_2_link_proximal_actuating_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_2_link_proximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_middle_link_0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_middle_link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_middle_link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_middle_link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_middle_link_median_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_middle_link_median_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_middle_link_median_bar_underactuated:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_middle_link_paradistal_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_middle_link_paramedian_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_middle_link_paraproximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_middle_link_paraproximal_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_middle_link_proximal_actuating_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_finger_middle_link_proximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_palm:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_sensor_d415_camera_bottom_screw_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_gripper_sensor_d415_camera_color_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_gripper_sensor_d415_camera_color_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_gripper_sensor_d415_camera_depth_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_gripper_sensor_d415_camera_depth_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_gripper_sensor_d415_camera_left_ir_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_gripper_sensor_d415_camera_left_ir_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_gripper_sensor_d415_camera_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_sensor_d415_camera_right_ir_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_gripper_sensor_d415_camera_right_ir_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_gripper_sensor_support_mounted_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_gripper_sensor_support_support_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_gripper_tool0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        rear_left_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        rear_right_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_arm_base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_arm_base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_arm_ee_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_arm_forearm_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_arm_shoulder_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_arm_tool0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_arm_upper_arm_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_arm_wrist_1_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_arm_wrist_2_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_arm_wrist_3_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_1_link_0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_1_link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_1_link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_1_link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_1_link_median_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_1_link_median_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_1_link_median_bar_underactuated:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_1_link_paradistal_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_1_link_paramedian_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_1_link_paraproximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_1_link_paraproximal_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_1_link_proximal_actuating_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_1_link_proximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_2_link_0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_2_link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_2_link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_2_link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_2_link_median_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_2_link_median_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_2_link_median_bar_underactuated:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_2_link_paradistal_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_2_link_paramedian_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_2_link_paraproximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_2_link_paraproximal_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_2_link_proximal_actuating_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_2_link_proximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_middle_link_0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_middle_link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_middle_link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_middle_link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_middle_link_median_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_middle_link_median_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_middle_link_median_bar_underactuated:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_middle_link_paradistal_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_middle_link_paramedian_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_middle_link_paraproximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_middle_link_paraproximal_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_middle_link_proximal_actuating_bar:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_finger_middle_link_proximal_actuating_hinge:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_palm:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_sensor_d415_camera_bottom_screw_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_gripper_sensor_d415_camera_color_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_gripper_sensor_d415_camera_color_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_gripper_sensor_d415_camera_depth_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_gripper_sensor_d415_camera_depth_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_gripper_sensor_d415_camera_left_ir_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_gripper_sensor_d415_camera_left_ir_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_gripper_sensor_d415_camera_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_sensor_d415_camera_right_ir_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_gripper_sensor_d415_camera_right_ir_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_gripper_sensor_support_mounted_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_gripper_sensor_support_support_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_gripper_tool0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        top_plate_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-      Name: RobotState
-      Robot Alpha: 1
-      Robot Description: robot_description
-      Robot State Topic: /bulldog_pick_and_place_demo/display_robot_state
-      Show All Links: true
-      Show Highlights: true
-      Value: true
-      Visual Enabled: true
-    - Class: moveit_rviz_plugin/Trajectory
-      Color Enabled: false
-      Enabled: true
-      Interrupt Display: false
-      Links:
-        All Links Enabled: true
-        Expand Joint Details: false
-        Expand Link Details: false
-        Expand Tree: false
-        Link Tree Style: Links in Alphabetic Order
-      Loop Animation: false
-      Name: Trajectory
-      Robot Alpha: 0.5
-      Robot Color: 150; 50; 150
-      Robot Description: robot_description
-      Show Robot Collision: false
-      Show Robot Visual: true
-      Show Trail: false
-      State Display Time: 0.05 s
-      Trail Step Size: 1
-      Trajectory Topic: /bulldog_pick_and_place_demo/display_planned_path
-      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -887,7 +1468,7 @@ Visualization Manager:
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 994
+  Height: 908
   Help:
     collapsed: false
   Hide Left Dock: false
@@ -896,13 +1477,11 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002ad0000039cfc0200000009fb000000100044006900730070006c0061007900730100000028000001a3000000d700fffffffb0000000800480065006c00700000000342000000bb0000007300fffffffb0000000a0056006900650077007300000003b0000000b0000000ad00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00fffffffc000001d1000001f3000001c40100001dfa000000000100000002fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000000ffffffff000002ad00fffffffb000000260052006f0062006f007400690071003300460069006e00670065007200500061006e0065006c0100000000ffffffff0000019200fffffffb000000280020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000000000000000fb0000003c005400720061006a006500630074006f007200790020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00ffffff000003070000039c00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000002ad00000346fc0200000007fb000000100044006900730070006c00610079007301000000280000017c000000d700fffffffb0000000800480065006c00700000000342000000bb0000007300fffffffb0000000a0056006900650077007300000003b0000000b0000000ad00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00fffffffc000001aa000001c4000001c40100001dfa000000000100000002fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000000ffffffff000002ad00fffffffb000000260052006f0062006f007400690071003300460069006e00670065007200500061006e0065006c0100000000ffffffff0000019200ffffff000003070000034600000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Robotiq3FingerPanel:
-    collapsed: false
-  Trajectory - Trajectory Slider:
     collapsed: false
   Views:
     collapsed: false
   Width: 1466
-  X: 270
-  Y: 24
+  X: 244
+  Y: 84
