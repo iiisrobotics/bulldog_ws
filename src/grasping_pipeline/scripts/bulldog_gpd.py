@@ -488,9 +488,9 @@ def main():
 	# We use the pose of the gripper base for planning.
 	target_position = grasp.bottom
 	target_rotation_matrix = np.array([
-		[grasp.approach.x, grasp.binormal.x, grasp.axis.x, 0.0],
-		[grasp.approach.y, grasp.binormal.y, grasp.axis.y, 0.0],
-		[grasp.approach.z, grasp.binormal.z, grasp.axis.z, 0.0],
+		[-grasp.binormal.x, -grasp.axis.x, grasp.approach.x, 0.0],
+		[-grasp.binormal.y, -grasp.axis.y, grasp.approach.y, 0.0],
+		[-grasp.binormal.z, -grasp.axis.z, grasp.approach.z, 0.0],
 		[0.0, 0.0, 0.0, 1.0]
 	])
 	target_quaternion = tf.transformations.quaternion_from_matrix(
@@ -520,6 +520,7 @@ def main():
 	plan = group.plan()
 	# plan = group.go(wait=True)
 	group.execute(plan, wait=True)
+	# group.set_start_state_to_current_state()
 
 	rospy.loginfo("============ Waiting while RVIZ displays motion planning...")
 	rospy.sleep(3.0)
