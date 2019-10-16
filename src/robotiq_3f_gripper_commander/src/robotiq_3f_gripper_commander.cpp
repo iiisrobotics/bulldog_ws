@@ -12,30 +12,29 @@ Robotiq3FGripperCommander::Robotiq3FGripperCommander(
     const double timeout) :
     node_(node),
     command_topic_(command_topic),
-    status_topic_(command_topic),
+    status_topic_(status_topic),
     timeout_(timeout)
 {
     command_pub_ = node_.advertise<RobotOutput>(command_topic, 1);
+    ros::Duration(0.1).sleep();// wait for advertising completion
     if (command_pub_.getNumSubscribers() == 0) {
         ROS_WARN_STREAM(
-            "No robotiq 3 finger gripper command subscribers found! \
-            Command may lost");
+            "No robotiq 3 finger gripper command subscribers found! "
+            << "Command may lost");
     }
-    else {
-        ROS_DEBUG_STREAM(
-            "Robotiq 3 finger gripper command topic: " << command_topic_);
-    }
+    ROS_DEBUG_STREAM(
+        "Robotiq 3 finger gripper command topic: " << command_pub_.getTopic());
 
     status_sub_ = node_.subscribe(
         status_topic, 1, &Robotiq3FGripperCommander::statusCallback, this);
+    ros::Duration(0.1).sleep();// wait for subscribing completion    
     if (status_sub_.getNumPublishers() == 0) {
-        ROS_WARN_STREAM("No robtiq 3 finger gripper status publishers found! \
-            Gripper may not startup");
+        ROS_WARN_STREAM(
+            "No robotiq 3 finger gripper status publishers found! "
+            << "Gripper may not startup correctly");
     }
-    else {
-        ROS_DEBUG_STREAM(
-            "Robotiq 3 finger gripper status topic: " << status_topic_);
-    }
+    ROS_DEBUG_STREAM(
+        "Robotiq 3 finger gripper status topic: " << status_sub_.getTopic());
 }
 
 Robotiq3FGripperCommander::Robotiq3FGripperCommander(
@@ -65,18 +64,22 @@ Robotiq3FGripperCommander::~Robotiq3FGripperCommander()
 
 bool Robotiq3FGripperCommander::activate()
 {
+    ROS_DEBUG_STREAM("Activating robotiq 3 finger gripper...");
+
     command_ = RobotOutput();
     command_.rACT = 1;
     command_.rGTO = 1;
     command_.rSPA = 255;
     command_.rFRA = 150;
     sendCommand();
+    // ros::Duration(3.0).sleep();// wait for 0.1 second.
 
     bool success = false;
     ros::Time send_time = ros::Time::now();
     while ((ros::Time::now() - send_time).toSec() < timeout_) {
-        if (status_.gACT == 1 &&
-            status_.gMOD == 1) {
+        if (status_.gACT == 1 &&    // gripper activation
+            status_.gGTO == 1 &&    // go to position request
+            status_.gPOA == 5) {    // the actual position of finger A
             success = true;
             break;
         }
@@ -87,6 +90,8 @@ bool Robotiq3FGripperCommander::activate()
 
 bool Robotiq3FGripperCommander::deactivate()
 {
+    ROS_DEBUG_STREAM("Deactivating robotiq 3 finger gripper...");
+
     command_ = RobotOutput();
     command_.rACT = 0;
     sendCommand();
@@ -105,6 +110,8 @@ bool Robotiq3FGripperCommander::deactivate()
 
 bool Robotiq3FGripperCommander::open()
 {
+    ROS_DEBUG_STREAM("Opening robotiq 3 finger gripper...");
+
     command_.rPRA = 0;
     sendCommand();
 
@@ -112,8 +119,8 @@ bool Robotiq3FGripperCommander::open()
     ros::Time send_time = ros::Time::now();
     while ((ros::Time::now() - send_time).toSec() < timeout_) {
         if (status_.gACT = 0) {
-            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated! \
-                Please activate it first");
+            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated!"
+                << "Please activate it first");
             break;
         }
         else if (status_.gPRA == 0) {
@@ -127,15 +134,18 @@ bool Robotiq3FGripperCommander::open()
 
 bool Robotiq3FGripperCommander::close()
 {
+    ROS_DEBUG_STREAM("Closing robotiq 3 finger gripper...");
+
     command_.rPRA = 255;
     sendCommand();
+    ros::Duration(3.0).sleep();
 
     bool success = false;
     ros::Time send_time = ros::Time::now();
     while ((ros::Time::now() - send_time).toSec() < timeout_) {
         if (status_.gACT = 0) {
-            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated! \
-                Please activate it first");
+            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated!"
+                << "Please activate it first");
             break;
         }
         else if (status_.gPRA == 255) {
@@ -156,8 +166,8 @@ bool Robotiq3FGripperCommander::setMode(Robotiq3FGripperModes mode)
     ros::Time send_time = ros::Time::now();
     while ((ros::Time::now() - send_time).toSec() < timeout_) {
         if (status_.gACT = 0) {
-            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated! \
-                Please activate it first");
+            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated!"
+                << "Please activate it first");
             break;
         }
         else if (status_.gMOD == mode) {
@@ -178,8 +188,8 @@ bool Robotiq3FGripperCommander::setPosition(uint8_t position)
     ros::Time send_time = ros::Time::now();
     while ((ros::Time::now() - send_time).toSec() < timeout_) {
         if (status_.gACT = 0) {
-            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated! \
-                Please activate it first");
+            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated!"
+                << "Please activate it first");
             break;
         }
         else if (status_.gPRA == position) {
@@ -200,8 +210,8 @@ bool Robotiq3FGripperCommander::increaseSpeed()
     ros::Time send_time = ros::Time::now();
     while ((ros::Time::now() - send_time).toSec() < timeout_) {
         if (status_.gACT = 0) {
-            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated! \
-                Please activate it first");
+            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated!"
+                << "Please activate it first");
             break;
         }
         else if (status_.gFLT == 0) {
@@ -222,8 +232,8 @@ bool Robotiq3FGripperCommander::decreaseSpeed()
     ros::Time send_time = ros::Time::now();
     while ((ros::Time::now() - send_time).toSec() < timeout_) {
         if (status_.gACT = 0) {
-            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated! \
-                Please activate it first");
+            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated!"
+                << "Please activate it first");
             break;
         }
         else if (status_.gFLT == 0) {
@@ -244,8 +254,8 @@ bool Robotiq3FGripperCommander::increaseForce()
     ros::Time send_time = ros::Time::now();
     while ((ros::Time::now() - send_time).toSec() < timeout_) {
         if (status_.gACT = 0) {
-            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated! \
-                Please activate it first");
+            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated!"
+                << "Please activate it first");
             break;
         }
         else if (status_.gFLT == 0) {
@@ -266,8 +276,8 @@ bool Robotiq3FGripperCommander::decreaseForce()
     ros::Time send_time = ros::Time::now();
     while ((ros::Time::now() - send_time).toSec() < timeout_) {
         if (status_.gACT = 0) {
-            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated! \
-                Please activate it first");
+            ROS_WARN_STREAM("Robotiq 3 finger gripper is deactivated!"
+                << "Please activate it first");
             break;
         }
         else if (status_.gFLT == 0) {
@@ -286,6 +296,7 @@ void Robotiq3FGripperCommander::sendCommand()
 
 void Robotiq3FGripperCommander::statusCallback(const RobotInput& status)
 {
+    // ROS_DEBUG_STREAM("Updating robotiq 3 finger gripper status...");
     status_ = status;
 }
 

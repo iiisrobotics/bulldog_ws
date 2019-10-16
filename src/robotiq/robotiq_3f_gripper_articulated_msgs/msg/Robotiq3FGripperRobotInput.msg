@@ -50,7 +50,7 @@ uint8 gDTA
 
 uint8 gDTB
 
-# gDTC : Finger C object detection status returns information on possible object contact from finger A.
+# gDTC : Finger C object detection status returns information on possible object contact from finger C.
 # 0x00 - Finger C is in motion (only meaningful if gGTO = 1).
 # 0x01 - Finger C has stopped due to a contact while opening.
 # 0x02 - Finger C has stopped due to a contact while closing.
