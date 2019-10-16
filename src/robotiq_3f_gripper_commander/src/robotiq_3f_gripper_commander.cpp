@@ -99,7 +99,14 @@ bool Robotiq3FGripperCommander::deactivate()
     bool success = false;
     ros::Time send_time = ros::Time::now();
     while ((ros::Time::now() - send_time).toSec() < timeout_) {
-        if (status_.gACT == 0) {
+        // if (status_.gACT == 0 &&        // gripper activation
+        //     status_.gGTO == 0 &&        // go to position request
+        //     status_.gPOA == 255) {      // the actual position of finger A
+        //     success = true;
+        //     break;
+        // }
+        if (status_.gACT == 0 &&        // gripper activation
+            status_.gGTO == 0) {        // go to position request
             success = true;
             break;
         }
@@ -123,7 +130,8 @@ bool Robotiq3FGripperCommander::open()
                 << "Please activate it first");
             break;
         }
-        else if (status_.gPRA == 0) {
+        else if (status_.gPRA == 0 &&       // echo of the requested position of finger A
+                 status_.gPOA == 5) {       // the actual position of finger A
             success = true;
             break;
         }
@@ -138,7 +146,6 @@ bool Robotiq3FGripperCommander::close()
 
     command_.rPRA = 255;
     sendCommand();
-    ros::Duration(3.0).sleep();
 
     bool success = false;
     ros::Time send_time = ros::Time::now();
@@ -148,7 +155,8 @@ bool Robotiq3FGripperCommander::close()
                 << "Please activate it first");
             break;
         }
-        else if (status_.gPRA == 255) {
+        else if (status_.gPRA = 255 &&      // echo of the requested position of finger A
+                 status_.gPOA == 255) {     // the actual position of finger A
             success = true;
             break;
         }
