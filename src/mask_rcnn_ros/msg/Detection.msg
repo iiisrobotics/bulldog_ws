@@ -14,4 +14,3 @@ float32[] scores
 
 # Instance masks as Image
 sensor_msgs/Image[] masks
-

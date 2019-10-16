@@ -15,26 +15,29 @@ Robotiq3FGripperCommander::Robotiq3FGripperCommander(
     status_topic_(status_topic),
     timeout_(timeout)
 {
-    command_pub_ = node_.advertise<RobotOutput>(command_topic, 1);
-    ros::Duration(0.1).sleep();// wait for advertising completion
+    command_pub_ = node_.advertise<RobotOutput>(command_topic_, 1);
+    ros::Duration(0.5).sleep();// wait for advertising completion
     if (command_pub_.getNumSubscribers() == 0) {
         ROS_WARN_STREAM(
             "No robotiq 3 finger gripper command subscribers found! "
             << "Command may lost");
     }
+    command_topic_ = command_pub_.getTopic();
     ROS_DEBUG_STREAM(
-        "Robotiq 3 finger gripper command topic: " << command_pub_.getTopic());
+        "Robotiq 3 finger gripper command topic: " << command_topic_);
+
 
     status_sub_ = node_.subscribe(
-        status_topic, 1, &Robotiq3FGripperCommander::statusCallback, this);
-    ros::Duration(0.1).sleep();// wait for subscribing completion    
+        status_topic_, 1, &Robotiq3FGripperCommander::statusCallback, this);
+    ros::Duration(0.5).sleep();// wait for subscribing completion    
     if (status_sub_.getNumPublishers() == 0) {
         ROS_WARN_STREAM(
             "No robotiq 3 finger gripper status publishers found! "
             << "Gripper may not startup correctly");
     }
+    status_topic_ = status_sub_.getTopic();
     ROS_DEBUG_STREAM(
-        "Robotiq 3 finger gripper status topic: " << status_sub_.getTopic());
+        "Robotiq 3 finger gripper status topic: " << status_topic_);
 }
 
 Robotiq3FGripperCommander::Robotiq3FGripperCommander(
@@ -72,7 +75,6 @@ bool Robotiq3FGripperCommander::activate()
     command_.rSPA = 255;
     command_.rFRA = 150;
     sendCommand();
-    // ros::Duration(3.0).sleep();// wait for 0.1 second.
 
     bool success = false;
     ros::Time send_time = ros::Time::now();
@@ -80,6 +82,9 @@ bool Robotiq3FGripperCommander::activate()
         if (status_.gACT == 1 &&    // gripper activation
             status_.gGTO == 1 &&    // go to position request
             status_.gPOA == 5) {    // the actual position of finger A
+            std::cout << "status_.gACT = " << std::to_string(status_.gACT) << std::endl;
+            std::cout << "status_.gGTO = " << std::to_string(status_.gGTO) << std::endl;
+            std::cout << "status_.gPOA = " << std::to_string(status_.gPOA) << std::endl;
             success = true;
             break;
         }

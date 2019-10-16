@@ -18,7 +18,7 @@ public:
 	bool transformCloud(gpd::CloudTransform::Request &req,
 		gpd::CloudTransform::Response &res)
 	{
-		ROS_INFO("Point cloud received.");
+		ROS_INFO("Point cloud received");
 	
 		try{
 			pcl_ros::transformPointCloud(
@@ -27,7 +27,7 @@ public:
 				res.cloud_transformed,
 				listener_
 			);
-			ROS_INFO("Point cloud transformation completed.");
+			ROS_INFO("Point cloud transformation completed");
 		}
 		catch(tf::TransformException &e){
 			ROS_ERROR("%s", e.what());
