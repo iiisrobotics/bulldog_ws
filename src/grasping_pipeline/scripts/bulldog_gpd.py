@@ -15,10 +15,19 @@ from std_msgs.msg import Int64
 from mask_rcnn_ros.srv import MaskDetect
 from gpd.srv import DetectGrasps
 from gpd.srv import CloudTransform
+from pick_and_place.srv import PickAndPlace
 
 import moveit_commander
 import tf.transformations
 
+
+IMAGE_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/color/image_raw'
+CLOUD_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/depth/color/points'
+
+CLOUD_TRANSFROM_DEFAULT_NAME = 'cloud_transform_server/transformation'
+MASK_RCNN_DEFAULT_NAME = 'mask_rcnn/detection'
+DETECT_GRASPS_DEFAULT_NAME = 'detect_grasps_server/detect_grasps'
+PICK_AND_PLACE_DEFAULT_NAME = 'bulldog_pick_and_place/pick_and_place'
 
 POSE_REFERENCE_FRAME = 'odom'
 GRASP_FILTERING_FRAME = 'left_arm_base'  # 'left_gripper_tool0', 'left_arm_base'
@@ -124,6 +133,38 @@ def grasps_detection(srv, cloud_indexed):
 	grasp_configs = detect_grasps_response.grasp_configs
 
 	return grasp_configs
+
+def pick_and_place(srv, grasp_poses):
+	"""Pick and place objects with possible grasp poses
+
+	Parameters
+	----------
+	- srv: str
+		Name of the pick and place service.
+
+	- grasp_poses: [geometry_msgs.msg.PoseStamped, ...]
+		Grasp poses in the global frame.
+
+	Returns
+	----------
+	- success: boolean
+		True on success.
+
+	"""
+	rospy.loginfo("Waiting for pick and place service...")
+	rospy.wait_for_service(srv)
+	rospy.loginfo("Pick and place service is available.")
+
+	try:
+		rospy.loginfo("Pick and place...")
+		pick_and_place_pipeline = rospy.ServiceProxy(srv, PickAndPlace)
+		pick_and_place_response = pick_and_place_pipeline(grasp_poses)
+	except rospy.ServiceException as e:
+		rospy.logerr("Point cloud transform service call failed: %s" % e)
+		raise SystemExit()
+	success = pick_and_place_response.success
+	
+	return success
 
 
 def process_cloud(cloud_transformed, detection):
@@ -368,7 +409,6 @@ def find_closest_grasp(grasps, frame='odom',
 
 	return closest_grasp
 
-
 def configure_target_pose(target_position, target_quaternion):
 	"""Configure target pose for planning
 
@@ -430,9 +470,9 @@ def main():
 	#
 	rospy.init_node('gpd_mask')
 	image_stream = rospy.get_param(
-		'image_stream', 'left_gripper_sensor_d415_camera/color/image_raw')
+		'image_stream', IMAGE_STREAM_DEFAULT_NAME)
 	cloud_stream = rospy.get_param(
-		'image_stream', 'left_gripper_sensor_d415_camera/depth/color/points')
+		'cloud_stream', CLOUD_STREAM_DEFAULT_NAME)
 
 	#
 	# get image and point cloud
@@ -446,14 +486,14 @@ def main():
 	# transform point cloud form camera frame to odom (a.k.a. base_link) frame.
 	#
 	cloud_transformed = cloud_transformation(
-		"cloud_transform_server/transformation",
+		CLOUD_TRANSFROM_DEFAULT_NAME,
 		cloud
 	)
 
 	#
 	# Mask RCNN detection
 	#
-	detection = mask_rcnn_detection("mask_rcnn/detection", image)
+	detection = mask_rcnn_detection(MASK_RCNN_DEFAULT_NAME, image)
 
 	#
 	# process point cloud through Mask RCNN detection
@@ -463,7 +503,7 @@ def main():
 	#
 	# find reasonable grasps
 	#
-	grasp_configs = grasps_detection("detect_grasps_server/detect_grasps",
+	grasp_configs = grasps_detection(DETECT_GRASPS_DEFAULT_NAME,
 									 cloud_indexed)
 
 	#
@@ -515,14 +555,16 @@ def main():
 	#
 	# planning
 	#
-	group.set_pose_target(target_pose)
+	# group.set_pose_target(target_pose)
 
-	plan = group.plan()
+	# plan = group.plan()
 	# plan = group.go(wait=True)
-	group.execute(plan, wait=True)
+	# group.execute(plan, wait=True)
 	# group.set_start_state_to_current_state()
+	pick_and_place(PICK_AND_PLACE_DEFAULT_NAME, [target_pose])
 
-	rospy.loginfo("============ Waiting while RVIZ displays motion planning...")
+
+	rospy.loginfo("Waiting while RVIZ displays motion planning...")
 	rospy.sleep(3.0)
 
 
