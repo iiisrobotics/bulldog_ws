@@ -23,7 +23,7 @@ import sensor_msgs.point_cloud2
 
 
 IMAGE_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/color/image_raw'
-CLOUD_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/depth/color/points'
+CLOUD_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/depth_registered/points'
 
 CLOUD_TRANSFROM_DEFAULT_NAME = 'cloud_transform_server/transformation'
 MASK_RCNN_DEFAULT_NAME = 'mask_rcnn/detection'
