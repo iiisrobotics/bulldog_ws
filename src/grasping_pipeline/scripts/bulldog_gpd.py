@@ -160,7 +160,7 @@ def pick_and_place(srv, grasp_poses):
 		pick_and_place_pipeline = rospy.ServiceProxy(srv, PickAndPlace)
 		pick_and_place_response = pick_and_place_pipeline(grasp_poses)
 	except rospy.ServiceException as e:
-		rospy.logerr("Point cloud transform service call failed: %s" % e)
+		rospy.logerr("Pick and place service call failed: %s" % e)
 		raise SystemExit()
 	success = pick_and_place_response.success
 	
@@ -440,12 +440,12 @@ def configure_target_pose(target_position, target_quaternion):
 
 	"""
 	target_pose = PoseStamped()
-	target_pose.header.stamp = rospy.get_time()
+	target_pose.header.stamp = rospy.Time.now()
 	target_pose.header.frame_id = POSE_REFERENCE_FRAME
 	target_pose.pose.position = target_position
 	# target_pose.pose.position.x = 0.98714264072
 	# target_pose.pose.position.y = -0.0181142373857
-	# target_pose.pose.position.z = 0.480302787791 + 0.3
+	# target_pose.pose.position.z = 0.480302787791 + 0.1
 	target_pose.pose.orientation = target_quaternion
 	# target_pose.pose.orientation.x = 0.6859901647729069
 	# target_pose.pose.orientation.y = 0.7275965355007923
