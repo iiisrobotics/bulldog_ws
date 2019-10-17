@@ -19,6 +19,7 @@ from pick_and_place.srv import PickAndPlace
 
 import moveit_commander
 import tf.transformations
+import sensor_msgs.point_cloud2
 
 
 IMAGE_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/color/image_raw'
@@ -192,15 +193,20 @@ def process_cloud(cloud_transformed, detection):
 	cloud_indexed.cloud_sources.camera_source.append(Int64(0))
 
 	#
-	# convert PointCloud2 to a list of points
+	# get NAN points from the point cloud
 	#
-	cloud_points = np.reshape(
-		np.fromstring(cloud_transformed.data, dtype=np.float32), [-1, 4]
-	)
-	# odd rows and first three columns are informative
-	cloud_points = cloud_points[::2, 0:3]
-	# remove nans
-	cloud_points = cloud_points[~np.isnan(cloud_points[:, 0])]
+	cloud_points = []
+	for cloud_point in sensor_msgs.point_cloud2.read_points(cloud_transformed):
+		cloud_points.append([cloud_point[0], cloud_point[1], cloud_point[2]])
+	cloud_points = np.asarray(cloud_points)
+	nan_mask = np.isnan(cloud_points[:, 0])
+	print(cloud_points.shape)
+	cloud_points = cloud_points[~nan_mask]
+	print(cloud_points.shape)
+	# cloud_points[:, 0] -= 0.1 # offset along x axis
+	# cloud_indexed.cloud_sources.cloud = sensor_msgs.point_cloud2.create_cloud_xyz32(
+	# 	cloud_transformed.header, cloud_points.tolist()
+	# )
 
 	if len(detection.masks) > 0:
 		for class_name, mask in zip(detection.class_names,
@@ -208,7 +214,7 @@ def process_cloud(cloud_transformed, detection):
 			#
 			# name filtering
 			#
-			mask_indices = name_filtering(class_name, mask)
+			mask_indices = name_filtering(class_name, mask, nan_mask)
 
 			if len(mask_indices) > 0:
 				cloud_indices = mask_indices
@@ -241,7 +247,7 @@ def process_cloud(cloud_transformed, detection):
 	return cloud_indexed
 
 
-def name_filtering(class_name, mask):
+def name_filtering(class_name, mask, nan_mask):
 	"""Extract point cloud of typical objects.
 
 	Parameters
@@ -252,6 +258,9 @@ def name_filtering(class_name, mask):
 	- mask: sensor_msgs/Image
 		Mask of the corresponding detection from the Mask RCNN.
 
+	- nan_mask: numpy.ndarray
+		Boolean mask to indicate the NAN points in the point cloud.
+
 	Returns
 	----------
 	- mask_indices: list
@@ -260,7 +269,7 @@ def name_filtering(class_name, mask):
 	"""
 	if (class_name == 'bottle') or (class_name == 'cup'):
 		mask_data = np.fromstring(mask.data, dtype=np.uint8)
-		mask_indices = np.where(mask_data != 0)[0].tolist()
+		mask_indices = np.where((mask_data != 0) & ~nan_mask)[0].tolist()
 	else:
 		mask_indices = []
 
@@ -319,7 +328,7 @@ def least_squares_filtering(cloud_points, mask_indices, dist_thresh=4e-4):
 	return least_squares_indices
 
 
-def find_closest_grasp(grasps, frame='odom',
+def find_closest_grasp(grasps, frame='base_link',
 					   min_y_thresh=-0.05, 
 					   min_y_soft_thresh=0.08,
 					   min_dist_thresh=0.81):
@@ -331,14 +340,14 @@ def find_closest_grasp(grasps, frame='odom',
 		Grasps describe by their 6-DOF pose, consisting of a 3-DOF position
 		and 3-DOF orientation, and the opening width of the robot hand.
 
-	- frame: str (optional, default = 'odom' (a.k.a. 'base_link') )
+	- frame: str (optional, default = 'base_link')
 		Name of the reference frame.
 
 	- min_y_thresh: float (optional, default = -0.05)
 		Minimum value for closest grasp along y axis, i.e. the left arm cannot
 		move to the right side of the robot, and the right arm cannot
 		move to the left side of the robot. Remember to define this threshold
-		in 'odom' frame.
+		in 'base_link' frame.
 
 	- min_y_soft_thresh: float (optional, default = 0.08)
 		Minimum value for closest grasp along y axis which we begin to consider
@@ -358,7 +367,7 @@ def find_closest_grasp(grasps, frame='odom',
 	"""
 	#
 	# We use the pose of the gripper base for planning.
-	# The cloud represents points in 'odom' frame by default.
+	# The cloud represents points in 'base_link' frame by default.
 	#
 	pose_positions = [PointStamped(
 		header=Header(frame_id=POSE_REFERENCE_FRAME),
@@ -429,28 +438,27 @@ def configure_target_pose(target_position, target_quaternion):
 	----------
 	pose: 
 		position: 
-			x: 0.98714264072
-			y: -0.0181142373857
-			z: 0.480302787791
+			x: 0.896101885954
+			y: 0.220898042324
+			z: 0.440645337477
 		orientation: 
-			x: 0.6859901647729069
-			y: 0.7275965355007923
-			z: 0.004507587996639602
-			w: 0.0006760270237895833
-
+			x: 0.628300287611576
+			y: -0.39971341565013935
+			z: -0.5883724060255893
+			w: -0.3150965657765391
 	"""
 	target_pose = PoseStamped()
 	target_pose.header.stamp = rospy.Time.now()
 	target_pose.header.frame_id = POSE_REFERENCE_FRAME
 	target_pose.pose.position = target_position
-	# target_pose.pose.position.x = 0.98714264072
-	# target_pose.pose.position.y = -0.0181142373857
-	# target_pose.pose.position.z = 0.480302787791 + 0.1
+	# target_pose.pose.position.x = 0.795009083413
+	# target_pose.pose.position.y = 0.22062083617
+	# target_pose.pose.position.z = 0.489056381231
 	target_pose.pose.orientation = target_quaternion
-	# target_pose.pose.orientation.x = 0.6859901647729069
-	# target_pose.pose.orientation.y = 0.7275965355007923
-	# target_pose.pose.orientation.z = 0.004507587996639602
-	# target_pose.pose.orientation.w = 0.0006760270237895833
+	# target_pose.pose.orientation.x = -0.08121355241516261
+	# target_pose.pose.orientation.y = -0.052377064390203044
+	# target_pose.pose.orientation.z = -0.5590192309531775
+	# target_pose.pose.orientation.w = 0.8235037956527536
 
 	return target_pose
 
@@ -483,12 +491,10 @@ def main():
 	rospy.loginfo("Image and cloud are available.")
 
 	#
-	# transform point cloud form camera frame to odom (a.k.a. base_link) frame.
+	# transform point cloud form camera frame to base_link frame.
 	#
 	cloud_transformed = cloud_transformation(
-		CLOUD_TRANSFROM_DEFAULT_NAME,
-		cloud
-	)
+		CLOUD_TRANSFROM_DEFAULT_NAME, cloud)
 
 	#
 	# Mask RCNN detection
@@ -535,8 +541,7 @@ def main():
 	])
 	target_quaternion = tf.transformations.quaternion_from_matrix(
 		target_rotation_matrix)
-	# take inverse quaternion to rotate the gripper in the odom
-	# (a.k.a. base_link) frame
+	# take inverse quaternion to rotate the gripper in the base_link
 	target_quaternion = Quaternion(x=target_quaternion[0],
 								   y=target_quaternion[1],
 								   z=target_quaternion[2],
@@ -562,7 +567,6 @@ def main():
 	# group.execute(plan, wait=True)
 	# group.set_start_state_to_current_state()
 	pick_and_place(PICK_AND_PLACE_DEFAULT_NAME, [target_pose])
-
 
 	rospy.loginfo("Waiting while RVIZ displays motion planning...")
 	rospy.sleep(3.0)
