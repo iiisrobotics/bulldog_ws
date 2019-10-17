@@ -15,15 +15,22 @@ from std_msgs.msg import Int64
 from mask_rcnn_ros.srv import MaskDetect
 from gpd.srv import DetectGrasps
 from gpd.srv import CloudTransform
+from pick_and_place.srv import PickAndPlace
 
 import moveit_commander
 import tf.transformations
-import sensor_msgs.point_cloud2
 
 
-POSE_REFERENCE_FRAME = 'base_link'
-GRASP_FILTERING_FRAME = 'left_arm_base'  
-# 'left_gripper_tool0', 'left_arm_base'
+IMAGE_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/color/image_raw'
+CLOUD_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/depth/color/points'
+
+CLOUD_TRANSFROM_DEFAULT_NAME = 'cloud_transform_server/transformation'
+MASK_RCNN_DEFAULT_NAME = 'mask_rcnn/detection'
+DETECT_GRASPS_DEFAULT_NAME = 'detect_grasps_server/detect_grasps'
+PICK_AND_PLACE_DEFAULT_NAME = 'bulldog_pick_and_place/pick_and_place'
+
+POSE_REFERENCE_FRAME = 'odom'
+GRASP_FILTERING_FRAME = 'left_arm_base'  # 'left_gripper_tool0', 'left_arm_base'
 
 
 def cloud_transformation(srv, cloud):
@@ -33,6 +40,7 @@ def cloud_transformation(srv, cloud):
 	----------
 	- srv: str
 		Name of the point cloud transform service.
+
 	- cloud: sensor_msgs.msg.PointCloud2
 		Point cloud in the local frame.
 
@@ -40,7 +48,7 @@ def cloud_transformation(srv, cloud):
 	----------
 	- cloud_transformed: sensor_msgs.msg.PointCloud2
 		Point cloud in the robot frame.
-	
+
 	"""
 	rospy.loginfo("Waiting for point cloud transform service...")
 	rospy.wait_for_service(srv)
@@ -60,6 +68,7 @@ def cloud_transformation(srv, cloud):
 
 def mask_rcnn_detection(srv, image):
 	"""Detection objects in a image by calling Mask RCNN.
+
 	Parameters
 	----------
 	- srv: str
@@ -67,10 +76,12 @@ def mask_rcnn_detection(srv, image):
 	
 	- image: sensor_msgs.msg.Image
 		Image message acquired from the camera.
+
 	Returns
 	----------
 	- detection: mask_rcnn_ros.msg.Detection
 		Detection result of the image.
+
 	"""
 	rospy.loginfo("Waiting for Mask RCNN service...")
 	rospy.wait_for_service(srv)
@@ -95,17 +106,18 @@ def grasps_detection(srv, cloud_indexed):
 	----------
 	- srv:
 		Name of the grasps detection service.
+
 	- cloud_indexed: gpd.msg.CloudIndexed
 		The transformed point cloud and a list of indices into it at which to
 		sample grasp candidates. 
-	
+
 	Returns
 	----------
 	- grasp_configs: gpd.msg.GraspConfigList
 		A list of grasp configurations each of which describes a grasp by its 
 		6-DOF pose, consisting of a 3-DOF position and 3-DOF orientation, and 
 		the opening width of the robot hand.
-	
+
 	"""
 	rospy.loginfo("Waiting for grasp detection service...")
 	rospy.wait_for_service(srv)
@@ -122,6 +134,38 @@ def grasps_detection(srv, cloud_indexed):
 
 	return grasp_configs
 
+def pick_and_place(srv, grasp_poses):
+	"""Pick and place objects with possible grasp poses
+
+	Parameters
+	----------
+	- srv: str
+		Name of the pick and place service.
+
+	- grasp_poses: [geometry_msgs.msg.PoseStamped, ...]
+		Grasp poses in the global frame.
+
+	Returns
+	----------
+	- success: boolean
+		True on success.
+
+	"""
+	rospy.loginfo("Waiting for pick and place service...")
+	rospy.wait_for_service(srv)
+	rospy.loginfo("Pick and place service is available.")
+
+	try:
+		rospy.loginfo("Pick and place...")
+		pick_and_place_pipeline = rospy.ServiceProxy(srv, PickAndPlace)
+		pick_and_place_response = pick_and_place_pipeline(grasp_poses)
+	except rospy.ServiceException as e:
+		rospy.logerr("Pick and place service call failed: %s" % e)
+		raise SystemExit()
+	success = pick_and_place_response.success
+	
+	return success
+
 
 def process_cloud(cloud_transformed, detection):
 	"""Process the transformed point cloud with respect to the Mask RCNN 
@@ -131,15 +175,16 @@ def process_cloud(cloud_transformed, detection):
 	----------
 	- cloud_transformed: sensor_msgs.msg.PointCloud2
 		Point cloud in the robot base_link frame.
+
 	- detection: mask_rcnn_ros.msg.Detection
 		Detection result of the image.
-	
+
 	Returns
 	----------
 	- cloud_indexed: gpd.msg.CloudIndexed
 		The transformed point cloud and a list of indices into it at which to
 		sample grasp candidates. 
-	
+
 	"""
 	cloud_indexed = CloudIndexed()
 	cloud_indexed.cloud_sources.cloud = cloud_transformed
@@ -147,20 +192,15 @@ def process_cloud(cloud_transformed, detection):
 	cloud_indexed.cloud_sources.camera_source.append(Int64(0))
 
 	#
-	# get NAN points from the point cloud
+	# convert PointCloud2 to a list of points
 	#
-	cloud_points = []
-	for cloud_point in sensor_msgs.point_cloud2.read_points(cloud_transformed):
-		cloud_points.append([cloud_point[0], cloud_point[1], cloud_point[2]])
-	cloud_points = np.asarray(cloud_points)
-	nan_mask = np.isnan(cloud_points[:, 0])
-	print(cloud_points.shape)
-	cloud_points = cloud_points[~nan_mask]
-	print(cloud_points.shape)
-	# cloud_points[:, 0] -= 0.1 # offset along x axis
-	# cloud_indexed.cloud_sources.cloud = sensor_msgs.point_cloud2.create_cloud_xyz32(
-	# 	cloud_transformed.header, cloud_points.tolist()
-	# )
+	cloud_points = np.reshape(
+		np.fromstring(cloud_transformed.data, dtype=np.float32), [-1, 4]
+	)
+	# odd rows and first three columns are informative
+	cloud_points = cloud_points[::2, 0:3]
+	# remove nans
+	cloud_points = cloud_points[~np.isnan(cloud_points[:, 0])]
 
 	if len(detection.masks) > 0:
 		for class_name, mask in zip(detection.class_names,
@@ -168,7 +208,7 @@ def process_cloud(cloud_transformed, detection):
 			#
 			# name filtering
 			#
-			mask_indices = name_filtering(class_name, mask, nan_mask)
+			mask_indices = name_filtering(class_name, mask)
 
 			if len(mask_indices) > 0:
 				cloud_indices = mask_indices
@@ -201,27 +241,26 @@ def process_cloud(cloud_transformed, detection):
 	return cloud_indexed
 
 
-def name_filtering(class_name, mask, nan_mask):
+def name_filtering(class_name, mask):
 	"""Extract point cloud of typical objects.
 
 	Parameters
 	----------
 	- class_name: str
 		Name of the detection from the Mask RCNN.
+
 	- mask: sensor_msgs/Image
 		Mask of the corresponding detection from the Mask RCNN.
-	- nan_mask: numpy.ndarray
-		Boolean mask to indicate the NAN points in the point cloud.
-	
+
 	Returns
 	----------
 	- mask_indices: list
 		List of index indicating the valid point cloud through Mask RCNN.
-	
+
 	"""
 	if (class_name == 'bottle') or (class_name == 'cup'):
 		mask_data = np.fromstring(mask.data, dtype=np.uint8)
-		mask_indices = np.where((mask_data != 0) & ~nan_mask)[0].tolist()
+		mask_indices = np.where(mask_data != 0)[0].tolist()
 	else:
 		mask_indices = []
 
@@ -235,17 +274,19 @@ def least_squares_filtering(cloud_points, mask_indices, dist_thresh=4e-4):
 	----------
 	- cloud_points: list
 		List of points in the point cloud.
+
 	- mask_indices: list
 		List of index indicating the valid point cloud through Mask RCNN.
+
 	- dist_thresh: float (optional, default = 0.0004)
 		Threshold of the distances between the fitting plane and points.
-	
+
 	Returns
 	----------
 	- least_squares_indices: list
 		List of index indicating the valid point cloud through least squares
 		fitting.
-	
+
 	Note
 	----------
 	The normal plane equation is a * x + b * y + c * z + d = 0, we assume
@@ -278,29 +319,36 @@ def least_squares_filtering(cloud_points, mask_indices, dist_thresh=4e-4):
 	return least_squares_indices
 
 
-def find_closest_grasp(grasps, frame='base_link',
-					   min_y_thresh=-0.05,
-					   max_dist_thresh=0.90):
+def find_closest_grasp(grasps, frame='odom',
+					   min_y_thresh=-0.05, 
+					   min_y_soft_thresh=0.08,
+					   min_dist_thresh=0.81):
 	"""Find the closest grasp to a specified frame.
-	
+
 	Parameters
 	----------
 	- grasps: gpd.msg.GraspConfig
 		Grasps describe by their 6-DOF pose, consisting of a 3-DOF position
 		and 3-DOF orientation, and the opening width of the robot hand.
-	
-	- frame: str (optional, default = 'base_link')
+
+	- frame: str (optional, default = 'odom' (a.k.a. 'base_link') )
 		Name of the reference frame.
 
 	- min_y_thresh: float (optional, default = -0.05)
 		Minimum value for closest grasp along y axis, i.e. the left arm cannot
 		move to the right side of the robot, and the right arm cannot
 		move to the left side of the robot. Remember to define this threshold
-		in 'base_link' frame.
-	
-	- max_dist_thresh: float (optional, default = 0.90)
-		Max value for the closest grasp from the base link, i.e. the arms
-		cannot go farther than this.
+		in 'odom' frame.
+
+	- min_y_soft_thresh: float (optional, default = 0.08)
+		Minimum value for closest grasp along y axis which we begin to consider
+		distance threshold, i.e. when targer position's y value is in
+		[min_y_soft_thresh, min_y_thresh), we consider the planar distance of
+		the target position from the arm base frame.
+
+	- min_dist_thresh: float (optional, default = 0.81)
+		Max value for closest grasp from the are base link, i.e. the arms
+		cannot go farther than this distance.
 
 	Returns
 	----------
@@ -310,7 +358,7 @@ def find_closest_grasp(grasps, frame='base_link',
 	"""
 	#
 	# We use the pose of the gripper base for planning.
-	# The cloud represents points in 'base_link' frame by default.
+	# The cloud represents points in 'odom' frame by default.
 	#
 	pose_positions = [PointStamped(
 		header=Header(frame_id=POSE_REFERENCE_FRAME),
@@ -342,7 +390,7 @@ def find_closest_grasp(grasps, frame='base_link',
 	#
 	# thresholding
 	#
-	if closest_dist <= max_dist_thresh:
+	if closest_dist >= min_dist_thresh:
 		if closest_grasp.bottom.y <= min_y_thresh:
 			rospy.logerr("%s arm cannot move to the other side of the robot!" %
 						("Left" if min_y_thresh < 0 else "Right"))
@@ -352,15 +400,14 @@ def find_closest_grasp(grasps, frame='base_link',
 						closest_grasp.bottom.z))
 			rospy.logerr("Please move the robot first!")
 			raise SystemExit()
-	else:
-		rospy.logerr("%s arm cannot move farther!" %
-						("Left" if min_y_thresh < 0 else "Right"))
-		rospy.logerr("Target plannar distance: %f." % closest_dist)
-		rospy.logerr("Please move the robot first!")
-		raise SystemExit()
+		elif min_y_soft_thresh >= closest_grasp.bottom.y > min_y_thresh:
+			rospy.logerr("%s arm cannot move farther!" %
+					 	 ("Left" if min_y_thresh < 0 else "Right"))
+			rospy.logerr("Target plannar distance: %f." % closest_dist)
+			rospy.logerr("Please move the robot first!")
+			raise SystemExit()
 
 	return closest_grasp
-
 
 def configure_target_pose(target_position, target_quaternion):
 	"""Configure target pose for planning
@@ -382,30 +429,28 @@ def configure_target_pose(target_position, target_quaternion):
 	----------
 	pose: 
 		position: 
-			x: 0.896101885954
-			y: 0.220898042324
-			z: 0.440645337477
+			x: 0.98714264072
+			y: -0.0181142373857
+			z: 0.480302787791
 		orientation: 
-			x: 0.628300287611576
-			y: -0.39971341565013935
-			z: -0.5883724060255893
-			w: -0.3150965657765391
+			x: 0.6859901647729069
+			y: 0.7275965355007923
+			z: 0.004507587996639602
+			w: 0.0006760270237895833
 
 	"""
 	target_pose = PoseStamped()
-	target_pose.header.stamp = rospy.get_time()
+	target_pose.header.stamp = rospy.Time.now()
 	target_pose.header.frame_id = POSE_REFERENCE_FRAME
-	# target_position.x += 0.1
-	# target_position.z += 0.1
 	target_pose.pose.position = target_position
-	# target_pose.pose.position.x = 0.795009083413
-	# target_pose.pose.position.y = 0.22062083617
-	# target_pose.pose.position.z = 0.489056381231
+	# target_pose.pose.position.x = 0.98714264072
+	# target_pose.pose.position.y = -0.0181142373857
+	# target_pose.pose.position.z = 0.480302787791 + 0.1
 	target_pose.pose.orientation = target_quaternion
-	# target_pose.pose.orientation.x = -0.08121355241516261
-	# target_pose.pose.orientation.y = -0.052377064390203044
-	# target_pose.pose.orientation.z = -0.5590192309531775
-	# target_pose.pose.orientation.w = 0.8235037956527536
+	# target_pose.pose.orientation.x = 0.6859901647729069
+	# target_pose.pose.orientation.y = 0.7275965355007923
+	# target_pose.pose.orientation.z = 0.004507587996639602
+	# target_pose.pose.orientation.w = 0.0006760270237895833
 
 	return target_pose
 
@@ -425,9 +470,9 @@ def main():
 	#
 	rospy.init_node('gpd_mask')
 	image_stream = rospy.get_param(
-		'image_stream', 'left_gripper_sensor_d415_camera/color/image_raw')
+		'image_stream', IMAGE_STREAM_DEFAULT_NAME)
 	cloud_stream = rospy.get_param(
-		'image_stream', 'left_gripper_sensor_d415_camera/depth_registered/points')
+		'cloud_stream', CLOUD_STREAM_DEFAULT_NAME)
 
 	#
 	# get image and point cloud
@@ -438,17 +483,17 @@ def main():
 	rospy.loginfo("Image and cloud are available.")
 
 	#
-	# transform point cloud form camera frame to base_link frame.
+	# transform point cloud form camera frame to odom (a.k.a. base_link) frame.
 	#
 	cloud_transformed = cloud_transformation(
-		"cloud_transform_server/transformation",
+		CLOUD_TRANSFROM_DEFAULT_NAME,
 		cloud
 	)
 
 	#
 	# Mask RCNN detection
 	#
-	detection = mask_rcnn_detection("mask_rcnn/detection", image)
+	detection = mask_rcnn_detection(MASK_RCNN_DEFAULT_NAME, image)
 
 	#
 	# process point cloud through Mask RCNN detection
@@ -458,7 +503,7 @@ def main():
 	#
 	# find reasonable grasps
 	#
-	grasp_configs = grasps_detection("detect_grasps_server/detect_grasps",
+	grasp_configs = grasps_detection(DETECT_GRASPS_DEFAULT_NAME,
 									 cloud_indexed)
 
 	#
@@ -483,14 +528,15 @@ def main():
 	# We use the pose of the gripper base for planning.
 	target_position = grasp.bottom
 	target_rotation_matrix = np.array([
-		[grasp.approach.x, grasp.binormal.x, grasp.axis.x, 0.0],
-		[grasp.approach.y, grasp.binormal.y, grasp.axis.y, 0.0],
-		[grasp.approach.z, grasp.binormal.z, grasp.axis.z, 0.0],
+		[-grasp.binormal.x, -grasp.axis.x, grasp.approach.x, 0.0],
+		[-grasp.binormal.y, -grasp.axis.y, grasp.approach.y, 0.0],
+		[-grasp.binormal.z, -grasp.axis.z, grasp.approach.z, 0.0],
 		[0.0, 0.0, 0.0, 1.0]
 	])
 	target_quaternion = tf.transformations.quaternion_from_matrix(
 		target_rotation_matrix)
-	# take inverse quaternion to rotate the gripper in the base_link
+	# take inverse quaternion to rotate the gripper in the odom
+	# (a.k.a. base_link) frame
 	target_quaternion = Quaternion(x=target_quaternion[0],
 								   y=target_quaternion[1],
 								   z=target_quaternion[2],
@@ -509,14 +555,18 @@ def main():
 	#
 	# planning
 	#
-	group.set_pose_target(target_pose)
+	# group.set_pose_target(target_pose)
 
-	plan = group.plan()
+	# plan = group.plan()
 	# plan = group.go(wait=True)
-	group.execute(plan, wait=True)
+	# group.execute(plan, wait=True)
+	# group.set_start_state_to_current_state()
+	pick_and_place(PICK_AND_PLACE_DEFAULT_NAME, [target_pose])
 
-	rospy.loginfo("============ Waiting while RVIZ displays motion planning...")
+
+	rospy.loginfo("Waiting while RVIZ displays motion planning...")
 	rospy.sleep(3.0)
+
 
 if __name__ == "__main__":
 	main()
