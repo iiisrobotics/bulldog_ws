@@ -1,0 +1,30 @@
+<launch>
+    <!-- Load rosconsole configuration -->
+    <env name="ROSCONSOLE_CONFIG_FILE" 
+        value="$(find pick_and_place)/config/rosconsole.config" />
+
+    <!-- Debug -->
+    <arg name="debug" default="false" />
+    <arg unless="$(arg debug)" name="launch_prefix" value="" />
+    <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
+
+    <!-- Verbose mode -->
+    <arg name="verbose" default="false" />
+    <arg unless="$(arg verbose)" name="command_args" value="" />
+    <arg     if="$(arg verbose)" name="command_args" value="--verbose" />
+
+    <!-- Load the pick and place node -->
+    <node name="bulldog_pick_and_place" pkg="pick_and_place" 
+        type="pick_and_place_service_node"
+        launch-prefix="$(arg launch_prefix)" output="screen" 
+        args="$(arg command_args)">
+        <param name="service_topic" value="pick_and_place" />
+        <param name="end_effector_group_name" value="left_gripper" />
+        <param name="arm_group_name" value="left_arm" />
+        <param name="gripper_command_topic" value="/left_gripper/command" />
+        <param name="gripper_status_topic" value="/left_gripper/state" />
+        <param name="planning_plugin" value="ompl_interface/OMPLPlanner" />
+        <rosparam command="load" file="$(find pick_and_place)/config/moveit_grasps_config.yaml" />
+        <rosparam command="load" file="$(find pick_and_place)/config/bulldog_grasp_data.yaml" />
+    </node>
+</launch>
