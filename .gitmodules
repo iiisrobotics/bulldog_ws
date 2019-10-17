@@ -8,3 +8,6 @@
 	path = src/gazebo_grasp_fix_plugin/gazebo-pkgs
 	url = https://github.com/JenniferBuehler/gazebo-pkgs.git
 
+[submodule "src/moveit_grasps"]
+	path = src/moveit_grasps
+	url = https://www.github.com/YeeCY/moveit_grasps.git
