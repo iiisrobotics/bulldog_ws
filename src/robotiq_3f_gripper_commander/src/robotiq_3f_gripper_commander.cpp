@@ -81,10 +81,7 @@ bool Robotiq3FGripperCommander::activate()
     while ((ros::Time::now() - send_time).toSec() < timeout_) {
         if (status_.gACT == 1 &&    // gripper activation
             status_.gGTO == 1 &&    // go to position request
-            status_.gPOA == 5) {    // the actual position of finger A
-            std::cout << "status_.gACT = " << std::to_string(status_.gACT) << std::endl;
-            std::cout << "status_.gGTO = " << std::to_string(status_.gGTO) << std::endl;
-            std::cout << "status_.gPOA = " << std::to_string(status_.gPOA) << std::endl;
+            status_.gPOA <= 5) {    // the actual position of finger A
             success = true;
             break;
         }
@@ -136,7 +133,7 @@ bool Robotiq3FGripperCommander::open()
             break;
         }
         else if (status_.gPRA == 0 &&       // echo of the requested position of finger A
-                 status_.gPOA == 5) {       // the actual position of finger A
+                 status_.gPOA <= 5) {       // the actual position of finger A
             success = true;
             break;
         }
@@ -160,8 +157,8 @@ bool Robotiq3FGripperCommander::close()
                 << "Please activate it first");
             break;
         }
-        else if (status_.gPRA = 255 &&      // echo of the requested position of finger A
-                 status_.gPOA == 255) {     // the actual position of finger A
+        else if (status_.gPRA == 255 &&     // echo of the requested position of finger A
+                 status_.gPOA >= 250) {     // the actual position of finger A
             success = true;
             break;
         }
@@ -205,7 +202,8 @@ bool Robotiq3FGripperCommander::setPosition(uint8_t position)
                 << "Please activate it first");
             break;
         }
-        else if (status_.gPRA == position) {
+        else if (status_.gPRA == position &&    // echo of the requested position of finger A
+                 status_.gPOA == position) {    // the actual position of finger A
             success = true;
             break;
         }
