@@ -64,7 +64,6 @@ Robotiq3FGripperCommander& Robotiq3FGripperCommander::operator=(
 
 Robotiq3FGripperCommander::~Robotiq3FGripperCommander()
 {
-    deactivate();
 }
 
 bool Robotiq3FGripperCommander::activate()
@@ -83,7 +82,7 @@ bool Robotiq3FGripperCommander::activate()
     while ((ros::Time::now() - send_time).toSec() < timeout_) {
         if (status_.gACT == 1 &&    // gripper activation
             status_.gGTO == 1 &&    // go to position request
-            status_.gPOA <= 5) {    // the actual position of finger A
+            status_.gPOA <= 6) {    // the actual position of finger A
             success = true;
             break;
         }

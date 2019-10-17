@@ -482,6 +482,9 @@ def main():
 	cloud_stream = rospy.get_param(
 		'cloud_stream', CLOUD_STREAM_DEFAULT_NAME)
 
+	pick_and_place(PICK_AND_PLACE_DEFAULT_NAME, [])
+	return
+
 	#
 	# get image and point cloud
 	#
