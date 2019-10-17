@@ -94,6 +94,15 @@ private:
      */
     void statusCallback(const RobotInput& status);
 
+    /**
+     *  @brief  isAllElementEqual: check all elements in an array are
+     *                             equivalent
+     *  @param  array: the array
+     *  @param  num_element: number of element in the array
+     *  @return success: true on success
+     */
+    bool isAllElementEqual(uint8_t array[], const size_t num_element);
+
 protected:
 public:
     /**

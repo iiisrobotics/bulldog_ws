@@ -5,6 +5,8 @@
 namespace robotiq_3f_gripper_commander
 {
 
+static const size_t POA_BUFFER_SIZE = 2;
+
 Robotiq3FGripperCommander::Robotiq3FGripperCommander(
     ros::NodeHandle node,
     std::string command_topic,
@@ -150,6 +152,8 @@ bool Robotiq3FGripperCommander::close()
     sendCommand();
 
     bool success = false;
+    uint8_t poa_buffer[POA_BUFFER_SIZE];
+    uint32_t poa_count = 0;
     ros::Time send_time = ros::Time::now();
     while ((ros::Time::now() - send_time).toSec() < timeout_) {
         if (status_.gACT = 0) {
@@ -157,10 +161,12 @@ bool Robotiq3FGripperCommander::close()
                 << "Please activate it first");
             break;
         }
-        else if (status_.gPRA == 255 &&     // echo of the requested position of finger A
-                 status_.gPOA >= 250) {     // the actual position of finger A
-            success = true;
-            break;
+        else if (status_.gPRA == 255) {     // echo of the requested position of finger A
+            poa_buffer[poa_count++ % POA_BUFFER_SIZE] = status_.gPOA;
+            if (isAllElementEqual(poa_buffer, POA_BUFFER_SIZE)) {
+                success = true;
+                break;
+            }
         }
     }
 
@@ -309,6 +315,19 @@ void Robotiq3FGripperCommander::statusCallback(const RobotInput& status)
 {
     // ROS_DEBUG_STREAM("Updating robotiq 3 finger gripper status...");
     status_ = status;
+}
+
+bool Robotiq3FGripperCommander::isAllElementEqual(
+    uint8_t array[], const size_t num_element)
+{
+    bool success = true;
+    for (size_t i = 0; i < num_element; i++) {
+        if (array[i] != array[0]) {
+            success = false;
+        }
+    }
+    
+    return success;
 }
 
 } // namespace robotiq_3f_gripper_commander
