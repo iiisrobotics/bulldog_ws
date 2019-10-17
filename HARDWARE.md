@@ -118,11 +118,11 @@ Negative - Black
 
 4. Left Robotiq 3 Finger Gripper
 
-    IP = 192.168.2.11
+    IP = 192.168.1.12
 
 5. Right Robotiq 3 Finger Gripper
 
-    IP = 192.168.3.11
+    IP = 192.168.1.13
 
 6. Laser LADAR
 

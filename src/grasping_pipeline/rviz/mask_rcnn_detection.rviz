@@ -108,7 +108,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.00999999978
       Style: Flat Squares
-      Topic: /left_gripper_sensor_d415_camera/depth/color/points
+      Topic: /left_gripper_sensor_d415_camera/depth_registered/points
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -138,25 +138,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.41940308
+      Distance: 2.6249814
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 1.60348701
-        Y: -0.245230377
-        Z: -0.0328390077
+        X: 1.63632715
+        Y: -0.0909663886
+        Z: -0.0167217851
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.894796968
+      Pitch: 0.634797394
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.9071722
+      Yaw: 3.0071733
     Saved: ~
 Window Geometry:
   Displays:
@@ -176,5 +176,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1259
-  X: 751
-  Y: 152
+  X: 344
+  Y: 89

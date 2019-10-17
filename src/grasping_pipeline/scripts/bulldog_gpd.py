@@ -22,21 +22,25 @@ import sensor_msgs.point_cloud2
 
 
 POSE_REFERENCE_FRAME = 'base_link'
-GRASP_FILTERING_FRAME = 'left_arm_base'  # 'left_gripper_tool0', 'left_arm_base'
+GRASP_FILTERING_FRAME = 'left_arm_base'  
+# 'left_gripper_tool0', 'left_arm_base'
 
 
 def cloud_transformation(srv, cloud):
 	"""Transform point cloud into robot frame.
+
 	Parameters
 	----------
 	- srv: str
 		Name of the point cloud transform service.
 	- cloud: sensor_msgs.msg.PointCloud2
 		Point cloud in the local frame.
+
 	Returns
 	----------
 	- cloud_transformed: sensor_msgs.msg.PointCloud2
 		Point cloud in the robot frame.
+	
 	"""
 	rospy.loginfo("Waiting for point cloud transform service...")
 	rospy.wait_for_service(srv)
@@ -86,6 +90,7 @@ def mask_rcnn_detection(srv, image):
 
 def grasps_detection(srv, cloud_indexed):
 	"""Find reasonable grasps among all the cloud samples.
+
 	Parameters
 	----------
 	- srv:
@@ -93,12 +98,14 @@ def grasps_detection(srv, cloud_indexed):
 	- cloud_indexed: gpd.msg.CloudIndexed
 		The transformed point cloud and a list of indices into it at which to
 		sample grasp candidates. 
+	
 	Returns
 	----------
 	- grasp_configs: gpd.msg.GraspConfigList
 		A list of grasp configurations each of which describes a grasp by its 
 		6-DOF pose, consisting of a 3-DOF position and 3-DOF orientation, and 
 		the opening width of the robot hand.
+	
 	"""
 	rospy.loginfo("Waiting for grasp detection service...")
 	rospy.wait_for_service(srv)
@@ -126,11 +133,13 @@ def process_cloud(cloud_transformed, detection):
 		Point cloud in the robot base_link frame.
 	- detection: mask_rcnn_ros.msg.Detection
 		Detection result of the image.
+	
 	Returns
 	----------
 	- cloud_indexed: gpd.msg.CloudIndexed
 		The transformed point cloud and a list of indices into it at which to
 		sample grasp candidates. 
+	
 	"""
 	cloud_indexed = CloudIndexed()
 	cloud_indexed.cloud_sources.cloud = cloud_transformed
@@ -194,6 +203,7 @@ def process_cloud(cloud_transformed, detection):
 
 def name_filtering(class_name, mask, nan_mask):
 	"""Extract point cloud of typical objects.
+
 	Parameters
 	----------
 	- class_name: str
@@ -202,10 +212,12 @@ def name_filtering(class_name, mask, nan_mask):
 		Mask of the corresponding detection from the Mask RCNN.
 	- nan_mask: numpy.ndarray
 		Boolean mask to indicate the NAN points in the point cloud.
+	
 	Returns
 	----------
 	- mask_indices: list
 		List of index indicating the valid point cloud through Mask RCNN.
+	
 	"""
 	if (class_name == 'bottle') or (class_name == 'cup'):
 		mask_data = np.fromstring(mask.data, dtype=np.uint8)
@@ -218,6 +230,7 @@ def name_filtering(class_name, mask, nan_mask):
 
 def least_squares_filtering(cloud_points, mask_indices, dist_thresh=4e-4):
 	"""Extract the nonplanar indices through least squares fitting.
+
 	Parameters
 	----------
 	- cloud_points: list
@@ -226,15 +239,18 @@ def least_squares_filtering(cloud_points, mask_indices, dist_thresh=4e-4):
 		List of index indicating the valid point cloud through Mask RCNN.
 	- dist_thresh: float (optional, default = 0.0004)
 		Threshold of the distances between the fitting plane and points.
+	
 	Returns
 	----------
 	- least_squares_indices: list
 		List of index indicating the valid point cloud through least squares
 		fitting.
+	
 	Note
 	----------
 	The normal plane equation is a * x + b * y + c * z + d = 0, we assume
 	c = -1 and let a * x + b * y + d = z to solve the least squares fitting.
+
 	"""
 	mask_points = cloud_points[mask_indices]
 	mask_idxs = np.array(mask_indices)
@@ -263,34 +279,34 @@ def least_squares_filtering(cloud_points, mask_indices, dist_thresh=4e-4):
 
 
 def find_closest_grasp(grasps, frame='base_link',
-					   min_y_thresh=-0.05, 
-					   min_y_soft_thresh=0.08,
-					   min_dist_thresh=0.81):
+					   min_y_thresh=-0.05,
+					   max_dist_thresh=0.90):
 	"""Find the closest grasp to a specified frame.
+	
 	Parameters
 	----------
 	- grasps: gpd.msg.GraspConfig
 		Grasps describe by their 6-DOF pose, consisting of a 3-DOF position
 		and 3-DOF orientation, and the opening width of the robot hand.
+	
 	- frame: str (optional, default = 'base_link')
 		Name of the reference frame.
+
 	- min_y_thresh: float (optional, default = -0.05)
 		Minimum value for closest grasp along y axis, i.e. the left arm cannot
 		move to the right side of the robot, and the right arm cannot
 		move to the left side of the robot. Remember to define this threshold
 		in 'base_link' frame.
-	- min_y_soft_thresh: float (optional, default = 0.08)
-		Minimum value for closest grasp along y axis which we begin to consider
-		distance threshold, i.e. when targer position's y value is in
-		[min_y_soft_thresh, min_y_thresh), we consider the planar distance of
-		the target position from the arm base frame.
-	- min_dist_thresh: float (optional, default = 0.81)
-		Max value for closest grasp from the are base link, i.e. the arms
-		cannot go farther than this distance.
+	
+	- max_dist_thresh: float (optional, default = 0.90)
+		Max value for the closest grasp from the base link, i.e. the arms
+		cannot go farther than this.
+
 	Returns
 	----------
 	- closest_grasp: gpd.msg.GraspConfig
 		The closest grasp in the specified frame.
+
 	"""
 	#
 	# We use the pose of the gripper base for planning.
@@ -326,7 +342,7 @@ def find_closest_grasp(grasps, frame='base_link',
 	#
 	# thresholding
 	#
-	if closest_dist >= min_dist_thresh:
+	if closest_dist <= max_dist_thresh:
 		if closest_grasp.bottom.y <= min_y_thresh:
 			rospy.logerr("%s arm cannot move to the other side of the robot!" %
 						("Left" if min_y_thresh < 0 else "Right"))
@@ -336,28 +352,32 @@ def find_closest_grasp(grasps, frame='base_link',
 						closest_grasp.bottom.z))
 			rospy.logerr("Please move the robot first!")
 			raise SystemExit()
-		elif min_y_soft_thresh >= closest_grasp.bottom.y > min_y_thresh:
-			rospy.logerr("%s arm cannot move farther!" %
-					 	 ("Left" if min_y_thresh < 0 else "Right"))
-			rospy.logerr("Target plannar distance: %f." % closest_dist)
-			rospy.logerr("Please move the robot first!")
-			raise SystemExit()
+	else:
+		rospy.logerr("%s arm cannot move farther!" %
+						("Left" if min_y_thresh < 0 else "Right"))
+		rospy.logerr("Target plannar distance: %f." % closest_dist)
+		rospy.logerr("Please move the robot first!")
+		raise SystemExit()
 
 	return closest_grasp
 
 
 def configure_target_pose(target_position, target_quaternion):
 	"""Configure target pose for planning
+
 	Parameters
 	----------
 	- target_position: geometry_msgs.msg.Point
 		Position of the target pose.
+
 	- target_quaternion: geometry_msgs.msg.Quaternion
 		Rotation of the target pose.
+
 	Returns
 	----------
 	target_pose: geometry_msgs.msg.PoseStamped
 		Target pose with a header.
+
 	Notes
 	----------
 	pose: 
@@ -370,6 +390,7 @@ def configure_target_pose(target_position, target_quaternion):
 			y: -0.39971341565013935
 			z: -0.5883724060255893
 			w: -0.3150965657765391
+
 	"""
 	target_pose = PoseStamped()
 	target_pose.header.stamp = rospy.get_time()
@@ -391,10 +412,13 @@ def configure_target_pose(target_position, target_quaternion):
 
 def main():
 	"""Main entrance
+
 	Parameters
 	----------
+
 	Returns
 	----------
+
 	"""
 	#
 	# node initialization
