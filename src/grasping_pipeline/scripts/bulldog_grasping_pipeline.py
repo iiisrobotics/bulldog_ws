@@ -21,14 +21,19 @@ import moveit_commander
 import tf.transformations
 import sensor_msgs.point_cloud2
 
+import actionlib
+import darknet_ros_msgs.msg
 
+
+IMAGE_SHAPE = None
 IMAGE_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/color/image_raw'
 CLOUD_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/depth_registered/points'
 
-CLOUD_TRANSFROM_DEFAULT_NAME = 'cloud_transform_server/transformation'
-MASK_RCNN_DEFAULT_NAME = 'mask_rcnn/detection'
-DETECT_GRASPS_DEFAULT_NAME = 'detect_grasps_server/detect_grasps'
-PICK_AND_PLACE_DEFAULT_NAME = 'bulldog_pick_and_place/pick_and_place'
+CLOUD_TRANSFROM_SERVER_DEFAULT_NAME = 'cloud_transform_server/transformation'
+MASK_RCNN_SERVICE_DEFAULT_NAME = 'mask_rcnn/detection'
+YOLO_ACTION_DEFAULT_NAME = 'darknet_ros/check_for_objects'
+DETECT_GRASPS_SERVICE_DEFAULT_NAME = 'detect_grasps_server/detect_grasps'
+PICK_AND_PLACE_SERVICE_DEFAULT_NAME = 'bulldog_pick_and_place/pick_and_place'
 
 POSE_REFERENCE_FRAME = 'odom'
 GRASP_FILTERING_FRAME = 'left_arm_base'  # 'left_gripper_tool0', 'left_arm_base'
@@ -51,16 +56,16 @@ def cloud_transformation(srv, cloud):
 		Point cloud in the robot frame.
 
 	"""
-	rospy.loginfo("Waiting for point cloud transform service...")
+	rospy.loginfo("[GraspingPipeline] Waiting for point cloud transform service...")
 	rospy.wait_for_service(srv)
-	rospy.loginfo("Point cloud transform service is available.")
+	rospy.loginfo("[GraspingPipeline] Point cloud transform service is available.")
 
 	try:
-		rospy.loginfo("Transforming point cloud...")
+		rospy.loginfo("[GraspingPipeline] Transforming point cloud...")
 		cloud_transformer = rospy.ServiceProxy(srv, CloudTransform)
 		cloud_transform_response = cloud_transformer(cloud)
 	except rospy.ServiceException as e:
-		rospy.logerr("Point cloud transform service call failed: %s" % e)
+		rospy.logerr("[GraspingPipeline] Point cloud transform service call failed: %s" % e)
 		raise SystemExit()
 	cloud_transformed = cloud_transform_response.cloud_transformed
 	
@@ -68,7 +73,7 @@ def cloud_transformation(srv, cloud):
 
 
 def mask_rcnn_detection(srv, image):
-	"""Detection objects in a image by calling Mask RCNN.
+	"""Detection objects in a image using Mask RCNN.
 
 	Parameters
 	----------
@@ -84,20 +89,61 @@ def mask_rcnn_detection(srv, image):
 		Detection result of the image.
 
 	"""
-	rospy.loginfo("Waiting for Mask RCNN service...")
+	rospy.loginfo("[GraspingPipeline] Waiting for Mask RCNN service...")
 	rospy.wait_for_service(srv)
-	rospy.loginfo("Mask RCNN service is available.")
+	rospy.loginfo("[GraspingPipeline] Mask RCNN service is available.")
 
 	try:
-		rospy.loginfo("Mask RCNN Detecting...")
+		rospy.loginfo("[GraspingPipeline] Mask RCNN Detecting...")
 		mask_rcnn_detector = rospy.ServiceProxy(srv, MaskDetect)
 		mask_rcnn_response = mask_rcnn_detector(image)
 	except rospy.ServiceException as e:
-		rospy.logerr("Mask RCNN service call failed: %s" % e)
+		rospy.logerr("[GraspingPipeline] Mask RCNN service call failed: %s" % e)
 		raise SystemExit()
 	detection = mask_rcnn_response.detection
 
 	return detection
+
+
+def yolo_detection(act, image):
+	"""Detection objects in a image using YOLO detector.
+
+	Parameters
+	----------
+	- act: str
+		Namespaces of the YOLO detection action.
+	
+	- image: sensor_msgs.msg.Image
+		Image message acquired from the camera.
+
+	Returns
+	----------
+	- bounding_boxes: darknet_ros_msgs.msg.BoundingBoxes
+		Bounding box of each detected object.
+
+	"""
+	yolo_client = actionlib.SimpleActionClient(
+		act, darknet_ros_msgs.msg.CheckForObjectsAction)
+
+	rospy.loginfo("[GraspingPipeline] Waiting for Yolo action...")
+	yolo_client.wait_for_server()
+	rospy.loginfo("[GraspingPipeline] Yolo action is available.")
+
+	goal = darknet_ros_msgs.msg.CheckForObjectsGoal(
+		id=0, image=image)
+
+	#
+	# actual goal and result
+	#
+	yolo_client.send_goal(goal)
+	done = yolo_client.wait_for_result()
+	if not done:
+		rospy.logerr("[GraspingPipeline] Yolo detection action call failed!")
+		raise SystemExit()
+	result = yolo_client.get_result()
+
+	bounding_boxes = result.bounding_boxes.bounding_boxes
+	return bounding_boxes
 
 
 def grasps_detection(srv, cloud_indexed):
@@ -120,20 +166,21 @@ def grasps_detection(srv, cloud_indexed):
 		the opening width of the robot hand.
 
 	"""
-	rospy.loginfo("Waiting for grasp detection service...")
+	rospy.loginfo("[GraspingPipeline] Waiting for grasp detection service...")
 	rospy.wait_for_service(srv)
-	rospy.loginfo("Grasp detection service is available.")
+	rospy.loginfo("[GraspingPipeline] Grasp detection service is available.")
 
 	try:
-		rospy.loginfo("Generating grasps...")
+		rospy.loginfo("[GraspingPipeline] Generating grasps...")
 		grasps_detector = rospy.ServiceProxy(srv, DetectGrasps)
 		detect_grasps_response = grasps_detector(cloud_indexed)
 	except rospy.ServiceException as e:
-		rospy.logerr("Grasp detection service call failed: %s" % e)
+		rospy.logerr("[GraspingPipeline] Grasp detection service call failed: %s" % e)
 		raise SystemExit()
 	grasp_configs = detect_grasps_response.grasp_configs
 
 	return grasp_configs
+
 
 def pick_and_place(srv, grasp_poses):
 	"""Pick and place objects with possible grasp poses
@@ -152,23 +199,23 @@ def pick_and_place(srv, grasp_poses):
 		True on success.
 
 	"""
-	rospy.loginfo("Waiting for pick and place service...")
+	rospy.loginfo("[GraspingPipeline] Waiting for pick and place service...")
 	rospy.wait_for_service(srv)
-	rospy.loginfo("Pick and place service is available.")
+	rospy.loginfo("[GraspingPipeline] Pick and place service is available.")
 
 	try:
-		rospy.loginfo("Pick and place...")
+		rospy.loginfo("[GraspingPipeline] Pick and place...")
 		pick_and_place_pipeline = rospy.ServiceProxy(srv, PickAndPlace)
 		pick_and_place_response = pick_and_place_pipeline(grasp_poses)
 	except rospy.ServiceException as e:
-		rospy.logerr("Pick and place service call failed: %s" % e)
+		rospy.logerr("[GraspingPipeline] Pick and place service call failed: %s" % e)
 		raise SystemExit()
 	success = pick_and_place_response.success
 	
 	return success
 
 
-def process_cloud(cloud_transformed, detection):
+def mask_rcnn_process_cloud(cloud_transformed, detection):
 	"""Process the transformed point cloud with respect to the Mask RCNN 
 	detection.
 	
@@ -214,7 +261,7 @@ def process_cloud(cloud_transformed, detection):
 			#
 			# name filtering
 			#
-			mask_indices = name_filtering(class_name, mask, nan_mask)
+			mask_indices = mask_rcnn_name_filtering(class_name, mask, nan_mask)
 
 			if len(mask_indices) > 0:
 				cloud_indices = mask_indices
@@ -238,16 +285,78 @@ def process_cloud(cloud_transformed, detection):
 			# 	cloud_indexed.indices = [Int64(idx) for idx in cloud_indices]
 			# 	break
 		else:
-			rospy.logfatal("No bottle or cup found!")
+			rospy.logerr("[GraspingPipeline] No bottle or cup found!")
 			raise SystemExit()
 	else:
-		rospy.logfatal("Detect nothing!")
+		rospy.logerr("[GraspingPipeline] Detect nothing!")
 		raise SystemExit()
 
 	return cloud_indexed
 
 
-def name_filtering(class_name, mask, nan_mask):
+def process_cloud(cloud_transformed, image_size, bounding_boxes):
+	"""Process the transformed point cloud with respect to the Mask RCNN 
+	detection.
+	
+	Parameters
+	----------
+	- cloud_transformed: sensor_msgs.msg.PointCloud2
+		Point cloud in the robot base_link frame.
+
+	- image_size: (int, int)
+		Size of the image
+
+	- bounding_boxes: darknet_ros_msgs.msg.BoundingBoxes
+		Bounding box of each detected object.
+
+	Returns
+	----------
+	- cloud_indexed: gpd.msg.CloudIndexed
+		The transformed point cloud and a list of indices into it at which to
+		sample grasp candidates. 
+
+	"""
+	cloud_indexed = CloudIndexed()
+	cloud_indexed.cloud_sources.cloud = cloud_transformed
+	cloud_indexed.cloud_sources.view_points.append(Point(0, 0, 0))
+	cloud_indexed.cloud_sources.camera_source.append(Int64(0))
+
+	#
+	# get NAN points from the point cloud
+	#
+	cloud_points = []
+	for cloud_point in sensor_msgs.point_cloud2.read_points(cloud_transformed):
+		cloud_points.append([cloud_point[0], cloud_point[1], cloud_point[2]])
+	cloud_points = np.asarray(cloud_points)
+	nan_mask = np.isnan(cloud_points[:, 0])
+
+	if len(bounding_boxes) > 0:
+		for bounding_box in bounding_boxes:
+			#
+			# name filtering
+			#
+			mask_indices = name_filtering(
+				bounding_box.Class,
+				image_size,
+				bounding_box.xmin,
+				bounding_box.ymin,
+				bounding_box.xmax,
+				bounding_box.ymax,
+				nan_mask
+			)
+
+			if len(mask_indices) > 0:
+				cloud_indices = mask_indices
+				cloud_indexed.indices = [Int64(idx) for idx in cloud_indices]
+				break
+		else:
+			rospy.logerr("[GraspingPipeline] No bottle or cup in the view!")
+			raise SystemExit()
+
+	return cloud_indexed
+
+
+def mask_rcnn_name_filtering(class_name, mask, nan_mask):
 	"""Extract point cloud of typical objects.
 
 	Parameters
@@ -274,6 +383,51 @@ def name_filtering(class_name, mask, nan_mask):
 		mask_indices = []
 
 	return mask_indices
+
+
+def name_filtering(object_name,
+				   image_size,
+				   x_min, y_min, x_max, y_max,
+				   nan_mask):
+	"""Extract point cloud of typical objects.
+
+	Parameters
+	----------
+	- object_name: str
+		Name of the detected object.
+
+	- image_size: (int, int)
+
+	- x_min: float
+		Top-left x coordinate of the bounding box.
+
+	- y_min: float
+		Top-left y coordinate of the bounding box.
+
+	- x_max: float
+		Bottom-right x coordinate of the bounding box.
+
+	- y_max: float
+		Bottom-right y coordinate of the bounding box.
+
+	- nan_mask: numpy.ndarray
+		Boolean mask to indicate the NAN points in the point cloud.
+
+	Returns
+	----------
+	- valid_indices: list
+		List of index indicating the valid point cloud through Mask RCNN.
+
+	"""
+	if (object_name == 'bottle') or (object_name == 'cup'):
+		object_mask = np.zeros(image_size, dtype=np.bool)
+		object_mask[y_min:y_max, x_min:x_max] = True
+		object_mask = np.reshape(object_mask, -1)
+		valid_indices = np.where((object_mask != 0) & ~nan_mask)[0].tolist()
+	else:
+		valid_indices = []
+
+	return valid_indices
 
 
 def least_squares_filtering(cloud_points, mask_indices, dist_thresh=4e-4):
@@ -373,6 +527,10 @@ def find_closest_grasp(grasps, frame='base_link',
 		header=Header(frame_id=POSE_REFERENCE_FRAME),
 		point=grasp.bottom
 	) for grasp in grasps]
+	# pose_positions = [PointStamped(
+	# 	header=Header(frame_id=POSE_REFERENCE_FRAME),
+	# 	point=grasp.bottom
+	# ) for grasp in grasps if -grasp.axis.z <= 0.0]
 	if frame != POSE_REFERENCE_FRAME:
 		listener = tf.TransformListener()
 
@@ -384,15 +542,19 @@ def find_closest_grasp(grasps, frame='base_link',
 		except (tf.LookupException,
 				tf.ConnectivityException,
 				tf.ExtrapolationException) as e:
-			rospy.logerr("%s" % e)
+			rospy.logerr("[GraspingPipeline] %s" % e)
 			raise SystemExit()
+	if len(pose_positions) == 0:
+		rospy.logerr("[GraspingPipeline: No grasp found!")
+		raise SystemExit()
+
 	pose_plannar_positions = [[pose_position.point.x,
 							   pose_position.point.y]
 							  for pose_position in pose_positions]
 
 	dist = np.linalg.norm(pose_plannar_positions, axis=1)
 	closest_dist = np.min(dist)
-	rospy.loginfo("Closest Distance: %f." % closest_dist)
+	rospy.loginfo("[GraspingPipeline] Closest Distance: %f." % closest_dist)
 	closest_idx = np.argmin(dist)
 	closest_grasp = grasps[closest_idx]
 
@@ -401,22 +563,23 @@ def find_closest_grasp(grasps, frame='base_link',
 	#
 	if closest_dist >= min_dist_thresh:
 		if closest_grasp.bottom.y <= min_y_thresh:
-			rospy.logerr("%s arm cannot move to the other side of the robot!" %
+			rospy.logerr("[GraspingPipeline] %s arm cannot move to the other side of the robot!" %
 						("Left" if min_y_thresh < 0 else "Right"))
-			rospy.logerr("Target position: (%f, %f, %f)." %
+			rospy.logerr("[GraspingPipeline] Target position: (%f, %f, %f)." %
 						(closest_grasp.bottom.x,
 						closest_grasp.bottom.y,
 						closest_grasp.bottom.z))
-			rospy.logerr("Please move the robot first!")
+			rospy.logerr("[GraspingPipeline] Please move the robot first!")
 			raise SystemExit()
 		elif min_y_soft_thresh >= closest_grasp.bottom.y > min_y_thresh:
-			rospy.logerr("%s arm cannot move farther!" %
+			rospy.logerr("[GraspingPipeline] %s arm cannot move farther!" %
 					 	 ("Left" if min_y_thresh < 0 else "Right"))
-			rospy.logerr("Target plannar distance: %f." % closest_dist)
-			rospy.logerr("Please move the robot first!")
+			rospy.logerr("[GraspingPipeline] Target plannar distance: %f." % closest_dist)
+			rospy.logerr("[GraspingPipeline] Please move the robot first!")
 			raise SystemExit()
 
 	return closest_grasp
+
 
 def configure_target_pose(target_position, target_quaternion):
 	"""Configure target pose for planning
@@ -485,31 +648,45 @@ def main():
 	#
 	# get image and point cloud
 	#
-	rospy.loginfo("Getting image and cloud...")
+	rospy.loginfo("[GraspingPipeline] Getting image and cloud...")
 	image = rospy.wait_for_message(image_stream, Image)
 	cloud = rospy.wait_for_message(cloud_stream, PointCloud2)
-	rospy.loginfo("Image and cloud are available.")
+	rospy.loginfo("[GraspingPipeline] Image and cloud are available.")
+
 
 	#
 	# transform point cloud form camera frame to base_link frame.
 	#
 	cloud_transformed = cloud_transformation(
-		CLOUD_TRANSFROM_DEFAULT_NAME, cloud)
+		CLOUD_TRANSFROM_SERVER_DEFAULT_NAME, cloud)
 
 	#
 	# Mask RCNN detection
 	#
-	detection = mask_rcnn_detection(MASK_RCNN_DEFAULT_NAME, image)
+	# detection = mask_rcnn_detection(MASK_RCNN_SERVICE_DEFAULT_NAME, image)
+
+	#
+	# Yolo detection
+	#
+	while True:
+		bounding_boxes = yolo_detection(YOLO_ACTION_DEFAULT_NAME, image)
+		if len(bounding_boxes) > 0:
+			break
+		else:
+			rospy.logerr("[GraspingPipeline] No object found!")
 
 	#
 	# process point cloud through Mask RCNN detection
 	#
-	cloud_indexed = process_cloud(cloud_transformed, detection)
+	# cloud_indexed = mask_rcnn_process_cloud(cloud_transformed, detection)
+	image_size = (image.height, image.width)
+	cloud_indexed = process_cloud(
+		cloud_transformed, image_size, bounding_boxes)
 
 	#
 	# find reasonable grasps
 	#
-	grasp_configs = grasps_detection(DETECT_GRASPS_DEFAULT_NAME,
+	grasp_configs = grasps_detection(DETECT_GRASPS_SERVICE_DEFAULT_NAME,
 									 cloud_indexed)
 
 	#
@@ -524,8 +701,8 @@ def main():
 		moveit_commander.RobotCommander()
 		group = moveit_commander.MoveGroupCommander("left_arm")
 	except RuntimeError as e:
-		rospy.logerr("%s" % e)
-		rospy.logerr("Please startup MoveIt planning context first!")
+		rospy.logerr("[GraspingPipeline] %s" % e)
+		rospy.logerr("[GraspingPipeline] Please startup MoveIt planning context first!")
 		raise SystemExit()
 
 	#
@@ -539,6 +716,10 @@ def main():
 		[-grasp.binormal.z, -grasp.axis.z, grasp.approach.z, 0.0],
 		[0.0, 0.0, 0.0, 1.0]
 	])
+	print("-grasp.axis.x: %f" % -grasp.axis.x)
+	print("-grasp.axis.y: %f" % -grasp.axis.y)
+	print("-grasp.axis.z: %f" % -grasp.axis.z)
+
 	target_quaternion = tf.transformations.quaternion_from_matrix(
 		target_rotation_matrix)
 	# take inverse quaternion to rotate the gripper in the base_link
@@ -554,7 +735,7 @@ def main():
 	# target_quaternion = None
 	target_pose = configure_target_pose(target_position, target_quaternion)
 
-	print("Target pose:")
+	rospy.loginfo("[GraspingPipeline] Target pose: ")
 	print(target_pose)
 
 	#
@@ -566,9 +747,9 @@ def main():
 	# plan = group.go(wait=True)
 	# group.execute(plan, wait=True)
 	# group.set_start_state_to_current_state()
-	pick_and_place(PICK_AND_PLACE_DEFAULT_NAME, [target_pose])
+	pick_and_place(PICK_AND_PLACE_SERVICE_DEFAULT_NAME, [target_pose])
 
-	rospy.loginfo("Waiting while RVIZ displays motion planning...")
+	rospy.loginfo("[GraspingPipeline] Waiting while RVIZ displays motion planning...")
 	rospy.sleep(3.0)
 
 
