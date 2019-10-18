@@ -134,11 +134,11 @@ include_directories(
 
 ## Declare a C++ library
 add_library(pick_and_place_pipeline
-  src/lib/pick_and_place_pipeline.cpp
+  src/pick_and_place_pipeline.cpp
 )
 
 add_library(pick_and_place_server
-  src/lib/pick_and_place_server.cpp
+  src/pick_and_place_server.cpp
 )
 
 ## Add cmake target dependencies of the library
