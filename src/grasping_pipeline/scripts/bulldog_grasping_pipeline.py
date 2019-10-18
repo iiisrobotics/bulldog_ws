@@ -483,9 +483,7 @@ def least_squares_filtering(cloud_points, mask_indices, dist_thresh=4e-4):
 
 
 def find_closest_grasp(grasps, frame='base_link',
-					   min_y_thresh=-0.05, 
-					   min_y_soft_thresh=0.08,
-					   min_dist_thresh=0.81):
+					   min_y_thresh=-0.05):
 	"""Find the closest grasp to a specified frame.
 
 	Parameters
@@ -502,16 +500,6 @@ def find_closest_grasp(grasps, frame='base_link',
 		move to the right side of the robot, and the right arm cannot
 		move to the left side of the robot. Remember to define this threshold
 		in 'base_link' frame.
-
-	- min_y_soft_thresh: float (optional, default = 0.08)
-		Minimum value for closest grasp along y axis which we begin to consider
-		distance threshold, i.e. when targer position's y value is in
-		[min_y_soft_thresh, min_y_thresh), we consider the planar distance of
-		the target position from the arm base frame.
-
-	- min_dist_thresh: float (optional, default = 0.81)
-		Max value for closest grasp from the are base link, i.e. the arms
-		cannot go farther than this distance.
 
 	Returns
 	----------
@@ -561,40 +549,32 @@ def find_closest_grasp(grasps, frame='base_link',
 	#
 	# thresholding
 	#
-	if closest_dist >= min_dist_thresh:
-		if closest_grasp.bottom.y <= min_y_thresh:
-			rospy.logerr("[GraspingPipeline] %s arm cannot move to the other side of the robot!" %
-						("Left" if min_y_thresh < 0 else "Right"))
-			rospy.logerr("[GraspingPipeline] Target position: (%f, %f, %f)." %
-						(closest_grasp.bottom.x,
-						closest_grasp.bottom.y,
-						closest_grasp.bottom.z))
-			rospy.logerr("[GraspingPipeline] Please move the robot first!")
-			raise SystemExit()
-		elif min_y_soft_thresh >= closest_grasp.bottom.y > min_y_thresh:
-			rospy.logerr("[GraspingPipeline] %s arm cannot move farther!" %
-					 	 ("Left" if min_y_thresh < 0 else "Right"))
-			rospy.logerr("[GraspingPipeline] Target plannar distance: %f." % closest_dist)
-			rospy.logerr("[GraspingPipeline] Please move the robot first!")
-			raise SystemExit()
+	if closest_grasp.bottom.y <= min_y_thresh:
+		rospy.logerr("[GraspingPipeline] %s arm cannot move to the other side of the robot!" %
+					("Left" if min_y_thresh < 0 else "Right"))
+		rospy.logerr("[GraspingPipeline] Target position: (%f, %f, %f)." %
+					(closest_grasp.bottom.x,
+					closest_grasp.bottom.y,
+					closest_grasp.bottom.z))
+		rospy.logerr("[GraspingPipeline] Please move the robot first!")
+		raise SystemExit()
 
 	return closest_grasp
 
 
-def configure_target_pose(target_position, target_quaternion):
+def configure_target_pose(grasp_configs):
 	"""Configure target pose for planning
 
 	Parameters
 	----------
-	- target_position: geometry_msgs.msg.Point
-		Position of the target pose.
-
-	- target_quaternion: geometry_msgs.msg.Quaternion
-		Rotation of the target pose.
+	- grasp_configs: gpd.msg.GraspConfigList
+		A list of grasp configurations each of which describes a grasp by its 
+		6-DOF pose, consisting of a 3-DOF position and 3-DOF orientation, and 
+		the opening width of the robot hand.
 
 	Returns
 	----------
-	target_pose: geometry_msgs.msg.PoseStamped
+	target_poses: [geometry_msgs.msg.PoseStamped, ...]
 		Target pose with a header.
 
 	Notes
@@ -610,20 +590,39 @@ def configure_target_pose(target_position, target_quaternion):
 			z: -0.5883724060255893
 			w: -0.3150965657765391
 	"""
-	target_pose = PoseStamped()
-	target_pose.header.stamp = rospy.Time.now()
-	target_pose.header.frame_id = POSE_REFERENCE_FRAME
-	target_pose.pose.position = target_position
-	# target_pose.pose.position.x = 0.795009083413
-	# target_pose.pose.position.y = 0.22062083617
-	# target_pose.pose.position.z = 0.489056381231
-	target_pose.pose.orientation = target_quaternion
-	# target_pose.pose.orientation.x = -0.08121355241516261
-	# target_pose.pose.orientation.y = -0.052377064390203044
-	# target_pose.pose.orientation.z = -0.5590192309531775
-	# target_pose.pose.orientation.w = 0.8235037956527536
+	target_poses = []
+	for grasp in grasp_configs.grasps:
+		target_positions = grasp.bottom
+		target_rotation_matrix = np.array([
+			[-grasp.binormal.x, -grasp.axis.x, grasp.approach.x, 0.0],
+			[-grasp.binormal.y, -grasp.axis.y, grasp.approach.y, 0.0],
+			[-grasp.binormal.z, -grasp.axis.z, grasp.approach.z, 0.0],
+			[0.0, 0.0, 0.0, 1.0]
+		])
 
-	return target_pose
+		target_quaternion = tf.transformations.quaternion_from_matrix(
+			target_rotation_matrix)
+		# take inverse quaternion to rotate the gripper in the base_link
+		target_quaternion = Quaternion(x=target_quaternion[0],
+									y=target_quaternion[1],
+									z=target_quaternion[2],
+									w=target_quaternion[3])
+
+		target_pose = PoseStamped()
+		target_pose.header.stamp = rospy.Time.now()
+		target_pose.header.frame_id = POSE_REFERENCE_FRAME
+		target_pose.pose.position = target_position
+		# target_pose.pose.position.x = 0.795009083413
+		# target_pose.pose.position.y = 0.22062083617
+		# target_pose.pose.position.z = 0.489056381231
+		target_pose.pose.orientation = target_quaternion
+		# target_pose.pose.orientation.x = -0.08121355241516261
+		# target_pose.pose.orientation.y = -0.052377064390203044
+		# target_pose.pose.orientation.z = -0.5590192309531775
+		# target_pose.pose.orientation.w = 0.8235037956527536
+		target_poses.append(target_pose)
+
+	return target_poses
 
 
 def main():
@@ -690,64 +689,15 @@ def main():
 									 cloud_indexed)
 
 	#
-	# grasp filtering: find the closest grasp first
-	#
-	grasp = find_closest_grasp(grasp_configs.grasps, GRASP_FILTERING_FRAME)
-
-	#
-	# bring up MoveIt motion planning context
-	#
-	try:
-		moveit_commander.RobotCommander()
-		group = moveit_commander.MoveGroupCommander("left_arm")
-	except RuntimeError as e:
-		rospy.logerr("[GraspingPipeline] %s" % e)
-		rospy.logerr("[GraspingPipeline] Please startup MoveIt planning context first!")
-		raise SystemExit()
-
-	#
 	# interpret pose configuration
 	#
 	# We use the pose of the gripper base for planning.
-	target_position = grasp.bottom
-	target_rotation_matrix = np.array([
-		[-grasp.binormal.x, -grasp.axis.x, grasp.approach.x, 0.0],
-		[-grasp.binormal.y, -grasp.axis.y, grasp.approach.y, 0.0],
-		[-grasp.binormal.z, -grasp.axis.z, grasp.approach.z, 0.0],
-		[0.0, 0.0, 0.0, 1.0]
-	])
-	print("-grasp.axis.x: %f" % -grasp.axis.x)
-	print("-grasp.axis.y: %f" % -grasp.axis.y)
-	print("-grasp.axis.z: %f" % -grasp.axis.z)
-
-	target_quaternion = tf.transformations.quaternion_from_matrix(
-		target_rotation_matrix)
-	# take inverse quaternion to rotate the gripper in the base_link
-	target_quaternion = Quaternion(x=target_quaternion[0],
-								   y=target_quaternion[1],
-								   z=target_quaternion[2],
-								   w=target_quaternion[3])
-
-	#
-	# configure target pose
-	#
-	# target_position = None
-	# target_quaternion = None
-	target_pose = configure_target_pose(target_position, target_quaternion)
-
-	rospy.loginfo("[GraspingPipeline] Target pose: ")
-	print(target_pose)
+	target_poses = configure_target_pose(grasp_configs)
 
 	#
 	# planning
 	#
-	# group.set_pose_target(target_pose)
-
-	# plan = group.plan()
-	# plan = group.go(wait=True)
-	# group.execute(plan, wait=True)
-	# group.set_start_state_to_current_state()
-	pick_and_place(PICK_AND_PLACE_SERVICE_DEFAULT_NAME, [target_pose])
+	pick_and_place(PICK_AND_PLACE_SERVICE_DEFAULT_NAME, target_poses)
 
 	rospy.loginfo("[GraspingPipeline] Waiting while RVIZ displays motion planning...")
 	rospy.sleep(3.0)

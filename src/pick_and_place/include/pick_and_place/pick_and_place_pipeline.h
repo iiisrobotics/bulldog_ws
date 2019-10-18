@@ -114,22 +114,31 @@ private:
     /**
      *  @brief  generateGrasps: generate grasp candidates with respect to
      *                          target pose
-     *  @param  grasp_pose: the target grasping pose
-     *  @param  grasp_candidates_ptrs: the generated grasp candidates
+     *  @param  grasp_poses: the target grasping poses
+     *  @param  grasp_candidate_ptrs: the generated grasp candidates
      *  @return success: true on success
      */
     bool generateGrasps(
-        geometry_msgs::PoseStamped& grasp_pose,
-        std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidates_ptrs);
+        std::vector<geometry_msgs::PoseStamped>& grasp_poses,
+        std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidate_ptrs);
+
+    /**
+     *  @brief  generateSeedStates: generate seed state for inverse kinematics
+     *                              filtering of each grasp candidate.
+     *  @param  grasp_candidate_ptrs: the generated grasp candidates
+     *  @return success: true on success
+     */
+    bool generateSeedStates(
+        std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidate_ptrs);
 
     /**
      *  @brief  planGrasps: plan the trajectories of the grasp candidates
-     *  @param  grasp_candidates_ptrs: the grasp candidates
+     *  @param  grasp_candidate_ptrs: the grasp candidates
      *  @param  valid_grasp_candidate_ptr: the valid grasp candidate
      *  @return success: true on success
      */
     bool planGrasps(
-        std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidates_ptrs,
+        std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidate_ptrs,
         moveit_grasps::GraspCandidatePtr& vaild_grasp_candidate_ptr);
 
     /**

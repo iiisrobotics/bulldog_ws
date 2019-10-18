@@ -21,10 +21,14 @@ PickAndPlacePipeline::PickAndPlacePipeline(ros::NodeHandle node) :
     node_.getParam("gripper_command_topic", gripper_command_topic_);
     node_.getParam("gripper_status_topic", gripper_status_topic_);
 
-    ROS_DEBUG_STREAM("End effector group name: " << end_effector_group_name_);
-    ROS_DEBUG_STREAM("Arm group name: " << arm_group_name_);
-    ROS_DEBUG_STREAM("Gripper command topic: " << gripper_command_topic_);
-    ROS_DEBUG_STREAM("Gripper status topic: " << gripper_status_topic_);
+    ROS_DEBUG_STREAM("[PickAndPlacePipeline] End effector group name: " 
+        << end_effector_group_name_);
+    ROS_DEBUG_STREAM("[PickAndPlacePipeline] Arm group name: " 
+        << arm_group_name_);
+    ROS_DEBUG_STREAM("[PickAndPlacePipeline] Gripper command topic: " 
+        << gripper_command_topic_);
+    ROS_DEBUG_STREAM("[PickAndPlacePipeline] Gripper status topic: " 
+        << gripper_status_topic_);
 
     //
     // load planning scene
@@ -32,11 +36,12 @@ PickAndPlacePipeline::PickAndPlacePipeline(ros::NodeHandle node) :
     planning_scene_monitor_ptr_.reset(
         new planning_scene_monitor::PlanningSceneMonitor("robot_description"));
     if (!planning_scene_monitor_ptr_->getPlanningScene()) {
-        ROS_ERROR_STREAM("Planning scene not configured!");
+        ROS_ERROR_STREAM(
+            "[PickAndPlacePipeline] Planning scene not configured!");
         return;
     }
     else {
-        ROS_DEBUG_STREAM("Planning scene configured!");
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Planning scene configured!");
     }
     planning_scene_monitor_ptr_->startPublishingPlanningScene(
         planning_scene_monitor::PlanningSceneMonitor::UPDATE_SCENE,
@@ -59,18 +64,18 @@ PickAndPlacePipeline::PickAndPlacePipeline(ros::NodeHandle node) :
     //
     // load move group interface
     //
-    ROS_DEBUG_STREAM("Loading move group...");
+    ROS_DEBUG_STREAM("[PickAndPlacePipeline] Loading move group...");
     move_group_ptr_.reset(new moveit::planning_interface::MoveGroupInterface(
         arm_group_name_));
-    ROS_DEBUG_STREAM("Move group loaded!");
+    ROS_DEBUG_STREAM("[PickAndPlacePipeline] Move group loaded!");
 
     //
     // load motion planning pipeline
     //
-    ROS_DEBUG_STREAM("Loading planning pipeline...");
+    ROS_DEBUG_STREAM("[PickAndPlacePipeline] Loading planning pipeline...");
     planning_pipeline_ptr_.reset(new planning_pipeline::PlanningPipeline(
         robot_model_ptr_, node_, "planning_plugin", "request_adapters"));
-    ROS_DEBUG_STREAM("Planning pipeline loaded!");
+    ROS_DEBUG_STREAM("[PickAndPlacePipeline] Planning pipeline loaded!");
 
     //
     // setup rviz visual tools
@@ -147,11 +152,11 @@ bool PickAndPlacePipeline::run(
      *  activate gripper
      */
     if (!gripper_commander_ptr_->activate()) {
-        ROS_ERROR_STREAM("Activate gripper failed!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Activate gripper failed!");
         return success;
     }
     else {
-        ROS_DEBUG_STREAM("Activate gripper succeeded");
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Activate gripper succeeded");
     }
 
     /**
@@ -169,8 +174,8 @@ bool PickAndPlacePipeline::run(
     //
     // setup target pose
     //
-    geometry_msgs::PoseStamped target_pose;
-    target_pose = grasp_poses[0];
+    // geometry_msgs::PoseStamped target_pose;
+    // target_pose = grasp_poses[0];
     // target_pose.header.frame_id = robot_model_ptr_->getModelFrame();
     // target_pose.header.stamp = ros::Time::now();
     // ROS_DEBUG_STREAM("Robot model frame: " << target_pose.header.frame_id);
@@ -210,18 +215,26 @@ bool PickAndPlacePipeline::run(
     /**
      *  generate grasp candidates
      */
-    std::vector<moveit_grasps::GraspCandidatePtr> grasp_candidates_ptrs;
-    if (!generateGrasps(target_pose, grasp_candidates_ptrs)) {
-        ROS_ERROR_STREAM("Grasps generation failed!");
+    std::vector<moveit_grasps::GraspCandidatePtr> grasp_candidate_ptrs;
+    if (!generateGrasps(grasp_poses, grasp_candidate_ptrs)) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Grasps generation failed!");
         return success;
     }
     else {
-        ROS_DEBUG_STREAM("Grasps generation succeeded");
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Grasps generation succeeded");
     }
 
     /**
      *  generating a seed state for filtering grasps
      */
+    if (!generateSeedStates(grasp_candidate_ptrs)) {
+        ROS_ERROR_STREAM(
+            "[PickAndPlacePipeline] Seed states generation failed!");
+    }
+    else {
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Seed states generation succeeded");
+    }
+
     moveit::core::RobotStatePtr seed_state_ptr;
     Eigen::Affine3d target_pose_eigen;
     tf::poseMsgToEigen(target_pose.pose, target_pose_eigen);
@@ -243,7 +256,7 @@ bool PickAndPlacePipeline::run(
      *  filter grasp candidates: use the initial seed state to compute inverse 
      *                           kinematics
      */
-    // moveit_grasps::GraspCandidatePtr grasp_candidate_ptr = grasp_candidates_ptrs[0];
+    // moveit_grasps::GraspCandidatePtr grasp_candidate_ptr = grasp_candidate_ptrs[0];
     // geometry_msgs::PoseStamped grasp_pose = grasp_candidate_ptr->grasp_.grasp_pose;
     // kinematics::KinematicsBaseConstPtr kin_solver_ptr = arm_group_ptr_->getSolverInstance();
     // std::string ik_frame = kin_solver_ptr->getBaseFrame();
@@ -386,7 +399,7 @@ bool PickAndPlacePipeline::run(
     //
     bool filter_pregrasps = true;
     if (!grasp_filter_ptr_->filterGrasps(
-            grasp_candidates_ptrs, 
+            grasp_candidate_ptrs, 
             planning_scene_monitor_ptr_, 
             arm_group_ptr_, 
             seed_state_ptr,
@@ -397,23 +410,23 @@ bool PickAndPlacePipeline::run(
     else {
         ROS_DEBUG_STREAM("Grasps filtering succeeded");
     }
-    if (!grasp_filter_ptr_->removeInvalidAndFilter(grasp_candidates_ptrs)) {
+    if (!grasp_filter_ptr_->removeInvalidAndFilter(grasp_candidate_ptrs)) {
         ROS_ERROR_STREAM("Grasps filtering remove all grasps!");
         return success;
     }
-    ROS_INFO_STREAM(grasp_candidates_ptrs.size() << " grasps remain after filtering");
+    ROS_INFO_STREAM(grasp_candidate_ptrs.size() << " grasps remain after filtering");
 
     std::cout << "---------- IK solution from moveit_grasps ----------" << std::endl;
-    for (auto it = grasp_candidates_ptrs[0]->grasp_ik_solution_.begin(); 
-        it != grasp_candidates_ptrs[0]->grasp_ik_solution_.end(); 
+    for (auto it = grasp_candidate_ptrs[0]->grasp_ik_solution_.begin(); 
+        it != grasp_candidate_ptrs[0]->grasp_ik_solution_.end(); 
         it++) {
         std::cout << *it << std::endl;
     }
     std::cout << "---------------------------------" << std::endl;
 
     std::cout << "---------- Pre-grasp IK solution from moveit_grasps ----------" << std::endl;
-    for (auto it = grasp_candidates_ptrs[0]->pregrasp_ik_solution_.begin(); 
-        it != grasp_candidates_ptrs[0]->pregrasp_ik_solution_.end(); 
+    for (auto it = grasp_candidate_ptrs[0]->pregrasp_ik_solution_.begin(); 
+        it != grasp_candidate_ptrs[0]->pregrasp_ik_solution_.end(); 
         it++) {
         std::cout << *it << std::endl;
     }
@@ -423,7 +436,7 @@ bool PickAndPlacePipeline::run(
      *  pre-approach motion planning
      */
     moveit_grasps::GraspCandidatePtr grasp_candidate_ptr = 
-        grasp_candidates_ptrs[0];
+        grasp_candidate_ptrs[0];
 
     //
     // critical waypoints
@@ -654,8 +667,8 @@ bool PickAndPlacePipeline::run(
 }
 
 bool PickAndPlacePipeline::generateGrasps(
-    geometry_msgs::PoseStamped& grasp_pose,
-    std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidates_ptrs)
+    std::vector<geometry_msgs::PoseStamped>& grasp_poses,
+    std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidate_ptrs)
 {
     //
     // justify the end effector type
@@ -669,109 +682,115 @@ bool PickAndPlacePipeline::generateGrasps(
     }
 
     //
-    // convert grasp_pose to Eigen::Affine3d matrix
-    //
-    Eigen::Affine3d grasp_pose_eigen;
-    tf::poseMsgToEigen(grasp_pose.pose, grasp_pose_eigen);
-
-    //
-    // the grasp
+    // generate grasp candidates
     //
     moveit_msgs::Grasp grasp;
+    Eigen::Affine3d grasp_pose_eigen;
+    Eigen::Vector3d pre_grasp_approach_vector;
+    Eigen::Affine3d end_effector_pose_eigen;
+    for (size_t i = 0; i < grasp_poses.size(); i++) {
+        //
+        // convert grasp_pose to Eigen::Affine3d matrix
+        //
+        tf::poseMsgToEigen(grasp_poses[i].pose, grasp_pose_eigen);
 
-    //
-    // name the grasp
-    //
-    static std::size_t grasp_id = 0;
-    grasp.id = "grasp" + boost::lexical_cast<std::string>(grasp_id);
-    grasp_id++;
+        //
+        // name the grasp
+        //
+        grasp.id = "grasp" + boost::lexical_cast<std::string>(i);
 
-    //
-    // pregrasp approach - aligned with the parent link of the end effector 
-    //                     group
-    //
-    Eigen::Vector3d pre_grasp_approach_vector = 
+        //
+        // pregrasp approach - aligned with the parent link of the end effector 
+        //                     group
+        //
+        pre_grasp_approach_vector = 
         -1.0 * grasp_data_ptr_->grasp_pose_to_eef_pose_.translation();
-    pre_grasp_approach_vector.normalize();
-
-    grasp.pre_grasp_approach.desired_distance = 
+        pre_grasp_approach_vector.normalize();
+        
+        grasp.pre_grasp_approach.desired_distance = 
         grasp_data_ptr_->grasp_max_depth_ + 
         grasp_data_ptr_->approach_distance_desired_;
-    grasp.pre_grasp_approach.min_distance = 0.0;// NOT IMPLEMENTED
-    
-    grasp.pre_grasp_approach.direction.header.frame_id = 
+        grasp.pre_grasp_approach.min_distance = 0.0;// NOT IMPLEMENTED
+        
+        grasp.pre_grasp_approach.direction.header.frame_id = 
         grasp_data_ptr_->parent_link_->getName();
-    grasp.pre_grasp_approach.direction.header.stamp = ros::Time::now();
-    grasp.pre_grasp_approach.direction.vector.x = 
-        pre_grasp_approach_vector.x();
-    grasp.pre_grasp_approach.direction.vector.y = 
-        pre_grasp_approach_vector.y();
-    grasp.pre_grasp_approach.direction.vector.z = 
-        pre_grasp_approach_vector.z();
+        grasp.pre_grasp_approach.direction.header.stamp = ros::Time::now();
+        grasp.pre_grasp_approach.direction.vector.x = 
+            pre_grasp_approach_vector.x();
+        grasp.pre_grasp_approach.direction.vector.y = 
+            pre_grasp_approach_vector.y();
+        grasp.pre_grasp_approach.direction.vector.z = 
+            pre_grasp_approach_vector.z();
 
-    //
-    // postgrasp retreat - aligned with the parent link of the end effector
-    //                     group 
-    //
-    grasp.post_grasp_retreat.desired_distance = 
+        //
+        // postgrasp retreat - aligned with the parent link of the end effector
+        //                     group 
+        //
+        grasp.post_grasp_retreat.desired_distance = 
         grasp_data_ptr_->grasp_max_depth_ + 
         grasp_data_ptr_->retreat_distance_desired_;
-    grasp.post_grasp_retreat.min_distance = 0.0;// NOT IMPLEMENTED
-    
-    grasp.post_grasp_retreat.direction.header.frame_id = 
+        grasp.post_grasp_retreat.min_distance = 0.0;// NOT IMPLEMENTED
+        
+        grasp.post_grasp_retreat.direction.header.frame_id = 
         grasp_data_ptr_->parent_link_->getName();
-    grasp.post_grasp_retreat.direction.header.stamp = ros::Time::now();
-    grasp.post_grasp_retreat.direction.vector.x = 
-        -1.0 * pre_grasp_approach_vector.x();
-    grasp.post_grasp_retreat.direction.vector.y = 
-        -1.0 * pre_grasp_approach_vector.y();
-    grasp.post_grasp_retreat.direction.vector.z = 
-        -1.0 * pre_grasp_approach_vector.z();
+        grasp.post_grasp_retreat.direction.header.stamp = ros::Time::now();
+        grasp.post_grasp_retreat.direction.vector.x = 
+            -1.0 * pre_grasp_approach_vector.x();
+        grasp.post_grasp_retreat.direction.vector.y = 
+            -1.0 * pre_grasp_approach_vector.y();
+        grasp.post_grasp_retreat.direction.vector.z = 
+            -1.0 * pre_grasp_approach_vector.z();
 
-    //
-    // grasp pose - aligend with the base frame of the entire robot
-    //
-    grasp.grasp_pose.header.frame_id = grasp_data_ptr_->base_link_;
-    grasp.grasp_pose.header.stamp = ros::Time::now();
+        //
+        // grasp pose - aligend with the base frame of the entire robot
+        //
+        grasp.grasp_pose.header.frame_id = grasp_data_ptr_->base_link_;
+        grasp.grasp_pose.header.stamp = ros::Time::now();
 
-    // Eigen::Affine3d end_effector_pose_eigen = 
-    //     grasp_pose_eigen * grasp_data_ptr_->grasp_pose_to_eef_pose_;
-    Eigen::Affine3d end_effector_pose_eigen = 
-        grasp_pose_eigen;
-    tf::poseEigenToMsg(end_effector_pose_eigen, grasp.grasp_pose.pose);
+        end_effector_pose_eigen = grasp_pose_eigen;
+        tf::poseEigenToMsg(end_effector_pose_eigen, grasp.grasp_pose.pose);
 
-    //
-    // pregrasp posture - open the gripper
-    //
-    grasp.pre_grasp_posture = grasp_data_ptr_->pre_grasp_posture_;
+        //
+        // pregrasp posture - open the gripper
+        //
+        grasp.pre_grasp_posture = grasp_data_ptr_->pre_grasp_posture_;
 
-    //
-    // grasp posture - close the gripper
-    //
-    grasp.grasp_posture = grasp_data_ptr_->grasp_posture_;
+        //
+        // grasp posture - close the gripper
+        //
+        grasp.grasp_posture = grasp_data_ptr_->grasp_posture_;
 
-    //
-    // add and check the grasp candidates
-    //
-    grasp_candidates_ptrs.push_back(moveit_grasps::GraspCandidatePtr(
-        new moveit_grasps::GraspCandidate(
-            grasp, grasp_data_ptr_, Eigen::Affine3d()
-        )
-    ));
+        //
+        // add and check the grasp candidates
+        //
+        grasp_candidate_ptrs.push_back(moveit_grasps::GraspCandidatePtr(
+            new moveit_grasps::GraspCandidate(
+                grasp, grasp_data_ptr_, Eigen::Affine3d()
+            )
+        ));
+    }
 
-    if (!grasp_candidates_ptrs.size()) {
+    bool success = false;
+    if (!grasp_candidate_ptrs.size()) {
         ROS_WARN_STREAM("Generated 0 grasps");
-        return false;
+        return success;
     }
     else {
-        ROS_INFO_STREAM("Generated " << grasp_candidates_ptrs.size() << " grasps");
+        ROS_INFO_STREAM("Generated " << grasp_candidate_ptrs.size() << " grasps");
     }
 
+    success = true;
+    return success;
+}
+
+bool generateSeedStates(
+        std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidate_ptrs)
+{
     return true;
 }
 
 bool PickAndPlacePipeline::planGrasps(
-    std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidates_ptrs, 
+    std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidate_ptrs, 
     moveit_grasps::GraspCandidatePtr& valid_grasp_candidate_ptr)
 {
     moveit::core::RobotStatePtr pre_grasp_state_ptr;
@@ -785,8 +804,8 @@ bool PickAndPlacePipeline::planGrasps(
 
     bool verbose_cartesian_filtering = true;
     bool success = false; 
-    for (; !grasp_candidates_ptrs.empty(); grasp_candidates_ptrs.pop_back()) {
-        valid_grasp_candidate_ptr = grasp_candidates_ptrs.front();
+    for (; !grasp_candidate_ptrs.empty(); grasp_candidate_ptrs.pop_back()) {
+        valid_grasp_candidate_ptr = grasp_candidate_ptrs.front();
         valid_grasp_candidate_ptr->getPreGraspState(pre_grasp_state_ptr);
 
         if (!grasp_planner_ptr_->planApproachLiftRetreat(
