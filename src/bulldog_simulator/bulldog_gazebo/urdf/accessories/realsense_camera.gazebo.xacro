@@ -156,7 +156,7 @@
           <cameraInfoTopicName>/${prefix}camera/depth/dummy_camera_info</cameraInfoTopicName>
           <depthImageTopicName>/${prefix}camera/depth/image_rect_raw</depthImageTopicName>
           <depthImageCameraInfoTopicName>/${prefix}camera/depth/camera_info</depthImageCameraInfoTopicName>
-          <pointCloudTopicName>/${prefix}camera/depth/color/points</pointCloudTopicName>
+          <pointCloudTopicName>/${prefix}camera/depth_registered/points</pointCloudTopicName>
           <frameName>${prefix}camera_depth_optical_frame</frameName>
           <pointCloudCutoff>0.4</pointCloudCutoff>
           <distortion_k1>0.0</distortion_k1>

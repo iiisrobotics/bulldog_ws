@@ -466,6 +466,8 @@ bool PickAndPlacePipeline::run(
         pre_grasp_state, rviz_visual_tools::colors::GREEN);
     visual_tools_ptr_->trigger();
 
+    return false;
+
     visual_tools_ptr_->prompt("Press NEXT to show the pre-approach motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(pre_approach_plan.trajectory_, 
         pre_approach_plan.start_state_, true);
