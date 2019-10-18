@@ -170,10 +170,10 @@ bool PickAndPlacePipeline::run(
     // setup target pose
     //
     geometry_msgs::PoseStamped target_pose;
-    // target_pose = grasp_poses[0];
-    target_pose.header.frame_id = robot_model_ptr_->getModelFrame();
-    target_pose.header.stamp = ros::Time::now();
-    ROS_DEBUG_STREAM("Robot model frame: " << target_pose.header.frame_id);
+    target_pose = grasp_poses[0];
+    // target_pose.header.frame_id = robot_model_ptr_->getModelFrame();
+    // target_pose.header.stamp = ros::Time::now();
+    // ROS_DEBUG_STREAM("Robot model frame: " << target_pose.header.frame_id);
     
     // Selected Grasp: 
     //
@@ -452,7 +452,7 @@ bool PickAndPlacePipeline::run(
     else if (move_group_error_code == 
         moveit::planning_interface::MoveItErrorCode::TIMED_OUT) {
         ROS_ERROR_STREAM("Pre-approach planning timeout!");
-        return success;        
+        return success;
     }
     else {
         ROS_ERROR_STREAM("Unknown pre-approach planning error!");
@@ -462,12 +462,6 @@ bool PickAndPlacePipeline::run(
     //
     // execute the pre-approach plan
     //
-    visual_tools_ptr_->publishRobotState(
-        pre_grasp_state, rviz_visual_tools::colors::GREEN);
-    visual_tools_ptr_->trigger();
-
-    return false;
-
     visual_tools_ptr_->prompt("Press NEXT to show the pre-approach motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(pre_approach_plan.trajectory_, 
         pre_approach_plan.start_state_, true);
@@ -1009,10 +1003,16 @@ bool PickAndPlacePipeline::isStateValid(
     robot_state_ptr->setJointGroupPositions(group_ptr, ik_solution);
     robot_state_ptr->update();
 
+    bool is_valid = false;
     planning_scene_monitor::LockedPlanningSceneRO 
     locked_planning_scene_ro_ptr(planning_scene_monitor_ptr_);
-    return locked_planning_scene_ro_ptr->isStateValid(
+    is_valid = locked_planning_scene_ro_ptr->isStateValid(
         *robot_state_ptr, group_ptr->getName());
+    if (is_valid) {
+        is_valid = ik_solution[1] <= 0.01;// left_arm_should_lift_joint <= 0.01
+    }
+
+    return is_valid;
 }
 
 } // namespace pick_and_place_pipeline
