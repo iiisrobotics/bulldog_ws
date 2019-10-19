@@ -15,7 +15,7 @@
     <arg name="enable_accel" default="false"/>
     <arg name="enable_sync" default="true"/>
     <arg name="align_depth" default="true"/>
-    <arg name="initial_reset" default="true"/>
+    <arg name="initial_reset" default="false"/>
 
     <group if="$(arg realsense_enabled)">
         <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">

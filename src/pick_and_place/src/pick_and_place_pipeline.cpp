@@ -650,6 +650,10 @@ bool PickAndPlacePipeline::run(
         ROS_DEBUG_STREAM("[PickAndPlacePipeline] Gripper deactivation succeeded");
     }
 
+    /**
+     *  clear octomap
+     */
+
     success = true;
     return success;
 }
@@ -796,12 +800,12 @@ bool PickAndPlacePipeline::generateSeedStates(
             seed_state_ptr, 
             grasp_data_ptr_->parent_link_->getName()
         )) {
-            // ROS_ERROR_STREAM(
-            //     "[PickAndPlacePipeline] Get inverse kinematics solution failed!");
+            ROS_ERROR_STREAM(
+                "[PickAndPlacePipeline] Get inverse kinematics solution failed!");
         }
         else {
-            // ROS_DEBUG_STREAM(
-            //     "[PickAndPlacePipeline] Get inverse kinematics solution succeeded!");
+            ROS_DEBUG_STREAM(
+                "[PickAndPlacePipeline] Get inverse kinematics solution succeeded!");
         }
         
         //
