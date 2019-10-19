@@ -113,17 +113,12 @@ PickAndPlacePipeline::PickAndPlacePipeline(ros::NodeHandle node) :
     //
     // load grasp filter
     //
-    {
-        moveit::core::RobotStatePtr current_state_ptr;
-        planning_scene_monitor::LockedPlanningSceneRO 
-        locked_planning_scene_ro_ptr(planning_scene_monitor_ptr_);
-        current_state_ptr.reset(new moveit::core::RobotState(
-            locked_planning_scene_ro_ptr->getCurrentState())
-        );
-        grasp_filter_ptr_.reset(new moveit_grasps::GraspFilter(
-            current_state_ptr, visual_tools_ptr_)
-        );
-    }
+    moveit::core::RobotStatePtr current_state_ptr;
+    current_state_ptr.reset(new moveit::core::RobotState(
+        *move_group_ptr_->getCurrentState()
+    ));
+    grasp_filter_ptr_.reset(new moveit_grasps::GraspFilter(
+        current_state_ptr, visual_tools_ptr_));
 
     //
     // load grasp planner
@@ -227,29 +222,13 @@ bool PickAndPlacePipeline::run(
     /**
      *  generating a seed state for filtering grasps
      */
-    if (!generateSeedStates(grasp_candidate_ptrs)) {
+    std::vector<moveit::core::RobotStatePtr> seed_state_ptrs;
+    if (!generateSeedStates(grasp_candidate_ptrs, seed_state_ptrs)) {
         ROS_ERROR_STREAM(
             "[PickAndPlacePipeline] Seed states generation failed!");
     }
     else {
         ROS_DEBUG_STREAM("[PickAndPlacePipeline] Seed states generation succeeded");
-    }
-
-    moveit::core::RobotStatePtr seed_state_ptr;
-    Eigen::Affine3d target_pose_eigen;
-    tf::poseMsgToEigen(target_pose.pose, target_pose_eigen);
-    ROS_DEBUG_STREAM("Tip link: " << grasp_data_ptr_->parent_link_->getName());
-    if (!getIKSolution(
-            arm_group_ptr_, 
-            target_pose_eigen, 
-            seed_state_ptr, 
-            grasp_data_ptr_->parent_link_->getName()
-        )) {
-        ROS_ERROR_STREAM("Get inverse kinematics solution failed!");
-        return success;
-    }
-    else {
-        ROS_DEBUG_STREAM("Get inverse kinematics solution succeeded!");
     }
 
     /**
@@ -397,40 +376,7 @@ bool PickAndPlacePipeline::run(
     //
     // grasp filter
     //
-    bool filter_pregrasps = true;
-    if (!grasp_filter_ptr_->filterGrasps(
-            grasp_candidate_ptrs, 
-            planning_scene_monitor_ptr_, 
-            arm_group_ptr_, 
-            seed_state_ptr,
-            filter_pregrasps)) {
-        ROS_ERROR_STREAM("Grasps filtering failed!");
-        return success;
-    }
-    else {
-        ROS_DEBUG_STREAM("Grasps filtering succeeded");
-    }
-    if (!grasp_filter_ptr_->removeInvalidAndFilter(grasp_candidate_ptrs)) {
-        ROS_ERROR_STREAM("Grasps filtering remove all grasps!");
-        return success;
-    }
-    ROS_INFO_STREAM(grasp_candidate_ptrs.size() << " grasps remain after filtering");
-
-    std::cout << "---------- IK solution from moveit_grasps ----------" << std::endl;
-    for (auto it = grasp_candidate_ptrs[0]->grasp_ik_solution_.begin(); 
-        it != grasp_candidate_ptrs[0]->grasp_ik_solution_.end(); 
-        it++) {
-        std::cout << *it << std::endl;
-    }
-    std::cout << "---------------------------------" << std::endl;
-
-    std::cout << "---------- Pre-grasp IK solution from moveit_grasps ----------" << std::endl;
-    for (auto it = grasp_candidate_ptrs[0]->pregrasp_ik_solution_.begin(); 
-        it != grasp_candidate_ptrs[0]->pregrasp_ik_solution_.end(); 
-        it++) {
-        std::cout << *it << std::endl;
-    }
-    std::cout << "---------------------------------" << std::endl;
+    filterGrasps(grasp_candidate_ptrs, seed_state_ptrs);
 
     /**
      *  pre-approach motion planning
@@ -460,22 +406,23 @@ bool PickAndPlacePipeline::run(
     move_group_error_code = planTargetState(pre_grasp_state, pre_approach_plan);
     if (move_group_error_code == 
         moveit::planning_interface::MoveItErrorCode::SUCCESS) {
-        ROS_DEBUG_STREAM("Pre-approach planning succeeded");
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Pre-approach planning succeeded");
     }
     else if (move_group_error_code == 
         moveit::planning_interface::MoveItErrorCode::TIMED_OUT) {
-        ROS_ERROR_STREAM("Pre-approach planning timeout!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Pre-approach planning timeout!");
         return success;
     }
     else {
-        ROS_ERROR_STREAM("Unknown pre-approach planning error!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Unknown pre-approach planning error!");
         return success;
     }
 
     //
     // execute the pre-approach plan
     //
-    visual_tools_ptr_->prompt("Press NEXT to show the pre-approach motion planning\n");
+    visual_tools_ptr_->prompt(
+        "[PickAndPlacePipeline] Press NEXT to show the pre-approach motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(pre_approach_plan.trajectory_, 
         pre_approach_plan.start_state_, true);
     visual_tools_ptr_->trigger();
@@ -504,22 +451,23 @@ bool PickAndPlacePipeline::run(
         approach_waypoints, approach_plan);
     if (move_group_error_code == 
         moveit::planning_interface::MoveItErrorCode::SUCCESS) {
-        ROS_DEBUG_STREAM("Approach planning succeeded");
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Approach planning succeeded");
     }
     else if (move_group_error_code == 
         moveit::planning_interface::MoveItErrorCode::TIMED_OUT) {
-        ROS_ERROR_STREAM("Approach planning timeout!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Approach planning timeout!");
         return success;
     }
     else {
-        ROS_ERROR_STREAM("Unknown approach planning error!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Unknown approach planning error!");
         return success;
     }
 
     //
     // execute the approach plan
     //
-    visual_tools_ptr_->prompt("Press NEXT to show the approach motion planning\n");
+    visual_tools_ptr_->prompt(
+        "[PickAndPlacePipeline] Press NEXT to show the approach motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(approach_plan.trajectory_, 
         approach_plan.start_state_, true);
     visual_tools_ptr_->trigger();    
@@ -531,10 +479,10 @@ bool PickAndPlacePipeline::run(
     // close gripper
     //
     if (!gripper_commander_ptr_->close()) {
-        ROS_ERROR_STREAM("Close gripper failed!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Close gripper failed!");
     }
     else {
-        ROS_DEBUG_STREAM("Close gripper succeeded");
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Close gripper succeeded");
     }
 
     //
@@ -551,22 +499,23 @@ bool PickAndPlacePipeline::run(
         lift_waypoints, lift_plan);
     if (move_group_error_code == 
         moveit::planning_interface::MoveItErrorCode::SUCCESS) {
-        ROS_DEBUG_STREAM("Lift planning succeeded");
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Lift planning succeeded");
     }
     else if (move_group_error_code == 
         moveit::planning_interface::MoveItErrorCode::TIMED_OUT) {
-        ROS_ERROR_STREAM("Lift planning timeout!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Lift planning timeout!");
         return success;
     }
     else {
-        ROS_ERROR_STREAM("Unknown lift planning error!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Unknown lift planning error!");
         return success;
     }
 
     //
     // execute the lift plan
     //
-    visual_tools_ptr_->prompt("Press NEXT to show the lift motion planning\n");
+    visual_tools_ptr_->prompt(
+        "[PickAndPlacePipeline] Press NEXT to show the lift motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(lift_plan.trajectory_, 
         lift_plan.start_state_, true);
     visual_tools_ptr_->trigger();
@@ -588,22 +537,23 @@ bool PickAndPlacePipeline::run(
         retreat_waypoints, retreat_plan);
     if (move_group_error_code == 
         moveit::planning_interface::MoveItErrorCode::SUCCESS) {
-        ROS_DEBUG_STREAM("Retreat planning succeeded");
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Retreat planning succeeded");
     }
     else if (move_group_error_code == 
         moveit::planning_interface::MoveItErrorCode::TIMED_OUT) {
-        ROS_ERROR_STREAM("Retreat planning timeout!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Retreat planning timeout!");
         return success;
     }
     else {
-        ROS_ERROR_STREAM("Unknown retreat planning error!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Unknown retreat planning error!");
         return success;
     }
 
     //
     // execute the retreat plan
     //
-    visual_tools_ptr_->prompt("Press NEXT to show the lift motion planning\n");
+    visual_tools_ptr_->prompt(
+        "[PickAndPlacePipeline] Press NEXT to show the lift motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(retreat_plan.trajectory_, 
         retreat_plan.start_state_, true);
     visual_tools_ptr_->trigger();
@@ -621,20 +571,21 @@ bool PickAndPlacePipeline::run(
     move_group_error_code = planTargetState(default_state, post_retreat_plan);
     if (move_group_error_code == 
         moveit::planning_interface::MoveItErrorCode::SUCCESS) {
-        ROS_DEBUG_STREAM("Post-retreat planning succeeded");
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Post-retreat planning succeeded");
     }
     else if (move_group_error_code == 
         moveit::planning_interface::MoveItErrorCode::TIMED_OUT) {
-        ROS_ERROR_STREAM("Post-retreat planning timeout!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Post-retreat planning timeout!");
         return success;
     }
     else {
-        ROS_ERROR_STREAM("Unknown pre-approach planning error!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Unknown pre-approach planning error!");
         return success;
     }
 
     // execute the post-retreat plan
-    visual_tools_ptr_->prompt("Press NEXT to show the post-retreat motion planning\n");
+    visual_tools_ptr_->prompt(
+        "[PickAndPlacePipeline] Press NEXT to show the post-retreat motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(post_retreat_plan.trajectory_, 
         post_retreat_plan.start_state_, true);
     visual_tools_ptr_->trigger();
@@ -644,22 +595,22 @@ bool PickAndPlacePipeline::run(
 
     // open gripper
     if (!gripper_commander_ptr_->open()) {
-        ROS_ERROR_STREAM("Open gripper failed!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Open gripper failed!");
         return success;
     }
     else {
-        ROS_DEBUG_STREAM("Open gripper succeeded");
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Open gripper succeeded");
     }
 
     /**
      *  deactivate gripper
      */
     if (!gripper_commander_ptr_->deactivate()) {
-        ROS_ERROR_STREAM("Gripper deactivation failed!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Gripper deactivation failed!");
         return success;
     }
     else {
-        ROS_DEBUG_STREAM("Gripper deactivation succeeded");
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Gripper deactivation succeeded");
     }
 
     success = true;
@@ -674,11 +625,11 @@ bool PickAndPlacePipeline::generateGrasps(
     // justify the end effector type
     //
     if (grasp_data_ptr_->end_effector_type_ != moveit_grasps::FINGER) {
-        ROS_ERROR_STREAM("End effector type must be FINGER!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] End effector type must be FINGER!");
         return false;
     }
     else {
-        ROS_DEBUG_STREAM("End effector type confirmed!");
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] End effector type confirmed!");
     }
 
     //
@@ -772,21 +723,114 @@ bool PickAndPlacePipeline::generateGrasps(
 
     bool success = false;
     if (!grasp_candidate_ptrs.size()) {
-        ROS_WARN_STREAM("Generated 0 grasps");
+        ROS_WARN_STREAM("[PickAndPlacePipeline] Generated 0 grasps");
         return success;
     }
     else {
-        ROS_INFO_STREAM("Generated " << grasp_candidate_ptrs.size() << " grasps");
+        ROS_INFO_STREAM("[PickAndPlacePipeline] Generated " 
+            << grasp_candidate_ptrs.size() 
+            << " grasps");
     }
 
     success = true;
     return success;
 }
 
-bool generateSeedStates(
-        std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidate_ptrs)
+bool PickAndPlacePipeline::generateSeedStates(
+    std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidate_ptrs,
+    std::vector<moveit::core::RobotStatePtr>& seed_state_ptrs)
 {
-    return true;
+    moveit::core::RobotStatePtr seed_state_ptr;
+    Eigen::Affine3d grasp_pose_eigen;
+    for (auto grasp_candidate_ptr : grasp_candidate_ptrs) {
+        //
+        // convert grasp pose to eigen
+        //
+        tf::poseMsgToEigen(
+        grasp_candidate_ptr->grasp_.grasp_pose.pose, 
+        grasp_pose_eigen);
+
+        //
+        // solve inverse kinematics
+        //
+        if (!getIKSolution(
+            arm_group_ptr_, 
+            grasp_pose_eigen, 
+            seed_state_ptr, 
+            grasp_data_ptr_->parent_link_->getName()
+        )) {
+            ROS_ERROR_STREAM(
+                "[PickAndPlacePipeline] Get inverse kinematics solution failed!");
+        }
+        else {
+            ROS_DEBUG_STREAM(
+                "[PickAndPlacePipeline] Get inverse kinematics solution succeeded!");
+        }
+        
+        //
+        // append seed state
+        //
+        seed_state_ptrs.push_back(seed_state_ptr);
+    }
+
+    bool success = false;
+    if (!seed_state_ptrs.size()) {
+        ROS_WARN_STREAM("[PickAndPlacePipeline] Generated 0 seed states");
+        return success;
+    }
+    else {
+        ROS_INFO_STREAM("[PickAndPlacePipeline] Generated " 
+            << grasp_candidate_ptrs.size() 
+            << " grasps");
+    }
+
+    success = true;
+    return success;
+}
+
+bool PickAndPlacePipeline::filterGrasps(
+    std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidate_ptrs,
+    std::vector<moveit::core::RobotStatePtr>& seed_state_ptrs,
+    bool filter_pregrasps)
+{
+    bool success = false;
+
+    // if (!grasp_filter_ptr_->filterGrasps(
+    //         grasp_candidate_ptrs, 
+    //         seed_state_ptrs, 
+    //         planning_scene_monitor_ptr_, 
+    //         arm_group_ptr_, 
+    //         filter_pregrasps)) {
+    //     ROS_ERROR_STREAM("[PickAndPlacePipeline] Grasps filtering failed!");
+    //     return success;
+    // }
+    // else {
+    //     ROS_DEBUG_STREAM("[PickAndPlacePipeline] Grasps filtering succeeded");
+    // }
+    // if (!grasp_filter_ptr_->removeInvalidAndFilter(grasp_candidate_ptrs)) {
+    //     ROS_ERROR_STREAM("[PickAndPlacePipeline] Grasps filtering remove all grasps!");
+    //     return success;
+    // }
+    // ROS_INFO_STREAM("[PickAndPlacePipeline]" 
+    //     << grasp_candidate_ptrs.size() 
+    //     << " grasps remain after filtering");
+
+    // std::cout << "---------- IK solution from moveit_grasps ----------" << std::endl;
+    // for (auto it = grasp_candidate_ptrs[0]->grasp_ik_solution_.begin(); 
+    //     it != grasp_candidate_ptrs[0]->grasp_ik_solution_.end(); 
+    //     it++) {
+    //     std::cout << *it << std::endl;
+    // }
+    // std::cout << "---------------------------------" << std::endl;
+
+    // std::cout << "---------- Pre-grasp IK solution from moveit_grasps ----------" << std::endl;
+    // for (auto it = grasp_candidate_ptrs[0]->pregrasp_ik_solution_.begin(); 
+    //     it != grasp_candidate_ptrs[0]->pregrasp_ik_solution_.end(); 
+    //     it++) {
+    //     std::cout << *it << std::endl;
+    // }
+    // std::cout << "---------------------------------" << std::endl;
+
 }
 
 bool PickAndPlacePipeline::planGrasps(
@@ -813,12 +857,14 @@ bool PickAndPlacePipeline::planGrasps(
             pre_grasp_state_ptr, 
             planning_scene_monitor_ptr_,
             verbose_cartesian_filtering)) {
-            ROS_WARN_STREAM("Failed to plan approach lift retreat for " 
+            ROS_WARN_STREAM(
+                "[PickAndPlacePipeline] Failed to plan approach lift retreat for "
                 << valid_grasp_candidate_ptr->grasp_.id);
             continue;
         }
 
-        ROS_DEBUG_STREAM("Succeeded to plan approach lift retreat for "
+        ROS_DEBUG_STREAM(
+            "[PickAndPlacePipeline] Succeeded to plan approach lift retreat for "
             << valid_grasp_candidate_ptr->grasp_.id);
         success = true;
         break;
@@ -898,35 +944,40 @@ void PickAndPlacePipeline::visualizeGrasp(
     //
     // visualize the pregrasp, grasp, lifted, and retreat states
     //
-    visual_tools_ptr_->prompt("Press NEXT to show pre-grasp state");
+    visual_tools_ptr_->prompt(
+        "[PickAndPlacePipeline] Press NEXT to show pre-grasp state");
     visual_tools_ptr_->publishRobotState(
         valid_grasp_candidate_ptr->
             segmented_cartesian_traj_[moveit_grasps::APPROACH].front(),
         rviz_visual_tools::YELLOW
     );
 
-    visual_tools_ptr_->prompt("Press NEXT to show grasp state");
+    visual_tools_ptr_->prompt(
+        "[PickAndPlacePipeline] Press NEXT to show grasp state");
     moveit::core::RobotStatePtr grasp_state_ptr(
         valid_grasp_candidate_ptr->
         segmented_cartesian_traj_[moveit_grasps::APPROACH].back());
     valid_grasp_candidate_ptr->getGraspStateClosedEEOnly(grasp_state_ptr);
     visual_tools_ptr_->publishRobotState(grasp_state_ptr, rviz_visual_tools::GREEN);
 
-    visual_tools_ptr_->prompt("Press NEXT to show lifted state");
+    visual_tools_ptr_->prompt(
+        "[PickAndPlacePipeline] Press NEXT to show lifted state");
     visual_tools_ptr_->publishRobotState(
         valid_grasp_candidate_ptr->
             segmented_cartesian_traj_[moveit_grasps::LIFT].back(),
         rviz_visual_tools::GREEN
     );
 
-    visual_tools_ptr_->prompt("Press NEXT to show retreat state");
+    visual_tools_ptr_->prompt(
+        "[PickAndPlacePipeline] Press NEXT to show retreat state");
     visual_tools_ptr_->publishRobotState(
         valid_grasp_candidate_ptr->
             segmented_cartesian_traj_[moveit_grasps::RETREAT].back(),
         rviz_visual_tools::YELLOW
     );
 
-    visual_tools_ptr_->prompt("Press NEXT to show the motion planning");
+    visual_tools_ptr_->prompt(
+        "[PickAndPlacePipeline] Press NEXT to show the motion planning");
     visual_tools_ptr_->trigger();
 
     //
@@ -968,13 +1019,9 @@ bool PickAndPlacePipeline::getIKSolution(
     //
     // get current state
     //
-    {
-        planning_scene_monitor::LockedPlanningSceneRO
-        locked_planning_scene_ro_ptr(planning_scene_monitor_ptr_);
-        solution_state_ptr.reset(new moveit::core::RobotState(
-            locked_planning_scene_ro_ptr->getCurrentState())
-        );
-    }
+    solution_state_ptr.reset(new moveit::core::RobotState(
+        *move_group_ptr_->getCurrentState()
+    ));
     
     //
     // group state validity callback function

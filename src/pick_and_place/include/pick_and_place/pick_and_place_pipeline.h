@@ -124,12 +124,26 @@ private:
 
     /**
      *  @brief  generateSeedStates: generate seed state for inverse kinematics
-     *                              filtering of each grasp candidate.
-     *  @param  grasp_candidate_ptrs: the generated grasp candidates
+     *                              filtering of each grasp candidate
+     *  @param  grasp_candidate_ptrs: grasp candidates
+     *  @param  seed_state_ptrs: seed state of each grasp candidates
      *  @return success: true on success
      */
     bool generateSeedStates(
-        std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidate_ptrs);
+        std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidate_ptrs,
+        std::vector<moveit::core::RobotStatePtr>& seed_state_ptrs);
+
+    /**
+     *  @brief  filterGrasps: filter grasp candidates
+     *  @param  grasp_candidate_ptrs: grasp candidates
+     *  @param  seed_state_ptrs: seed state of each grasp candidates
+     *  @param  filter_pregrasps: filter pre-grasp poses or not
+     *  @return success: true on success
+     */
+    bool filterGrasps(
+        std::vector<moveit_grasps::GraspCandidatePtr>& grasp_candidate_ptrs,
+        std::vector<moveit::core::RobotStatePtr>& seed_state_ptrs,
+        bool filter_pregrasps = true);
 
     /**
      *  @brief  planGrasps: plan the trajectories of the grasp candidates
