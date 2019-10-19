@@ -127,7 +127,8 @@ bool Robotiq3FGripperCommander::open()
             break;
         }
         else if (status_.gPRA == 0 &&       // echo of the requested position of finger A
-                 status_.gSTA == 3) {       // all fingers reached requested position
+                 (status_.gSTA == 3 ||      // all fingers reached requested position
+                  status_.gPOA >= 240)) {   // the actual position of finger A
             success = true;
             break;
         }
@@ -181,7 +182,9 @@ bool Robotiq3FGripperCommander::setMode(Robotiq3FGripperModes mode)
             break;
         }
         else if (status_.gMOD == mode &&    // operation mode status, echo of the grasping mode request
-                 status_.gSTA == 3) {       // all fingers reached requested position
+                 (status_.gSTA == 3 ||      // all fingers reached requested position
+                  status_.gPOA <= 5 ||      // the actual position of finger A
+                  status_.gPOA >= 240)) {   // the actual position of finger A
             success = true;
             break;
         }

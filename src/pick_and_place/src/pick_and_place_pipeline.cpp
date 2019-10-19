@@ -157,7 +157,7 @@ bool PickAndPlacePipeline::run(
     bool success = false;
 
     /**
-     *  activate gripper and switch to pinch mode
+     *  activate gripper
      */
     if (!gripper_commander_ptr_->activate()) {
         ROS_ERROR_STREAM("[PickAndPlacePipeline] Activate gripper failed!");
@@ -166,32 +166,6 @@ bool PickAndPlacePipeline::run(
     else {
         ROS_DEBUG_STREAM("[PickAndPlacePipeline] Activate gripper succeeded");
     }
-
-    if (!gripper_commander_ptr_->setMode(
-            robotiq_3f_gripper_commander::Robotiq3FGripperModes::PINCH)) {
-        ROS_ERROR_STREAM("[PickAndPlacePipeline] Switch to pinch mode failed!");
-    }
-    else {
-        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Gripper switches to pinch mode");
-    }
-
-    if (!gripper_commander_ptr_->setMode(
-            robotiq_3f_gripper_commander::Robotiq3FGripperModes::BASIC)) {
-        ROS_ERROR_STREAM("[PickAndPlacePipeline] Switch to pinch mode failed!");
-    }
-    else {
-        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Gripper switches to pinch mode");
-    }
-
-    if (!gripper_commander_ptr_->deactivate()) {
-        ROS_ERROR_STREAM("[PickAndPlacePipeline] Gripper deactivation failed!");
-        return success;
-    }
-    else {
-        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Gripper deactivation succeeded");
-    }
-
-    return true;
 
     /**
      *  move the arm to random valid state
@@ -495,7 +469,7 @@ bool PickAndPlacePipeline::run(
     visual_tools_ptr_->prompt(
         "[PickAndPlacePipeline] Press NEXT to show the pre-approach motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(pre_approach_plan.trajectory_, 
-        pre_approach_plan.start_state_, true);
+        pre_approach_plan.start_state_, false);
     visual_tools_ptr_->trigger();
 
     move_group_ptr_->execute(pre_approach_plan);
@@ -667,7 +641,7 @@ bool PickAndPlacePipeline::run(
     // open gripper
     if (!gripper_commander_ptr_->open()) {
         ROS_ERROR_STREAM("[PickAndPlacePipeline] Open gripper failed!");
-        // return success;
+        return success;
     }
     else {
         ROS_DEBUG_STREAM("[PickAndPlacePipeline] Open gripper succeeded");
