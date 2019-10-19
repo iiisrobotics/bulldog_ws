@@ -356,7 +356,7 @@ def process_cloud(cloud_transformed, image_size, bounding_boxes):
 			raise SystemExit()
 	else:
 		rospy.logerr("[GraspingPipeline] No object found!")
-		raise SystemError()
+		raise SystemExit()
 
 	return cloud_indexed
 

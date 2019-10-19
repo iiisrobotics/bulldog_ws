@@ -157,7 +157,7 @@ bool PickAndPlacePipeline::run(
     bool success = false;
 
     /**
-     *  activate gripper
+     *  activate gripper and switch to pinch mode
      */
     if (!gripper_commander_ptr_->activate()) {
         ROS_ERROR_STREAM("[PickAndPlacePipeline] Activate gripper failed!");
@@ -166,6 +166,32 @@ bool PickAndPlacePipeline::run(
     else {
         ROS_DEBUG_STREAM("[PickAndPlacePipeline] Activate gripper succeeded");
     }
+
+    if (!gripper_commander_ptr_->setMode(
+            robotiq_3f_gripper_commander::Robotiq3FGripperModes::PINCH)) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Switch to pinch mode failed!");
+    }
+    else {
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Gripper switches to pinch mode");
+    }
+
+    if (!gripper_commander_ptr_->setMode(
+            robotiq_3f_gripper_commander::Robotiq3FGripperModes::BASIC)) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Switch to pinch mode failed!");
+    }
+    else {
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Gripper switches to pinch mode");
+    }
+
+    if (!gripper_commander_ptr_->deactivate()) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Gripper deactivation failed!");
+        return success;
+    }
+    else {
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Gripper deactivation succeeded");
+    }
+
+    return true;
 
     /**
      *  move the arm to random valid state
@@ -624,7 +650,7 @@ bool PickAndPlacePipeline::run(
         return success;
     }
     else {
-        ROS_ERROR_STREAM("[PickAndPlacePipeline] Unknown pre-approach planning error!");
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Unknown post-retreat planning error!");
         return success;
     }
 
@@ -641,7 +667,7 @@ bool PickAndPlacePipeline::run(
     // open gripper
     if (!gripper_commander_ptr_->open()) {
         ROS_ERROR_STREAM("[PickAndPlacePipeline] Open gripper failed!");
-        return success;
+        // return success;
     }
     else {
         ROS_DEBUG_STREAM("[PickAndPlacePipeline] Open gripper succeeded");
@@ -657,6 +683,32 @@ bool PickAndPlacePipeline::run(
     else {
         ROS_DEBUG_STREAM("[PickAndPlacePipeline] Gripper deactivation succeeded");
     }
+
+    /**
+     *  ready-to-grasp motion planning
+     */
+    moveit::core::RobotState ready_state(robot_model_ptr_);
+    ready_state = getNamedTargetState("left_arm_grasp_side");
+
+    moveit::planning_interface::MoveGroupInterface::Plan ready_to_grasp_plan;
+    move_group_error_code = planTargetState(ready_state, ready_to_grasp_plan);
+    if (move_group_error_code == 
+        moveit::planning_interface::MoveItErrorCode::SUCCESS) {
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Ready-to-grasp planning succeeded");
+    }
+    else if (move_group_error_code == 
+        moveit::planning_interface::MoveItErrorCode::TIMED_OUT) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Ready-to-grasp planning timeout!");
+        return success;
+    }
+    else {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Unknown ready-to-grasp planning error!");
+        return success;
+    }
+
+    // execute the ready-to-grasp plan
+    move_group_ptr_->execute(ready_to_grasp_plan);
+    move_group_ptr_->setStartStateToCurrentState();
 
     /**
      *  clear octomap
