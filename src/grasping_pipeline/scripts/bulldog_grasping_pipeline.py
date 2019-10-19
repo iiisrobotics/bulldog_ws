@@ -26,6 +26,8 @@ import darknet_ros_msgs.msg
 
 
 IMAGE_SHAPE = None
+OBJECT_DETECTION_TIMEOUT = 1.0
+
 IMAGE_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/color/image_raw'
 CLOUD_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/depth_registered/points'
 
@@ -562,8 +564,8 @@ def find_closest_grasp(grasps, frame='base_link',
 	return closest_grasp
 
 
-def configure_target_pose(grasp_configs):
-	"""Configure target pose for planning
+def configure_grasp_poses(grasp_configs):
+	"""Configure grasp poses for planning
 
 	Parameters
 	----------
@@ -590,39 +592,39 @@ def configure_target_pose(grasp_configs):
 			z: -0.5883724060255893
 			w: -0.3150965657765391
 	"""
-	target_poses = []
+	grasp_poses = []
 	for grasp in grasp_configs.grasps:
-		target_positions = grasp.bottom
-		target_rotation_matrix = np.array([
+		grasp_position = grasp.bottom
+		grasp_rotation_matrix = np.array([
 			[-grasp.binormal.x, -grasp.axis.x, grasp.approach.x, 0.0],
 			[-grasp.binormal.y, -grasp.axis.y, grasp.approach.y, 0.0],
 			[-grasp.binormal.z, -grasp.axis.z, grasp.approach.z, 0.0],
 			[0.0, 0.0, 0.0, 1.0]
 		])
 
-		target_quaternion = tf.transformations.quaternion_from_matrix(
-			target_rotation_matrix)
+		grasp_quaternion = tf.transformations.quaternion_from_matrix(
+			grasp_rotation_matrix)
 		# take inverse quaternion to rotate the gripper in the base_link
-		target_quaternion = Quaternion(x=target_quaternion[0],
-									y=target_quaternion[1],
-									z=target_quaternion[2],
-									w=target_quaternion[3])
+		grasp_quaternion = Quaternion(x=grasp_quaternion[0],
+									  y=grasp_quaternion[1],
+									  z=grasp_quaternion[2],
+									  w=grasp_quaternion[3])
 
-		target_pose = PoseStamped()
-		target_pose.header.stamp = rospy.Time.now()
-		target_pose.header.frame_id = POSE_REFERENCE_FRAME
-		target_pose.pose.position = target_position
-		# target_pose.pose.position.x = 0.795009083413
-		# target_pose.pose.position.y = 0.22062083617
-		# target_pose.pose.position.z = 0.489056381231
-		target_pose.pose.orientation = target_quaternion
-		# target_pose.pose.orientation.x = -0.08121355241516261
-		# target_pose.pose.orientation.y = -0.052377064390203044
-		# target_pose.pose.orientation.z = -0.5590192309531775
-		# target_pose.pose.orientation.w = 0.8235037956527536
-		target_poses.append(target_pose)
+		grasp_pose = PoseStamped()
+		grasp_pose.header.stamp = rospy.Time.now()
+		grasp_pose.header.frame_id = POSE_REFERENCE_FRAME
+		grasp_pose.pose.position = grasp_position
+		# grasp_pose.pose.position.x = 0.795009083413
+		# grasp_pose.pose.position.y = 0.22062083617
+		# grasp_pose.pose.position.z = 0.489056381231
+		grasp_pose.pose.orientation = grasp_quaternion
+		# grasp_pose.pose.orientation.x = -0.08121355241516261
+		# grasp_pose.pose.orientation.y = -0.052377064390203044
+		# grasp_pose.pose.orientation.z = -0.5590192309531775
+		# grasp_pose.pose.orientation.w = 0.8235037956527536
+		grasp_poses.append(grasp_pose)
 
-	return target_poses
+	return grasp_poses
 
 
 def main():
@@ -667,12 +669,16 @@ def main():
 	#
 	# Yolo detection
 	#
-	while True:
+	start_time = rospy.Time.now()
+	while (rospy.Time.now() - start_time).to_sec() <= OBJECT_DETECTION_TIMEOUT:
 		bounding_boxes = yolo_detection(YOLO_ACTION_DEFAULT_NAME, image)
 		if len(bounding_boxes) > 0:
 			break
 		else:
 			rospy.logerr("[GraspingPipeline] No object found!")
+	else:
+		rospy.logerr("[GraspingPipeline] Object detection timeout!")
+		raise SystemExit()
 
 	#
 	# process point cloud through Mask RCNN detection
@@ -691,8 +697,8 @@ def main():
 	#
 	# interpret pose configuration
 	#
-	# We use the pose of the gripper base for planning.
-	target_poses = configure_target_pose(grasp_configs)
+	# We use the pose of the gripper tool 0 link for planning.
+	target_poses = configure_grasp_poses(grasp_configs)
 
 	#
 	# planning

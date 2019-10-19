@@ -114,11 +114,16 @@ PickAndPlacePipeline::PickAndPlacePipeline(ros::NodeHandle node) :
     // load grasp filter
     //
     moveit::core::RobotStatePtr current_state_ptr;
-    current_state_ptr.reset(new moveit::core::RobotState(
-        *move_group_ptr_->getCurrentState()
-    ));
+    {
+        planning_scene_monitor::LockedPlanningSceneRO 
+        locked_planning_scene_ro_ptr(planning_scene_monitor_ptr_);
+        current_state_ptr.reset(new moveit::core::RobotState(
+            locked_planning_scene_ro_ptr->getCurrentState())
+        );
+    }
     grasp_filter_ptr_.reset(new moveit_grasps::GraspFilter(
-        current_state_ptr, visual_tools_ptr_));
+        current_state_ptr, visual_tools_ptr_)
+    );
 
     //
     // load grasp planner
@@ -383,25 +388,32 @@ bool PickAndPlacePipeline::run(
     else {
         ROS_DEBUG_STREAM("[PickAndPlacePipeline] Grasps filtering succeeded");
     }
-    ROS_INFO_STREAM("[PickAndPlacePipeline]" 
+    ROS_INFO_STREAM("[PickAndPlacePipeline] " 
         << grasp_candidate_ptrs.size() 
         << " grasps remain after filtering");
 
-    std::cout << "---------- IK solution from moveit_grasps ----------" << std::endl;
-    for (auto it = grasp_candidate_ptrs[0]->grasp_ik_solution_.begin(); 
-        it != grasp_candidate_ptrs[0]->grasp_ik_solution_.end(); 
-        it++) {
-        std::cout << *it << std::endl;
-    }
-    std::cout << "---------------------------------" << std::endl;
+    for (size_t remaining_grasp_id = 0; 
+        remaining_grasp_id < grasp_candidate_ptrs.size(); 
+        remaining_grasp_id++) {
 
-    std::cout << "---------- Pre-grasp IK solution from moveit_grasps ----------" << std::endl;
-    for (auto it = grasp_candidate_ptrs[0]->pregrasp_ik_solution_.begin(); 
-        it != grasp_candidate_ptrs[0]->pregrasp_ik_solution_.end(); 
-        it++) {
-        std::cout << *it << std::endl;
+        std::cout << "remainning_grasp: " << remaining_grasp_id << std::endl;
+
+        std::cout << "--------------- IK solution from moveit_grasps ---------------" << std::endl;
+        for (auto it = grasp_candidate_ptrs[remaining_grasp_id]->grasp_ik_solution_.begin();
+            it != grasp_candidate_ptrs[remaining_grasp_id]->grasp_ik_solution_.end();
+            it++) {
+            std::cout << *it << std::endl;
+        }
+        std::cout << "--------------------------------------------------------------" << std::endl;
+
+        std::cout << "---------- Pre-grasp IK solution from moveit_grasps ----------" << std::endl;
+        for (auto it = grasp_candidate_ptrs[remaining_grasp_id]->pregrasp_ik_solution_.begin();
+            it != grasp_candidate_ptrs[remaining_grasp_id]->pregrasp_ik_solution_.end();
+            it++) {
+            std::cout << *it << std::endl;
+        }
+        std::cout << "--------------------------------------------------------------" << std::endl;
     }
-    std::cout << "---------------------------------" << std::endl;
 
     /**
      *  pre-approach motion planning
@@ -494,7 +506,7 @@ bool PickAndPlacePipeline::run(
     visual_tools_ptr_->prompt(
         "[PickAndPlacePipeline] Press NEXT to show the approach motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(approach_plan.trajectory_, 
-        approach_plan.start_state_, true);
+        approach_plan.start_state_, false);
     visual_tools_ptr_->trigger();    
 
     move_group_ptr_->execute(approach_plan);
@@ -542,7 +554,7 @@ bool PickAndPlacePipeline::run(
     visual_tools_ptr_->prompt(
         "[PickAndPlacePipeline] Press NEXT to show the lift motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(lift_plan.trajectory_, 
-        lift_plan.start_state_, true);
+        lift_plan.start_state_, false);
     visual_tools_ptr_->trigger();
 
     move_group_ptr_->execute(lift_plan);
@@ -580,7 +592,7 @@ bool PickAndPlacePipeline::run(
     visual_tools_ptr_->prompt(
         "[PickAndPlacePipeline] Press NEXT to show the lift motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(retreat_plan.trajectory_, 
-        retreat_plan.start_state_, true);
+        retreat_plan.start_state_, false);
     visual_tools_ptr_->trigger();
 
     move_group_ptr_->execute(retreat_plan);
@@ -612,7 +624,7 @@ bool PickAndPlacePipeline::run(
     visual_tools_ptr_->prompt(
         "[PickAndPlacePipeline] Press NEXT to show the post-retreat motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(post_retreat_plan.trajectory_, 
-        post_retreat_plan.start_state_, true);
+        post_retreat_plan.start_state_, false);
     visual_tools_ptr_->trigger();
 
     move_group_ptr_->execute(post_retreat_plan);
@@ -784,12 +796,12 @@ bool PickAndPlacePipeline::generateSeedStates(
             seed_state_ptr, 
             grasp_data_ptr_->parent_link_->getName()
         )) {
-            ROS_ERROR_STREAM(
-                "[PickAndPlacePipeline] Get inverse kinematics solution failed!");
+            // ROS_ERROR_STREAM(
+            //     "[PickAndPlacePipeline] Get inverse kinematics solution failed!");
         }
         else {
-            ROS_DEBUG_STREAM(
-                "[PickAndPlacePipeline] Get inverse kinematics solution succeeded!");
+            // ROS_DEBUG_STREAM(
+            //     "[PickAndPlacePipeline] Get inverse kinematics solution succeeded!");
         }
         
         //
