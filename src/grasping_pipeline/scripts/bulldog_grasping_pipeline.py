@@ -354,6 +354,9 @@ def process_cloud(cloud_transformed, image_size, bounding_boxes):
 		else:
 			rospy.logerr("[GraspingPipeline] No bottle or cup in the view!")
 			raise SystemExit()
+	else:
+		rospy.logerr("[GraspingPipeline] No object found!")
+		raise SystemError()
 
 	return cloud_indexed
 
@@ -669,16 +672,17 @@ def main():
 	#
 	# Yolo detection
 	#
-	start_time = rospy.Time.now()
-	while (rospy.Time.now() - start_time).to_sec() <= OBJECT_DETECTION_TIMEOUT:
-		bounding_boxes = yolo_detection(YOLO_ACTION_DEFAULT_NAME, image)
-		if len(bounding_boxes) > 0:
-			break
-		else:
-			rospy.logerr("[GraspingPipeline] No object found!")
-	else:
-		rospy.logerr("[GraspingPipeline] Object detection timeout!")
-		raise SystemExit()
+	# start_time = rospy.Time.now()
+	# while (rospy.Time.now() - start_time).to_sec() <= OBJECT_DETECTION_TIMEOUT:
+	# 	bounding_boxes = yolo_detection(YOLO_ACTION_DEFAULT_NAME, image)
+	# 	if len(bounding_boxes) > 0:
+	# 		break
+	# 	else:
+	# 		rospy.logerr("[GraspingPipeline] No object found!")
+	# else:
+	# 	rospy.logerr("[GraspingPipeline] Object detection timeout!")
+	# 	raise SystemExit()
+	bounding_boxes = yolo_detection(YOLO_ACTION_DEFAULT_NAME, image)
 
 	#
 	# process point cloud through Mask RCNN detection
