@@ -26,7 +26,7 @@ import darknet_ros_msgs.msg
 
 
 IMAGE_SHAPE = None
-OBJECT_DETECTION_TIMEOUT = 1.0
+OBJECT_DETECTION_TIMEOUT = 5.0
 
 IMAGE_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/color/image_raw'
 CLOUD_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/depth_registered/points'

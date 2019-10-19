@@ -9,6 +9,8 @@
     <arg name="right_gripper_camera" default="right_gripper_sensor_d415_camera"/>  
     <arg name="left_gripper_camera_tf_prefix" default="$(arg left_gripper_camera)"/>
     <arg name="right_gripper_camera_tf_prefix" default="$(arg right_gripper_camera)"/>
+    <arg name="enable_infra1" default="false"/>
+    <arg name="enable_infra2" default="false"/>
     <arg name="enable_gyro" default="false"/>
     <arg name="enable_accel" default="false"/>
     <arg name="enable_sync" default="true"/>
@@ -20,6 +22,8 @@
             <arg name="serial_no" value="$(arg left_gripper_camera_serial_no)"/>
             <arg name="camera" value="$(arg left_gripper_camera)"/>
             <arg name="tf_prefix" value="$(arg left_gripper_camera_tf_prefix)"/>
+            <arg name="enable_infra1" value="$(arg enable_infra1)"/>
+            <arg name="enable_infra2" value="$(arg enable_infra2)"/>
             <arg name="enable_sync" value="$(arg enable_sync)"/>
             <arg name="enable_gyro" value="$(arg enable_gyro)"/>
             <arg name="enable_accel" value="$(arg enable_accel)"/>
@@ -31,6 +35,8 @@
             <arg name="serial_no" value="$(arg right_gripper_camera_serial_no)"/>
             <arg name="camera" value="$(arg right_gripper_camera)"/>
             <arg name="tf_prefix" value="$(arg right_gripper_camera_tf_prefix)"/>
+            <arg name="enable_infra1" value="$(arg enable_infra1)"/>
+            <arg name="enable_infra2" value="$(arg enable_infra2)"/>
             <arg name="enable_sync" value="$(arg enable_sync)"/>
             <arg name="enable_gyro" value="$(arg enable_gyro)"/>
             <arg name="enable_accel" value="$(arg enable_accel)"/>
