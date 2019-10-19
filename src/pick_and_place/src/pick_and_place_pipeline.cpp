@@ -376,7 +376,32 @@ bool PickAndPlacePipeline::run(
     //
     // grasp filter
     //
-    filterGrasps(grasp_candidate_ptrs, seed_state_ptrs);
+    if (!filterGrasps(grasp_candidate_ptrs, seed_state_ptrs)) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Grasps filtering failed!");
+        return success;
+    }
+    else {
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Grasps filtering succeeded");
+    }
+    ROS_INFO_STREAM("[PickAndPlacePipeline]" 
+        << grasp_candidate_ptrs.size() 
+        << " grasps remain after filtering");
+
+    std::cout << "---------- IK solution from moveit_grasps ----------" << std::endl;
+    for (auto it = grasp_candidate_ptrs[0]->grasp_ik_solution_.begin(); 
+        it != grasp_candidate_ptrs[0]->grasp_ik_solution_.end(); 
+        it++) {
+        std::cout << *it << std::endl;
+    }
+    std::cout << "---------------------------------" << std::endl;
+
+    std::cout << "---------- Pre-grasp IK solution from moveit_grasps ----------" << std::endl;
+    for (auto it = grasp_candidate_ptrs[0]->pregrasp_ik_solution_.begin(); 
+        it != grasp_candidate_ptrs[0]->pregrasp_ik_solution_.end(); 
+        it++) {
+        std::cout << *it << std::endl;
+    }
+    std::cout << "---------------------------------" << std::endl;
 
     /**
      *  pre-approach motion planning
@@ -795,42 +820,23 @@ bool PickAndPlacePipeline::filterGrasps(
 {
     bool success = false;
 
-    // if (!grasp_filter_ptr_->filterGrasps(
-    //         grasp_candidate_ptrs, 
-    //         seed_state_ptrs, 
-    //         planning_scene_monitor_ptr_, 
-    //         arm_group_ptr_, 
-    //         filter_pregrasps)) {
-    //     ROS_ERROR_STREAM("[PickAndPlacePipeline] Grasps filtering failed!");
-    //     return success;
-    // }
-    // else {
-    //     ROS_DEBUG_STREAM("[PickAndPlacePipeline] Grasps filtering succeeded");
-    // }
-    // if (!grasp_filter_ptr_->removeInvalidAndFilter(grasp_candidate_ptrs)) {
-    //     ROS_ERROR_STREAM("[PickAndPlacePipeline] Grasps filtering remove all grasps!");
-    //     return success;
-    // }
-    // ROS_INFO_STREAM("[PickAndPlacePipeline]" 
-    //     << grasp_candidate_ptrs.size() 
-    //     << " grasps remain after filtering");
+    success = grasp_filter_ptr_->filterGrasps(
+        grasp_candidate_ptrs, 
+        seed_state_ptrs, 
+        planning_scene_monitor_ptr_, 
+        arm_group_ptr_, 
+        filter_pregrasps
+    );
 
-    // std::cout << "---------- IK solution from moveit_grasps ----------" << std::endl;
-    // for (auto it = grasp_candidate_ptrs[0]->grasp_ik_solution_.begin(); 
-    //     it != grasp_candidate_ptrs[0]->grasp_ik_solution_.end(); 
-    //     it++) {
-    //     std::cout << *it << std::endl;
-    // }
-    // std::cout << "---------------------------------" << std::endl;
+    success = grasp_filter_ptr_->removeInvalidAndFilter(grasp_candidate_ptrs);
 
-    // std::cout << "---------- Pre-grasp IK solution from moveit_grasps ----------" << std::endl;
-    // for (auto it = grasp_candidate_ptrs[0]->pregrasp_ik_solution_.begin(); 
-    //     it != grasp_candidate_ptrs[0]->pregrasp_ik_solution_.end(); 
-    //     it++) {
-    //     std::cout << *it << std::endl;
-    // }
-    // std::cout << "---------------------------------" << std::endl;
+    if (grasp_candidate_ptrs.size() == 0) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Grasps filtering remove all grasps!");
+        success = false;
+        return success;
+    }
 
+    return success;
 }
 
 bool PickAndPlacePipeline::planGrasps(
