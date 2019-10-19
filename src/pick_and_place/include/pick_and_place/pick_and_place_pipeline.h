@@ -60,9 +60,9 @@ private:
     moveit::planning_interface::MoveGroupInterfacePtr move_group_ptr_;
 
     /**
-     *  @attrib planning_pipeline_ptr_: motion planning
+     *  @attrib clear_octomap_client_ptr_: ros seriver client to clear octomap
      */
-    planning_pipeline::PlanningPipelinePtr planning_pipeline_ptr_;
+    ros::ServiceClientPtr clear_octomap_client_ptr_;
 
     /**
      *  @attrib end_effector_name_: name of the end effector group
@@ -81,9 +81,14 @@ private:
     std::string gripper_command_topic_;
 
     /**
-     *  @attib gripper_status_topic_: topic to receive the gripper status
+     *  @attrib gripper_status_topic_: topic to receive the gripper status
      */
     std::string gripper_status_topic_;
+
+    /**
+     *  @attrib clear_octomap_service_: service to clear the octomap
+     */
+    std::string clear_octomap_service_;
 
     /**
      *  @attrib arm_group_ptr_: arm group
@@ -100,12 +105,6 @@ private:
      */
     robotiq_3f_gripper_commander::Robotiq3FGripperCommanderPtr 
         gripper_commander_ptr_;
-
-    /**
-     *  @attrib motion_plans_: motion planning results
-     */
-    std::vector<
-        moveit::planning_interface::MoveGroupInterface::Plan> motion_plans_;
 
 protected:
 public:

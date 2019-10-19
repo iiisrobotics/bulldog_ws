@@ -2,6 +2,10 @@
 #include "pick_and_place/pick_and_place_pipeline.h"
 //----------
 
+//---------- std_srvs
+#include <std_srvs/Empty.h>
+//----------
+
 //---------- moveit
 #include <moveit/robot_state/conversions.h>
 //----------
@@ -18,6 +22,7 @@ PickAndPlacePipeline::PickAndPlacePipeline(ros::NodeHandle node) :
     //
     node_.getParam("end_effector_group_name", end_effector_group_name_);
     node_.getParam("arm_group_name", arm_group_name_);
+    node_.getParam("clear_octomap_service", clear_octomap_service_);
     node_.getParam("gripper_command_topic", gripper_command_topic_);
     node_.getParam("gripper_status_topic", gripper_status_topic_);
 
@@ -25,6 +30,8 @@ PickAndPlacePipeline::PickAndPlacePipeline(ros::NodeHandle node) :
         << end_effector_group_name_);
     ROS_DEBUG_STREAM("[PickAndPlacePipeline] Arm group name: " 
         << arm_group_name_);
+    ROS_DEBUG_STREAM("[PickAndPlacePipeline] Clear octomap service: "
+        << clear_octomap_service_);
     ROS_DEBUG_STREAM("[PickAndPlacePipeline] Gripper command topic: " 
         << gripper_command_topic_);
     ROS_DEBUG_STREAM("[PickAndPlacePipeline] Gripper status topic: " 
@@ -70,12 +77,13 @@ PickAndPlacePipeline::PickAndPlacePipeline(ros::NodeHandle node) :
     ROS_DEBUG_STREAM("[PickAndPlacePipeline] Move group loaded!");
 
     //
-    // load motion planning pipeline
+    // load clear octomap client
     //
-    ROS_DEBUG_STREAM("[PickAndPlacePipeline] Loading planning pipeline...");
-    planning_pipeline_ptr_.reset(new planning_pipeline::PlanningPipeline(
-        robot_model_ptr_, node_, "planning_plugin", "request_adapters"));
-    ROS_DEBUG_STREAM("[PickAndPlacePipeline] Planning pipeline loaded!");
+    ROS_DEBUG_STREAM("[PickAndPlacePipeline] Loading clear octomap client...");
+    clear_octomap_client_ptr_.reset(new ros::ServiceClient(
+        node_.serviceClient<std_srvs::Empty>(clear_octomap_service_)
+    ));
+    ROS_DEBUG_STREAM("[PickAndPlacePipeline] Clear octomap client loaded!");
 
     //
     // setup rviz visual tools
@@ -653,6 +661,14 @@ bool PickAndPlacePipeline::run(
     /**
      *  clear octomap
      */
+    std_srvs::Empty clear_octomap_request;
+    if (!clear_octomap_client_ptr_->call(clear_octomap_request)) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Clear octomap failed!");
+        return success;
+    }
+    else {
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Octomap cleared");
+    }
 
     success = true;
     return success;

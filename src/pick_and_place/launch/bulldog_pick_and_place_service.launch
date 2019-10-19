@@ -21,6 +21,7 @@
         <param name="service_topic" value="pick_and_place" />
         <param name="end_effector_group_name" value="left_gripper" />
         <param name="arm_group_name" value="left_arm" />
+        <param name="clear_octomap_service" value="/clear_octomap" />
         <param name="gripper_command_topic" value="/left_gripper/command" />
         <param name="gripper_status_topic" value="/left_gripper/state" />
         <param name="planning_plugin" value="ompl_interface/OMPLPlanner" />
