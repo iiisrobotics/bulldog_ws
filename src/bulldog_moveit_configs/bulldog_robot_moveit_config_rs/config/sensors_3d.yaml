@@ -20,8 +20,8 @@ sensors:
     image_topic: /left_gripper_sensor_d415_camera/aligned_depth_to_color/image_raw
     queue_size: 1
     near_clipping_plane_distance: 0.01
-    far_clipping_plane_distance: 2.00
-    shadow_threshold: 0.1
+    far_clipping_plane_distance: 2.00 # 3.00 - 5.00
+    shadow_threshold: 0.1 # 0.2
     padding_scale: 1.0
     padding_offset: 0.01
     max_update_rate: 0.5
@@ -30,8 +30,8 @@ sensors:
     image_topic: /right_gripper_sensor_d415_camera/aligned_depth_to_color/image_raw
     queue_size: 1
     near_clipping_plane_distance: 0.01
-    far_clipping_plane_distance: 2.00
-    shadow_threshold: 0.1
+    far_clipping_plane_distance: 2.00 # 3.00 - 5.00
+    shadow_threshold: 0.1 # 0.2
     padding_scale: 1.0
     padding_offset: 0.01
     max_update_rate: 0.5
