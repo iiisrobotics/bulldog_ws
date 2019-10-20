@@ -8,6 +8,7 @@
 
 //---------- moveit
 #include <moveit/robot_state/conversions.h>
+#include <moveit/kinematic_constraints/utils.h>
 //----------
 
 
@@ -75,6 +76,14 @@ PickAndPlacePipeline::PickAndPlacePipeline(ros::NodeHandle node) :
     move_group_ptr_.reset(new moveit::planning_interface::MoveGroupInterface(
         arm_group_name_));
     ROS_DEBUG_STREAM("[PickAndPlacePipeline] Move group loaded!");
+
+    //
+    // load motion planning pipeline
+    //
+    ROS_DEBUG_STREAM("Loading planning pipeline...");
+    planning_pipeline_ptr_.reset(new planning_pipeline::PlanningPipeline(
+        robot_model_ptr_, node_, "planning_plugin", "request_adapters"));
+    ROS_DEBUG_STREAM("Planning pipeline loaded!");
 
     //
     // load clear octomap client
@@ -446,15 +455,15 @@ bool PickAndPlacePipeline::run(
     pre_grasp_state.setJointGroupPositions(
         arm_group_ptr_, grasp_candidate_ptr->pregrasp_ik_solution_);
 
-    moveit::planning_interface::MoveItErrorCode move_group_error_code;
-    moveit::planning_interface::MoveGroupInterface::Plan pre_approach_plan;
-    move_group_error_code = planTargetState(pre_grasp_state, pre_approach_plan);
-    if (move_group_error_code == 
-        moveit::planning_interface::MoveItErrorCode::SUCCESS) {
+    moveit_msgs::MoveItErrorCodes planning_pipeline_error_code;
+    moveit_msgs::MotionPlanResponse pre_approach_plan;
+    planning_pipeline_error_code = planTargetState(pre_grasp_state, pre_approach_plan);
+    if (planning_pipeline_error_code.val == 
+        moveit_msgs::MoveItErrorCodes::SUCCESS) {
         ROS_DEBUG_STREAM("[PickAndPlacePipeline] Pre-approach planning succeeded");
     }
-    else if (move_group_error_code == 
-        moveit::planning_interface::MoveItErrorCode::TIMED_OUT) {
+    else if (planning_pipeline_error_code.val == 
+        moveit_msgs::MoveItErrorCodes::TIMED_OUT) {
         ROS_ERROR_STREAM("[PickAndPlacePipeline] Pre-approach planning timeout!");
         return success;
     }
@@ -468,12 +477,12 @@ bool PickAndPlacePipeline::run(
     //
     visual_tools_ptr_->prompt(
         "[PickAndPlacePipeline] Press NEXT to show the pre-approach motion planning\n");
-    visual_tools_ptr_->publishTrajectoryPath(pre_approach_plan.trajectory_, 
-        pre_approach_plan.start_state_, false);
+    visual_tools_ptr_->publishTrajectoryPath(pre_approach_plan.trajectory, 
+        pre_approach_plan.trajectory_start, false);
     visual_tools_ptr_->trigger();
 
-    move_group_ptr_->execute(pre_approach_plan);
-    move_group_ptr_->setStartStateToCurrentState();
+    // move_group_ptr_->execute(pre_approach_plan);
+    // move_group_ptr_->setStartStateToCurrentState();
 
     /**
      *  planning Cartesian path
@@ -492,6 +501,7 @@ bool PickAndPlacePipeline::run(
     approach_waypoints.push_back(grasp_waypoint);
 
     moveit::planning_interface::MoveGroupInterface::Plan approach_plan;
+    moveit::planning_interface::MoveItErrorCode move_group_error_code;
     move_group_error_code = planCartesianPath(
         approach_waypoints, approach_plan);
     if (move_group_error_code == 
@@ -612,14 +622,14 @@ bool PickAndPlacePipeline::run(
     moveit::core::RobotState default_state(robot_model_ptr_);
     default_state = getNamedTargetState("left_arm_default");
 
-    moveit::planning_interface::MoveGroupInterface::Plan post_retreat_plan;
-    move_group_error_code = planTargetState(default_state, post_retreat_plan);
-    if (move_group_error_code == 
-        moveit::planning_interface::MoveItErrorCode::SUCCESS) {
+    moveit_msgs::MotionPlanResponse post_retreat_plan;
+    planning_pipeline_error_code = planTargetState(default_state, post_retreat_plan);
+    if (planning_pipeline_error_code.val == 
+        moveit_msgs::MoveItErrorCodes::SUCCESS) {
         ROS_DEBUG_STREAM("[PickAndPlacePipeline] Post-retreat planning succeeded");
     }
-    else if (move_group_error_code == 
-        moveit::planning_interface::MoveItErrorCode::TIMED_OUT) {
+    else if (planning_pipeline_error_code.val == 
+        moveit_msgs::MoveItErrorCodes::TIMED_OUT) {
         ROS_ERROR_STREAM("[PickAndPlacePipeline] Post-retreat planning timeout!");
         return success;
     }
@@ -631,12 +641,12 @@ bool PickAndPlacePipeline::run(
     // execute the post-retreat plan
     visual_tools_ptr_->prompt(
         "[PickAndPlacePipeline] Press NEXT to show the post-retreat motion planning\n");
-    visual_tools_ptr_->publishTrajectoryPath(post_retreat_plan.trajectory_, 
-        post_retreat_plan.start_state_, false);
+    visual_tools_ptr_->publishTrajectoryPath(post_retreat_plan.trajectory, 
+        post_retreat_plan.trajectory_start, false);
     visual_tools_ptr_->trigger();
 
-    move_group_ptr_->execute(post_retreat_plan);
-    move_group_ptr_->setStartStateToCurrentState();
+    // move_group_ptr_->execute(post_retreat_plan);
+    // move_group_ptr_->setStartStateToCurrentState();
 
     // open gripper
     if (!gripper_commander_ptr_->open()) {
@@ -664,7 +674,7 @@ bool PickAndPlacePipeline::run(
     moveit::core::RobotState ready_state(robot_model_ptr_);
     ready_state = getNamedTargetState("left_arm_grasp_side");
 
-    moveit::planning_interface::MoveGroupInterface::Plan ready_to_grasp_plan;
+    moveit_msgs::MotionPlanResponse ready_to_grasp_plan;
     move_group_error_code = planTargetState(ready_state, ready_to_grasp_plan);
     if (move_group_error_code == 
         moveit::planning_interface::MoveItErrorCode::SUCCESS) {
@@ -681,8 +691,8 @@ bool PickAndPlacePipeline::run(
     }
 
     // execute the ready-to-grasp plan
-    move_group_ptr_->execute(ready_to_grasp_plan);
-    move_group_ptr_->setStartStateToCurrentState();
+    // move_group_ptr_->execute(ready_to_grasp_plan);
+    // move_group_ptr_->setStartStateToCurrentState();
 
     /**
      *  clear octomap
@@ -937,26 +947,53 @@ bool PickAndPlacePipeline::planGrasps(
     return success;
 }
 
-moveit::planning_interface::MoveItErrorCode
+moveit_msgs::MoveItErrorCodes
 PickAndPlacePipeline::planTargetState(
     moveit::core::RobotState& target_state,
-    moveit::planning_interface::MoveGroupInterface::Plan& plan)
+    moveit_msgs::MotionPlanResponse& plan)
 {
-    const unsigned int num_planning_attempts = 5;// 5 times
-    const double planning_time = 1.5;// 1.5s
-    const double goal_tolerance = 0.01;// 0.01m
+    // const unsigned int num_planning_attempts = 5;// 5 times
+    // const double planning_time = 1.5;// 1.5s
+    // const double goal_tolerance = 0.01;// 0.01m
 
-    move_group_ptr_->setNumPlanningAttempts(num_planning_attempts);
-    move_group_ptr_->setPlanningTime(planning_time);
-    move_group_ptr_->setGoalTolerance(goal_tolerance);
+    // move_group_ptr_->setNumPlanningAttempts(num_planning_attempts);
+    // move_group_ptr_->setPlanningTime(planning_time);
+    // move_group_ptr_->setGoalTolerance(goal_tolerance);
 
-    move_group_ptr_->setStartStateToCurrentState();
-    move_group_ptr_->setJointValueTarget(target_state);
+    // move_group_ptr_->setStartStateToCurrentState();
+    // move_group_ptr_->setJointValueTarget(target_state);
 
-    moveit::planning_interface::MoveItErrorCode error_code = 
-        move_group_ptr_->plan(plan);
+    // moveit::planning_interface::MoveItErrorCode error_code = 
+    //     move_group_ptr_->plan(plan);
     
-    return error_code;
+    // return error_code;
+
+    planning_interface::MotionPlanRequest req;
+    planning_interface::MotionPlanResponse res;
+
+    req.group_name = arm_group_name_;
+    req.num_planning_attempts = 5;// 5 times
+    req.allowed_planning_time = 1.5;// 1.5s
+    moveit::core::robotStateToRobotStateMsg(
+        *move_group_ptr_->getCurrentState(), req.start_state);
+
+    double tolerance_below = 0.01;
+    double tolerance_above = 0.01;
+    moveit_msgs::Constraints goal_constrained = 
+        kinematic_constraints::constructGoalConstraints(
+            target_state, 
+            arm_group_ptr_,tolerance_below, 
+            tolerance_above
+        );
+    req.goal_constraints.push_back(goal_constrained);
+
+    planning_scene_monitor::LockedPlanningSceneRO 
+    locked_planning_scene_ro_ptr(planning_scene_monitor_ptr_);
+    planning_pipeline_ptr_->generatePlan(
+        locked_planning_scene_ro_ptr, req, res);
+
+    res.getMessage(plan);
+    return res.error_code_;
 }
 
 moveit::planning_interface::MoveItErrorCode

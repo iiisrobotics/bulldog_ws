@@ -60,6 +60,11 @@ private:
     moveit::planning_interface::MoveGroupInterfacePtr move_group_ptr_;
 
     /**
+     *  @attrib planning_pipeline_ptr_: motion planning
+     */
+    planning_pipeline::PlanningPipelinePtr planning_pipeline_ptr_;
+
+    /**
      *  @attrib clear_octomap_client_ptr_: ros seriver client to clear octomap
      */
     ros::ServiceClientPtr clear_octomap_client_ptr_;
@@ -161,9 +166,9 @@ private:
      *  @return error_code: error code of motion planning given by the move
      *                      group interface
      */
-    moveit::planning_interface::MoveItErrorCode planTargetState(
+    moveit_msgs::MoveItErrorCodes planTargetState(
         moveit::core::RobotState& target_state,
-        moveit::planning_interface::MoveGroupInterface::Plan& plan);
+        moveit_msgs::MotionPlanResponse& plan);
 
     /**
      *  @brief  planCartesianPath: plan a Cartesian path along the waypoints
