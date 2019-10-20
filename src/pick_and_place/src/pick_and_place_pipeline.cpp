@@ -488,7 +488,7 @@ bool PickAndPlacePipeline::run(
     std::vector<geometry_msgs::Pose> approach_waypoints;
     tf::poseEigenToMsg(eigen_waypoints[0], pre_grasp_waypoint);
     tf::poseEigenToMsg(eigen_waypoints[1], grasp_waypoint);
-    approach_waypoints.push_back(pre_grasp_waypoint);
+    // approach_waypoints.push_back(pre_grasp_waypoint);
     approach_waypoints.push_back(grasp_waypoint);
 
     moveit::planning_interface::MoveGroupInterface::Plan approach_plan;

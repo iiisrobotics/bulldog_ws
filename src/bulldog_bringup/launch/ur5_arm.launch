@@ -10,6 +10,11 @@
     <arg name="ur5_base_frame" default="$(arg ur5_prefix)base"/>
     <arg name="ur5_tool_frame" default="$(arg ur5_prefix)tool0"/>
 
+    <arg name="ur5_controllers" default="
+        joint_state_controller 
+        force_torque_sensor_controller 
+        arm_controller"/>
+
     <!-- Dual UR5 settings -->
     <arg name="ur5_left_prefix" default="left_arm_" />
     <arg name="ur5_right_prefix" default="right_arm_" />
@@ -21,6 +26,12 @@
     <arg name="ur5_right_base_frame" default="$(arg ur5_right_prefix)base"/>
     <arg name="ur5_left_tool_frame" default="$(arg ur5_left_prefix)tool0"/>
     <arg name="ur5_right_tool_frame" default="$(arg ur5_right_prefix)tool0"/>
+
+    <arg name="dual_ur5_controllers" default="
+        joint_state_controller 
+        force_torque_sensor_controller 
+        left_arm_controller
+        right_arm_controller"/>
 
     <!-- General settings -->
     <arg name="ur5_min_payload"  default="0.0"/>
@@ -78,5 +89,12 @@
 
             <remap from="follow_joint_trajectory" to="right_arm_controller/follow_joint_trajectory"/>
         </node>
+
+        <!-- Load controller settings -->
+        <!-- <rosparam file="$(find bulldog_bringup)/config/ur5_controllers.yaml" command="load"/> -->
+
+        <!-- spawn controller manager -->
+        <!-- <node name="dual_ur5_controller_spawner" pkg="controller_manager" type="spawner" respawn="true"
+            output="screen" args="$(arg dual_ur5_controllers)"/> -->
     </group>
 </launch>
