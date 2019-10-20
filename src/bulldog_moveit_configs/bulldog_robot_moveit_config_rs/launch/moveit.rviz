@@ -1452,9 +1452,9 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 999999
+      Max Intensity: 821
       Min Color: 0; 0; 0
-      Min Intensity: -2.88594947e-07
+      Min Intensity: 309
       Name: LaserScan
       Position Transformer: XYZ
       Queue Size: 10
@@ -1508,7 +1508,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.00999999978
       Style: Flat Squares
-      Topic: /left_gripper_sensor_d415_camera/depth/color/points
+      Topic: /left_gripper_sensor_d415_camera/depth_registered/points
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -1580,10 +1580,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.71979624
+      Pitch: 0.609796405
       Target Frame: base_link
       Value: XYOrbit (rviz)
-      Yaw: 0.785837293
+      Yaw: 3.37083817
     Saved: ~
 Window Geometry:
   Displays:
@@ -1607,5 +1607,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1624
-  X: 152
-  Y: 55
+  X: 214
+  Y: 67

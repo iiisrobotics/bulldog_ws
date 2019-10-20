@@ -13,6 +13,7 @@
 
   <!-- Load updated joint limits (override information from URDF) -->
   <group ns="$(arg robot_description)_planning">
+    <param name="shape_transform_cache_lookup_wait_time" value="0.1"/>
     <rosparam command="load" file="$(find bulldog_robot_moveit_config_rs)/config/joint_limits.yaml"/>
   </group>
 
