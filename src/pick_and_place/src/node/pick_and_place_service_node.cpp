@@ -1,5 +1,5 @@
 //---------- pick_and_place
-#include "pick_and_place/lib/pick_and_place_server.h"
+#include "pick_and_place/pick_and_place_server.h"
 //----------
 
 int main(int argc, char *argv[])

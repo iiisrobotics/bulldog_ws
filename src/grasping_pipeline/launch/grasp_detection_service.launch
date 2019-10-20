@@ -55,11 +55,11 @@
     <param name="filter_half_antipodal" value="false"/> <!-- on half antipodal -->
     
     <!-- Filter out grasps which are too low on (i.e. too close to) the table -->
-    <!-- <param name="filter_table_side_grasps" value="false" />
+    <param name="filter_table_side_grasps" value="false" />
     <rosparam param="vertical_axis"> [0, 0, 1] </rosparam>
     <param name="angle_thresh" value="0.1" />
     <param name="table_height" value="0.5" />
-    <param name="table_thresh" value="0.05" /> -->
+    <param name="table_thresh" value="0.05" />
 
     <!-- Grasp image creation -->
     <param name="create_image_batches" value="false" /> <!-- creates grasp images in batches (less memory usage) -->
@@ -69,10 +69,10 @@
     <param name="min_inliers" value="1" />
 
     <!-- Grasp selection -->
-    <param name="min_score_diff" value="100" />
+    <param name="min_score_diff" value="5" />
     <param name="min_aperture" value="0.0" />
     <param name="max_aperture" value="0.085" />
-    <param name="num_selected" value="10" />
+    <param name="num_selected" value="50" />
 
   </node>
 
