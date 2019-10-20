@@ -406,21 +406,21 @@ bool PickAndPlacePipeline::run(
 
         std::cout << "remainning_grasp: " << remaining_grasp_id << std::endl;
 
-        std::cout << "--------------- IK solution from moveit_grasps ---------------" << std::endl;
+        std::cout << "----------- IK solution from moveit_grasps ------------" << std::endl;
         for (auto it = grasp_candidate_ptrs[remaining_grasp_id]->grasp_ik_solution_.begin();
             it != grasp_candidate_ptrs[remaining_grasp_id]->grasp_ik_solution_.end();
             it++) {
             std::cout << *it << std::endl;
         }
-        std::cout << "--------------------------------------------------------------" << std::endl;
+        std::cout << "-------------------------------------------------------" << std::endl;
 
-        std::cout << "---------- Pre-grasp IK solution from moveit_grasps ----------" << std::endl;
+        std::cout << "------ Pre-grasp IK solution from moveit_grasps -------" << std::endl;
         for (auto it = grasp_candidate_ptrs[remaining_grasp_id]->pregrasp_ik_solution_.begin();
             it != grasp_candidate_ptrs[remaining_grasp_id]->pregrasp_ik_solution_.end();
             it++) {
             std::cout << *it << std::endl;
         }
-        std::cout << "--------------------------------------------------------------" << std::endl;
+        std::cout << "-------------------------------------------------------" << std::endl;
     }
 
     /**
