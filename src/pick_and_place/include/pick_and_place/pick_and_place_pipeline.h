@@ -166,9 +166,9 @@ private:
      *  @return error_code: error code of motion planning given by the move
      *                      group interface
      */
-    moveit_msgs::MoveItErrorCodes planTargetState(
+    moveit::planning_interface::MoveItErrorCode planTargetState(
         moveit::core::RobotState& target_state,
-        moveit_msgs::MotionPlanResponse& plan);
+        moveit::planning_interface::MoveGroupInterface::Plan& plan);
 
     /**
      *  @brief  planCartesianPath: plan a Cartesian path along the waypoints
