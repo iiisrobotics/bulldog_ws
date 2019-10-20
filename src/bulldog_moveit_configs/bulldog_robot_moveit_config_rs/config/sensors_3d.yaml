@@ -18,7 +18,7 @@ sensors:
   #   filtered_cloud_topic: filtered_cloud
   - sensor_plugin: occupancy_map_monitor/DepthImageOctomapUpdater
     image_topic: /left_gripper_sensor_d415_camera/aligned_depth_to_color/image_raw
-    queue_size: 4 # 1
+    queue_size: 1 # 1
     near_clipping_plane_distance: 0.01
     far_clipping_plane_distance: 2.00 # 3.00 - 5.00
     shadow_threshold: 0.2 # 0.2
@@ -28,7 +28,7 @@ sensors:
     filtered_cloud_topic: filtered_cloud
   - sensor_plugin: occupancy_map_monitor/DepthImageOctomapUpdater
     image_topic: /right_gripper_sensor_d415_camera/aligned_depth_to_color/image_raw
-    queue_size: 4 # 1
+    queue_size: 1 # 1
     near_clipping_plane_distance: 0.01
     far_clipping_plane_distance: 2.00 # 3.00 - 5.00
     shadow_threshold: 0.2 # 0.2

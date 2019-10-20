@@ -352,7 +352,7 @@ def process_cloud(cloud_transformed, image_size, bounding_boxes):
 				cloud_indexed.indices = [Int64(idx) for idx in cloud_indices]
 				break
 		else:
-			rospy.logerr("[GraspingPipeline] No bottle or cup in the view!")
+			rospy.logerr("[GraspingPipeline] No bottle, cup, remote or bowl in the view!")
 			raise SystemExit()
 	else:
 		rospy.logerr("[GraspingPipeline] No object found!")
@@ -424,7 +424,10 @@ def name_filtering(object_name,
 		List of index indicating the valid point cloud through Mask RCNN.
 
 	"""
-	if (object_name == 'bottle') or (object_name == 'cup'):
+	if (object_name == 'bottle') or \
+		(object_name == 'cup') or \
+		(object_name == 'remote') or \
+		(object_name == 'bowl'):
 		object_mask = np.zeros(image_size, dtype=np.bool)
 		object_mask[y_min:y_max, x_min:x_max] = True
 		object_mask = np.reshape(object_mask, -1)
@@ -435,7 +438,7 @@ def name_filtering(object_name,
 	return valid_indices
 
 
-def least_squares_filtering(cloud_points, mask_indices, dist_thresh=4e-4):
+def least_squares_filtering(cloud_points, mask_indices, dist_thresh=1e-4):
 	"""Extract the nonplanar indices through least squares fitting.
 
 	Parameters
@@ -672,16 +675,6 @@ def main():
 	#
 	# Yolo detection
 	#
-	# start_time = rospy.Time.now()
-	# while (rospy.Time.now() - start_time).to_sec() <= OBJECT_DETECTION_TIMEOUT:
-	# 	bounding_boxes = yolo_detection(YOLO_ACTION_DEFAULT_NAME, image)
-	# 	if len(bounding_boxes) > 0:
-	# 		break
-	# 	else:
-	# 		rospy.logerr("[GraspingPipeline] No object found!")
-	# else:
-	# 	rospy.logerr("[GraspingPipeline] Object detection timeout!")
-	# 	raise SystemExit()
 	bounding_boxes = yolo_detection(YOLO_ACTION_DEFAULT_NAME, image)
 
 	#

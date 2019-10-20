@@ -477,7 +477,7 @@ bool PickAndPlacePipeline::run(
     visual_tools_ptr_->prompt(
         "[PickAndPlacePipeline] Press NEXT to show the pre-approach motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(pre_approach_plan.trajectory_, 
-        pre_approach_plan.start_state_, false);
+        pre_approach_plan.start_state_, true);
     visual_tools_ptr_->trigger();
 
     move_group_ptr_->execute(pre_approach_plan);
@@ -522,7 +522,7 @@ bool PickAndPlacePipeline::run(
     visual_tools_ptr_->prompt(
         "[PickAndPlacePipeline] Press NEXT to show the approach motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(approach_plan.trajectory_, 
-        approach_plan.start_state_, false);
+        approach_plan.start_state_, true);
     visual_tools_ptr_->trigger();    
 
     move_group_ptr_->execute(approach_plan);
@@ -544,7 +544,7 @@ bool PickAndPlacePipeline::run(
     geometry_msgs::Pose lifted_waypoint;
     std::vector<geometry_msgs::Pose> lift_waypoints;
     tf::poseEigenToMsg(eigen_waypoints[2], lifted_waypoint);
-    lift_waypoints.push_back(grasp_waypoint);
+    // lift_waypoints.push_back(grasp_waypoint);
     lift_waypoints.push_back(lifted_waypoint);
 
     moveit::planning_interface::MoveGroupInterface::Plan lift_plan;
@@ -570,7 +570,7 @@ bool PickAndPlacePipeline::run(
     visual_tools_ptr_->prompt(
         "[PickAndPlacePipeline] Press NEXT to show the lift motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(lift_plan.trajectory_, 
-        lift_plan.start_state_, false);
+        lift_plan.start_state_, true);
     visual_tools_ptr_->trigger();
 
     move_group_ptr_->execute(lift_plan);
@@ -582,7 +582,7 @@ bool PickAndPlacePipeline::run(
     geometry_msgs::Pose retreat_waypoint;
     tf::poseEigenToMsg(eigen_waypoints[3], retreat_waypoint);
     std::vector<geometry_msgs::Pose> retreat_waypoints;
-    retreat_waypoints.push_back(lifted_waypoint);
+    // retreat_waypoints.push_back(lifted_waypoint);
     retreat_waypoints.push_back(retreat_waypoint);
 
     moveit::planning_interface::MoveGroupInterface::Plan retreat_plan;
@@ -608,7 +608,7 @@ bool PickAndPlacePipeline::run(
     visual_tools_ptr_->prompt(
         "[PickAndPlacePipeline] Press NEXT to show the lift motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(retreat_plan.trajectory_, 
-        retreat_plan.start_state_, false);
+        retreat_plan.start_state_, true);
     visual_tools_ptr_->trigger();
 
     move_group_ptr_->execute(retreat_plan);
@@ -640,7 +640,7 @@ bool PickAndPlacePipeline::run(
     visual_tools_ptr_->prompt(
         "[PickAndPlacePipeline] Press NEXT to show the post-retreat motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(post_retreat_plan.trajectory_, 
-        post_retreat_plan.start_state_, false);
+        post_retreat_plan.start_state_, true);
     visual_tools_ptr_->trigger();
 
     move_group_ptr_->execute(post_retreat_plan);
