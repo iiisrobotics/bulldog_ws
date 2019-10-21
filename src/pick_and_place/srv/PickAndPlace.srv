@@ -1,3 +1,0 @@
-geometry_msgs/PoseStamped[] grasp_poses
----
-bool success
