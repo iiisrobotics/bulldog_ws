@@ -176,6 +176,18 @@ bool PickAndPlacePipeline::run(
     }
 
     /**
+     *  switch to pinch mode
+     */
+    if (!gripper_commander_ptr_->setMode(
+            robotiq_3f_gripper_commander::Robotiq3FGripperModes::PINCH)) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Failed to switch the gripper to pinch mode!");
+        return success;
+    }
+    else {
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Gripper switches to pinch mode");
+    }
+
+    /**
      *  move the arm to random valid state
      */
     // moveit::planning_interface::MoveItErrorCode temp_error_code =
@@ -726,6 +738,18 @@ bool PickAndPlacePipeline::run(
     }
     else {
         ROS_DEBUG_STREAM("[PickAndPlacePipeline] Octomap cleared");
+    }
+
+    /**
+     *  switch to basic mode
+     */
+    if (!gripper_commander_ptr_->setMode(
+            robotiq_3f_gripper_commander::Robotiq3FGripperModes::BASIC)) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Failed to switch the gripper to basic mode!");
+        return success;
+    }
+    else {
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Gripper switches to basic mode");
     }
 
     /**

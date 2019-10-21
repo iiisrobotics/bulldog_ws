@@ -696,6 +696,10 @@ def main():
 	# process point cloud through Mask RCNN detection
 	#
 	# cloud_indexed = mask_rcnn_process_cloud(cloud_transformed, detection)
+
+	#
+	# process point cloud
+	#
 	image_size = (image.height, image.width)
 	cloud_indexed = process_cloud(
 		cloud_transformed, image_size, bounding_boxes)
