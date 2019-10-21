@@ -352,7 +352,7 @@ def process_cloud(cloud_transformed, image_size, bounding_boxes):
 				cloud_indexed.indices = [Int64(idx) for idx in cloud_indices]
 				break
 		else:
-			rospy.logerr("[GraspingPipeline] No bottle, cup, remote or bowl in the view!")
+			rospy.logerr("[GraspingPipeline] No bottle, cup, remote, handbag, cell phone or bowl in the view!")
 			raise SystemExit()
 	else:
 		rospy.logerr("[GraspingPipeline] No object found!")
@@ -427,6 +427,8 @@ def name_filtering(object_name,
 	if (object_name == 'bottle') or \
 		(object_name == 'cup') or \
 		(object_name == 'remote') or \
+		(object_name == 'handbag') or \
+		(object_name == 'cell phone') or \
 		(object_name == 'bowl'):
 		object_mask = np.zeros(image_size, dtype=np.bool)
 		object_mask[y_min:y_max, x_min:x_max] = True

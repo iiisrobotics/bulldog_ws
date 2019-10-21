@@ -444,11 +444,24 @@ bool PickAndPlacePipeline::run(
     moveit_grasps::GraspGenerator::getGraspWaypoints(
         grasp_candidate_ptr, eigen_waypoints);
 
+    visual_tools_ptr_->deleteAllMarkers();
     visual_tools_ptr_->publishAxisLabeled(eigen_waypoints[0], "pre-grasp");
     visual_tools_ptr_->publishAxisLabeled(eigen_waypoints[1], "grasp");
     visual_tools_ptr_->publishAxisLabeled(eigen_waypoints[2], "lifted");
     visual_tools_ptr_->publishAxisLabeled(eigen_waypoints[3], "retreat");
     visual_tools_ptr_->trigger();
+
+    //
+    //  clear octomap
+    //
+    std_srvs::Empty clear_octomap_request;
+    if (!clear_octomap_client_ptr_->call(clear_octomap_request)) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Clear octomap failed!");
+        return success;
+    }
+    else {
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Octomap cleared");
+    }
 
     moveit::core::RobotState pre_grasp_state(robot_model_ptr_);
     pre_grasp_state.setJointGroupPositions(
@@ -483,6 +496,17 @@ bool PickAndPlacePipeline::run(
     move_group_ptr_->execute(pre_approach_plan);
     move_group_ptr_->setStartStateToCurrentState();
 
+    //
+    // clear octomap
+    //
+    if (!clear_octomap_client_ptr_->call(clear_octomap_request)) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Clear octomap failed!");
+        return success;
+    }
+    else {
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Octomap cleared");
+    }
+
     /**
      *  planning Cartesian path
      */
@@ -500,6 +524,7 @@ bool PickAndPlacePipeline::run(
     approach_waypoints.push_back(grasp_waypoint);
 
     moveit::planning_interface::MoveGroupInterface::Plan approach_plan;
+    // move_group_error_code = planTargetPose(grasp_waypoint, approach_plan);
     move_group_error_code = planCartesianPath(
         approach_waypoints, approach_plan);
     if (move_group_error_code == 
@@ -539,6 +564,17 @@ bool PickAndPlacePipeline::run(
     }
 
     //
+    // clear octomap
+    //
+    if (!clear_octomap_client_ptr_->call(clear_octomap_request)) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Clear octomap failed!");
+        return success;
+    }
+    else {
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Octomap cleared");
+    }
+
+    //
     // compute the lift Cartesian path
     //
     geometry_msgs::Pose lifted_waypoint;
@@ -548,6 +584,7 @@ bool PickAndPlacePipeline::run(
     lift_waypoints.push_back(lifted_waypoint);
 
     moveit::planning_interface::MoveGroupInterface::Plan lift_plan;
+    // move_group_error_code = planTargetPose(lifted_waypoint, approach_plan);
     move_group_error_code = planCartesianPath(
         lift_waypoints, lift_plan);
     if (move_group_error_code == 
@@ -577,6 +614,17 @@ bool PickAndPlacePipeline::run(
     move_group_ptr_->setStartStateToCurrentState();
 
     //
+    // clear octomap
+    //
+    if (!clear_octomap_client_ptr_->call(clear_octomap_request)) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Clear octomap failed!");
+        return success;
+    }
+    else {
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Octomap cleared");
+    }
+
+    //
     // compute the retreat Cartesian path
     //
     geometry_msgs::Pose retreat_waypoint;
@@ -586,6 +634,7 @@ bool PickAndPlacePipeline::run(
     retreat_waypoints.push_back(retreat_waypoint);
 
     moveit::planning_interface::MoveGroupInterface::Plan retreat_plan;
+    // move_group_error_code = planTargetPose(retreat_waypoint, approach_plan);    
     move_group_error_code = planCartesianPath(
         retreat_waypoints, retreat_plan);
     if (move_group_error_code == 
@@ -606,13 +655,24 @@ bool PickAndPlacePipeline::run(
     // execute the retreat plan
     //
     visual_tools_ptr_->prompt(
-        "[PickAndPlacePipeline] Press NEXT to show the lift motion planning\n");
+        "[PickAndPlacePipeline] Press NEXT to show the retreat motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(retreat_plan.trajectory_, 
         retreat_plan.start_state_, true);
     visual_tools_ptr_->trigger();
 
     move_group_ptr_->execute(retreat_plan);
     move_group_ptr_->setStartStateToCurrentState();
+
+    //
+    // clear octomap
+    //
+    if (!clear_octomap_client_ptr_->call(clear_octomap_request)) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Clear octomap failed!");
+        return success;
+    }
+    else {
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Octomap cleared");
+    }
 
     /**
      *  post-retreat motion planning
@@ -636,7 +696,9 @@ bool PickAndPlacePipeline::run(
         return success;
     }
 
+    //
     // execute the post-retreat plan
+    //
     visual_tools_ptr_->prompt(
         "[PickAndPlacePipeline] Press NEXT to show the post-retreat motion planning\n");
     visual_tools_ptr_->publishTrajectoryPath(post_retreat_plan.trajectory_, 
@@ -646,13 +708,24 @@ bool PickAndPlacePipeline::run(
     move_group_ptr_->execute(post_retreat_plan);
     move_group_ptr_->setStartStateToCurrentState();
 
+    //
     // open gripper
+    //
     if (!gripper_commander_ptr_->open()) {
         ROS_ERROR_STREAM("[PickAndPlacePipeline] Open gripper failed!");
         return success;
     }
     else {
         ROS_DEBUG_STREAM("[PickAndPlacePipeline] Open gripper succeeded");
+    }
+
+    // clear octomap
+    if (!clear_octomap_client_ptr_->call(clear_octomap_request)) {
+        ROS_ERROR_STREAM("[PickAndPlacePipeline] Clear octomap failed!");
+        return success;
+    }
+    else {
+        ROS_DEBUG_STREAM("[PickAndPlacePipeline] Octomap cleared");
     }
 
     /**
@@ -695,7 +768,6 @@ bool PickAndPlacePipeline::run(
     /**
      *  clear octomap
      */
-    std_srvs::Empty clear_octomap_request;
     if (!clear_octomap_client_ptr_->call(clear_octomap_request)) {
         ROS_ERROR_STREAM("[PickAndPlacePipeline] Clear octomap failed!");
         return success;
@@ -950,8 +1022,8 @@ PickAndPlacePipeline::planTargetState(
     moveit::core::RobotState& target_state,
     moveit::planning_interface::MoveGroupInterface::Plan& plan)
 {
-    const unsigned int num_planning_attempts = 5;// 5 times
-    const double planning_time = 1.5;// 1.5s
+    const unsigned int num_planning_attempts = 10;// 10 times
+    const double planning_time = 5.0;// 5.0s
     const double goal_tolerance = 0.01;// 0.01m
 
     move_group_ptr_->setNumPlanningAttempts(num_planning_attempts);
@@ -968,6 +1040,30 @@ PickAndPlacePipeline::planTargetState(
 }
 
 moveit::planning_interface::MoveItErrorCode
+PickAndPlacePipeline::planTargetPose(
+    geometry_msgs::Pose& target_pose,
+    moveit::planning_interface::MoveGroupInterface::Plan& plan)
+{
+    const unsigned int num_planning_attempts = 3;// 3 times
+    const double planning_time = 1.0;// 1.5s
+    const double goal_tolerance = 0.01;// 0.01m
+    const double max_velocity_scaling_factor = 0.1;// slow down
+
+    move_group_ptr_->setNumPlanningAttempts(num_planning_attempts);
+    move_group_ptr_->setPlanningTime(planning_time);
+    move_group_ptr_->setGoalTolerance(0.01);// 0.01m
+    move_group_ptr_->setMaxVelocityScalingFactor(max_velocity_scaling_factor);
+
+    move_group_ptr_->setStartStateToCurrentState();
+    move_group_ptr_->setPoseTarget(target_pose);
+
+    moveit::planning_interface::MoveItErrorCode error_code = 
+        move_group_ptr_->plan(plan);
+
+    return error_code;
+}
+
+moveit::planning_interface::MoveItErrorCode
 PickAndPlacePipeline::planCartesianPath(
     std::vector<geometry_msgs::Pose>& waypoints,
     moveit::planning_interface::MoveGroupInterface::Plan& plan,
@@ -976,8 +1072,9 @@ PickAndPlacePipeline::planCartesianPath(
 {
     moveit::planning_interface::MoveItErrorCode error_code;
     moveit_msgs::RobotTrajectory trajectory;
+    move_group_ptr_->setStartStateToCurrentState();
     move_group_ptr_->computeCartesianPath(
-        waypoints, eef_step, jump_threshold, trajectory, true, &error_code);
+        waypoints, eef_step, jump_threshold, trajectory, false, &error_code);
 
     moveit::core::RobotState current_state(
         *move_group_ptr_->getCurrentState());

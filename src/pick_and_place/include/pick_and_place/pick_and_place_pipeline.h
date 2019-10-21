@@ -161,7 +161,7 @@ private:
 
     /**
      *  @brief  planTargetState: plan the trajectory to target state
-     *  @param  target_state: the terminated state of the trajectory
+     *  @param  target_state: the terminated state in the trajectory
      *  @param  plan: the trajectory motion plan
      *  @return error_code: error code of motion planning given by the move
      *                      group interface
@@ -169,6 +169,17 @@ private:
     moveit::planning_interface::MoveItErrorCode planTargetState(
         moveit::core::RobotState& target_state,
         moveit::planning_interface::MoveGroupInterface::Plan& plan);
+
+    /**
+     *  @brief  planTargetPose: plan the trajectory to target pose
+     *  @param  target_pose: the terminated pose in the trajectory
+     *  @param  plan: the trajectory motion plan
+     *  @return error_code: error code of motion planning given by the move
+     *                      group interface
+     */
+    moveit::planning_interface::MoveItErrorCode planTargetPose(
+        geometry_msgs::Pose& target_pose,
+        moveit::planning_interface::MoveGroupInterface::Plan &plan);
 
     /**
      *  @brief  planCartesianPath: plan a Cartesian path along the waypoints

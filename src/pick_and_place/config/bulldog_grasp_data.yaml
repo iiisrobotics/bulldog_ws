@@ -45,7 +45,7 @@ left_gripper:
   retreat_distance_desired: 0.1
 
   # minimum distance to lift object after grasping
-  lift_distance_desired: 0.01
+  lift_distance_desired: 0.05
 
   # open position
   pregrasp_posture: [
