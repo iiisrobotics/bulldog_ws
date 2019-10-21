@@ -10,4 +10,3 @@
 [submodule "src/moveit_grasps"]
 	path = src/moveit_grasps
 	url = https://github.com/YeeCY/moveit_grasps.git
-
