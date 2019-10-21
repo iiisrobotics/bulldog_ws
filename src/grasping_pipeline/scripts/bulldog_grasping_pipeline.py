@@ -27,6 +27,8 @@ import darknet_ros_msgs.msg
 
 IMAGE_SHAPE = None
 OBJECT_DETECTION_TIMEOUT = 5.0
+GRASP_DETECTION_ATTEMPTS = 3
+MAX_GRASPS_NUM = 32
 
 IMAGE_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/color/image_raw'
 CLOUD_STREAM_DEFAULT_NAME = 'left_gripper_sensor_d415_camera/depth_registered/points'
@@ -172,14 +174,25 @@ def grasps_detection(srv, cloud_indexed):
 	rospy.wait_for_service(srv)
 	rospy.loginfo("[GraspingPipeline] Grasp detection service is available.")
 
-	try:
-		rospy.loginfo("[GraspingPipeline] Generating grasps...")
-		grasps_detector = rospy.ServiceProxy(srv, DetectGrasps)
-		detect_grasps_response = grasps_detector(cloud_indexed)
-	except rospy.ServiceException as e:
-		rospy.logerr("[GraspingPipeline] Grasp detection service call failed: %s" % e)
+	attempt = 0
+	while attempt < GRASP_DETECTION_ATTEMPTS:
+		attempt += 1
+		try:
+			rospy.loginfo("[GraspingPipeline] Generating grasps...")
+			grasps_detector = rospy.ServiceProxy(srv, DetectGrasps)
+			detect_grasps_response = grasps_detector(cloud_indexed)
+		except rospy.ServiceException as e:
+			rospy.logerr("[GraspingPipeline] Grasp detection service call failed: %s" % e)
+			raise SystemExit()
+		grasp_configs = detect_grasps_response.grasp_configs
+
+		if len(grasp_configs.grasps) < MAX_GRASPS_NUM / 4:
+			rospy.logerr("[GraspingPipeline] The number of possible grasps is less than a quarter of the maximum! Retry...")
+		else:
+			break
+	else:
+		rospy.logerr("[GraspingPipeline] No enough possible grasps found after %d trys!" % attempt)
 		raise SystemExit()
-	grasp_configs = detect_grasps_response.grasp_configs
 
 	return grasp_configs
 
