@@ -187,7 +187,7 @@ def grasps_detection(srv, cloud_indexed):
 		grasp_configs = detect_grasps_response.grasp_configs
 
 		if len(grasp_configs.grasps) < MAX_GRASPS_NUM / 4:
-			rospy.logerr("[GraspingPipeline] The number of possible grasps is less than a quarter of the maximum! Retry...")
+			rospy.logwarn("[GraspingPipeline] The number of possible grasps is less than a quarter of the maximum! Retry...")
 		else:
 			break
 	else:
@@ -309,7 +309,7 @@ def mask_rcnn_process_cloud(cloud_transformed, detection):
 	return cloud_indexed
 
 
-def process_cloud(cloud_transformed, image_size, bounding_boxes):
+def process_cloud(cloud_transformed, image_size, bounding_box):
 	"""Process the transformed point cloud with respect to the Mask RCNN 
 	detection.
 	
@@ -321,8 +321,8 @@ def process_cloud(cloud_transformed, image_size, bounding_boxes):
 	- image_size: (int, int)
 		Size of the image
 
-	- bounding_boxes: darknet_ros_msgs.msg.BoundingBoxes
-		Bounding box of each detected object.
+	- bounding_box: darknet_ros_msgs.msg.BoundingBox
+		Bounding box of an detected object.
 
 	Returns
 	----------
@@ -345,31 +345,22 @@ def process_cloud(cloud_transformed, image_size, bounding_boxes):
 	cloud_points = np.asarray(cloud_points)
 	nan_mask = np.isnan(cloud_points[:, 0])
 
-	if len(bounding_boxes) > 0:
-		for bounding_box in bounding_boxes:
-			#
-			# name filtering
-			#
-			mask_indices = name_filtering(
-				bounding_box.Class,
-				image_size,
-				bounding_box.xmin,
-				bounding_box.ymin,
-				bounding_box.xmax,
-				bounding_box.ymax,
-				nan_mask
-			)
+	#
+	# name filtering
+	#
+	mask_indices = name_filtering(
+		bounding_box.Class,
+		image_size,
+		bounding_box.xmin,
+		bounding_box.ymin,
+		bounding_box.xmax,
+		bounding_box.ymax,
+		nan_mask
+	)
 
-			if len(mask_indices) > 0:
-				cloud_indices = mask_indices
-				cloud_indexed.indices = [Int64(idx) for idx in cloud_indices]
-				break
-		else:
-			rospy.logerr("[GraspingPipeline] No bottle, cup, remote, handbag, cell phone or bowl in the view!")
-			raise SystemExit()
-	else:
-		rospy.logerr("[GraspingPipeline] No object found!")
-		raise SystemExit()
+	if len(mask_indices) > 0:
+		cloud_indices = mask_indices
+		cloud_indexed.indices = [Int64(idx) for idx in cloud_indices]
 
 	return cloud_indexed
 
@@ -442,6 +433,8 @@ def name_filtering(object_name,
 		(object_name == 'remote') or \
 		(object_name == 'handbag') or \
 		(object_name == 'cell phone') or \
+		(object_name == 'scissors') or \
+		(object_name == 'mouse') or \
 		(object_name == 'bowl'):
 		object_mask = np.zeros(image_size, dtype=np.bool)
 		object_mask[y_min:y_max, x_min:x_max] = True
@@ -505,84 +498,84 @@ def least_squares_filtering(cloud_points, mask_indices, dist_thresh=1e-4):
 	return least_squares_indices
 
 
-def find_closest_grasp(grasps, frame='base_link',
-					   min_y_thresh=-0.05):
-	"""Find the closest grasp to a specified frame.
+# def find_closest_grasp(grasps, frame='base_link',
+# 					   min_y_thresh=-0.05):
+# 	"""Find the closest grasp to a specified frame.
 
-	Parameters
-	----------
-	- grasps: gpd.msg.GraspConfig
-		Grasps describe by their 6-DOF pose, consisting of a 3-DOF position
-		and 3-DOF orientation, and the opening width of the robot hand.
+# 	Parameters
+# 	----------
+# 	- grasps: gpd.msg.GraspConfig
+# 		Grasps describe by their 6-DOF pose, consisting of a 3-DOF position
+# 		and 3-DOF orientation, and the opening width of the robot hand.
 
-	- frame: str (optional, default = 'base_link')
-		Name of the reference frame.
+# 	- frame: str (optional, default = 'base_link')
+# 		Name of the reference frame.
 
-	- min_y_thresh: float (optional, default = -0.05)
-		Minimum value for closest grasp along y axis, i.e. the left arm cannot
-		move to the right side of the robot, and the right arm cannot
-		move to the left side of the robot. Remember to define this threshold
-		in 'base_link' frame.
+# 	- min_y_thresh: float (optional, default = -0.05)
+# 		Minimum value for closest grasp along y axis, i.e. the left arm cannot
+# 		move to the right side of the robot, and the right arm cannot
+# 		move to the left side of the robot. Remember to define this threshold
+# 		in 'base_link' frame.
 
-	Returns
-	----------
-	- closest_grasp: gpd.msg.GraspConfig
-		The closest grasp in the specified frame.
+# 	Returns
+# 	----------
+# 	- closest_grasp: gpd.msg.GraspConfig
+# 		The closest grasp in the specified frame.
 
-	"""
-	#
-	# We use the pose of the gripper base for planning.
-	# The cloud represents points in 'base_link' frame by default.
-	#
-	pose_positions = [PointStamped(
-		header=Header(frame_id=POSE_REFERENCE_FRAME),
-		point=grasp.bottom
-	) for grasp in grasps]
-	# pose_positions = [PointStamped(
-	# 	header=Header(frame_id=POSE_REFERENCE_FRAME),
-	# 	point=grasp.bottom
-	# ) for grasp in grasps if -grasp.axis.z <= 0.0]
-	if frame != POSE_REFERENCE_FRAME:
-		listener = tf.TransformListener()
+# 	"""
+# 	#
+# 	# We use the pose of the gripper base for planning.
+# 	# The cloud represents points in 'base_link' frame by default.
+# 	#
+# 	pose_positions = [PointStamped(
+# 		header=Header(frame_id=POSE_REFERENCE_FRAME),
+# 		point=grasp.bottom
+# 	) for grasp in grasps]
+# 	# pose_positions = [PointStamped(
+# 	# 	header=Header(frame_id=POSE_REFERENCE_FRAME),
+# 	# 	point=grasp.bottom
+# 	# ) for grasp in grasps if -grasp.axis.z <= 0.0]
+# 	if frame != POSE_REFERENCE_FRAME:
+# 		listener = tf.TransformListener()
 
-		listener.waitForTransform(
-			frame, POSE_REFERENCE_FRAME, rospy.Time(0), rospy.Duration(1))
-		try:
-			pose_positions = [listener.transformPoint(frame, pose_position)
-							  for pose_position in pose_positions]
-		except (tf.LookupException,
-				tf.ConnectivityException,
-				tf.ExtrapolationException) as e:
-			rospy.logerr("[GraspingPipeline] %s" % e)
-			raise SystemExit()
-	if len(pose_positions) == 0:
-		rospy.logerr("[GraspingPipeline: No grasp found!")
-		raise SystemExit()
+# 		listener.waitForTransform(
+# 			frame, POSE_REFERENCE_FRAME, rospy.Time(0), rospy.Duration(1))
+# 		try:
+# 			pose_positions = [listener.transformPoint(frame, pose_position)
+# 							  for pose_position in pose_positions]
+# 		except (tf.LookupException,
+# 				tf.ConnectivityException,
+# 				tf.ExtrapolationException) as e:
+# 			rospy.logerr("[GraspingPipeline] %s" % e)
+# 			raise SystemExit()
+# 	if len(pose_positions) == 0:
+# 		rospy.logerr("[GraspingPipeline: No grasp found!")
+# 		raise SystemExit()
 
-	pose_plannar_positions = [[pose_position.point.x,
-							   pose_position.point.y]
-							  for pose_position in pose_positions]
+# 	pose_plannar_positions = [[pose_position.point.x,
+# 							   pose_position.point.y]
+# 							  for pose_position in pose_positions]
 
-	dist = np.linalg.norm(pose_plannar_positions, axis=1)
-	closest_dist = np.min(dist)
-	rospy.loginfo("[GraspingPipeline] Closest Distance: %f." % closest_dist)
-	closest_idx = np.argmin(dist)
-	closest_grasp = grasps[closest_idx]
+# 	dist = np.linalg.norm(pose_plannar_positions, axis=1)
+# 	closest_dist = np.min(dist)
+# 	rospy.loginfo("[GraspingPipeline] Closest Distance: %f." % closest_dist)
+# 	closest_idx = np.argmin(dist)
+# 	closest_grasp = grasps[closest_idx]
 
-	#
-	# thresholding
-	#
-	if closest_grasp.bottom.y <= min_y_thresh:
-		rospy.logerr("[GraspingPipeline] %s arm cannot move to the other side of the robot!" %
-					("Left" if min_y_thresh < 0 else "Right"))
-		rospy.logerr("[GraspingPipeline] Target position: (%f, %f, %f)." %
-					(closest_grasp.bottom.x,
-					closest_grasp.bottom.y,
-					closest_grasp.bottom.z))
-		rospy.logerr("[GraspingPipeline] Please move the robot first!")
-		raise SystemExit()
+# 	#
+# 	# thresholding
+# 	#
+# 	if closest_grasp.bottom.y <= min_y_thresh:
+# 		rospy.logerr("[GraspingPipeline] %s arm cannot move to the other side of the robot!" %
+# 					("Left" if min_y_thresh < 0 else "Right"))
+# 		rospy.logerr("[GraspingPipeline] Target position: (%f, %f, %f)." %
+# 					(closest_grasp.bottom.x,
+# 					closest_grasp.bottom.y,
+# 					closest_grasp.bottom.z))
+# 		rospy.logerr("[GraspingPipeline] Please move the robot first!")
+# 		raise SystemExit()
 
-	return closest_grasp
+# 	return closest_grasp
 
 
 def configure_grasp_poses(grasp_configs):
@@ -600,18 +593,6 @@ def configure_grasp_poses(grasp_configs):
 	target_poses: [geometry_msgs.msg.PoseStamped, ...]
 		Target pose with a header.
 
-	Notes
-	----------
-	pose: 
-		position: 
-			x: 0.896101885954
-			y: 0.220898042324
-			z: 0.440645337477
-		orientation: 
-			x: 0.628300287611576
-			y: -0.39971341565013935
-			z: -0.5883724060255893
-			w: -0.3150965657765391
 	"""
 	grasp_poses = []
 	for grasp in grasp_configs.grasps:
@@ -635,17 +616,74 @@ def configure_grasp_poses(grasp_configs):
 		grasp_pose.header.stamp = rospy.Time.now()
 		grasp_pose.header.frame_id = POSE_REFERENCE_FRAME
 		grasp_pose.pose.position = grasp_position
-		# grasp_pose.pose.position.x = 0.795009083413
-		# grasp_pose.pose.position.y = 0.22062083617
-		# grasp_pose.pose.position.z = 0.489056381231
 		grasp_pose.pose.orientation = grasp_quaternion
-		# grasp_pose.pose.orientation.x = -0.08121355241516261
-		# grasp_pose.pose.orientation.y = -0.052377064390203044
-		# grasp_pose.pose.orientation.z = -0.5590192309531775
-		# grasp_pose.pose.orientation.w = 0.8235037956527536
 		grasp_poses.append(grasp_pose)
 
 	return grasp_poses
+
+
+def dense_clutter_pick_and_place(image_size, cloud, bounding_boxes):
+	"""Pick and place one object from a dense clutter.
+
+	Parameters
+	----------
+	- image_size: (int, int)
+		Size of the image
+	
+	- cloud: sensor_msgs.msg.PointCloud2
+		Point cloud in the robot frame.
+
+	- bounding_boxes: darknet_ros_msgs.msg.BoundingBoxes
+		Bounding box of each detected objects.
+
+	Returns
+	----------
+
+	"""
+	if len(bounding_boxes) > 0:
+		for bounding_box in bounding_boxes:
+			#
+			# process point cloud
+			#
+			cloud_indexed = process_cloud(
+				cloud, image_size, bounding_box)
+
+			if len(cloud_indexed.indices) == 0:
+				rospy.logwarn("[GraspingPipeline] Invalid object found! Try the next object...")
+				continue
+
+			#
+			# find reasonable grasps
+			#
+			grasp_configs = grasps_detection(
+				DETECT_GRASPS_SERVICE_DEFAULT_NAME,
+				cloud_indexed
+			)
+
+			#
+			# interpret pose configuration
+			#
+			# We use the pose of the gripper tool 0 link for planning.
+			target_poses = configure_grasp_poses(grasp_configs)
+
+			#
+			# planning
+			#
+			if not pick_and_place(
+				PICK_AND_PLACE_SERVICE_DEFAULT_NAME, target_poses):
+				rospy.logwarn("[GraspingPipeline] Pick and place failed! Try the next object...")
+				continue
+
+			rospy.loginfo("[GraspingPipeline] Pick and place succeeded")
+			rospy.loginfo("[GraspingPipeline] Waiting while RVIZ displays motion planning...")
+			rospy.sleep(3.0)
+			break
+		else:
+			rospy.logerr("[GraspingPipeline] No bottle, cup, remote, handbag, cell phone, scissors, mouse or bowl in the view!")
+			raise SystemExit()
+	else:
+		rospy.logerr("[GraspingPipeline] No object found!")
+		raise SystemExit()
 
 
 def main():
@@ -675,7 +713,8 @@ def main():
 	cloud = rospy.wait_for_message(cloud_stream, PointCloud2)
 	rospy.loginfo("[GraspingPipeline] Image and cloud are available.")
 
-
+	image_size = (image.height, image.width)
+	
 	#
 	# transform point cloud form camera frame to base_link frame.
 	#
@@ -698,31 +737,9 @@ def main():
 	# cloud_indexed = mask_rcnn_process_cloud(cloud_transformed, detection)
 
 	#
-	# process point cloud
+	# dense clutter pick and place
 	#
-	image_size = (image.height, image.width)
-	cloud_indexed = process_cloud(
-		cloud_transformed, image_size, bounding_boxes)
-
-	#
-	# find reasonable grasps
-	#
-	grasp_configs = grasps_detection(DETECT_GRASPS_SERVICE_DEFAULT_NAME,
-									 cloud_indexed)
-
-	#
-	# interpret pose configuration
-	#
-	# We use the pose of the gripper tool 0 link for planning.
-	target_poses = configure_grasp_poses(grasp_configs)
-
-	#
-	# planning
-	#
-	pick_and_place(PICK_AND_PLACE_SERVICE_DEFAULT_NAME, target_poses)
-
-	rospy.loginfo("[GraspingPipeline] Waiting while RVIZ displays motion planning...")
-	rospy.sleep(3.0)
+	dense_clutter_pick_and_place(image_size, cloud_transformed, bounding_boxes)
 
 
 if __name__ == "__main__":

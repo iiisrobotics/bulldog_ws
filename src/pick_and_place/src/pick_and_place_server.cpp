@@ -42,7 +42,7 @@ bool PickAndPlaceServer::serviceCallback(
     bool success = pipeline_.run(req.grasp_poses);
     res.success = success;
 
-    return success;
+    return true;
 }
 
 } // namespace pick_and_place
