@@ -13,3 +13,7 @@
 [submodule "src/darknet_ros"]
 	path = src/darknet_ros
 	url = https://github.com/YeeCY/darknet_ros.git
+[submodule "src/pick_and_place"]
+	path = src/pick_and_place
+	url = https://github.com/YeeCY/pick_and_place.git
+
