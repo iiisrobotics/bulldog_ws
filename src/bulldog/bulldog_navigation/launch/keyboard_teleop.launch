@@ -1,0 +1,18 @@
+<launch>
+    <!-- Arguments -->
+    <arg name="teleop_node_name" default="teleop_keyboard" />
+
+    <arg name="speed" default="0.1" />
+    <arg name="turn" default="0.1" />
+
+    <!--  smooths inputs from bulldog_teleop_keyboard/cmd_vel to bulldog_velocity_controller/cmd_vel -->
+    <include file="$(find bulldog_navigation)/launch/velocity_smoother.launch"/>
+
+    <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="$(arg teleop_node_name)"
+        output="screen">
+        <!-- <param name="speed" value="$(arg speed)" />
+        <param name="turn" value="$(arg turn)" /> -->
+
+        <remap from="cmd_vel" to="$(arg teleop_node_name)/cmd_vel" />
+    </node>
+</launch>
