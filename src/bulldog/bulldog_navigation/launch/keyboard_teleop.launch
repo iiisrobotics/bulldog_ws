@@ -10,8 +10,8 @@
 
     <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="$(arg teleop_node_name)"
         output="screen">
-        <!-- <param name="speed" value="$(arg speed)" />
-        <param name="turn" value="$(arg turn)" /> -->
+        <param name="speed" value="$(arg speed)" />
+        <param name="turn" value="$(arg turn)" />
 
         <remap from="cmd_vel" to="$(arg teleop_node_name)/cmd_vel" />
     </node>
