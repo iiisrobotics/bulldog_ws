@@ -3,8 +3,8 @@
     <arg name="node_name"             default="velocity_smoother"/>
     <arg name="nodelet_manager_name"  default="nodelet_manager"/>
     <arg name="config_file"           default="$(find bulldog_navigation)/config/velocity_smoother.yaml"/>
-    <arg name="raw_cmd_vel_topic"     default="teleop_keyboard/cmd_vel"/>
-    <arg name="smooth_cmd_vel_topic"  default="cmd_vel"/>
+    <arg name="raw_cmd_vel_topic"     default="cmd_vel"/>
+    <arg name="smooth_cmd_vel_topic"  default="smooth_teleop/cmd_vel"/>
     <arg name="robot_cmd_vel_topic"   default="velocity_controller/cmd_vel"/>
     <arg name="odom_topic"            default="velocity_controller/odom"/>
     
