@@ -39,7 +39,7 @@ YOLO_ACTION_DEFAULT_NAME = 'darknet_ros/check_for_objects'
 DETECT_GRASPS_SERVICE_DEFAULT_NAME = 'detect_grasps_server/detect_grasps'
 PICK_AND_PLACE_SERVICE_DEFAULT_NAME = 'bulldog_pick_and_place/pick_and_place'
 
-POSE_REFERENCE_FRAME = 'odom'
+POSE_REFERENCE_FRAME = 'base_link'
 GRASP_FILTERING_FRAME = 'left_arm_base'  # 'left_gripper_tool0', 'left_arm_base'
 
 

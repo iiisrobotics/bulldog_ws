@@ -15,7 +15,7 @@
   <rosparam command="load" file="$(find bulldog_driver)/config/control.yaml" />
   <node name="controller_spawner" pkg="controller_manager" type="spawner" 
   	respawn="false" output="screen" 
-	  args="joint_publisher velocity_controller"/>
+	  args="bulldog_joint_publisher bulldog_velocity_controller"/>
 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
@@ -26,8 +26,8 @@
   <node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server" output="screen"/>
 
   <node pkg="twist_mux" type="twist_mux" name="twist_mux" output="screen">
-  	<rosparam command="load" file="$(find bulldog_driver)/config/twist_mux.yaml"/>
-	  <remap from="cmd_vel_out" to="velocity_controller/cmd_vel"/>
+  	<rosparam command="load" file="$(find bulldog_control)/config/twist_mux.yaml"/>
+	  <remap from="cmd_vel_out" to="bulldog_velocity_controller/cmd_vel"/>
   </node>
 
   <include file="$(find bulldog_driver)/launch/joystick.launch"/>
