@@ -196,14 +196,12 @@ Negative - Black
         ATTRS{product}=="USB-Serial Controller"
         ATTRS{idProduct}=="2303"
         ATTRS{idVendor}=="067b"
-        ATTRS{devnum}=="2"
 
-    - ttyUSB1 - monitor controller
+    - ttyUSB2 - monitor controller
 
         ATTRS{product}=="USB-Serial Controller"
         ATTRS{idProduct}=="2303"
         ATTRS{idVendor}=="067b"
-        ATTRS{devnum}=="5"
 
 3. 拷贝bulldog_rules中的内容至系统目录
 
