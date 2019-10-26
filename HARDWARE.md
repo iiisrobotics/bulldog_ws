@@ -197,7 +197,7 @@ Negative - Black
         ATTRS{idProduct}=="2303"
         ATTRS{idVendor}=="067b"
 
-    - ttyUSB2 - monitor controller
+    - ttyUSB1 - monitor controller
 
         ATTRS{product}=="USB-Serial Controller"
         ATTRS{idProduct}=="2303"

@@ -1,3 +1,3 @@
-# Monitor Controller - ttyUSB2
+# Monitor Controller - ttyUSB1
 # WARNNING: This rule may not be adaptable to every machine!
-KERNEL=="ttyUSB2", SUBSYSTEMS=="usb", ATTRS{product}=="USB-Serial Controller", ATTRS{idProduct}=="2303", ATTRS{idVendor}=="067b", MODE="0666", SYMLINK+="monitor_controller"
+KERNEL=="ttyUSB1", SUBSYSTEMS=="usb", ATTRS{product}=="USB-Serial Controller", ATTRS{idProduct}=="2303", ATTRS{idVendor}=="067b", MODE="0666", SYMLINK+="monitor_controller"
