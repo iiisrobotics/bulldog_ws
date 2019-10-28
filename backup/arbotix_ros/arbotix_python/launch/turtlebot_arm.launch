@@ -1,0 +1,10 @@
+<launch>
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find turtlebot_arm_description)/urdf/$(arg arm_type)_arm.urdf.xacro'"/>
+
+  <node name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
+    <rosparam file="$(find arbotix_python)/config/config_arm.yaml" command="load"/>
+    <param name="sim" value="$(arg simulation)"/>
+  </node>
+
+</launch>
