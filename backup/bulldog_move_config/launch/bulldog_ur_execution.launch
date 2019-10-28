@@ -1,0 +1,69 @@
+<launch>
+
+  <arg name="prefix_right" default="right_arm_" />
+  <arg name="prefix_left" default="left_arm_" />
+  <arg name="robot_ip_right" default="192.168.1.60"/>
+  <arg name="robot_ip_left" default="192.168.1.50"/>
+  <arg name="reverse_port_right" default="50001"/>
+  <arg name="reverse_port_left" default="33829"/>
+  <arg name="min_payload"  default="0.0"/>
+  <arg name="max_payload"  default="3.0"/>
+  <arg name="max_velocity" default="5.0"/> 
+  <arg name="servoj_time" default="0.008" />
+  <arg name="base_frame" default="frame_base" />
+  <arg name="tool_frame_left" default="$(arg prefix_right)tool0_controller" />
+  <arg name="tool_frame_right" default="$(arg prefix_left)tool0_controller" />
+
+  <include file="$(find bulldog_move_config)/launch/planning_context.launch">
+    <arg name="load_robot_description" value="true"/>
+  </include>
+
+  <group ns="right_arm">
+    <node name="ur_driver" pkg="ur_modern_driver" type="ur_driver" output="screen">
+      <param name="prefix" type="str" value="$(arg prefix_right)" />
+      <param name="robot_ip_address" type="str" value="$(arg robot_ip_right)" />
+      <param name="reverse_port" value="$(arg reverse_port_right)"/>
+      <param name="min_payload" type="double" value="$(arg min_payload)" />
+      <param name="max_payload" type="double" value="$(arg max_payload)" />
+      <param name="max_velocity" type="double" value="$(arg max_velocity)" />
+      <param name="servoj_time" type="double" value="$(arg servoj_time)" />
+      <param name="base_frame" type="str" value="$(arg base_frame)"/>
+      <param name="tool_frame" type="str" value="$(arg tool_frame_left)"/>
+    </node>
+  </group>
+
+  <node name="left_gripper_publisher" pkg="robotiq_joint_state_publisher" type="s_model_joint_states">
+    <param name="prefix" type="str" value="left_gripper_"/>
+    <remap from="/SModelRobotInput" to="left/LeftSModelRobotInput" />
+    <remap from="/joint_states" to="left_gripper/joint_states" />
+  </node>
+    <node name="right_gripper_publisher" pkg="robotiq_joint_state_publisher" type="s_model_joint_states">
+      <param name="prefix" type="str" value="right_gripper_"/>
+      <remap from="/SModelRobotInput" to="right/RightSModelRobotInput" />
+      <remap from="/joint_states" to="right_gripper/joint_states" />
+    </node>
+
+
+  <group ns="left_arm">
+    <node name="ur_driver" pkg="ur_modern_driver" type="ur_driver" output="screen">
+      <param name="prefix" type="str" value="$(arg prefix_left)" />
+      <param name="robot_ip_address" type="str" value="$(arg robot_ip_left)" />
+      <param name="reverse_port" value="$(arg reverse_port_left)"/>
+      <param name="min_payload" type="double" value="$(arg min_payload)" />
+      <param name="max_payload" type="double" value="$(arg max_payload)" />
+      <param name="max_velocity" type="double" value="$(arg max_velocity)" />
+      <param name="servoj_time" type="double" value="$(arg servoj_time)" />
+      <param name="base_frame" type="str" value="$(arg base_frame)"/>
+      <param name="tool_frame" type="str" value="$(arg tool_frame_right)"/>
+    </node>
+  </group>
+
+  <node pkg="tf" type="static_transform_publisher" name="virtual_joint_broadcaster_0" args="0 0 0.5 0 0 0 base_link frame_base 100"/>
+
+  <include file="$(find bulldog_move_config)/launch/move_group.launch" />
+
+  <!--include file="$(find bulldog_move_config)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+  </include-->
+
+</launch>

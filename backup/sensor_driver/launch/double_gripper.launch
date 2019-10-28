@@ -1,0 +1,15 @@
+<launch>
+	<group ns="left">
+	<node name="left_gripper_driver" pkg="robotiq_s_model_control" type="SModelTcpNodeLeft.py" >
+	<remap from="SModelRobotInput" to="LeftSModelRobotInput" />
+	<remap from="/left/LeftSModelRobotInput" to="LeftSModelRobotInput" />
+	</node>
+	</group>
+        <group ns="right">
+        <node name="right_gripper_driver" pkg="robotiq_s_model_control" type="SModelTcpNode.py" >
+        <remap from="SModelRobotInput" to="RightSModelRobotInput" />
+        <remap from="/right/RightSModelRobotInput" to="RightSModelRobotInput" />
+        </node>
+        </group>
+
+</launch>

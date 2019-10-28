@@ -1,0 +1,6 @@
+<launch>
+    <node name="left_gripper_move" pkg="robotiq_s_model_control" type="SModelSimpleController.py">
+        <remap from="SModelRobotOutput" to="left/SModelRobotOutput" />
+    </node>
+    
+</launch>

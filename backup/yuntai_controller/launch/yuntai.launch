@@ -1,0 +1,7 @@
+<launch>
+
+  <node name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
+    <rosparam file="$(find yuntai_controller)/cfg/yuntai_controller.yaml" command="load"/>
+  </node>
+
+</launch>

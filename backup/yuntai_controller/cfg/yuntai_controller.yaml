@@ -1,0 +1,11 @@
+source: turtlebot_yuntai.yaml
+port: /dev/ttyUSB2
+read_rate: 15
+write_rate: 25
+joints: {
+    yuntai_shoulder_elbow_joint: {id: 1, neutral: 205, max_angle: 360, min_angle: -360, max_speed: 90, type: dynamixel},
+    kinect2_joint: {id: 2, neutral: 205, max_angle: 180, min_angle: -180, max_speed: 90, type: dynamixel}
+}
+controllers: {
+    yuntai_controller: {type: follow_controller, joints: [yuntai_shoulder_elbow_joint, kinect2_joint], action_name: yuntai_controller/follow_joint_trajectory, onboard: False }
+}
