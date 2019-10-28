@@ -68,7 +68,7 @@ class ArduIMUROS(object):
         self.stop()
 
     def start(self):
-        self._Serial = serial.Serial(self.port, self.baud, timeout=1)
+        self._Serial = serial.Serial(self.port, self.baud, timeout=5.0)
         self._Serial.flushInput()
         self._Serial.flushOutput()
 

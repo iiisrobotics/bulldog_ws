@@ -6,7 +6,7 @@ two_d_mode: true
 
 frequency: 50
 
-odom0: bulldog_velocity_controller/odom
+odom0: velocity_controller/odom
 odom0_config: [false, false, false,
                false, false, false,
                true, true, true,

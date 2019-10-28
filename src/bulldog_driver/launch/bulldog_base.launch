@@ -1,37 +1,57 @@
 <?xml version="1.0"?>
 <launch>
+  <!-- Devices -->
+  <arg name="motor_dev" default="/dev/motor_controller" />
+  <arg name="display_dev" default="/dev/monitor_controller" />
+  <arg name="bms_dev" default="/dev/bms_controller" />
+  <arg name="imu_dev" default="/dev/imu_controller" />
+  <arg name="joy_dev" default="/dev/input/js0" />
 
+  <!-- Load robot description -->
   <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find bulldog_description)/urdf/bulldog_robot.xacro'" />
 
-  <node pkg="bulldog_driver" type="bulldog_node" name="bulldog_driver" output="screen" >
-    <param name="controller_port" value="/dev/motor_controller" />
-    <param name="display_port" value="/dev/monitor_controller" />
-    <param name="bms_port" value="/dev/bms_controller" />
+  <!-- Basic driver -->
+  <node pkg="bulldog_driver" type="bulldog_node" name="bulldog_driver" output="screen">
+    <param name="controller_port" value="$(arg motor_dev)" />
+    <param name="display_port" value="$(arg display_dev)" />
+    <param name="bms_port" value="$(arg bms_dev)" />
     <param name="r1_offset" value="7" />
     <param name="r2_offset" value="13" />
     <param name="tmp_limit" value="70" />
   </node>
 
+  <!-- Joystick driver -->
+  <include file="$(find bulldog_driver)/launch/include/joystick.launch.xml">
+    <arg name="joy_dev" value="$(arg joy_dev)" />
+  </include>
+
+  <!-- IMU driver -->
+  <include file="$(find bulldog_driver)/launch/include/arduimu.launch.xml">
+    <arg name="imu_dev" value="$(arg imu_dev)" />
+  </include>
+
+  <!-- Spawn controllers -->
   <rosparam command="load" file="$(find bulldog_driver)/config/control.yaml" />
   <node name="controller_spawner" pkg="controller_manager" type="spawner" 
   	respawn="false" output="screen" 
-	  args="bulldog_joint_publisher bulldog_velocity_controller"/>
+	  args="joint_publisher velocity_controller"/>
 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
+  <!-- Odometry fusion -->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization" output="screen">
     <rosparam command="load" file="$(find bulldog_driver)/config/localization.yaml" />
   </node>
 
+  <!-- Multual exclusive twist commands -->
   <node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server" output="screen"/>
 
   <node pkg="twist_mux" type="twist_mux" name="twist_mux" output="screen">
   	<rosparam command="load" file="$(find bulldog_control)/config/twist_mux.yaml"/>
-	  <remap from="cmd_vel_out" to="bulldog_velocity_controller/cmd_vel"/>
+	  <remap from="cmd_vel_out" to="velocity_controller/cmd_vel"/>
   </node>
 
-  <include file="$(find bulldog_driver)/launch/joystick.launch"/>
-
+  <!-- Diagnostic aggregator -->
   <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator">
     <rosparam command="load" file="$(find bulldog_driver)/config/diagnostics.yaml"/>
   </node>
