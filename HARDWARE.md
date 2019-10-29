@@ -87,8 +87,6 @@ Negative - Black
         auto eth[X](enp[X]s[XX])
         iface eth[X](enp[X]s[XX]) inet static
         address 192.168.1.30
-        netmask 255.255.255.0
-        gateway 192.168.1.1
         dns-nameservers 166.111.8.28
 
     其中166.111.8.28为Tsinghua内网DNS端口，也可以用8.8.8.8。之后重启系统
@@ -98,6 +96,10 @@ Negative - Black
     或重启网络
 
         sudo /etc/init.d/networking restart
+
+    以上命令可以使Intel NUC通过ethenet直接和UR5, Grippers以及Laser等硬件进行通讯， 若需要将其与外部网络连接
+    可以直接使用无线网络选择对应的无线路由器。注意由于bulldog和bulldog_5G的路由器IP段也为192.168.1.XX, 所以
+    不能通过连接该路由器访问外部网络，使用其他路由器即可。
 
     检查连接是否可用
 

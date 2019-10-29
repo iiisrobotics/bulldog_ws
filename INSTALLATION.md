@@ -113,6 +113,8 @@ to clone all the following repository at once!
 
 17. realsense-ros
 
+    Intel RealSense RGBD sensors' ROS library.
+
     https://github.com/IntelRealSense/realsense-ros
 
     Follow the documentation to install realsense wrappers for ROS.
@@ -120,41 +122,42 @@ to clone all the following repository at once!
     Note: I have modify the code from official repository. If you have
     any question, feel free to contact me.
 
-18.  universal_robot
+18. gazebo_grasp_fix_plugin/general-message-pkgs
 
-    redirect into bulldog workspace.
+    General message packages to use the gazebo grasp fix plugin.
 
-        cd <path-to-workspace>
+    https://github.com/JenniferBuehler/general-message-pkgs.git
 
-    clone the git repository from https://github.com/ros-industrial/universal_robot.
 
-        git clone -b $ROS_DISTRO-devel https://github.com/ros-industrial/universal_robot.git
+19. gazebo_grasp_fix_plugin/gazebo-pkgs
 
-    Note: we use **kinetic-devel** branch here. And compile it from scratch.
+    Gazebo grasp fix plugin.
 
-19.  robotiq
+    https://github.com/JenniferBuehler/gazebo-pkgs.git
 
-    redirect into bulldog workspace.
+20. moveit_grasps
 
-        cd <path-to-workspace>
+    Moveit grasping pipeline for box size object only.
 
-    clone the git repository from https://github.com/ros-industrial/robotiq.
+    https://github.com/YeeCY/moveit_grasps.
 
-        git clone -b $ROS_DISTRO-devel https://github.com/ros-industrial/robotiq.git
-    
-    Note: we use **kinetic-devel** branch here. And compile it from scratch. 
+    Note: we use **kinetic-devel** branch here.
+21. pick_and_place
 
-20.  ur_modern_driver
+    Bulldog pick and place pipeline.
 
-    redirect into bulldog workspace
+    https://github.com/YeeCY/pick_and_place
 
-        cd <path-to-workspace>
+    Note: we use **kinetic-devel** branch here.
 
-    clone the git repository from https://github.com/ros-industrial/ur_modern_driver.
+22. darknet_ros
 
-        git clone -b $ROS_DISTRO-devel https://github.com/ros-industrial/ur_modern_driver.git
+    Yolo realtime object detector with ROS. We use it to find different objects
+    in grasping pipeline.
 
-    Note: we use **kinetic-devel** branch here. And compile it from scratch.
+    https://github.com/YeeCY/darknet_ros.git
+
+    Note: we use **kinetic-devel** branch here.
 
 ## Step by Step
 
