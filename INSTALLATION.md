@@ -102,6 +102,30 @@
 
         sudo apt-get install ros-$ROS_DISTRO-hector-gazebo-plugins
 
+18. yocs_velocity_smoother
+
+    http://wiki.ros.org/yocs_velocity_smoother
+
+        sudo apt-get install ros-$ROS_DISTRO-yocs-velocity-smoother
+
+19. moveit_visual_tools
+
+    https://wiki.ros.org/moveit_visual_tools
+
+        sudo apt-get install ros-$ROS_DISTRO-moveit-visual-tools
+
+20. rosparam_shortcuts
+
+    https://wiki.ros.org/rosparam
+
+        sudo apt-get install ros-$ROS_DISTRO-rosparam-shortcuts
+
+21. teleop_twist_joy
+
+    http://wiki.ros.org/teleop_twist_joy
+
+        sudo apt-get install ros-$ROS_DISTRO-teleop-twist-joy
+
 ----
 
 You can run
@@ -111,7 +135,7 @@ You can run
 
 to clone all the following repository at once!
 
-17. realsense-ros
+22. realsense-ros
 
     Intel RealSense RGBD sensors' ROS library.
 
@@ -122,27 +146,27 @@ to clone all the following repository at once!
     Note: I have modify the code from official repository. If you have
     any question, feel free to contact me.
 
-18. gazebo_grasp_fix_plugin/general-message-pkgs
+23. gazebo_grasp_fix_plugin/general-message-pkgs
 
     General message packages to use the gazebo grasp fix plugin.
 
     https://github.com/JenniferBuehler/general-message-pkgs.git
 
 
-19. gazebo_grasp_fix_plugin/gazebo-pkgs
+24. gazebo_grasp_fix_plugin/gazebo-pkgs
 
     Gazebo grasp fix plugin.
 
     https://github.com/JenniferBuehler/gazebo-pkgs.git
 
-20. moveit_grasps
+25. moveit_grasps
 
     Moveit grasping pipeline for box size object only.
 
     https://github.com/YeeCY/moveit_grasps.
 
     Note: we use **kinetic-devel** branch here.
-21. pick_and_place
+26. pick_and_place
 
     Bulldog pick and place pipeline.
 
@@ -150,7 +174,7 @@ to clone all the following repository at once!
 
     Note: we use **kinetic-devel** branch here.
 
-22. darknet_ros
+27. darknet_ros
 
     Yolo realtime object detector with ROS. We use it to find different objects
     in grasping pipeline.
