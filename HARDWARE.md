@@ -207,7 +207,7 @@ Negative - Black
 
 3. 拷贝bulldog_rules中的内容至系统目录
 
-        cd bulldog_rules
+        roscd bulldog_rule
         sudo cp * /etc/udev/rules.d
 
 4. 重启udev
