@@ -59,7 +59,8 @@
     <joint name="laser_plate_joint" type="fixed">
       <parent link="installation_plate_link"/>
       <child link="laser_plate_link"/>
-      <origin xyz="0.3 0 -0.1" rpy="${pi} 0 0" />
+      <origin xyz="0.35 0 -0.0476" rpy="${pi} 0 0" />
+      <!-- <origin xyz="0.3 0 -0.1" rpy="${pi} 0 0" /> -->
     </joint>
 
     <gazebo reference="laser_plate_link">

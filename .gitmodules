@@ -17,3 +17,6 @@
 	path = src/pick_and_place
 	url = https://github.com/YeeCY/pick_and_place.git
 
+[submodule "src/hector_gazebo"]
+	path = src/hector_gazebo
+	url = https://github.com/tu-darmstadt-ros-pkg/hector_gazebo.git
