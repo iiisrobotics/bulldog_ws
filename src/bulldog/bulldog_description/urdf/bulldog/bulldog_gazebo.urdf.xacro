@@ -10,9 +10,6 @@
   <xacro:include filename="$(find bulldog_description)/urdf/sensors/kinect_camera.urdf.xacro" />
   <xacro:include filename="$(find realsense2_description)/urdf/_d415.urdf.xacro" />
 
-  <xacro:property name="wheel_length" value="0.142" />
-  <xacro:property name="wheel_radius" value="0.183" />
-
   <xacro:property name="base_x_size" value="0.85" />
   <xacro:property name="base_y_size" value="0.42" />
   <xacro:property name="base_z_size" value="0.325" />
