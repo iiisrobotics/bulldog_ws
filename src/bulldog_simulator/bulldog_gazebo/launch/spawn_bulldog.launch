@@ -24,7 +24,6 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCL
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <launch>
-
   <arg name="laser_enabled" default="$(optenv BULLDOG_LMS1XX_ENABLED true)"/>
   <arg name="ur5_enabled" default="$(optenv BULLDOG_UR5_ENABLED false)"/>
   <arg name="kinect_enabled" default="$(optenv BULLDOG_KINECT_ENABLED false)"/>
@@ -150,5 +149,4 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   <!-- Launch script that stows bulldog arms -->
   <!-- uncomment this line when necessary -->
   <!-- <node name="initialize_bulldog_arms" pkg="bulldog_gazebo" type="setup_sim_positions" output="screen" /> -->
-
 </launch>
