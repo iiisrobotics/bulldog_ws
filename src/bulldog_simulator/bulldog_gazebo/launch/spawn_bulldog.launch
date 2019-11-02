@@ -56,10 +56,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       args="pub calibrated std_msgs/Bool true" />
     -->
 
-    <!-- Stow the arm -->
-    <!--
-    <node name="stow_ur5" pkg="bulldog_control" type="stow_ur5" />
-    -->
+    <!-- Initialize ur5 arm -->
+    <node name="stow_arm" pkg="bulldog_gazebo" type="stow_ur5" output="screen" />
   </group>
 
   <!-- Include ros_control configuration for left and right ur5, only used in simulation -->
@@ -72,9 +70,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     <node name="right_arm_controller_spawner" pkg="controller_manager" type="spawner" 
       args="right_arm_controller" output="screen" />
 
-    <!-- Stow the arm -->
-    <!-- <node name="initialize_bulldog_arms" pkg="bulldog_gazebo" type="setup_sim_positions" 
-      output="screen" /> -->
+    <!-- Initialize ur5 arms -->
+    <node name="stow_left_arm" pkg="bulldog_gazebo" type="stow_left_ur5" output="screen" />
+    <node name="stow_right_arm" pkg="bulldog_gazebo" type="stow_right_ur5" output="screen" />
   </group>
 
   <!-- Include robotiq gripper configs for left and right gripper, only used in sim -->
@@ -125,7 +123,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     </node>
   </group>
 
-  <!-- publish robot state (tf transforms) -->
+  <!-- Publish robot state (tf transforms) -->
   <!-- do not use robot_state_publisher in case we have passive joint in the URDF -->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="use_gui" value="false"/>
@@ -137,16 +135,10 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   </node>
 
   <!-- Spawn robot in gazebo -->
-  <!-- <node name="spawn_bulldog_model" pkg="gazebo_ros" type="spawn_model"
-    args="-unpause -file 'rosparam get /robot_description' -urdf -model bulldog"/> -->
-
   <node name="spawn_bulldog_model" pkg="gazebo_ros" type="spawn_model"
     respawn="false" output="screen" 
     args="-unpause -urdf -param robot_description -model bulldog" />
+
   <!-- Load the bumblebee depth and pointcloud capabilities -->
   <!--include file="$(find bulldog_gazebo)/launch/bumblebee_depth.launch"/-->
-
-  <!-- Launch script that stows bulldog arms -->
-  <!-- uncomment this line when necessary -->
-  <!-- <node name="initialize_bulldog_arms" pkg="bulldog_gazebo" type="setup_sim_positions" output="screen" /> -->
 </launch>
