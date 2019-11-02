@@ -3,8 +3,9 @@
   <arg name="odom_frame_id"   default="odom"/>
   <arg name="base_frame_id"   default="base_link"/>
   <arg name="global_frame_id" default="map"/>
-  <arg name="odom_topic" default="bulldog_velocity_controller/odom" />
-  <arg name="laser_topic" default="scan" />
+  <arg name="cmd_vel_topic"   default="velocity_controller/cmd_vel"/>
+  <arg name="odom_topic"      default="velocity_controller/odom" />
+  <arg name="laser_topic"     default="scan" />
 
   <node pkg="move_base" type="move_base" respawn="true" name="move_base" output="screen">
     <rosparam file="$(find bulldog_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
@@ -22,7 +23,7 @@
     <param name="local_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
     <param name="DWAPlannerROS/global_frame_id" value="$(arg odom_frame_id)"/>
 
-    <remap from="cmd_vel" to="bulldog_velocity_controller/cmd_vel"/>
+    <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
     <remap from="odom" to="$(arg odom_topic)"/>
     <remap from="scan" to="$(arg laser_topic)"/>
   </node>
