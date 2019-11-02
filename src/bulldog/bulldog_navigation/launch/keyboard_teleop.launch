@@ -5,7 +5,7 @@
     <arg name="turn"                default="0.2" />
 
     <!--  smooths inputs from keyboard_teleop/cmd_vel to smooth_teleop/cmd_vel -->
-    <include unless="$(arg sim)" file="$(find bulldog_navigation)/launch/velocity_smoother.launch">
+    <include file="$(find bulldog_navigation)/launch/velocity_smoother.launch">
         <arg name="raw_cmd_vel_topic" value="$(arg raw_cmd_vel_topic)" />
     </include>
 
