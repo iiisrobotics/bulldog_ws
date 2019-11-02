@@ -20,3 +20,6 @@
 [submodule "src/hector_gazebo"]
 	path = src/hector_gazebo
 	url = https://github.com/tu-darmstadt-ros-pkg/hector_gazebo.git
+[submodule "src/LMS1xx"]
+	path = src/LMS1xx
+	url = https://github.com/YeeCY/LMS1xx.git

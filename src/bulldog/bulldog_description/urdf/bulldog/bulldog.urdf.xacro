@@ -119,7 +119,7 @@
     <!-- laser -->
     <xacro:if value="$(arg laser_enabled)">
       <xacro:laser_plate />
-      <sick_lms1xx frame="laser" topic="scan"/>
+      <sick_lms1xx frame="laser" topic="scan" visualize="true"/>
       <joint name="laser_mount_joint" type="fixed">
         <origin xyz="0.015 0 0.044" rpy="${pi} 0 0" />
         <parent link="laser_plate_link" />
