@@ -39,3 +39,19 @@ velocity_controller:
       max_velocity           : 1.0   # rad/s
       has_acceleration_limits: true
       max_acceleration       : 2.0   # rad/s^2
+
+# gazebo_ros_control:
+#   pid_gains:
+#     left_arm_shoulder_pan_joint: {p: 3.125, i: 0.0, d: 0.0}
+#     left_arm_shoulder_lift_joint: {p: 3.125, i: 0.0, d: 0.0}
+#     left_arm_elbow_joint: {p: 3.125, i: 0.0, d: 0.0}
+#     left_arm_wrist_1_joint: {p: 3.125, i: 0.0, d: 0.0}
+#     left_arm_wrist_2_joint: {p: 3.125, i: 0.0, d: 0.0}
+#     left_arm_wrist_3_joint: {p: 3.125, i: 0.0, d: 0.0}
+    
+#     right_arm_shoulder_pan_joint: {p: 0.0, i: 0.0, d: 0.0}
+#     right_arm_shoulder_lift_joint: {p: 0.0, i: 0.0, d: 0.0}
+#     right_arm_elbow_joint: {p: 0.0, i: 0.0, d: 0.0}
+#     right_arm_wrist_1_joint: {p: 0.0, i: 0.0, d: 0.0}
+#     right_arm_wrist_2_joint: {p: 0.0, i: 0.0, d: 0.0}
+#     right_arm_wrist_3_joint: {p: 0.0, i: 0.0, d: 0.0}
