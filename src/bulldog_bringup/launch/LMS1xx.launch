@@ -1,13 +1,15 @@
 <launch>
   <!-- Robot settings -->
   <arg name="laser_enabled" default="$(optenv BULLDOG_LMS1XX_ENABLED true)" />
-
-  <arg name="laster_ip" default="192.168.1.40" />
+  <arg name="laser_ip" default="192.168.1.40" />
+  <arg name="laser_frame_id" default="laser" />
+  <arg name="publish_min_range_as_inf" default="false" />
 
   <group if="$(arg laser_enabled)">
-    <node pkg="lms1xx" name="lms1xx" type="LMS1xx_node">
+    <node pkg="lms1xx" name="lms1xx" type="LMS1xx_node" output="screen">
       <param name="host" value="$(arg laster_ip)" />
-      <param name="frame_id" value="laser" />
+      <param name="frame_id" value="$(arg laser_frame_id)" />
+      <param name="publish_min_range_as_inf" value="$(arg publish_min_range_as_inf)" />
     </node>
   </group>
 </launch>
