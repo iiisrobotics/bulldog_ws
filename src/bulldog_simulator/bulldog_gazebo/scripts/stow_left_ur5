@@ -97,6 +97,8 @@ def main():
     global client
     try:
         rospy.init_node("stow_left", anonymous=True, disable_signals=True)
+        rospy.sleep(1.0)  # wait for gazebo startup
+        
         client = actionlib.SimpleActionClient(
             'left_arm_controller/follow_joint_trajectory', 
             FollowJointTrajectoryAction
