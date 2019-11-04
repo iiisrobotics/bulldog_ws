@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="wheel" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:macro name="bulldog_wheel" params="wheel_prefix *joint_pose wheel_length:=0.142 wheel_radius:=0.183">
+  <xacro:macro name="bulldog_wheel" params="wheel_prefix wheel_length wheel_radius *joint_pose">
 
     <link name="${wheel_prefix}_wheel_link">
       <inertial>

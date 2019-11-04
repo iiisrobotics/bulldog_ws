@@ -1,4 +1,4 @@
-max_obstacle_height: 1
+max_obstacle_height: 2.0
 # footprint: [[0.5, 0.4], [-0.5, 0.4], [-0.5, -0.4], [0.5, -0.4]] 
 footprint: [[0.6, 0.4], [-0.6, 0.4], [-0.6, -0.4], [0.6, -0.4]]
 

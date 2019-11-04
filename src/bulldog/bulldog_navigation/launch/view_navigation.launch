@@ -1,5 +1,5 @@
 <launch>
-    <arg name="rviz_config" default="$(find bulldog_navigation)/rviz/navigation.rviz">
+    <arg name="rviz_config" default="$(find bulldog_navigation)/rviz/navigation.rviz" />
 
     <!-- RVIZ -->
     <node name="rviz" pkg="rviz" type="rviz"

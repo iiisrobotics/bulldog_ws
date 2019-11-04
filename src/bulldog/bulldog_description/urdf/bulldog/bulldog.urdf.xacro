@@ -11,13 +11,22 @@
   <xacro:include filename="$(find bulldog_description)/urdf/sensors/kinect_camera.urdf.xacro" />
   <xacro:include filename="$(find realsense2_description)/urdf/_d415.urdf.xacro" />
 
-  <xacro:property name="base_x_size" value="0.85" />
-  <xacro:property name="base_y_size" value="0.42" />
-  <xacro:property name="base_z_size" value="0.325" />
+  <!-- Base Size -->
+  <xacro:property name="base_x_size" value="0.85000000" />
+  <xacro:property name="base_y_size" value="0.42000000" />
+  <xacro:property name="base_z_size" value="0.32500000" />
+
+  <!-- Wheel Mounting Positions -->
+  <xacro:property name="wheelbase" value="0.5587" /> <!-- husky = 0.5120 -->
+  <xacro:property name="track" value="0.5708" /> <!-- husky = 0.5708 -->
+  <xacro:property name="wheel_vertical_offset" value="0.04352" /> <!-- husky = 0.3282 -->
+
+  <!-- Wheel Properties -->
+  <xacro:property name="wheel_length" value="0.1420" /> <!-- husky = 0.1143 -->
+  <xacro:property name="wheel_radius" value="0.1830" /> <!-- husky = 0.1651 -->
 
   <xacro:macro name="bulldog_robot">
-
-    <!-- base -->
+    <!-- Base -->
     <link name="base_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
@@ -27,18 +36,33 @@
         <material name="flat_black" />
       </visual>
       <collision>
-        <origin xyz="0 0 ${base_z_size / 2.0}" rpy="0 0 0" />
+        <origin xyz="0 0 ${base_z_size / 4.0}" rpy="0 0 0" />
         <geometry>
-          <box size="${base_x_size} ${base_y_size} ${base_z_size}"/>
+          <box size="${base_x_size} ${base_y_size} ${base_z_size / 2}"/>
+        </geometry>
+      </collision>
+      <collision>
+        <origin xyz="0 0 ${base_z_size * 3 / 4 - 0.01}" rpy="0 0 0" />
+        <geometry>
+          <box size="${base_x_size * 4 / 5} ${base_y_size} ${base_z_siz / 2 - 0.02}"/>
         </geometry>
       </collision>
     </link>
 
-    <gazebo reference="base_link">
+    <!-- <gazebo reference="base_link">
       <material>Gazebo/FlatBlack</material>
-    </gazebo>
+    </gazebo> -->
 
-    <!-- inertial -->
+    <!-- Base footprint is on the ground under the robot -->
+    <link name="base_footprint"/>
+
+    <joint name="base_footprint_joint" type="fixed">
+      <origin xyz="0 0 ${wheel_vertical_offset - wheel_radius}" rpy="0 0 0" />
+      <parent link="base_link" />
+      <child link="base_footprint" />
+    </joint>
+
+    <!-- Inertial -->
     <link name="inertial_link">
       <inertial>
         <mass value="40" />
@@ -53,10 +77,10 @@
       <child link="inertial_link" />
     </joint>
 
-    <!-- top plate -->
+    <!-- Top Plate -->
     <xacro:top_plate />
 
-    <!-- imu -->
+    <!-- IMU -->
     <link name="imu_link"/>
 
     <joint name="imu_joint" type="fixed">
@@ -68,7 +92,7 @@
     <gazebo reference="imu_link" />
 
     <xacro:bulldog_wheel wheel_prefix="front_left">
-      <origin xyz="0.27937 0.285 0.0435" rpy="0 0 0" />
+      <origin xyz="${wheelbase / 2} ${track / 2} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:bulldog_wheel>
     <xacro:bulldog_wheel wheel_prefix="front_right">
       <origin xyz="0.27937 -0.285 0.0435" rpy="0 0 0" />
@@ -80,10 +104,10 @@
       <origin xyz="-0.27937 -0.285 0.0435" rpy="0 0 0" />
     </xacro:bulldog_wheel>
 
-    <!-- installation plate -->
+    <!-- Installation Plate -->
     <xacro:installation_plate />
 
-    <!-- dual ur5 arms -->
+    <!-- Dual UR5 Arms -->
     <xacro:if value="$(arg dual_ur5_enabled)">
       <xacro:ur5_robot prefix="left_arm_" joint_limited="true"
         transmission_hw_interface="hardware_interface/PositionJointInterface" />
@@ -113,10 +137,11 @@
 
     </xacro:if>
 
-    <!-- laser -->
+    <!-- Sick LMS1xx LiDAR -->
     <xacro:if value="$(arg laser_enabled)">
       <xacro:laser_plate />
-      <sick_lms1xx frame="laser" topic="scan" visualize="true"/>
+      <sick_lms1xx frame="laser" topic="scan" visualize="true" 
+        min_angle="-2.35619" max_angle="2.35619"/>
       <joint name="laser_mount_joint" type="fixed">
         <origin xyz="0.015 0 0.044" rpy="${pi} 0 0" />
         <parent link="laser_plate_link" />
@@ -124,12 +149,12 @@
       </joint>
     </xacro:if>
 
-    <!-- kinect -->
+    <!-- Kinect -->
     <xacro:if value="$(arg kinect_enabled)">
       <xacro:kinect_camera prefix="kinect" parent="installation_plate_link" />
     </xacro:if>
 
-    <!-- realsense d415 -->
+    <!-- RealSense D415 -->
     <xacro:if value="$(arg realsense_enabled)">
       <xacro:realsense_support prefix="left_gripper_sensor_support_" 
         installation_link="left_gripper_palm">
@@ -151,7 +176,6 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
       </xacro:sensor_d415>
     </xacro:if>
-
   </xacro:macro>
 
 </robot>
