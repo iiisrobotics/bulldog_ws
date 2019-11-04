@@ -68,13 +68,17 @@
           <box size="${base_x_size} ${base_y_size} ${base_z_size / 2}"/>
         </geometry>
       </collision>
-      <collision>
+      <!-- <collision>
         <origin xyz="0 0 ${base_z_size * 3 / 4 - 0.01}" rpy="0 0 0" />
         <geometry>
           <box size="${base_x_size * 4 / 5} ${base_y_size} ${base_z_size / 2 - 0.02}"/>
         </geometry>
-      </collision>
+      </collision> -->
     </link>
+
+    <gazebo reference="base_link">
+      <material>Gazebo/FlatBlack</material>
+    </gazebo>
 
     <!-- Base footprint is on the ground under the robot -->
     <link name="base_footprint"/>
@@ -95,22 +99,22 @@
     </link> -->
 
     <!-- Dual UR5 Husky -->
-    <!-- <link name="inertial_link">
+    <link name="inertial_link">
       <inertial>
         <mass value="48.39054"/>
         <origin xyz="-0.0648 -0.00059 0.07895"/>
         <inertia ixx="2.1634275613800003" ixy="-0.055452352110000006" ixz="-0.41083822026" iyy="3.5314689495400002" iyz="-0.004366145530000001" izz="4.4759585875" />
       </inertial>
-    </link>  -->
+    </link>
 
     <!-- Husky -->
-    <link name="inertial_link">
+    <!-- <link name="inertial_link">
       <inertial>
         <mass value="46.034" />
         <origin xyz="-0.00065 -0.085 0.062" />
         <inertia ixx="0.6022" ixy="-0.02364" ixz="-0.1197" iyy="1.7386" iyz="-0.001544" izz="2.0296" />
       </inertial>
-    </link>
+    </link> -->
 
     <joint name="inertial_joint" type="fixed">
       <origin xyz="0 0 0" rpy="0 0 0" />
