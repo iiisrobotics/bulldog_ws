@@ -1,14 +1,15 @@
 max_obstacle_height: 1
-footprint: [[0.5, 0.4], [-0.5, 0.4], [-0.5, -0.4], [0.5, -0.4]] 
+# footprint: [[0.5, 0.4], [-0.5, 0.4], [-0.5, -0.4], [0.5, -0.4]] 
+footprint: [[0.6, 0.4], [-0.6, 0.4], [-0.6, -0.4], [0.6, -0.4]]
 
 map_type: voxel
 
 obstacle_layer:
   enabled:              true
-  max_obstacle_height:  1
+  max_obstacle_height:  2.0
   origin_z:             0.0
   z_resolution:         0.2
-  z_voxels:             2
+  z_voxels:             10
   unknown_threshold:    15
   mark_threshold:       0
   combination_method:   1
@@ -17,7 +18,7 @@ obstacle_layer:
   raytrace_range: 30
   origin_z: 0.0
   z_resolution: 0.2
-  z_voxels: 2
+  z_voxels: 10
   publish_voxel_map: true
   observation_sources:  scan 
   scan:
@@ -25,8 +26,8 @@ obstacle_layer:
     topic: scan
     marking: true
     clearing: true
-    min_obstacle_height: 0.1
-    max_obstacle_height: 0.5
+    min_obstacle_height: 0.0
+    max_obstacle_height: 2.0
 
 inflation_layer:
   enabled:              true
