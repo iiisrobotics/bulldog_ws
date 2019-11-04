@@ -4,8 +4,13 @@
   <xacro:macro name="bulldog_wheel" params="wheel_prefix wheel_length wheel_radius *joint_pose">
 
     <link name="${wheel_prefix}_wheel_link">
+      <!-- <inertial>
+        <mass value="2.637" />
+				<origin xyz="0 0 0" />
+				<inertia  ixx="0.02467" ixy="0" ixz="0" iyy="0.04411" iyz="0" izz="0.02467" />
+      </inertial> -->
       <inertial>
-        <mass value="3.0" />
+        <mass value="3" />
         <origin xyz="0 0 0" />
         <inertia  ixx="0.025" ixy="0" ixz="0" iyy="0.045" iyz="0" izz="0.025" />
       </inertial>
@@ -26,7 +31,7 @@
 
     <gazebo reference="${wheel_prefix}_wheel_link">
       <mu1 value="1.0"/>
-			<mu2 value="0.5"/>
+			<mu2 value="0.25"/>
 			<kp value="10000000.0" />
 			<kd value="1.0" />
 			<fdir1 value="1 0 0"/>
@@ -41,14 +46,14 @@
     </joint>
 
     <transmission name="${wheel_prefix}_wheel_trans" type="SimpleTransmission">
-      <type>transmission_interface/SimpleTransmission</type>
-      <actuator name="${wheel_prefix}_wheel_motor">
-        <mechanicalReduction>1</mechanicalReduction>
-      </actuator>
-      <joint name="${wheel_prefix}_wheel_joint">
-        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      </joint>
-    </transmission>
+			<type>transmission_interface/SimpleTransmission</type>
+			<actuator name="${wheel_prefix}_wheel_motor">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+			<joint name="${wheel_prefix}_wheel_joint">
+				<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			</joint>
+		</transmission>
 
   </xacro:macro>
 </robot>

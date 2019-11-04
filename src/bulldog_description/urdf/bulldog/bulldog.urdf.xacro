@@ -90,22 +90,22 @@
     </joint>
 
     <!-- Interial link stores the robot's inertial information -->
-    <!-- <link name="inertial_link">
+    <link name="inertial_link">
       <inertial>
         <mass value="40" />
         <origin xyz="0 0 0.1" />
         <inertia ixx="0.7" ixy="-0.03" ixz="-0.15" iyy="2" iyz="-0.01" izz="4" />
       </inertial>
-    </link> -->
+    </link>
 
     <!-- Dual UR5 Husky -->
-    <link name="inertial_link">
+    <!-- <link name="inertial_link">
       <inertial>
         <mass value="48.39054"/>
         <origin xyz="-0.0648 -0.00059 0.07895"/>
         <inertia ixx="2.1634275613800003" ixy="-0.055452352110000006" ixz="-0.41083822026" iyy="3.5314689495400002" iyz="-0.004366145530000001" izz="4.4759585875" />
       </inertial>
-    </link>
+    </link> -->
 
     <!-- Husky -->
     <!-- <link name="inertial_link">

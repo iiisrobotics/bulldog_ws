@@ -1,6 +1,6 @@
 <launch>
   <arg name="map_file" default="$(find bulldog_navigation)/maps/playpen_map.yaml"/>
-  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" output="screen" />
 
   <arg name="initial_pose_x" default="0.0"/> 
   <arg name="initial_pose_y" default="0.0"/> 
