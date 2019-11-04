@@ -25,8 +25,35 @@
   <xacro:property name="wheel_length" value="0.1420" /> <!-- husky = 0.1143 -->
   <xacro:property name="wheel_radius" value="0.1830" /> <!-- husky = 0.1651 -->
 
+  <!-- IMU Mounting Positions -->
+  <xacro:property name="imu_xyz" value="0.19 0 0.149" />
+  <xacro:property name="imu_rpy" value="0 -1.5708 3.1416" />
+
+  <!-- Dual UR5 Mounting Positions -->
+  <xacro:property name="left_arm_xyz" value="0 0.15945 0.09069" />
+  <xacro:property name="left_arm_rpy" value="${-pi / 4} 0 0" />
+  <xacro:property name="right_arm_xyz" value="0 -0.15945 0.09069" />
+  <xacro:property name="right_arm_rpy" value="${-pi / 4} 0 ${pi}" />
+
+  <!-- Robotiq 3 Finger Gripper Mounting Positions -->
+  <xacro:property name="left_robotiq_3f_gripper_xyz" value="0 0 0.065" />
+  <xacro:property name="left_robotiq_3f_gripper_rpy" value="${pi / 2} 0 ${-pi * 3 / 4}" />
+  <xacro:property name="right_robotiq_3f_gripper_xyz" value="0 0 0.065" />
+  <xacro:property name="right_robotiq_3f_gripper_rpy" value="${pi / 2} 0 ${pi * 3 / 4}" />
+
+  <!-- LMS1xx LiDAR Angle Range and Mounting Positions -->
+  <xacro:property name="lms1xx_angle" value="${pi * 3 / 4}" />
+  <xacro:property name="lms1xx_xyz" value="0.015 0 0.044" />
+  <xacro:property name="lms1xx_rpy" value="${pi} 0 0" />
+
+  <!-- Realsense D415 Mounting Positions -->
+  <xacro:property name="left_gripper_sensor_support_xyz" value="0 -0.050 0" />
+  <xacro:property name="left_gripper_sensor_support_rpy" value="${pi / 2} 0 ${pi}" />
+  <xacro:property name="right_gripper_sensor_support_xyz" value="0 -0.050 0" />
+  <xacro:property name="right_gripper_sensor_support_rpy" value="${-pi / 2} 0 0" />
+
   <xacro:macro name="bulldog_robot">
-    <!-- Base -->
+    <!-- Base link is the center of the robot's bottom plate -->
     <link name="base_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
@@ -44,14 +71,10 @@
       <collision>
         <origin xyz="0 0 ${base_z_size * 3 / 4 - 0.01}" rpy="0 0 0" />
         <geometry>
-          <box size="${base_x_size * 4 / 5} ${base_y_size} ${base_z_siz / 2 - 0.02}"/>
+          <box size="${base_x_size * 4 / 5} ${base_y_size} ${base_z_size / 2 - 0.02}"/>
         </geometry>
       </collision>
     </link>
-
-    <!-- <gazebo reference="base_link">
-      <material>Gazebo/FlatBlack</material>
-    </gazebo> -->
 
     <!-- Base footprint is on the ground under the robot -->
     <link name="base_footprint"/>
@@ -62,12 +85,30 @@
       <child link="base_footprint" />
     </joint>
 
-    <!-- Inertial -->
-    <link name="inertial_link">
+    <!-- Interial link stores the robot's inertial information -->
+    <!-- <link name="inertial_link">
       <inertial>
         <mass value="40" />
         <origin xyz="0 0 0.1" />
         <inertia ixx="0.7" ixy="-0.03" ixz="-0.15" iyy="2" iyz="-0.01" izz="4" />
+      </inertial>
+    </link> -->
+
+    <!-- Dual UR5 Husky -->
+    <!-- <link name="inertial_link">
+      <inertial>
+        <mass value="48.39054"/>
+        <origin xyz="-0.0648 -0.00059 0.07895"/>
+        <inertia ixx="2.1634275613800003" ixy="-0.055452352110000006" ixz="-0.41083822026" iyy="3.5314689495400002" iyz="-0.004366145530000001" izz="4.4759585875" />
+      </inertial>
+    </link>  -->
+
+    <!-- Husky -->
+    <link name="inertial_link">
+      <inertial>
+        <mass value="46.034" />
+        <origin xyz="-0.00065 -0.085 0.062" />
+        <inertia ixx="0.6022" ixy="-0.02364" ixz="-0.1197" iyy="1.7386" iyz="-0.001544" izz="2.0296" />
       </inertial>
     </link>
 
@@ -77,34 +118,34 @@
       <child link="inertial_link" />
     </joint>
 
-    <!-- Top Plate -->
-    <xacro:top_plate />
-
-    <!-- IMU -->
+    <!-- IMU link is the standard mounting position for the UM6 IMU.-->
+    <!-- Can be modified with environment variables in /etc/ros/setup.bash -->
     <link name="imu_link"/>
-
     <joint name="imu_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0" />
+      <origin xyz="${imu_xyz}" rpy="${imu_rpy}" />
       <parent link="base_link" />
       <child link="imu_link" />
     </joint>
-
     <gazebo reference="imu_link" />
 
-    <xacro:bulldog_wheel wheel_prefix="front_left">
+    <!-- Wheel macros -->
+    <xacro:bulldog_wheel wheel_prefix="front_left" wheel_length="${wheel_length}" wheel_radius="${wheel_radius}">
       <origin xyz="${wheelbase / 2} ${track / 2} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:bulldog_wheel>
-    <xacro:bulldog_wheel wheel_prefix="front_right">
-      <origin xyz="0.27937 -0.285 0.0435" rpy="0 0 0" />
+    <xacro:bulldog_wheel wheel_prefix="front_right" wheel_length="${wheel_length}" wheel_radius="${wheel_radius}">
+      <origin xyz="${wheelbase / 2} ${-track / 2} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:bulldog_wheel>
-    <xacro:bulldog_wheel wheel_prefix="rear_left">
-      <origin xyz="-0.27937 0.285 0.0435" rpy="0 0 0" />
+    <xacro:bulldog_wheel wheel_prefix="rear_left" wheel_length="${wheel_length}" wheel_radius="${wheel_radius}">
+      <origin xyz="${-wheelbase / 2} ${track / 2} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:bulldog_wheel>
-    <xacro:bulldog_wheel wheel_prefix="rear_right">
-      <origin xyz="-0.27937 -0.285 0.0435" rpy="0 0 0" />
+    <xacro:bulldog_wheel wheel_prefix="rear_right" wheel_length="${wheel_length}" wheel_radius="${wheel_radius}">
+      <origin xyz="${-wheelbase / 2} ${-track / 2} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:bulldog_wheel>
 
-    <!-- Installation Plate -->
+    <!-- Top plate -->
+    <xacro:top_plate />
+
+    <!-- Installation plate -->
     <xacro:installation_plate />
 
     <!-- Dual UR5 Arms -->
@@ -114,7 +155,7 @@
       <joint name="left_arm_base" type="fixed">
         <parent link="installation_plate_link" />
         <child link="left_arm_base_link" />
-        <origin xyz="0 0.15945 0.09069" rpy="-0.785 0 0" />
+        <origin xyz="${left_arm_xyz}" rpy="${left_arm_rpy}" />
       </joint>
       
       <xacro:ur5_robot prefix="right_arm_" joint_limited="true"
@@ -122,17 +163,17 @@
       <joint name="right_arm_base" type="fixed">
         <parent link="installation_plate_link" />
         <child link="right_arm_base_link" />
-        <origin xyz="0 -0.15945 0.09069" rpy="-0.785 0 ${pi}" />
+        <origin xyz="${right_arm_xyz}" rpy="${right_arm_rpy}" />
       </joint>
 
       <!-- If you modify the name of the grippers, remember to change the *prefix* in line 
-           780 and 782 accordingly of $(find robotiq_s_model_articulated_gazebo_plugins)/src/RobotiqHandPlugin.cpp. -->
+           780 and 782 accordingly of $(find robotiq_3f_gripper_articulated_gazebo_plugins)/src/RobotiqHandPlugin.cpp. -->
       <xacro:robotiq_hand prefix="left_gripper_" parent="left_arm_tool0" reflect="-1">
-        <origin rpy="${pi / 2} 0 ${-pi * 3 / 4}" xyz="0 0 0.065"/>
+        <origin xyz="${left_robotiq_3f_gripper_xyz}" rpy="${left_robotiq_3f_gripper_rpy}" />
       </xacro:robotiq_hand>
 
       <xacro:robotiq_hand prefix="right_gripper_" parent="right_arm_tool0" reflect="-1">
-        <origin rpy="${pi / 2} 0 ${pi * 3 / 4}" xyz="0 0 0.065"/>
+        <origin xyz="${right_robotiq_3f_gripper_xyz}" rpy="${right_robotiq_3f_gripper_rpy}" />
       </xacro:robotiq_hand>
 
     </xacro:if>
@@ -141,9 +182,9 @@
     <xacro:if value="$(arg laser_enabled)">
       <xacro:laser_plate />
       <sick_lms1xx frame="laser" topic="scan" visualize="true" 
-        min_angle="-2.35619" max_angle="2.35619"/>
+        min_angle="${-lms1xx_angle}" max_angle="${lms1xx_angle}"/>
       <joint name="laser_mount_joint" type="fixed">
-        <origin xyz="0.015 0 0.044" rpy="${pi} 0 0" />
+        <origin xyz="${lms1xx_xyz}" rpy="${lms1xx_rpy}" />
         <parent link="laser_plate_link" />
         <child link="laser" />
       </joint>
@@ -158,7 +199,7 @@
     <xacro:if value="$(arg realsense_enabled)">
       <xacro:realsense_support prefix="left_gripper_sensor_support_" 
         installation_link="left_gripper_palm">
-        <origin xyz="0 -0.050 0" rpy="${pi / 2} 0 ${pi}" />
+        <origin xyz="${left_gripper_sensor_support_xyz}" rpy="${left_gripper_sensor_support_rpy}" />
       </xacro:realsense_support>
 
       <xacro:sensor_d415 prefix="left_gripper_sensor_d415_" 
@@ -168,7 +209,7 @@
 
       <xacro:realsense_support prefix="right_gripper_sensor_support_" 
         installation_link="right_gripper_palm">
-        <origin xyz="0 -0.050 0" rpy="${-pi / 2} 0 0" />
+        <origin xyz="${right_gripper_sensor_support_xyz}" rpy="${right_gripper_sensor_support_rpy}" />
       </xacro:realsense_support>
 
       <xacro:sensor_d415 prefix="right_gripper_sensor_d415_" 
