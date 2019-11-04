@@ -1,12 +1,12 @@
 left_arm_controller:
   type: position_controllers/JointTrajectoryController
   joints:
-     - left_arm_shoulder_pan_joint
-     - left_arm_shoulder_lift_joint
-     - left_arm_elbow_joint
-     - left_arm_wrist_1_joint
-     - left_arm_wrist_2_joint
-     - left_arm_wrist_3_joint
+    - left_arm_shoulder_pan_joint
+    - left_arm_shoulder_lift_joint
+    - left_arm_elbow_joint
+    - left_arm_wrist_1_joint
+    - left_arm_wrist_2_joint
+    - left_arm_wrist_3_joint
   constraints:
       goal_time: 0.6
       stopped_velocity_tolerance: 0.05

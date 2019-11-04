@@ -86,7 +86,7 @@
     <!-- dual ur5 arms -->
     <xacro:if value="$(arg dual_ur5_enabled)">
       <xacro:ur5_robot prefix="left_arm_" joint_limited="true"
-        transmission_hw_interface="hardware_interface/PositionJointInterface" />    
+        transmission_hw_interface="hardware_interface/PositionJointInterface" />
       <joint name="left_arm_base" type="fixed">
         <parent link="installation_plate_link" />
         <child link="left_arm_base_link" />
@@ -94,7 +94,7 @@
       </joint>
       
       <xacro:ur5_robot prefix="right_arm_" joint_limited="true"
-        transmission_hw_interface="hardware_interface/PositionJointInterface" />  
+        transmission_hw_interface="hardware_interface/PositionJointInterface" />
       <joint name="right_arm_base" type="fixed">
         <parent link="installation_plate_link" />
         <child link="right_arm_base_link" />
