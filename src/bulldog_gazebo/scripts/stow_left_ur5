@@ -6,18 +6,17 @@ from control_msgs.msg import *
 from trajectory_msgs.msg import *
 from controller_manager_msgs.srv import *
 from controller_manager_msgs.msg import *
-
-JOINT_NAMES = ['right_arm_shoulder_pan_joint', 'right_arm_shoulder_lift_joint', 'right_arm_elbow_joint',
-               'right_arm_wrist_1_joint', 'right_arm_wrist_2_joint', 'right_arm_wrist_3_joint']
+JOINT_NAMES = ['left_arm_shoulder_pan_joint', 'left_arm_shoulder_lift_joint', 'left_arm_elbow_joint',
+               'left_arm_wrist_1_joint', 'left_arm_wrist_2_joint', 'left_arm_wrist_3_joint']
 
 Q1 = [1.5708, -1.5708, 0.0, -1.5708, 0.0, 0.0]
 Q2 = [-1.5708, -1.5708, 0.0, -1.5708, 0.0, 0.0]
-Q3 = [0.0, 0.0, -2.8300, 0.0, 1.5708, -0.7854]
+Q3 = [0.0, -3.1415, 2.8300, -3.1415, -1.5708, -2.3562]
 
 client = None
 
 def move():
-    rospy.loginfo("Initializing right arm...")
+    rospy.loginfo("Initializing left arm...")
 
     g = FollowJointTrajectoryGoal()
     g.trajectory = JointTrajectory()
@@ -25,16 +24,15 @@ def move():
     g.trajectory.points = [
         JointTrajectoryPoint(positions=Q1, velocities=[0]*6, time_from_start=rospy.Duration(2.0)),
         JointTrajectoryPoint(positions=Q2, velocities=[0]*6, time_from_start=rospy.Duration(3.0)),
-        JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(6.0))
-    ]
+        JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(6.0))]
     client.send_goal(g)
     try:
         client.wait_for_result()
     except KeyboardInterrupt:
         client.cancel_goal()
         raise
-    
-    rospy.loginfo("Right arm initialized")
+
+    rospy.loginfo("Left arm initialized")    
 
 def move_disordered():
     order = [4, 2, 3, 1, 5, 0]
@@ -68,8 +66,7 @@ def move_repeated():
         g.trajectory.points.append(
             JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(d)))
         d += 2
-    client.send_goal_and_wait(g)
-    # client.send_goal(g)
+    client.send_goal(g)
     try:
         client.wait_for_result()
     except KeyboardInterrupt:
@@ -83,7 +80,8 @@ def move_interrupt():
     g.trajectory.points = [
         JointTrajectoryPoint(positions=Q1, velocities=[0]*6, time_from_start=rospy.Duration(2.0)),
         JointTrajectoryPoint(positions=Q2, velocities=[0]*6, time_from_start=rospy.Duration(3.0)),
-        JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(4.0))]
+        JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(4.0))
+    ]
     
     client.send_goal(g)
     time.sleep(2.0)
@@ -98,16 +96,16 @@ def move_interrupt():
 def main():
     global client
     try:
-        rospy.init_node("stow_right_ur5", anonymous=True, disable_signals=True)
-        rospy.sleep(1.0)  # wait for gazebo startup        
-
+        rospy.init_node("stow_left_ur5", anonymous=True, disable_signals=True)
+        rospy.sleep(1.0)  # wait for gazebo startup
+        
         client = actionlib.SimpleActionClient(
-            'right_arm_controller/follow_joint_trajectory', 
+            'left_arm_controller/follow_joint_trajectory', 
             FollowJointTrajectoryAction
         )
-        rospy.loginfo("Waiting for right ur5 arm controller server...")
+        rospy.loginfo("Waiting for left ur5 arm controller server...")
         client.wait_for_server()
-        rospy.loginfo("Right ur5 arm controller server is available.")
+        rospy.loginfo("Left ur5 arm controller server is available.")
         move()
     except KeyboardInterrupt:
         rospy.signal_shutdown("KeyboardInterrupt")

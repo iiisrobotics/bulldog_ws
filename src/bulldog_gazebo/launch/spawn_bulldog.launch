@@ -24,12 +24,12 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCL
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <launch>
-  <arg name="laser_enabled" default="$(optenv BULLDOG_LMS1XX_ENABLED true)"/>
-  <arg name="ur5_enabled" default="$(optenv BULLDOG_UR5_ENABLED false)"/>
-  <arg name="kinect_enabled" default="$(optenv BULLDOG_KINECT_ENABLED false)"/>
-  <arg name="realsense_enabled" default="$(optenv BULLDOG_REALSENSE_ENABLED true)"/>
-  <arg name="dual_ur5_enabled" default="$(optenv BULLDOG_DUAL_UR5_ENABLED true)"/>
-  <arg name="robotiq_grippers_enabled" default="$(optenv ROBOTIQ_GRIPPERS_ENABLED true)"/>
+  <arg name="laser_enabled" default="$(optenv BULLDOG_LMS1XX_ENABLED true)" />
+  <arg name="ur5_enabled" default="$(optenv BULLDOG_UR5_ENABLED false)" />
+  <arg name="kinect_enabled" default="$(optenv BULLDOG_KINECT_ENABLED false)" />
+  <arg name="realsense_enabled" default="$(optenv BULLDOG_REALSENSE_ENABLED true)" />
+  <arg name="dual_ur5_enabled" default="$(optenv BULLDOG_DUAL_UR5_ENABLED true)" />
+  <arg name="robotiq_grippers_enabled" default="$(optenv ROBOTIQ_GRIPPERS_ENABLED true)" />
 
   <arg name="left_gripper_command_topic" default="left_gripper/command" />
   <arg name="right_gripper_command_topic" default="right_gripper/command" />
@@ -44,7 +44,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
              robotiq_grippers_enabled:=$(arg robotiq_grippers_enabled)" />
 
   <!-- Load base control information -->
-  <include file="$(find bulldog_control)/launch/control.launch"/>
+  <include file="$(find bulldog_control)/launch/control.launch" />
 
   <!-- Include ros_control configuration for ur5, only used in simulation -->
   <group if="$(arg ur5_enabled)">
@@ -101,7 +101,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <param name="topic" value="$(arg left_gripper_command_topic)" />
     </node>
     <node name="activate_right_robotiq_3f_gripper" pkg="bulldog_gazebo" type="activate_right_robotiq_3f_gripper" output="screen">
-      <param name="topic" value="$(arg right_gripper_cmmand_topic)" />
+      <param name="topic" value="$(arg right_gripper_command_topic)" />
     </node>
   </group>
 

@@ -1,0 +1,36 @@
+#!/usr/bin/env python
+from __future__ import print_function
+
+import roslib
+
+roslib.load_manifest('robotiq_3f_gripper_control')
+import rospy
+from robotiq_3f_gripper_articulated_msgs.msg import Robotiq3FGripperRobotOutput
+
+
+def get_activate_command():
+    command = Robotiq3FGripperRobotOutput()
+    command.rACT = 1
+    command.rGTO = 1
+    command.rSPA = 255
+    command.rFRA = 150
+
+    return command
+
+def main():
+    rospy.init_node('activate_left_robotiq_3f_gripper')
+    rospy.sleep(1.0)  # wait for gazebo startup
+
+    topic = rospy.get_param('~topic', default='Robotiq3FGripperRobotOutput')
+
+    publisher = rospy.Publisher(topic, Robotiq3FGripperRobotOutput, queue_size=1)
+    command = get_activate_command()
+    publisher.publish(command)
+
+    # while not rospy.is_shutdown():
+    #     publisher.publish(command)        
+    #     rospy.sleep(0.5)
+
+
+if __name__ == '__main__':
+    main()
