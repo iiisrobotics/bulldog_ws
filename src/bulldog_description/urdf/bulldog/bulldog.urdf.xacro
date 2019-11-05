@@ -22,7 +22,7 @@
   <xacro:property name="wheel_vertical_offset" value="0.04352" /> <!-- husky = 0.3282 -->
 
   <!-- Wheel Properties -->
-  <xacro:property name="wheel_length" value="0.1420" /> <!-- husky = 0.1143 -->
+  <xacro:property name="wheel_length" value="0.1143" /> <!-- husky = 0.1143 -->
   <xacro:property name="wheel_radius" value="0.1830" /> <!-- husky = 0.1651 -->
 
   <!-- IMU Mounting Positions -->
@@ -68,12 +68,12 @@
           <box size="${base_x_size} ${base_y_size} ${base_z_size / 2}"/>
         </geometry>
       </collision>
-      <!-- <collision>
-        <origin xyz="0 0 ${base_z_size * 3 / 4 - 0.01}" rpy="0 0 0" />
+      <collision>
+        <origin xyz="0 0 ${base_z_size * 3 / 4 - 0.0325}" rpy="0 0 0" />
         <geometry>
-          <box size="${base_x_size * 4 / 5} ${base_y_size} ${base_z_size / 2 - 0.02}"/>
+          <box size="${base_x_size * 4 / 5} ${base_y_size} ${base_z_size / 2 - 0.065}"/>
         </geometry>
-      </collision> -->
+      </collision>
     </link>
 
     <gazebo reference="base_link">

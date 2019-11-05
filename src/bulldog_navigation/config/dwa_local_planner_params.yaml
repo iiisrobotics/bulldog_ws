@@ -9,7 +9,7 @@ DWAPlannerROS:
   max_vel_y: 0.0  # null
   min_vel_y: 0.0  # null
 
-  max_trans_vel: 0.5 
+  max_trans_vel: 0.5
   min_trans_vel: 0.1 
   # trans_stopped_vel: 0.1
 
