@@ -2,13 +2,13 @@
     <!-- Arguments -->
     <arg name="sim"                 default="true" />
     <arg name="raw_cmd_vel_topic"   default="keyboard_teleop/cmd_vel" />
-    <arg name="speed"               default="1.00" if="$(arg sim)" />
-    <arg name="turn"                default="2.00" if="$(arg sim)" />
+    <arg name="speed"               default="0.50" if="$(arg sim)" />
+    <arg name="turn"                default="0.50" if="$(arg sim)" />
     <arg name="speed"               default="0.10" unless="$(arg sim)" />
     <arg name="turn"                default="0.20" unless="$(arg sim)" />
 
     <!--  smooths inputs from keyboard_teleop/cmd_vel to smooth_teleop/cmd_vel -->
-    <include unless="$(arg sim)" file="$(find bulldog_navigation)/launch/velocity_smoother.launch">
+    <include file="$(find bulldog_navigation)/launch/velocity_smoother.launch">
         <arg name="raw_cmd_vel_topic" value="$(arg raw_cmd_vel_topic)" />
     </include>
 
@@ -17,6 +17,6 @@
         <param name="speed" value="$(arg speed)" />
         <param name="turn" value="$(arg turn)" />
 
-        <remap unless="$(arg sim)" from="cmd_vel" to="keyboard_teleop/cmd_vel" />
+        <remap from="cmd_vel" to="keyboard_teleop/cmd_vel" />
     </node>
 </launch>

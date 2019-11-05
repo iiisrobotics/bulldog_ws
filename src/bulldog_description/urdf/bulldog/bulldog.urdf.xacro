@@ -18,7 +18,7 @@
 
   <!-- Wheel Mounting Positions -->
   <xacro:property name="wheelbase" value="0.5587" /> <!-- husky = 0.5120 -->
-  <xacro:property name="track" value="0.5708" /> <!-- husky = 0.5708 -->
+  <xacro:property name="track" value="0.5848" /> <!-- husky = 0.5708 -->
   <xacro:property name="wheel_vertical_offset" value="0.04352" /> <!-- husky = 0.3282 -->
 
   <!-- Wheel Properties -->
@@ -90,13 +90,13 @@
     </joint>
 
     <!-- Interial link stores the robot's inertial information -->
-    <link name="inertial_link">
+    <!-- <link name="inertial_link">
       <inertial>
         <mass value="40" />
         <origin xyz="0 0 0.1" />
         <inertia ixx="0.7" ixy="-0.03" ixz="-0.15" iyy="2" iyz="-0.01" izz="4" />
       </inertial>
-    </link>
+    </link> -->
 
     <!-- Dual UR5 Husky -->
     <!-- <link name="inertial_link">
@@ -108,13 +108,13 @@
     </link> -->
 
     <!-- Husky -->
-    <!-- <link name="inertial_link">
+    <link name="inertial_link">
       <inertial>
         <mass value="46.034" />
         <origin xyz="-0.00065 -0.085 0.062" />
         <inertia ixx="0.6022" ixy="-0.02364" ixz="-0.1197" iyy="1.7386" iyz="-0.001544" izz="2.0296" />
       </inertial>
-    </link> -->
+    </link>
 
     <joint name="inertial_joint" type="fixed">
       <origin xyz="0 0 0" rpy="0 0 0" />
@@ -132,7 +132,7 @@
     </joint>
     <gazebo reference="imu_link" />
 
-    <!-- Wheel macros -->
+    <!-- Wheels -->
     <xacro:bulldog_wheel wheel_prefix="front_left" wheel_length="${wheel_length}" wheel_radius="${wheel_radius}">
       <origin xyz="${wheelbase / 2} ${track / 2} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:bulldog_wheel>
