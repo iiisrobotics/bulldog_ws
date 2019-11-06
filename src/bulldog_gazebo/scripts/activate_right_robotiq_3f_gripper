@@ -24,7 +24,7 @@ def main():
     topic = rospy.get_param('~topic', default='Robotiq3FGripperRobotOutput')
 
     publisher = rospy.Publisher(topic, Robotiq3FGripperRobotOutput, queue_size=1)
-    publisher.publish(command)
+    # publisher.publish(command)
 
     # while not rospy.is_shutdown():
     #     publisher.publish(command)
