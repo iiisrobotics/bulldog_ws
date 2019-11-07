@@ -22,8 +22,8 @@
   <xacro:property name="wheel_vertical_offset" value="0.04352" /> <!-- husky = 0.3282 -->
 
   <!-- Wheel Properties -->
-  <xacro:property name="wheel_length" value="0.1143" /> <!-- husky = 0.1143 -->
-  <xacro:property name="wheel_radius" value="0.1830" /> <!-- husky = 0.1651 -->
+  <xacro:property name="wheel_length" value="0.1346" /> <!-- husky = 0.1143 -->
+  <xacro:property name="wheel_radius" value="0.1816" /> <!-- husky = 0.1651 -->
 
   <!-- IMU Mounting Positions -->
   <xacro:property name="imu_xyz" value="0.19 0 0.149" />
