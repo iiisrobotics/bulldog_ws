@@ -21,11 +21,17 @@ velocity_controller:
   # Bulldog hardware provides wheel velocities
   estimate_velocity_from_position: false
 
+  # Wheel separation and diameter. These are both optional.
+  # diff_drive_controller will attempt to read either one or both from the
+  # URDF if not specified as a parameter
+  wheel_separation           : 0.5848
+  wheel_radius               : 0.1816
+
   # Wheel separation and radius multipliers
   # wheel_separaddtion: 0.570
   # wheel_radius: 0.183
-  wheel_separation_multiplier: 0.570 # default: 1.0
-  wheel_radius_multiplier    : 0.183 # default: 1.0
+  wheel_separation_multiplier: 1.0 # default: 1.0
+  wheel_radius_multiplier    : 1.0 # default: 1.0
 
   # Velocity and acceleration limits
   # Whenever a min_* is unspecified, default to -max_*

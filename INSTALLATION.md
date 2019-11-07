@@ -126,6 +126,12 @@
 
         sudo apt-get install ros-$ROS_DISTRO-teleop-twist-joy
 
+22. rgbd_launch
+
+    http://wiki.ros.org/rgbd_launch
+
+        sudo apt-get install ros-$ROS_DISTRO-rgbd-launch
+
 ----
 
 You can run
@@ -135,7 +141,7 @@ You can run
 
 to clone all the following repository at once!
 
-22. realsense-ros
+23. realsense-ros
 
     Intel RealSense RGBD sensors' ROS library.
 
@@ -146,27 +152,28 @@ to clone all the following repository at once!
     Note: I have modify the code from official repository. If you have
     any question, feel free to contact me.
 
-23. gazebo_grasp_fix_plugin/general-message-pkgs
+24. gazebo_grasp_fix_plugin/general-message-pkgs
 
     General message packages to use the gazebo grasp fix plugin.
 
     https://github.com/JenniferBuehler/general-message-pkgs.git
 
 
-24. gazebo_grasp_fix_plugin/gazebo-pkgs
+25. gazebo_grasp_fix_plugin/gazebo-pkgs
 
     Gazebo grasp fix plugin.
 
     https://github.com/JenniferBuehler/gazebo-pkgs.git
 
-25. moveit_grasps
+26. moveit_grasps
 
     Moveit grasping pipeline for box size object only.
 
     https://github.com/YeeCY/moveit_grasps.
 
     Note: we use **kinetic-devel** branch here.
-26. pick_and_place
+
+27. pick_and_place
 
     Bulldog pick and place pipeline.
 
@@ -174,7 +181,7 @@ to clone all the following repository at once!
 
     Note: we use **kinetic-devel** branch here.
 
-27. darknet_ros
+28. darknet_ros
 
     Yolo realtime object detector with ROS. We use it to find different objects
     in grasping pipeline.
