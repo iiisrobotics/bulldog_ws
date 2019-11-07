@@ -1,0 +1,7 @@
+<launch>
+    <arg name="rviz_config" default="$(find bulldog_navigation)/rviz/navigation.rviz" />
+
+    <!-- RVIZ -->
+    <node name="rviz" pkg="rviz" type="rviz"
+        output="screen" args="-d $(arg rviz_config)" />
+</launch>
