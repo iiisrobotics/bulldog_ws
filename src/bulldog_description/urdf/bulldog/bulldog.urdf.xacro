@@ -42,7 +42,7 @@
   <xacro:property name="right_robotiq_3f_gripper_rpy" value="${pi / 2} 0 ${pi * 3 / 4}" />
 
   <!-- LMS1xx LiDAR Angle Range and Mounting Positions -->
-  <xacro:property name="lms1xx_angle" value="${pi * 3 / 4}" />
+  <xacro:property name="lms1xx_angle" value="${pi * 2 / 3}" />
   <xacro:property name="lms1xx_xyz" value="0.015 0 0.044" />
   <xacro:property name="lms1xx_rpy" value="${pi} 0 0" />
 
