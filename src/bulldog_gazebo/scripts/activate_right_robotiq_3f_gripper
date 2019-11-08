@@ -24,12 +24,12 @@ def main():
     topic = rospy.get_param('~topic', default='Robotiq3FGripperRobotOutput')
 
     publisher = rospy.Publisher(topic, Robotiq3FGripperRobotOutput, queue_size=1)
-    # publisher.publish(command)
+    command = get_activate_command()
 
-    # while not rospy.is_shutdown():
-    #     publisher.publish(command)
+    while not rospy.is_shutdown():
+        publisher.publish(command)
 
-    #     rospy.sleep(0.5)
+        rospy.sleep(0.5)
 
 
 if __name__ == '__main__':

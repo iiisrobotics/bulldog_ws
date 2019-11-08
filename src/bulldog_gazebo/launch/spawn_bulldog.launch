@@ -97,12 +97,12 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       args="/robotiq_hands/right_hand/joint_states /joint_states" output="screen" />
 
     <!-- Initialize robotiq 3 finger grippers -->
-    <!-- <node name="activate_left_robotiq_3f_gripper" pkg="bulldog_gazebo" type="activate_left_robotiq_3f_gripper" output="screen">
+    <node name="activate_left_robotiq_3f_gripper" pkg="bulldog_gazebo" type="activate_left_robotiq_3f_gripper" output="screen">
       <param name="topic" value="$(arg left_gripper_command_topic)" />
     </node>
     <node name="activate_right_robotiq_3f_gripper" pkg="bulldog_gazebo" type="activate_right_robotiq_3f_gripper" output="screen">
       <param name="topic" value="$(arg right_gripper_command_topic)" />
-    </node> -->
+    </node>
   </group>
 
   <group if="$(arg kinect_enabled)">

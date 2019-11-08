@@ -42,7 +42,7 @@
   <xacro:property name="right_robotiq_3f_gripper_rpy" value="${pi / 2} 0 ${pi * 3 / 4}" />
 
   <!-- LMS1xx LiDAR Angle Range and Mounting Positions -->
-  <xacro:property name="lms1xx_angle" value="${pi * 2 / 4}" />
+  <xacro:property name="lms1xx_angle" value="${pi * 3 / 4}" />
   <xacro:property name="lms1xx_xyz" value="0.015 0 0.044" />
   <xacro:property name="lms1xx_rpy" value="${pi} 0 0" />
 
@@ -111,8 +111,7 @@
     <link name="inertial_link">
       <inertial>
         <mass value="46.034" />
-        <!-- <origin xyz="-0.00065 -0.085 0.062" /> -->
-        <origin xyz="-0.00065 0.0 0.062" />
+        <origin xyz="-0.00065 -0.085 0.062" />
         <inertia ixx="0.6022" ixy="-0.02364" ixz="-0.1197" iyy="1.7386" iyz="-0.001544" izz="2.0296" />
       </inertial>
     </link>
