@@ -1,10 +1,10 @@
 <launch>
     <!-- Arguments -->
     <arg name="raw_cmd_vel_topic"   default="joystick_teleop/cmd_vel" />
-    <arg name="scale_linear"        default="0.2" />
-    <arg name="scale_linear_turbo"  default="1.0" />    
-    <arg name="scale_angular"       default="0.2" />
-    <arg name="scale_angular_turbo" default="1.0" />
+    <arg name="scale_linear"        default="1.0" />
+    <arg name="scale_linear_turbo"  default="2.0" />    
+    <arg name="scale_angular"       default="1.0" />
+    <arg name="scale_angular_turbo" default="2.0" />
 
     <!--  smooths inputs from bulldog_teleop_keyboard/cmd_vel to velocity_controller/cmd_vel -->
     <include file="$(find bulldog_navigation)/launch/velocity_smoother.launch">

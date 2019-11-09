@@ -3,7 +3,7 @@ teleop_twist_joy:
   scale_linear: 0.2  # 0.4 m/s
   scale_linear_turbo: 1.0
   axis_angular: 0
-  scale_angular: 0.2  # 0.6 rad/s
+  scale_angular: 0.4  # 0.6 rad/s
   scale_angular_turbo: 1.0
   enable_button: 0
   enable_turbo_button: 2

@@ -104,8 +104,8 @@ namespace bulldog
       }
       last_emergency_status = emergency_status;
 
-      float speed = joint_velocity_[0]*0.184;
-      float odom = joint_position_[0]*0.184;
+      float speed = joint_velocity_[0] * 0.1816;
+      float odom = joint_position_[0] * 0.1816;
 
       float left_motor_current = motor_controller->getMotorCurrent(1);
       float right_motor_current = motor_controller->getMotorCurrent(2);
