@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import time
 import serial
 import string
 import math
@@ -48,20 +47,20 @@ class ArduIMUROS(object):
             try:
                 line = self._Serial.readline()
             except Exception:
-                print 'Calibration ERROR!'
+                rospy.logerr("Calibration ERROR!")
 
-            words = string.split(line,",")
+            words = string.split(line, ",")
             if len(words) == 10:
-                try:  
+                try:
                     self.gyro_x.append(float(words[4]))
                     self.gyro_y.append(float(words[5]))
                     self.gyro_z.append(float(words[6]))
                 except Exception as e:
-                    print 'value error', e
+                    print 'Word Error: ', e
             i += 1
-        self.gyro_x_offset = sum(self.gyro_x)/len(self.gyro_x)
-        self.gyro_y_offset = sum(self.gyro_y)/len(self.gyro_y)
-        self.gyro_z_offset = sum(self.gyro_z)/len(self.gyro_z)
+        self.gyro_x_offset = sum(self.gyro_x) / len(self.gyro_x)
+        self.gyro_y_offset = sum(self.gyro_y) / len(self.gyro_y)
+        self.gyro_z_offset = sum(self.gyro_z) / len(self.gyro_z)
 
         while not rospy.is_shutdown():
             self.process()
@@ -74,17 +73,17 @@ class ArduIMUROS(object):
 
     def stop(self):
         rospy.loginfo("Stopping serial gateway")
-        time.sleep(.1)
+        rospy.sleep(0.1)
         self._Serial.close()
 
     def process(self):
         try:
             line = self._Serial.readline()
         except Exception:
-            print 'Interrupted'
+            rospy.logerr("Interrupted")
             return
 
-        words = string.split(line,",")
+        words = string.split(line, ",")
         if len(words) == 10:
             try:   
                 self.imuMsg.linear_acceleration.x = (float(words[1]) - (417))*SA
@@ -102,7 +101,7 @@ class ArduIMUROS(object):
                 self.magMsg.magnetic_field.z = (float(words[9]) - 0)*SM*(1e-7)
 
             except Exception as e:
-                print 'value error', e
+                print 'Word Error: ', e
         
         self.imuMsg.header.stamp= rospy.Time.now()
         self.imuMsg.header.frame_id = IMU_FRAME
@@ -113,5 +112,6 @@ class ArduIMUROS(object):
         self.mag_pub.publish(self.magMsg)
        
 if __name__ == '__main__': 
-    rospy.init_node('arduimu_ros') 
+    rospy.init_node('arduimu_ros')
+    rospy.sleep(1.0)
     ArduIMUROS()
