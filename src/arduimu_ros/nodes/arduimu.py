@@ -67,7 +67,7 @@ class ArduIMUROS(object):
         self.stop()
 
     def start(self):
-        self._Serial = serial.Serial(self.port, self.baud, timeout=5.0)
+        self._Serial = serial.Serial(self.port, self.baud, timeout=3.0)
         self._Serial.flushInput()
         self._Serial.flushOutput()
 
@@ -113,5 +113,4 @@ class ArduIMUROS(object):
        
 if __name__ == '__main__': 
     rospy.init_node('arduimu_ros')
-    rospy.sleep(1.0)
     ArduIMUROS()

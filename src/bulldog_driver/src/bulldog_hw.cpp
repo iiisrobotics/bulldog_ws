@@ -46,7 +46,7 @@ namespace bulldog
 
     for (unsigned int i = 0; i < joint_name_.size(); i++)
     {
-      js_interface_.registerHandle(JointStateHandle(joint_name_[i], &joint_position_[i], &joint_velocity_[i], &joint_effort_[i]));    
+      js_interface_.registerHandle(JointStateHandle(joint_name_[i], &joint_position_[i], &joint_velocity_[i], &joint_effort_[i]));
       vj_interface_.registerHandle(JointHandle(js_interface_.getHandle(joint_name_[i]), &joint_velocity_command_[i]));
     }
 
@@ -67,9 +67,9 @@ namespace bulldog
 
     if (left_encoder_speed != -1 && right_encoder_speed != -1)
     {
-      joint_velocity_[0] = -left_encoder_speed*SP;
+      joint_velocity_[0] = left_encoder_speed * SP;
       joint_velocity_[1] = joint_velocity_[0];
-      joint_velocity_[2] = right_encoder_speed*SP;
+      joint_velocity_[2] = -right_encoder_speed * SP;
       joint_velocity_[3] = joint_velocity_[2];
     }
 
@@ -77,9 +77,9 @@ namespace bulldog
     right_encoder_counts = motor_controller->getEncoderCount(2);
     if (left_encoder_counts != -1 && right_encoder_counts != -1)
     {
-      joint_position_[0] = -left_encoder_counts*PP;
+      joint_position_[0] = left_encoder_counts * PP;
       joint_position_[1] = joint_position_[0];
-      joint_position_[2] = right_encoder_counts*PP;
+      joint_position_[2] = -right_encoder_counts * PP;
       joint_position_[3] = joint_position_[2];
     }
 
@@ -112,7 +112,7 @@ namespace bulldog
       float battery_voltage = motor_controller->getBatteryVoltage();
       float controller_temp = motor_controller->getControllerTemp();
 
-      battery_capacity = (battery_voltage - 30.0)/0.2475;
+      battery_capacity = (battery_voltage - 30.0) / 0.2475;
       // ros::Duration bms_period(0.1);
       // if ((diagnostic_current_time - bms_last_time).toSec() > bms_period.toSec())
       // {
@@ -173,8 +173,8 @@ namespace bulldog
     }
     else
     {
-      motor_controller->setMotorSpeed(1, joint_velocity_command_[0]*CP);
-      motor_controller->setMotorSpeed(2, -joint_velocity_command_[2]*CP);
+      motor_controller->setMotorSpeed(1, joint_velocity_command_[0] * CP);
+      motor_controller->setMotorSpeed(2, -joint_velocity_command_[2] * CP);
     }
   }
 
