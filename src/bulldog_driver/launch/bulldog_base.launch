@@ -25,6 +25,9 @@
     <arg name="joy_dev" value="$(arg joy_dev)" />
   </include>
 
+  <!-- Joystick teleop -->
+  <include file="$(find bulldog_navigation)/launch/joystick_teleop.launch" />
+
   <!-- IMU driver -->
   <include file="$(find bulldog_driver)/launch/include/arduimu.launch.xml">
     <arg name="imu_dev" value="$(arg imu_dev)" />
