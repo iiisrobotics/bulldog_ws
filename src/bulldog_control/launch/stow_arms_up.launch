@@ -1,0 +1,15 @@
+<launch>
+    <arg name="left_arm_target_state"   default="left_arm_up" />
+    <arg name="right_arm_target_state"  default="right_arm_up" />
+
+    <!-- Stow UR5s -->
+    <node name="stow_left_ur5" pkg="bulldog_control" type="stow_left_ur5"
+        output="screen">
+        <param name="target_state" value="$(arg left_arm_target_state)" />
+    </node>
+
+    <node name="stow_right_ur5" pkg="bulldog_control" type="stow_right_ur5"
+        output="screen">
+        <param name="target_state" value="$(arg right_arm_target_state)" />
+    </node>
+</launch>

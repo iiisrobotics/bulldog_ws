@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import time
 import rospy
 import actionlib
 from control_msgs.msg import *
@@ -7,34 +6,44 @@ from trajectory_msgs.msg import *
 from controller_manager_msgs.srv import *
 from controller_manager_msgs.msg import *
 
-JOINT_NAMES = ['right_arm_shoulder_pan_joint', 'right_arm_shoulder_lift_joint', 'right_arm_elbow_joint',
-               'right_arm_wrist_1_joint', 'right_arm_wrist_2_joint', 'right_arm_wrist_3_joint']
+JOINT_NAMES = ['left_arm_shoulder_pan_joint', 'left_arm_shoulder_lift_joint', 'left_arm_elbow_joint',
+               'left_arm_wrist_1_joint', 'left_arm_wrist_2_joint', 'left_arm_wrist_3_joint']
 
-Q1 = [1.57,-1.57,0,-1.57,0,0]
-Q2 = [-1.57,-1.57,0,-1.57,0,0]
-Q3 = [-0.187947,0.070866,-2.824250,-0.176628,1.912136,1.465337]
+# use time interval between trajectory points to limit movement speed
+TRAJECTOR_POINTS_TIME_INTERVAL = 5.0
+
+target_states = {
+    'left_arm_extension_1': [1.5708, -1.5708, 0.0, -1.5708, 0.0, 0.0],
+    'left_arm_extension_2': [-1.5708, -1.5708, 0.0, -1.5708, 0.0, 0.0],
+    'left_arm_default': [0.0, -3.1415, 2.8300, -3.1415, -1.5708, -2.3562],
+    'left_arm_up': [-1.5708, -0.7854, 0.0, 0.0, 0.0, 0.7854]
+}
+
 
 client = None
 
-def move():
-    rospy.loginfo("Initializing right arm...")
+def move(target_state):
+    rospy.loginfo("[StowLeftUR5] Stowing left arm...")
 
     g = FollowJointTrajectoryGoal()
     g.trajectory = JointTrajectory()
     g.trajectory.joint_names = JOINT_NAMES
     g.trajectory.points = [
-        JointTrajectoryPoint(positions=Q1, velocities=[0]*6, time_from_start=rospy.Duration(2.0)),
-        JointTrajectoryPoint(positions=Q2, velocities=[0]*6, time_from_start=rospy.Duration(3.0)),
-        JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(6.0))
+        JointTrajectoryPoint(
+            positions=target_states[target_state], 
+            velocities=[0] * 6, 
+            time_from_start=rospy.Duration(TRAJECTOR_POINTS_TIME_INTERVAL)
+        )
     ]
 
-    client.send_goal_and_wait(g)
-    # client.send_goal(g)
-    try:
-        client.wait_for_result()
-    except KeyboardInterrupt:
-        client.cancel_goal()
-        raise
+    client.send_goal(g)
+    done = client.wait_for_result()
+
+    if not done:
+        rospy.logerr("[StowLeftUR5] Stow left UR5 failed!")
+        raise SystemExit()
+
+    rospy.loginfo("[StowLeftUR5] Left arm stowed")    
 
 def move_disordered():
     order = [4, 2, 3, 1, 5, 0]
@@ -68,8 +77,7 @@ def move_repeated():
         g.trajectory.points.append(
             JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(d)))
         d += 2
-    client.send_goal_and_wait(g)
-    # client.send_goal(g)
+    client.send_goal(g)
     try:
         client.wait_for_result()
     except KeyboardInterrupt:
@@ -83,11 +91,12 @@ def move_interrupt():
     g.trajectory.points = [
         JointTrajectoryPoint(positions=Q1, velocities=[0]*6, time_from_start=rospy.Duration(2.0)),
         JointTrajectoryPoint(positions=Q2, velocities=[0]*6, time_from_start=rospy.Duration(3.0)),
-        JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(4.0))]
+        JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(4.0))
+    ]
     
     client.send_goal(g)
-    time.sleep(2.0)
-    print("Interrupting")
+    rospy.sleep(2.0)
+    rospy.loginfo("[StowLeftUR5] Interrupting...")
     client.send_goal(g)
     try:
         client.wait_for_result()
@@ -96,22 +105,19 @@ def move_interrupt():
         raise
 
 def main():
-
     global client
-
     try:
-        # wait for controller
-        time.sleep(5)
+        rospy.init_node("stow_left_ur5", anonymous=True)
+        target_state = rospy.get_param('~target_state', default='left_arm_default')
 
-        rospy.init_node("stow_right", anonymous=True, disable_signals=True)
         client = actionlib.SimpleActionClient(
-            'right_arm_controller/follow_joint_trajectory', 
+            'left_arm_controller/follow_joint_trajectory', 
             FollowJointTrajectoryAction
         )
-        rospy.loginfo("Waiting for UR5_ARM server...")
+        rospy.loginfo("[StowLeftUR5] Waiting for left ur5 arm controller server...")
         client.wait_for_server()
-        rospy.loginfo("UR5_ARM server is available.")
-        move()
+        rospy.loginfo("[StowLeftUR5] Left ur5 arm controller server is available.")
+        move(target_state)
     except KeyboardInterrupt:
         rospy.signal_shutdown("KeyboardInterrupt")
         raise

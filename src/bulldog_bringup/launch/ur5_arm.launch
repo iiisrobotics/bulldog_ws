@@ -35,8 +35,8 @@
 
     <!-- General settings -->
     <arg name="ur5_min_payload"  default="0.0"/>
-    <arg name="ur5_max_payload"  default="3.0"/>
-    <arg name="ur5_max_velocity" default="5.0"/> 
+    <arg name="ur5_max_payload"  default="5.0"/>
+    <arg name="ur5_max_velocity" default="10.0"/>
     <arg name="ur5_shutdown_on_disconnect" default="true"/>
 
     <group if="$(arg ur5_enabled)">
