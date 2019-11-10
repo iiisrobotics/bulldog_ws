@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="imu_dev"       default="/dev/ttyUSB0"/>
+  <arg name="imu_frame"     default="imu_link" />
   <arg name="imu_raw_topic" default="imu/data_raw"/>  <!-- angular velocities and linear accelerations -->
   <arg name="imu_mag_topic" default="imu/mag"/>  <!-- magnetic field vector -->
   <arg name="world_frame"   default="enu"/>  <!-- East-North-Up -->
@@ -9,6 +10,7 @@
   <!-- Arduimu driver -->
   <node name="arduimu_driver" pkg="arduimu_ros" type="arduimu.py" output="screen" >
     <param name="port" value="$(arg imu_dev)"/>
+    <param name="frame" value="$(arg imu_frame)" />
   </node>
 
   <!-- IMU filter -->

@@ -7,7 +7,6 @@ import math
 import rospy
 from sensor_msgs.msg import Imu, MagneticField
 
-IMU_FRAME = 'imu_link'
 GRAD2RAD = 3.141592654/180.0
 RAD2GRAD = 180.0/3.141592654
 
@@ -22,6 +21,7 @@ class ArduIMUROS(object):
         self.imu_pub = rospy.Publisher('/imu/data_raw', Imu, queue_size = 0) 
         self.mag_pub = rospy.Publisher('/imu/mag', MagneticField, queue_size = 0)      
         self.port = rospy.get_param("~port", "/dev/ttyUSB0")
+        self.frame = rospy.get_param("~frame", "imu_link")
         self.baud = int(rospy.get_param("~baud", "115200"))
 
         self.imuMsg = Imu()
@@ -104,11 +104,11 @@ class ArduIMUROS(object):
                 print 'Word Error: ', e
         
         self.imuMsg.header.stamp= rospy.Time.now()
-        self.imuMsg.header.frame_id = IMU_FRAME
+        self.imuMsg.header.frame_id = self.frame
         self.imu_pub.publish(self.imuMsg)
 
         self.magMsg.header.stamp= rospy.Time.now()
-        self.magMsg.header.frame_id = IMU_FRAME
+        self.magMsg.header.frame_id = self.frame
         self.mag_pub.publish(self.magMsg)
        
 if __name__ == '__main__': 
