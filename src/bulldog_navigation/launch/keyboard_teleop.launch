@@ -1,10 +1,10 @@
 <launch>
-    <arg name="sim"                 default="true" />
+    <arg name="sim"                 default="false" />
     <arg name="raw_cmd_vel_topic"   default="keyboard_teleop/cmd_vel" />
     <arg name="speed"               default="1.0" if="$(arg sim)" />
     <arg name="turn"                default="1.5" if="$(arg sim)" />
-    <arg name="speed"               default="0.50" unless="$(arg sim)" />
-    <arg name="turn"                default="1.00" unless="$(arg sim)" />
+    <arg name="speed"               default="0.2" unless="$(arg sim)" />
+    <arg name="turn"                default="0.4" unless="$(arg sim)" />
 
     <!--  smooths inputs from keyboard_teleop/cmd_vel to smooth_teleop/cmd_vel -->
     <include file="$(find bulldog_navigation)/launch/velocity_smoother.launch">
