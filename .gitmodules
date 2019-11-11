@@ -26,3 +26,6 @@
 [submodule "src/visual_servoing"]
 	path = src/visual_servoing
 	url = https://github.com/YeeCY/visual_servoing.git
+[submodule "src/look_at_pose"]
+	path = src/look_at_pose
+	url = https://github.com/YeeCY/look_at_pose.git
