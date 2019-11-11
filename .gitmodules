@@ -23,3 +23,6 @@
 [submodule "src/LMS1xx"]
 	path = src/LMS1xx
 	url = https://github.com/YeeCY/LMS1xx.git
+[submodule "src/visual_servoing"]
+	path = src/visual_servoing
+	url = https://github.com/YeeCY/visual_servoing.git
