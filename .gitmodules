@@ -29,3 +29,6 @@
 [submodule "src/look_at_pose"]
 	path = src/look_at_pose
 	url = https://github.com/YeeCY/look_at_pose.git
+[submodule "src/moveit_jog_arm"]
+	path = src/moveit_jog_arm
+	url = https://github.com/YeeCY/moveit_jog_arm.git
