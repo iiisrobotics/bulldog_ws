@@ -185,7 +185,7 @@
     <!-- Sick LMS1xx LiDAR -->
     <xacro:if value="$(arg laser_enabled)">
       <xacro:laser_plate />
-      <sick_lms1xx frame="laser" topic="scan" visualize="true" 
+      <sick_lms1xx frame="laser" topic="scan" visualize="false" 
         min_angle="${-lms1xx_angle}" max_angle="${lms1xx_angle}"/>
       <joint name="laser_mount_joint" type="fixed">
         <origin xyz="${lms1xx_xyz}" rpy="${lms1xx_rpy}" />
