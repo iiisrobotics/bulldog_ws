@@ -1,11 +1,11 @@
 moveit_setup_assistant_config:
   URDF:
-    package: bulldog_gazebo
-    relative_path: urdf/description.gazebo.xacro
+    package: bulldog_description
+    relative_path: urdf/bulldog_robot.xacro
     xacro_args: "--inorder "
   SRDF:
     relative_path: config/bulldog_robot.srdf
   CONFIG:
     author_name: Chongyi Zheng
     author_email: chongyeezheng@gmail.com
-    generated_timestamp: 1573829062
+    generated_timestamp: 1573831352
