@@ -149,7 +149,7 @@ left_arm:
   projection_evaluator: joints(left_arm_shoulder_pan_joint,left_arm_shoulder_lift_joint)
   longest_valid_segment_fraction: 0.005
 right_arm:
-  default_planner_config: None
+  default_planner_config: RRTConnect
   planner_configs:
     - SBL
     - EST
