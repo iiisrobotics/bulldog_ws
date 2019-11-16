@@ -1,5 +1,5 @@
 <launch>
-  <arg name="map_file" default="$(find bulldog_navigation)/maps/playpen_map.yaml"/>
+  <arg name="map_file" default="$(find bulldog_navigation)/maps/mmw1floor.yaml"/>
   <arg name="initial_pose_x" default="0.0"/> 
   <arg name="initial_pose_y" default="0.0"/> 
   <arg name="initial_pose_a" default="0.0"/>
