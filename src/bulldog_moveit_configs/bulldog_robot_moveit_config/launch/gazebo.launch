@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="laser_enabled" default="$(optenv BULLDOG_LMS1XX_ENABLED true)"/>
+  <arg name="ur5_enabled" default="$(optenv BULLDOG_UR5_ENABLED false)"/>
+  <arg name="kinect_enabled" default="$(optenv BULLDOG_KINECT_ENABLED false)"/>
+  <arg name="realsense_enabled" default="$(optenv BULLDOG_REALSENSE_ENABLED true)"/>
+  <arg name="dual_ur5_enabled" default="$(optenv BULLDOG_DUAL_UR5_ENABLED true)"/>
+  <arg name="robotiq_grippers_enabled" default="$(optenv ROBOTIQ_GRIPPERS_ENABLED true)"/>
+
+  <arg name="paused" default="false"/>
+  <arg name="gazebo_gui" default="true"/>
+  <arg name="urdf_path" default="$(find bulldog_description)/urdf/bulldog_robot.xacro"/>
+
+  <!-- startup simulated world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" default="worlds/empty.world"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gazebo_gui)"/>
+  </include>
+
+  <!-- send robot urdf to param server -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg urdf_path)
+    laser_enabled:=$(arg laser_enabled)
+    ur5_enabled:=$(arg ur5_enabled)
+    kinect_enabled:=$(arg kinect_enabled)
+    realsense_enabled:=$(arg realsense_enabled)
+    dual_ur5_enabled:=$(arg dual_ur5_enabled)
+    robotiq_grippers_enabled:=$(arg robotiq_grippers_enabled)" />
+
+  <!-- push robot_description to factory and spawn robot in gazebo at the origin, change x,y,z arguments to spawn in a different position -->
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot -x 0 -y 0 -z 0"
+    respawn="false" output="screen" />
+
+  <include file="$(find bulldog_robot_moveit_config_rs)/launch/ros_controllers.launch"/>
+
+</launch>

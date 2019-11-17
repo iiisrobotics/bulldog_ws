@@ -17,3 +17,6 @@
 	path = src/pick_and_place
 	url = https://github.com/YeeCY/pick_and_place.git
 
+[submodule "src/visual_servoing"]
+	path = src/visual_servoing
+	url = https://www.github.com/YeeCY/visual_servoing.git
